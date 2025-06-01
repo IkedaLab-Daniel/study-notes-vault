@@ -136,3 +136,48 @@ A **prompt** is any input or series of instructions given to a generative AI mod
 
 * **Improves AI Safety**
   Reduces the chance of *harmful or biased outputs* by controlling inputs precisely.
+
+## Best Practices for Prompt Creation
+
+### Clarity
+
+* Use **simple and straightforward language** to convey instructions.
+* Avoid **ambiguous or complex terminology** that may confuse the model or the user.
+* Provide a **clear description of the task**.
+
+**Example**
+❌ *Discuss culinary processes that take place on foliaceous stipules...*
+✅ *Explain the process of photosynthesis in plants, detailing the role of chlorophyll and how sunlight, carbon dioxide, and water contribute to this biological function.*
+
+---
+
+### Context
+
+* Supply **background information** or situational details to guide the model’s response.
+* Include **relevant names, events, dates, or explanations** to set the stage.
+
+**Example**
+❌ *Write what happened during the outbreak of the Revolutionary War in 1775.*
+✅ *Describe the historical events leading to the American Revolutionary War, focusing on key incidents like the Boston Tea Party and Battle of Saratoga. Highlight tensions between the colonies and British government that led to war in 1775.*
+
+---
+
+### Precision
+
+* Clearly **outline the structure or format** of the desired response.
+* Use **examples** to guide the model toward your expectations.
+
+**Example**
+❌ *Talk about supply and demand and how it is affected in economics.*
+✅ *Explain the concept of supply and demand in economics. Describe how increased demand can affect pricing using the smartphone market as an example. Also explain the effects of reduced supply using disruptions in oil production.*
+
+---
+
+### Role Play (Persona Pattern)
+
+* Ask the model to **assume a specific role or identity**.
+* Provide **contextual details** to enhance alignment with the assumed persona.
+
+**Example**
+❌ *Write a log entry describing strange flora and fauna on an alien planet.*
+✅ *Pretend you are an astronaut who just landed on an uncharted alien planet. Write a log entry describing the flora, fauna, sky color, and sounds. Express your feelings of excitement, curiosity, and apprehension.*
