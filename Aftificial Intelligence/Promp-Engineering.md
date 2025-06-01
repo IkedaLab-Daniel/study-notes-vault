@@ -181,3 +181,74 @@ A **prompt** is any input or series of instructions given to a generative AI mod
 **Example**
 ❌ *Write a log entry describing strange flora and fauna on an alien planet.*
 ✅ *Pretend you are an astronaut who just landed on an uncharted alien planet. Write a log entry describing the flora, fauna, sky color, and sounds. Express your feelings of excitement, curiosity, and apprehension.*
+
+## Common Prompt Engineering Tools
+
+### Overview
+
+Prompt engineering is the process of designing accurate and context-rich prompts to guide generative AI models in producing relevant and reliable outputs. Various tools assist users in creating and refining prompts, even without deep NLP knowledge.
+
+---
+
+### Common Functionalities of Prompt Engineering Tools
+
+* **Prompt suggestions** based on input or desired output
+* **Contextual guidance** to help models interpret user intent
+* **Iterative refinement** by analyzing and adjusting responses
+* **Bias mitigation** through prompt structuring
+* **Domain-specific support** for legal, medical, or technical areas
+* **Prompt libraries** for reusable templates and use cases
+
+---
+
+### Notable Prompt Engineering Tools
+
+#### IBM Watsonx.ai & Prompt Lab
+
+* Integrated platform for training and deploying foundation models
+* **Prompt Lab** allows experimentation with prompts across use cases like summarization, classification, and extraction
+* Supports model training through added instructions and examples
+
+#### Spellbook by Scale AI
+
+* IDE for building LLM-based applications
+* Prompt editor for writing and testing prompts
+* Prompt templates and pre-built examples for generation, classification, Q\&A, etc.
+
+#### Dust
+
+* Web interface for chaining and versioning prompts
+* Custom scripting language and processing blocks
+* API integration for external services and models
+
+#### PromptPerfect
+
+* Optimizes prompts for both text and image generation models
+* Supports GPT, Claude, Llama, DALL·E, Stable Diffusion, and more
+* Features include autocomplete, preview, moderation, and streamline mode for iterative improvement
+
+---
+
+### Additional Tools and Platforms
+
+#### GitHub
+
+* Hosts repositories with guides, tools, and examples for prompt engineering
+
+#### OpenAI Playground
+
+* Web tool to experiment with prompts using OpenAI models like GPT
+
+#### Playground AI
+
+* Platform for experimenting with text-to-image prompts using Stable Diffusion
+
+#### LangChain
+
+* Python library for chaining prompts and building complex workflows with LLMs
+
+#### PromptBase
+
+* Marketplace for buying and selling prompts
+* Supports platforms like Midjourney, ChatGPT, DALL·E, and Stable Diffusion
+* Offers tools for prompt creation and listing directly on the platform
