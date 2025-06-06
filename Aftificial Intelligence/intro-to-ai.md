@@ -207,3 +207,48 @@ Large Language Models (LLMs) can produce both impressively accurate and surprisi
 ### Limitation:
 
 * The effectiveness of RAG depends on the **quality of the retriever**. Poor retrieval can result in missed or incorrect answers.
+
+## Who Should Make the Decision — Human, AI, or Both?
+
+Deciding whether a human or an AI should make a decision depends on **confidence levels**, **task complexity**, and **how AI recommendations are presented**. The key concept explored is **Augmented Intelligence**, where humans and AI collaborate.
+
+### Fraud Detection Example:
+
+* AI flags potentially fraudulent transactions.
+* Humans (analysts) must review thousands of alerts, most of which are **false positives**.
+* AI can help, but **which alerts should it handle** vs. humans?
+
+### Performance Curves:
+
+* **AI Curve**: High performance at **low and high confidence levels** (very sure it's real or not).
+* **Human Curve**: Flatter, but outperforms AI at **medium confidence** (around 50%) due to contextual reasoning and flexibility.
+* **Augmented Intelligence**: Combines both. Outperforms either one alone in the **moderate confidence range**.
+
+### Presentation Matters:
+
+To be effective, Augmented Intelligence must address **human cognitive biases**:
+
+#### 1. **Forced Display**:
+
+* AI recommendation shown **with every case**.
+* Leads to **automation bias** — humans overly trust AI, even when it’s wrong.
+
+#### 2. **Optional Display**:
+
+* AI recommendation shown **only if requested**.
+* Reduces automation bias by allowing humans to form their own opinion first.
+
+#### 3. **Trust & Accuracy Display**:
+
+* Showing **AI accuracy scores** can **reduce trust**, even if the model is reliable.
+* Humans may ignore AI if told it's "only" 85% accurate.
+
+### Final Insight:
+
+By analyzing performance curves and user behavior, organizations can **quantify who should decide**:
+
+* **AI** for high/low confidence predictions.
+* **Humans** for mid-confidence or rare/complex cases.
+* **Augmented Intelligence** for the best of both — *if designed to account for human bias*.
+
+Together, humans and AI can **improve decision outcomes** — if we *know who to ask, and how*.
