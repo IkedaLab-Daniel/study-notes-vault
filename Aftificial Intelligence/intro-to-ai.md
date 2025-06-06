@@ -177,3 +177,33 @@ This video explores how **Generative AI** is transforming businesses by enabling
 ### Conclusion:
 
 Generative AI is reshaping how businesses operate by driving **personalization, automation, and efficiency**. As it continues to evolve, its practical and responsible application will be key to unlocking even greater value across industries.
+
+## Summary: Retrieval-Augmented Generation (RAG) for Improving LLMs
+
+Large Language Models (LLMs) can produce both impressively accurate and surprisingly incorrect answers. Two key challenges with LLMs are:
+
+1. **Outdated knowledge**
+2. **Lack of source attribution**
+
+**Retrieval-Augmented Generation (RAG)** is a framework that addresses both issues by enhancing LLMs with an external content retrieval step.
+
+### How RAG Works:
+
+* Instead of generating a response based only on pre-trained data, the LLM first **retrieves relevant information** from a **content store** (e.g., the internet, private documents).
+* The prompt now includes:
+
+  1. An instruction to consider retrieved content
+  2. The user's question
+  3. The generation task
+* This enables the model to generate **accurate, up-to-date, and source-grounded responses**.
+
+### Benefits of RAG:
+
+* **Current information** without retraining the model — just update the data store.
+* **Factual grounding** using verifiable sources.
+* **Reduces hallucination** and potential data leakage.
+* Allows the model to respond with **“I don’t know”** when no reliable source is found.
+
+### Limitation:
+
+* The effectiveness of RAG depends on the **quality of the retriever**. Poor retrieval can result in missed or incorrect answers.
