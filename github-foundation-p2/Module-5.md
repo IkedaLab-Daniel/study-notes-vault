@@ -48,3 +48,45 @@ SAML(Security Assertion Markup Language) SSO integrates GitHub with your organiz
 
 When you require the use of two-factor authentication for your organization, all accounts that don't use 2FA is removed from the organization and lose access to its repositories. Accounts that are affected include bot accounts.
 
+## Unit 4: User authorization
+After a user successfully authenticates through your identity provider (IdP) by using SAML single sign-on (SSO), the next critical step is authorization—granting tools like personal access tokens (PATs), SSH keys, or OAuth apps with the ability to access organization resources.
+
+### Automating User Authorization with SAML SSO and SCIM
+Security assertion markup language (SAML) SSO enables enterprise and organization owners to control access to GitHub resources like repositories, issues, and pull requests. Integrating SCIM (System for Cross-domain Identity Management) enhances access control by automating user provisioning and deprovisioning.
+
+With SCIM, new employees added to your IdP are granted access to GitHub automatically, while departing users are removed, reducing manual steps and improving security.
+
+SCIM also revokes stale tokens after a session ends, reducing security risks. Without SCIM, revoking stale tokens must be done manually.
+
+### Managing SSH Keys and PATs with SAML SSO
+SAML SSO and SCIM work together to reflect identity changes in GitHub. To support this cohesion:
+- NameID and userName must match between the SAML IdP and SCIM client.
+- Group changes in your IdP trigger SCIM updates in GitHub.
+Users accessing APIs or Git must use an authorized PAT or SSH key. These methods are auditable and securely tied to SAML SSO.
+
+To simplify onboarding, provision users using: https://github.com/orgs/ORGANIZATION/sso/sign_up. Display this link in your IdP dashboard.
+
+When users first authenticate, GitHub links their account and SCIM data to your organization. Admins can later audit or revoke sessions and credentials to automate offboarding.
+
+### SCIM Integration with GitHub
+SCIM streamlines identity management in GitHub Enterprise Cloud by supporting both native integrations and custom configurations.
+
+#### Supported SCIM Providers
+- Okta
+- Microsoft Entra ID
+- OneLogin
+- Ping Identity
+- Google Workspace
+
+### Managing Identities and Access
+
+#### SAML SSO Configuration
+1. Configure your SAML SSO URL.
+2. Provide your public certificate.
+3. Add IdP metadata.
+
+### Credential Management
+PATs and SSH keys must be explicitly authorized and linked to IdP identities to access organization resources securely.
+
+
+
