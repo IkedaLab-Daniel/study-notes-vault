@@ -74,3 +74,60 @@ They are capable of decision-making, problem-solving, adapting to new informatio
 ### Conclusion
 
 AI agents are transforming industries through automation, strategic decision-making, and enhanced customer interaction. Their characteristics—social ability, autonomy, reactiveness, and proactiveness—enable them to work independently or in multi-agent systems across a wide range of applications.
+
+## AI Agents and the Shift to Compound AI Systems
+
+### From Monolithic Models to Compound AI Systems
+
+* Traditional models are limited to their training data and lack adaptability.
+* Compound AI systems integrate models with tools, databases, and logic to solve real-world problems.
+* Example: Planning a vacation involves accessing personal vacation data and generating personalized responses via database queries and LLMs.
+
+### Compound AI System Characteristics
+
+* **Modular Design**: Includes models, tools (e.g., verifiers, calculators), and databases.
+* **Control Logic**: Defines the path from query to answer (e.g., always querying the vacation policy database).
+* **RAG (Retrieval-Augmented Generation)**: A common compound AI pattern using external sources to enhance responses.
+
+### Introduction to AI Agents
+
+* AI agents are LLMs embedded within compound systems, controlling the system’s logic using reasoning.
+* Agents use **slow thinking**: plan, break down tasks, observe results, and iterate.
+
+### Core Capabilities of AI Agents
+
+1. **Reasoning**: LLMs plan the solution step-by-step.
+2. **Acting**: Use of external tools/APIs (e.g., search, calculators, code execution).
+3. **Memory**: Stores internal reasoning logs and conversation history for personalization.
+
+### ReAct Agent Pattern
+
+* Combines **Reasoning** + **Acting**.
+* Process:
+
+  1. Receive a user query.
+  2. Prompted to think before answering.
+  3. Decide to call external tools if needed.
+  4. Observe tool outputs and adjust plan accordingly.
+
+### Concrete Example – Sunscreen Planning
+
+* Query involves multiple steps:
+
+  1. Retrieve vacation days from memory.
+  2. Get forecasted sun hours for Florida.
+  3. Retrieve sunscreen dosage guidelines.
+  4. Calculate required sunscreen bottle count.
+* Demonstrates multi-tool reasoning, memory use, and step-by-step planning.
+
+### Choosing Between Programmatic vs Agentic Approaches
+
+* **Programmatic systems** are more efficient for narrow, well-defined problems.
+* **Agentic systems** are better for complex, varied tasks where manual path configuration is infeasible.
+* Trade-off between efficiency (programmatic) and flexibility (agentic).
+
+### Conclusion
+
+* Compound AI systems are evolving toward agentic architectures.
+* LLMs now control logic, enabling dynamic reasoning and tool use.
+* Human-in-the-loop is still necessary, but autonomy in AI systems is increasing rapidly.
