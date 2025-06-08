@@ -33,3 +33,18 @@ One foundational capability for enterprise-grade authentication is SAML Single S
 
 When users log into GitHub, they can see the enterprises they belong to—but access to repository data requires SAML reauthentication via the IdP.
 
+## Unit 3: User authentication
+When it comes to user authentication, security should be the number one consideration that comes to mind. Strong security is essential. It seems like every month or so, a company reports a data breach. Credentials are stolen because of inefficient security processes, or simply because of a lack of up-to-date security features within the company. Establishing secure user authentication can be a difficult task if user adoption requires long and frustrating steps to authenticate.
+
+GitHub Enterprise supports two recommended methods for secure user authentication:
+- SAML Single Sign-On(SSO)
+- Two-Factor Authentication(2FA)
+
+### SAML SSO Authentication
+SAML(Security Assertion Markup Language) SSO integrates GitHub with your organization’s identity provider (IdP), allowing centralized access control, and improved compliance. When enabled, GitHub redirects users to the IdP for authentication before granting access to organization resources.
+
+### Two-Factor Authentication (2FA)
+2FA adds a second verification step beyond username and password. You can require 2FA for organization members, outside collaborators, and billing managers.
+
+When you require the use of two-factor authentication for your organization, all accounts that don't use 2FA is removed from the organization and lose access to its repositories. Accounts that are affected include bot accounts.
+
