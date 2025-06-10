@@ -54,3 +54,24 @@ Cycle between suggestions. You can do this using Ctrl+Enter (or Cmd+Enter on a M
 If you're not getting the results you want, then you can reword the prompt or start writing code for Copilot to autocomplete.
 
 GitHub Copilot uses open files in your text editor as additional context. This is helpful because it provides useful information in addition to the prompt or code you may be writing. If you need GitHub Copilot to provide suggestions based on other files you can open those or use @workspace with your prompt when using GitHub Copilot Chat.
+
+## Unit 5: Lab
+
+## Unit 6: Quiz
+
+## Unit 7: Summary
+In this module, we looked at how GitHub Codespaces can significantly improve the software development lifecycle. We learned about the features of GitHub Codespaces that range from creating a repository from a GitHub template to adding animations with live suggestions. GitHub Codespaces allows you to customize your coding experience and GitHub Copilot guides you in each step of the way.
+
+After finishing this module, you should be able to:
+
+- Configure a GitHub repository in Codespaces and install the GitHub Copilot extension.
+- Engineer prompts for your project that follow best practices to generate suggestions from GitHub Copilot.
+- Use GitHub Copilot Chat to ask coding-related questions and receive answers.
+
+### Delete your Codespaces resources
+To avoid consuming all of your monthly GitHub Codespaces time, it's important to delete your resources after you upload your changes to your repository.
+
+Use the following steps to delete your Codespace instance:
+- Go to GitHub Codespaces.
+- Find your Codespace instance in the list, and select the ... menu to display your options.
+- Select Delete to remove your Codespace instance.
