@@ -64,3 +64,15 @@ In our scenario, these links could prove very valuable for ramping up if someone
 ### Looping in users with @mention
 Besides linking issues and commits, it's often helpful to associate other people with discussions. The easiest way to do this is by using an @mention. This kind of mention notifies the mentioned user so that they can participate in the discussion. It's also a good way to identify people associated with issues long after they have been closed.
 
+## Unit 3: Lab
+
+## Unit 4: Quiz
+
+## Unit 5: Summary
+In this module, you learned to search and organize repository history by using filters, blame, and cross-linking on GitHub.
+
+You learned about:
+
+- Finding relevant issues and pull requests.
+- Searching history to find context.
+- Making connections within GitHub to help others find things.
