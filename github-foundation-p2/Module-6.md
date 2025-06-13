@@ -64,3 +64,18 @@ The most common use of compare is to compare branches, such as when you're start
 5. If you have more than one email address associated with your account on GitHub.com, select the email address dropdown menu and select the email address to use as the Git author email address. Only verified email addresses appear in this dropdown menu. If you enabled email address privacy, then a no-reply GitHub email is the default commit author email address.
 6. Select Confirm merge, Confirm squash and merge, or Confirm rebase and merge.
 7. Optionally, you can delete the compare branch to keep the list of branches in your repository tidy.
+
+## Unit 3: Lab
+
+## Unit 4: Quiz
+
+## Unit 5: Summary
+In this module, you learned how to manage changes to your repository source by using pull requests.
+
+You learned about:
+
+- Reviewing branches and their importance to pull requests.
+- Defining what a pull request is.
+- Learning how to create a pull request.
+- Understanding the different pull request statuses.
+- Merging a pull request to a base branch.
