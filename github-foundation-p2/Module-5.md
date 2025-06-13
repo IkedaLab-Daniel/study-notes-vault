@@ -88,5 +88,70 @@ SCIM streamlines identity management in GitHub Enterprise Cloud by supporting bo
 ### Credential Management
 PATs and SSH keys must be explicitly authorized and linked to IdP identities to access organization resources securely.
 
+## Unit 5: Team synchronization
+If your company uses Microsoft Entra ID or Okta as your identity provider (IdP), you can manage GitHub team membership through team synchronization. When enabled, team sync automatically reflects changes in IdP groups on GitHub—reducing the need for manual updates or custom scripts. This centralized approach simplifies onboarding, permissions management, and access revocation.
 
+### Team Synchronization Use Cases
+Team sync is ideal for enterprises looking to streamline membership management within GitHub organizations. Admins can map GitHub teams to IdP groups and manage memberships automatically. This is useful for:
 
+- Onboarding new employees
+- Adjusting access as users move between teams
+- Removing users who leave the organization
+
+### Enterprise Managed Users
+If you're using Enterprise Managed Users in GitHub Enterprise Cloud, all members are provisioned through your IdP. Users don't self-manage GitHub accounts and can't access resources outside the enterprise.
+
+With this model, you can:
+- Manage organization/team membership directly through your IdP
+- Ensure GitHub users are enterprise-scoped and isolated
+
+### Team Synchronization vs. SCIM for GHES
+In GitHub Enterprise Server (GHES), managing user access and team memberships can be achieved through various methods, including team synchronization and System for Cross-domain Identity Management (SCIM). Understanding these methods is essential for effective administration.
+
+#### Team Sync in GHES
+Team synchronization allows you to link GitHub teams with groups in your Identity Provider (IdP). This integration ensures that any changes in the IdP group—such as adding or removing members—are automatically reflected in the corresponding GitHub team. This approach streamlines team management by centralizing user access control within the IdP.
+
+However, it's important to note that team synchronization isn't a user provisioning service and doesn't invite non-members to join organizations in most cases. Therefore, a user will only be successfully added to a team if they're already an organization member.
+
+Consider the following scenario to understand how team synchronization works in practice:
+
+### Team Sync Configuration
+1. Enable Security Assertion Markup Language(SAML) Single Sign-On(SSO) and SCIM in your IdP.
+2. Map GitHub teams to IdP groups via GitHub UI or API.
+3. Changes in group membership sync automatically to GitHub.
+Supported IdPs:
+
+1. Microsoft Entra ID: Requires permissions for profile reading and directory access.
+2. Okta: Requires SAML SSO, SCIM, tenant URL, and Single Sign-on for Web Systems(SSWS) token with read-only admin access.
+
+### Disable Team Sync
+To disable:
+
+1. Navigate to Settings > Organization security
+2. Click Disable team synchronization
+
+### SCIM in GHES
+SCIM is an open standard protocol designed to automate the exchange of user identity information between identity domains and IT systems. In the context of GHES, SCIM enables administrators to provision, update, and deprovision user accounts directly through the GitHub API. This means you can create, update, and delete user accounts, and sync group information to map GitHub team memberships.
+
+SCIM is useful for managing user lifecycles at scale, ensuring that user data remains consistent across systems.
+
+Consider the following scenario to understand how SCIM works in practice:
+- Okta SCIM integration provisions GitHub users automatically
+- Bob is added to Okta → GitHub account is provisioned
+- Bob changes roles → access and teams update
+- Bob leaves → account is deprovisioned
+
+### Team Sync vs. Group SCIM
+GitHub supports two primary identity integration approaches:
+
+- Team Sync: Focused on syncing group membership to GitHub teams
+- Group SCIM: Focused on full lifecycle management of users and groups
+
+### Usage Limits
+When using team synchronization, observe these limits:
+
+- Max members per team: 5,000
+- Max members per organization: 10,000
+- Max teams per organization: 1,500
+
+Exceeding these may result in performance issues or sync failures.
