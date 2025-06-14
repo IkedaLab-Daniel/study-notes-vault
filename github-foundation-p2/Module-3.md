@@ -141,3 +141,8 @@ Another automated scanning feature within a GitHub repository is secret scanning
 
 When secret scanning detects a set of credentials, GitHub notifies the service provider who issued the secret. The service provider validates the credential. Then, it decides whether they should revoke the secret, issue a new secret, or reach out to you directly. The action depends on the associated risks to you or the service provider.
 
+## Unit 3: Lab
+
+## Unit 4: Quiz
+
+## Unit 5: Summary
