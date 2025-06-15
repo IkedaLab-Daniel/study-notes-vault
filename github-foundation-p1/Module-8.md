@@ -164,4 +164,6 @@ Slash commands can save you time by reducing the typing required to create compl
 
 You can use slash commands in any description or comment field in issues, pull requests, or discussions where that slash command is supported.
 
-
+## Unit 3: Lab
+## Unit 4: Quiz
+## Unit 5: Summary
