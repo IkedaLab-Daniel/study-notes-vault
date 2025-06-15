@@ -125,4 +125,21 @@ Remember to always be respectful in all your exchanges and to follow the code of
 
 Contributing to open source requires patience. Sometimes you don't get immediate feedback. Don't reach out to the maintainers privately via email, X, or any other means hoping to get a faster answer. This behavior is considered harmful. Discussing things publicly also gives other contributors or passersby the opportunity to learn about the process behind the changes and the best practices to follow.
 
+## Unit 4: Exercise - Create your first pull request
+
+### Describe your changes
+To write a good commit message, and subsequently your pull request, follow these practices:
+
+For the body of your message and pull request, continue to use present tense. Make sure to include the motivation for the change. Contrast your change with the previous behavior. Use the space at your disposal to explain the what and why versus the how.
+
+Your commit message is only as much to the point as the content that you're about to submit. Commit or submit for review small, isolated sets of changes. This practice increases the likelihood of your changes getting merged into the project.
+
+### Add granularity
+Before you submit your pull request, check the sidebar for ways to complete your PR. Select Reviewers or Assignees if you're familiar with the project's team structure. Add labels when there's guidance on using labels in, for instance, the CONTRIBUTING.md file. You can use labels as a visual clue for what you're trying to accomplish. A maintainer might also add a label or multiple labels.
+
+Optionally, you can link issues in the sidebar, where successfully merging a pull request might close the corresponding issue. You can also customize your subscription to notifications on the thread. Some PRs receive many comments, reviews, and CI/CD-related notifications. You can choose from:
+- Not subscribed: Only receive notifications when you participated or were @mentioned
+- Subscribed: Receive all notifications for this pull request
+- Custom: Only be notified for the events you select
+
 
