@@ -123,3 +123,16 @@ You can start your workflow in GitHub.dev and continue working on a Codespace. I
 
 To continue your work in a Codespace, select Continue Working on…. Select Create New Codespace to create a Codespace on your current branch. Before you choose this option, you must commit any changes.
 
+## Unit 5: Lab
+
+## Unit 6: Quiz
+
+## Unit 7: Summary
+In this module, you learned about GitHub Codespaces, a fully configured development environment hosted in the cloud.
+
+You should now be able to:
+
+- Describe GitHub Codespaces.
+- Explain the GitHub Codespace lifecycle and how to perform each step.
+- Define the different customizations you can personalize with GitHub Codespaces.
+- Discern the differences between GitHub.dev and GitHub Codespaces.
