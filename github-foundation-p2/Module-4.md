@@ -237,3 +237,14 @@ Automating the management of permissions across multiple organizations is crucia
 - Testing: Thoroughly test scripts in a controlled environment before deployment.
 - Logging: Implement detailed logging to track changes and facilitate troubleshooting.
 - Version Control: Use version control systems (like Git) to manage script revisions and collaborate with team members.
+
+## Unit 6: Quiz
+
+## Unit 7: Summary
+GitHub supplies administrators with the tools they can use flexibly to control and protect their company's GitHub usage. Administrators can set up authentication schemes and enforce organization-wide or enterprise-wide policies. They can also design cascading permission structures that represent the natural groupings within the company.
+
+Hierarchical levels like teams, organizations, and enterprises enable ways of setting up and controlling authentication and other security measures. Permission levels allow for fine-grained control of specific tasks. Repository permissions apply to individual users or teams of users and cascade to child teams.
+
+Without these types of administrative controls, it would be impossible to adequately secure a company's GitHub implementation.
+
+GitHub administrators perform vital tasks that ensure the security and viability of company repositories.
