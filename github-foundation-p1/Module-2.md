@@ -208,4 +208,9 @@ To round out our journey of GitHub, let’s tackle GitHub pages. You can use Git
 
 GitHub Pages is a static site-hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub. Optionally, you can run the files through a build process and publish a website. Edit and push your changes, and your project is live for the public in a visually organized way.
 
+## Unit 6: Lab
+
+## Unit 7: Quiz
+
+## Unit 8: Summary
 
