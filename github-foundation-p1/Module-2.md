@@ -77,6 +77,54 @@ Every repository on GitHub.com comes equipped with a section for hosting documen
 
 It’s worth a reminder that if your repository is private, only people who have at least read access to your repository will have access to your wiki.
 
+## Unit 3: Components of the GitHub flow
+
+- Branches
+- Commits
+- Pull Requests
+- The GitHub Flow
+
+### What are Branches
+Branches are an essential part to the GitHub experience because they're where we can make changes without affecting the entire project we're working on.
+
+Your branch is a safe place to experiment with new features or fixes. If you make a mistake, you can revert your changes or push more changes to fix the mistake. Your changes won't update on the default branch until you merge your branch.
+
+Alternatively, you can create a new branch and check it out by using git in a terminal. The command would be "git checkout -b newBranchName"
+
+### What are Commits
+In the previous unit, you added a new file into the repository by pushing a commit. Let’s briefly review what commits are.
+
+A commit is a change to one or more files on a branch. Every time a commit is created, it's assigned a unique ID and tracked along with the time and contributor. Commits provide a clear audit trail for anyone reviewing the history of a file or linked item, such as an issue or pull request.
+
+Within a git repository, a file can exist in several valid states as it goes through the version control process. The primary states for a file in a Git repository are Untracked and Tracked.
+
+- Untracked: An initial state of a file when it isn't yet part of the Git repository. Git is unaware of its existence.
+
+- Tracked: A tracked file is one that Git is actively monitoring. It can be in one of the following substates:
+
+- Unmodified: The file is tracked, but it hasn't been modified since the last commit.
+- Modified: The file has been changed since the last commit, but these changes aren't yet staged for the next commit.
+- Staged: The file has been modified, and the changes have been added to the staging area (also known as the index). These changes are ready to be committed.
+- Committed: The file is in the repository's database. It represents the latest committed version of the file.
+
+### What are pull request?
+A pull request is the mechanism used to signal that the commits from one branch are ready to be merged into another branch.
+
+The team member submitting the pull request asks one or more reviewers to verify the code and approve the merge. These reviewers have the opportunity to comment on changes, add their own, or use the pull request itself for further discussion.
+
+Once the changes have been approved (if required), the pull request's source branch (the compare branch) is merged into the base branch.
+
+### The Github Flow
+The GitHub flow can be defined as a lightweight workflow that allows for safe experimentation. You can test new ideas and collaboration with your team by using branching, pull requests, and merging.
+
+Now that we know the basics of GitHub we can walk through the GitHub flow and its components.
+
+1. Start by creating a branch so that the changes, features, and fixes you create don't affect the main branch.
+2. Next, make your changes. We recommend deploying changes to your feature branch before merging into the main branch. Doing so ensures the changes are valid in a production environment.
+3. Now, create a pull request to ask collaborators for feedback. Pull request review is so valuable that some repositories require an approving review before pull requests can be merged.
+4. Then review and implement your feedback from your collaborators.
+5. Once you feel great about your changes, it's time to get your pull request approved and merge it into the main branch.
+6. Finally, you can delete your branch. Deleting your branch signals your work on the branch is complete and prevents you or others from accidentally using old branches.
 
 
 
