@@ -422,3 +422,7 @@ Free Tier:
 Use external storage services (e.g., AWS S3, Azure Blob Storage) for large files.
 Delete unused large files to optimize storage.
 Enable Git LFS file pruning to remove unreferenced objects.
+
+### Unit 8: Quiz
+
+### Unit 9: Summary
