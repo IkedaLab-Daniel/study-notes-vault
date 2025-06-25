@@ -140,5 +140,97 @@ Here are the extra features of GitHub Enterprise Cloud:
 - Option to centrally manage policy and billing for multiple GitHub.com organizations with an enterprise account
 - Option to provision and manage the user accounts for your developers, by using Enterprise Managed Users
 
+## Unit 3: GitHub Mobile and GitHub Desktop
+
+### GitHub Mobile
+GitHub Mobile gives you a way to do high-impact work on GitHub quickly and from anywhere. GitHub Mobile is a safe and secure way to access your GitHub data through a trusted, first-party client application.
+
+With GitHub Mobile you can:
+- Manage, triage, and clear notifications from github.com.
+- Read, review, and collaborate on issues and pull requests.
+- Edit files in pull requests.
+- Search for, browse, and interact with users, repositories, and organizations.
+- Receive a push notification when someone mentions your username.
+- Schedule your push notifications for specific custom hours.
+- Secure your GitHub.com account with two-factor authentication.
+- Verify your sign in attempts on unrecognized devices.
+
+### GitHub Desktop
+GitHub Desktop is an open-source, stand-alone software application that enables you to be more productive. It facilitates collaboration between you and your team and the sharing of Git and GitHub best practices within your team.
+
+Here are a few of the many things you can do with GitHub Desktop:
+- Add and clone repositories.
+- Add changes to your commit interactively.
+- Quickly add coauthors to your commit.
+- Check out branches with pull requests and view CI statuses.
+- Compare changed images.
+
+## Unit 4: Github Billing
+GitHub bills separately for each account. You receive a separate bill for your personal account and for each organization or enterprise account you own.
+
+The bill for each account is a combination of charges for your subscriptions and usage-based billing.
+
+- Subscriptions include your account's plan, such as GitHub Pro or GitHub Team, and paid products that have a consistent monthly cost, such as GitHub Copilot and apps from GitHub Marketplace.
+- Usage-based billing applies when the cost of a paid product depends on how much you use the product. For example, the cost of GitHub Actions depends on how many minutes your jobs spend running and how much storage your artifacts use.
+
+Your plan might come with included amounts of usage-based products. For example, with GitHub Pro, your personal account gets 3,000 minutes of GitHub Actions usage for free each month. You can control usage beyond the included amounts by setting spending limits.
+
+Understanding GitHub's billing structures is crucial for effective administration and cost management. This document focuses on differentiating how GitHub products are billed, including seat licenses, GitHub Actions, GitHub Packages, and the new billing platform's capabilities.
+
+### Pricing for GitHub Actions
+GitHub Actions enables automation of workflows directly within repositories. Its pricing model varies based on repository visibility and account type:
+
+Public Repositories: Usage of GitHub Actions is free for public repositories, providing unlimited minutes on GitHub-hosted runners.
+
+Private Repositories: Each account receives a certain amount of free minutes and storage for GitHub-hosted runners, depending on the account's plan. For example, GitHub Free for personal accounts includes 2,000 CI/CD minutes per month. Usage beyond the included amounts is controlled by spending limits.
+
+### Pricing and Support Options for Organizations
+GitHub offers various plans tailored to organizational needs, each with distinct features and support options:
+
+GitHub Free for Organizations:
+Features:
+- Unlimited public/private repositories
+- Community support
+- 2,000 CI/CD minutes per month
+
+GitHub Team:
+Features:
+- Everything in Free, plus:
+- Additional collaboration tools
+- Code owners
+- Required reviews
+- Enforced branch protections
+- Email support
+
+GitHub Enterprise:
+Features:
+- Everything in Team, plus:
+- SAML single sign-on
+- Advanced auditing
+- GitHub Connect
+- 24/7 support
+- Enterprise-level security features For more information about available features and pricing tiers, see GitHub’s pricing page.
+
+### Usage-Based Billing for Licenses (Metered Billing)
+With the enhanced billing platform, GitHub has introduced a usage-based billing model for licenses:
+
+- Monthly Billing: Organizations are billed monthly for the exact number of GitHub Enterprise and GitHub Advanced Security licenses used.
+
+-Pro Rata Charges: If a user starts consuming a license partway through the month, the organization is charged a pro rata amount for that user's usage.
+
+- Dynamic Adjustments: If a user stops consuming a license during the month, the billing for the following month reflects this change, ensuring organizations only pay for active users.
+
+This model eliminates the need to purchase a predefined number of licenses in advance, offering flexibility and cost efficiency.
+
+### Billing Platform’s New Capabilities
+GitHub's enhanced billing platform provides improved tools for financial management:
+
+- Granular Spending Controls: Administrators can set specific spending limits for services like GitHub Actions and GitHub Packages, preventing unexpected overages.
+
+- Detailed Usage Insights: The platform offers in-depth visibility into product usage, allowing organizations to monitor consumption patterns and optimize resource allocation.
+
+- Automated Reporting: Features for automating usage reporting streamline financial oversight and facilitate internal chargebacks.
+
+These capabilities enhance an organization's ability to manage expenses effectively and align GitHub usage with budgetary constraints.
 
 
