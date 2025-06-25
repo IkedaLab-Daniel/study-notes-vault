@@ -233,4 +233,27 @@ GitHub's enhanced billing platform provides improved tools for financial managem
 
 These capabilities enhance an organization's ability to manage expenses effectively and align GitHub usage with budgetary constraints.
 
+## Unit 5: License Usage Stats
+As a GitHub Enterprise administrator, tracking license usage is crucial for managing costs, optimizing resources, and ensuring compliance. GitHub provides various methods for obtaining license statistics at organization, enterprise, and instance levels.
+
+### Finding License Usage for a Specific Organization
+To find license usage statistics for a single GitHub organization:
+
+- Method 1: Using GitHub Enterprise Cloud (GHEC) Admin Console
+- Method 2: Finding License Usage Across Multiple Organizations
+- Method 3: Finding License Usage for Enterprise Accounts
+- Method 4: Finding License Usage Across Multiple GitHub Instances
+
+### Best Practices for License Usage Management
+The following strategies can help you manage licenses more efficiently across your organization:
+- Automate Monitoring: Use GraphQL/REST API queries to track usage trends.
+- Optimize Unused Seats: Identify inactive users and reclaim unused licenses.
+- Enable Usage-Based Billing: Ensure billing reflects actual consumption.
+- Regular Audits: Conduct monthly/quarterly license reviews to optimize cost.
+
+
+
+
+
+
 
