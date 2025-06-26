@@ -149,3 +149,47 @@ Unit tests are essential for ensuring code quality and reliability. Copilot can 
 Automated test generation helps you maintain code integrity and catch bugs early in the development process.
 
 Keep in mind that Copilot learns from context. Keeping your code well structured and commented helps Copilot provide more accurate and relevant assistance. The more you interact with Copilot, the better it becomes at understanding your coding style and preferences.
+
+## Unit 4: Set up, configure, and troubleshoot GitHub Copilot
+
+### Sign up for GitHub Copilot
+Before you can start using GitHub Copilot, you need to set up a free trial or subscription for your account.
+
+To get started, select your GitHub profile photo, and then select Settings. Copilot is on the left menu under Code, planning, and automation.
+
+After you sign up, you need to install an extension for your preferred environment. GitHub Copilot supports GitHub.com (which doesn't need an extension), VS Code, Visual Studio, JetBrains IDEs, and Neovim as an unobtrusive extension.
+
+### Configure GitHub Copilot in VS Code
+
+#### Add the VS Code extension for GitHub Copilot
+1. In Visual Studio Marketplace, go to the GitHub Copilot extension page and select Install.
+2. A popup dialog asks you to open VS Code. Select Open.
+3. In VS Code, on the Extension: GitHub Copilot tab, select Install.
+4. If you didn't previously authorize VS Code in your GitHub account, you're prompted to sign in to GitHub in VS Code. Select Sign in to GitHub.
+
+GitHub Copilot can autocomplete code as you type when you use VS Code. After installation, you can enable or disable GitHub Copilot, and you can configure advanced settings within VS Code.
+
+#### Enable or disable GitHub Copilot in VS Code
+1. On the bottom pane of the VS Code window, select the status icon, and then select Enable or Disable.
+2. When you're disabling GitHub Copilot, VS Code asks whether you want to disable completions globally or for the language of the file that you're currently editing.
+- To disable GitHub Copilot completions globally, select Disable completions.
+- To disable GitHub Copilot completions for a specified language, select Disable completions for LANGUAGE.
+
+#### Enable or disable inline suggestions in VS Code
+1. On the File menu, select Preferences > Settings.
+2. On the left-side pane of the Settings tab, select Extensions, and then select GitHub Copilot.
+3. Under Editor: Enable Auto Completions, select or clear the checkbox to enable or disable inline suggestions.
+
+Additionally, you can choose to enable or disable inline suggestions and specify for which languages you want to enable or disable GitHub Copilot.
+
+#### Troubleshoot GitHub Copilot in VS Code
+In VS Code, the log files are useful for diagnosing connection problems. The GitHub Copilot extension stores the log files in the standard log location for VS Code extensions. You can find the log files by opening the command palette and then entering either Developer: Open Log File or Developer: Open Extensions Logs Folder.
+
+In rare cases, errors might not be logged in the regular locations. If you encounter errors and nothing is in the logs, you might try to view the logs from the process that's running VS Code and the extension. This process enables you to view the Electron logs. You can find these logs by selecting Help > Toggle Developer Tools in VS Code.
+
+Network restrictions, firewalls, or your proxy might cause problems when you're connecting to GitHub Copilot. If a problem occurs, use the following steps to open a new editor with the relevant information that you can inspect yourself or share with the support team:
+
+1. Open the VS Code command palette, and then:
+- For Mac, use Shift+Command+P.
+- For Windows or Linux, use Ctrl+Shift+P.
+2. Enter Diagnostics, and then select GitHub Copilot: Collect Diagnostics from the list.
