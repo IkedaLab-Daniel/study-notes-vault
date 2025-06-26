@@ -278,3 +278,11 @@ This workflow scans:
 Every push to the default branch and the protected branch
 Every pull request to the default branch
 The default branch every Monday at 14:20 UTC
+
+Unit 5: Lab
+
+Unit 6: Quiz
+
+Unit 7: Summary
+In this module, you learned how to enable and configure code scanning for your repository. Code scanning works with the integrated GitHub CodeQL action or with third party tools. You can schedule or trigger it based on specific events, saving time and ensuring your code stays free of errors and security vulnerabilities. Without code scanning, you'd need to manually verify the code base, which can take a lot of time and has a higher potential for mistakes. Code scanning alerts you of any problems and lets you review these issues in a single location.
+
