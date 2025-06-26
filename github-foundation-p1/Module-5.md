@@ -193,3 +193,9 @@ Network restrictions, firewalls, or your proxy might cause problems when you're 
 - For Mac, use Shift+Command+P.
 - For Windows or Linux, use Ctrl+Shift+P.
 2. Enter Diagnostics, and then select GitHub Copilot: Collect Diagnostics from the list.
+
+## Unit 5: Lab
+
+## Unit 6: Quiz
+
+## Unit 7: Summary
