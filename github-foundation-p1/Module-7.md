@@ -44,3 +44,5 @@ The new GitHub Projects provides a richer experience that enables you to keep tr
 - GitHub app Project scopes
 - Webhooks events for Project item metadata updates
 - GitHub Action to automate adding issues to Projects
+
+## Unit 3: How to create a project
