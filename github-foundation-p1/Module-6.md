@@ -111,4 +111,15 @@ If you already use VS Code, you can use Settings Sync to automatically sync exte
 ### JetBrains plugins
 If you work on your Codespaces in a JetBrains IDE, you can add plugins from the JetBrains Marketplace.
 
+## Unit 4: Codespaces versus GitHub.dev editor
+You're probably asking yourself, when should I use GitHub Codespaces and when should I use GitHub.dev?
+
+You can use GitHub.dev to navigate files and sources code repositories from GitHub, and make and commit code changes. You can open any repository, fork, or pull request in GitHub.dev editor.
+
+If you want to do more heavy lifting like testing your code, use GitHub Codespaces. It has compute associated with it so you can build your code, run your code, and have terminal access. GitHub.dev doesn't have compute in it. With GitHub Codespaces, you get the power of a personal Virtual Machine (VM) with terminal access, the same way you could use your local environment, just in the cloud.
+
+### Continue working on Codespaces
+You can start your workflow in GitHub.dev and continue working on a Codespace. If you try to access the Run and Debug View or the Terminal, you see a notification that they're not available in GitHub.dev.
+
+To continue your work in a Codespace, select Continue Working on…. Select Create New Codespace to create a Codespace on your current branch. Before you choose this option, you must commit any changes.
 
