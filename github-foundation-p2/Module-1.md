@@ -169,3 +169,12 @@ For all three of the suggested paths, consider that you're now a maintainer of a
 
 If your project takes off, people's apps might depend on your bit of code. Can you involve more people to take some of the potential load off? Do you have time to add documentation, triage issues, and review suggestions from people you've likely never met before? Consider your "bandwidth," and instead set expectations in your project's README file. Or, you can release your code in a public gist or a blog post. Code doesn't need to be on GitHub to be open source, after all.
 
+## Unit 6: Quiz
+
+## Unit 7: Summary
+In this module, you wanted to take part in the open-source community by learning how to provide support and contribute to open-source projects using GitHub.
+
+You learned how to find projects to contribute to on GitHub. You discovered how to familiarize yourself with the project and its guidelines. You learned how to use the issue tracker and labels to find tasks to work on. You also learned that via GitHub Sponsors you can financially support your favorite projects and open-source contributors.
+
+After discovering where you can provide help, you learned how to use GitHub to create your first contribution and submit a pull request. You learned that it's important to write a succinct description of the changes you make to a project. Use imperative, present tense, and explain what and why and not how. These good practices will increase the likelihood of your changes getting merged. Finally, you learned how to communicate effectively with project maintainers and how to conduct code reviews.
+
