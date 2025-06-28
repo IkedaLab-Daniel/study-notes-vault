@@ -248,3 +248,6 @@ An issue creation triggers a workflow that adds a label, leaves a comment, and m
 GraphQL API
 If you're using GraphQL in GitHub, you can utilize an API to help automate your Project
 
+## Unit 7: Quiz
+
+## Unit 8: Summary
