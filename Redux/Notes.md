@@ -30,4 +30,16 @@ createStore() expect the reducer
     - to determine what should be pass on components
 - action:
     - main requirement is a "type"
-    
+
+### 4 - Redux Stores & Dispatch
+- Why shout the type values
+```js
+    { type: 'INCREMENT' }
+```
+   - because these types are CONSTANTS
+   - seperate to other variables
+   - to create a constant in the beginning and use that. So mispell show reference error
+   - other convention:
+```js
+    { type: 'counter/increment' }
+```
