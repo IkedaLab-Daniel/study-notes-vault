@@ -1,5 +1,4 @@
 import {
-  createStore,
   compose,
   applyMiddleware,
   bindActionCreators
@@ -18,4 +17,5 @@ const embolden = string => string.bold();
 // Using Redux - Compose
 const makeLouderRepeatThreeTimesAndEmbolden = compose(embolden, repeatThreeTimes, makeLouder)
 
+console.log('\n\n\n\n\n\n')
 console.log(makeLouderRepeatThreeTimesAndEmbolden('dev.iceice'))
