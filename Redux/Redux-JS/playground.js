@@ -18,7 +18,8 @@ const incrementAction = { type: INCREMENT, payload: 5 };
 const increment = () => ({ type: INCREMENT })
 const add = (amount) => ({ type: ADD, payload: amount})
 
-const reducer = (state, action) => {
+// > reducer
+const reducer = (state = initialState, action) => {
   if (action.type === 'INCREMENT'){
     return { value: state.value + 1 }
   }
@@ -32,4 +33,6 @@ const reducer = (state, action) => {
 
 const store = createStore(reducer);
 
-console.log(store)
+console.log("Before dispatch increment:\n", store.getState());
+store.dispatch(increment())
+console.log("After dispatch increment:\n", store.getState());

@@ -52,3 +52,13 @@ const increment = (amount) => ({ type: "INCREMENT", payload: amount})
 - simple but powerful
 - if you decided to change a feature, refactoring will be easier
 
+## 6 - Setting initialState
+- getState()
+    - return the current state
+- initialValue()
+    - must be pass on reducer (recommended) or the store
+```js
+const initialState  = { value: 0 };
+const reducer = (state = initialState, action) => { ...
+```
+
