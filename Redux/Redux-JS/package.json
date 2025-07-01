@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "redux": "^5.0.1"
+  },
+  "scripts": {
+    "start": "node playground.js"
   }
 }
