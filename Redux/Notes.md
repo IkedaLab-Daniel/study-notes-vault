@@ -62,3 +62,41 @@ const initialState  = { value: 0 };
 const reducer = (state = initialState, action) => { ...
 ```
 
+## 7 - Some Rules for Reducers
+*disover at your own peril*
+- No mutating objects. If you touch it, you replace it.
+- You have to return something and ideally, it should be the unchanged state if there is nothing you need to do it.
+- It's just a JavaScript function
+
+**Prefer Flat Objects**
+```js
+const angryBlogPost = {
+    title: 'A letter to the editor',
+    content: 'I am very salty about',
+    author: {
+        firstName: 'Steve',
+        lastName: 'Kinney',
+        location: {
+            city: 'Denver',
+        }
+    }
+}
+```
+Sample reducer action
+```js
+if (action.type === 'CITY_CHANGE'){
+    return{
+        ...state,
+        author: {
+            ...state.author,
+            location: {
+                city: action.payload,
+            }
+        }
+    }
+}
+```
+- Does it make sense to have multile stores?
+    - No, it's an anti-pattern
+    - Usually only one provider
+    - Generally speaking, you'll have one store and one giant set of data
