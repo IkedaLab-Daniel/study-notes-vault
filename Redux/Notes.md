@@ -31,7 +31,7 @@ createStore() expect the reducer
 - action:
     - main requirement is a "type"
 
-### 4 - Redux Stores & Dispatch
+## 4 - Redux Stores & Dispatch
 - Why shout the type values
 ```js
     { type: 'INCREMENT' }
@@ -43,3 +43,12 @@ createStore() expect the reducer
 ```js
     { type: 'counter/increment' }
 ```
+
+## 5 - Action Creators
+- Action Creator
+```js
+const increment = (amount) => ({ type: "INCREMENT", payload: amount})
+```
+- simple but powerful
+- if you decided to change a feature, refactoring will be easier
+

@@ -8,11 +8,23 @@ import {
 
 const initialState  = { value: 0 };
 
-const incrementAction = { type: 'INCREMENT', payload: 5 };
+// > actions constants
+const INCREMENT = "INCREMENT";
+const ADD = "ADD";
+
+const incrementAction = { type: INCREMENT, payload: 5 };
+
+// > action creator
+const increment = () => ({ type: INCREMENT })
+const add = (amount) => ({ type: ADD, payload: amount})
 
 const reducer = (state, action) => {
   if (action.type === 'INCREMENT'){
-    return { state: state.value + 1 }
+    return { value: state.value + 1 }
+  }
+
+  if (action.type === ADD){
+    return { value: state.value + action.payload}
   }
 
   return state;
