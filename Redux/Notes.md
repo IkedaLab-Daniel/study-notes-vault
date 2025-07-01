@@ -100,3 +100,44 @@ if (action.type === 'CITY_CHANGE'){
     - No, it's an anti-pattern
     - Usually only one provider
     - Generally speaking, you'll have one store and one giant set of data
+
+## 8 - Subscribe & Binding Action Creators
+- subscribe
+    - Like an event listener in DOM
+    - *I care about changes on this state. Here's the function to will give u to go ahead*
+
+Sample subscriber function to be called:
+```js
+const subscriber = () => console.log('SUBSCRIBER', store.getState());
+```
+
+Sample implementation
+```js
+store.subscribe(subscriber); // ? subscribe the subscriber-function
+store.dispatch(increment()); // ? using the function (recommended)
+store.dispatch( { type: INCREMENT }); // ? explicit, not recommended for future refactoring
+store.dispatch(add(100));
+```
+
+Sample output:
+```bash
+SUBSCRIBER { value: 1 }
+SUBSCRIBER { value: 2 }
+SUBSCRIBER { value: 102 }
+```
+
+- bindActionCreators
+    - functions that create actions
+    - function bound to the dispatch that we can call
+```js
+const actions = bindActionCreators({ increment, add, }, store.dispatch)
+
+console.log(actions)
+
+actions.add(1000);
+actions.increment();
+
+console.log(store.getState)
+```
+ - Where *increment, add* are defined functiuons
+ - *store.dispatch* is where it will bind

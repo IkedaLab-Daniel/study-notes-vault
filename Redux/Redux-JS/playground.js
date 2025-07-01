@@ -31,8 +31,17 @@ const reducer = (state = initialState, action) => {
   return state;
 }
 
+// > subscribe
+const subscriber = () => console.log('SUBSCRIBER', store.getState());
+
 const store = createStore(reducer);
 
-console.log("Before dispatch increment:\n", store.getState());
-store.dispatch(increment())
-console.log("After dispatch increment:\n", store.getState());
+// > bindActionCreators
+const actions = bindActionCreators({ increment, add, }, store.dispatch)
+
+console.log(actions)
+
+actions.add(1000);
+actions.increment();
+
+console.log(store.getState)
