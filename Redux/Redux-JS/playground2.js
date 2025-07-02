@@ -7,42 +7,30 @@ import {
   combineReducers
 } from 'redux';
 
-const initialState = {
-    users: [
-        { id: 1, name: 'Steve' },
-        { id: 2, name: 'Eric' },
-    ],
-    tasks: [
-        { title: 'File the TP reports'},
-        { title: 'Order more energy drinks'}
-    ]
-};
+const reducer = state => state
 
-// > constants
-const ADD_USER = "ADD_USER";
-const ADD_TASK = "ADD_TASK";
+const monitorEnhancer = (createStore) => (reducer, initialState, enhancer) => {
+    const monitorReducer = (state, action) => {
+        const start = performance.now();
+        const newState = reducer(state, action)
+        const end = performance.now();
+        const diff = end - start
+        console.log(diff)
 
-// > action creators
-const addTask = (title) => ({ type: ADD_TASK, payload: title});
-const addUser = (name) => ({ type: ADD_USER, payload: name});
-
-const userReducer = (users = initialState.users, action) => {
-    if (action.type === ADD_USER){
-        return [...users, action.payload]
+        return newState
     }
 
-    return users;
-};
-
-const taskReducer = (tasks = initialState.tasks, action) => {
-    if (action.type === ADD_TASK){
-        return [...tasks, action.payload]
-    }
-
-    return tasks
+    return createStore(monitorReducer, initialState, enhancer)
 }
 
-const reducer = combineReducers({ users: userReducer, tasks: taskReducer })
-const store = createStore(reducer);
+/**
+ * Creates a Redux store that holds the state tree.
+ *
+ * @param {Function} reducer - A function that returns the next state tree, given the current state and an action to handle.
+ * @param {any} [preloadedState={}] - The initial state. You may optionally specify it to hydrate the state from the server in universal apps, or to restore a previously serialized user session.
+ * @param {Function} [enhancer] - The store enhancer. You may optionally specify it to enhance the store with third-party capabilities such as middleware, time travel, persistence, etc.
+ * @returns {Store} A Redux store that lets you read the state, dispatch actions, and subscribe to changes.
+ */
+const store = createStore(reducer, {}, monitorEnhancer)
 
-console.log(store.getState())
+store.dispatch({ type: "dev.iceice" })
