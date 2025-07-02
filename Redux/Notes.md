@@ -518,6 +518,20 @@ const { count, increment, decrement, set } = useCounter()
 ...
 ```
 
+## Lesson: Connect API vs Hooks
+### Hooks
+- built in React Hooks
+- Simple and easy
+- ! - seperation of concern
+- ! - difficult to unit test
+
+### Connect API
+- wraps presentational components 
+- easy to unit test
+- ! - wrapping
+
+*project repo not working. Can't install dependencies due to dependency error*
+
 
 
 
