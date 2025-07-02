@@ -29,12 +29,10 @@ const logMiddleware = store => next => action => {
 
 const  monitorMiddleware= store => next => action => {
     const start = performance.now();
-    console.log('start:', start)
     next(action);
     const end = performance.now();
-    console.log('end:', end)
     const diff = end - start
-    console.log('diff:', diff)
+    console.log(diff)
 }
 
 const store = createStore(reducer, applyMiddleware(logMiddleware, monitorMiddleware));

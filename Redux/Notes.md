@@ -361,7 +361,7 @@ const store = createStore(reducer, applyMiddleware(logMiddleware));
 store.dispatch({ type: "dev.iceice" });
 ```
 
-# 14 - Middleware Exercise
+## 14 - Middleware Exercise
 Basically turn the performance monitor enchanher into middleware and add it to applymiddleware
 My solution:
 ```js
@@ -416,5 +416,21 @@ end: 36.702084
 diff: 0.2353340000000017
 new state { count: 1 } { type: 'dev.iceice' }
 ```
+
+## 15 - Middleware Solution
+- to remember middleware structure = "SNAck"
+> const  monitorMiddleware= **S** tore => **N** ext => **A** ction => { ...
+
+Solution:
+```js
+const  monitorMiddleware= store => next => action => {
+    const start = performance.now();
+    next(action);
+    const end = performance.now();
+    const diff = end - start
+    console.log(diff)
+}
+```
+
 
 
