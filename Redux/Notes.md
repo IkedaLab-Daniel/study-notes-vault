@@ -432,7 +432,23 @@ const  monitorMiddleware= store => next => action => {
 }
 ```
 
-## 16 - Connecting Redux into React
+## React - Redux notes
+- useSelector
+    - a fancy word for a function in Redux
+    - get something in the global state
+    ```js
+      const count = useSelector(state => state.count);
+    ```
+- Redux devtools extension
+    - add this as an enhancer on store:
+```js
+window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+```
+
+```js
+const enhancer = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+export const store = createStore(reducer, enhancer) 
+```
 
 
 
