@@ -27,6 +27,16 @@ const logMiddleware = store => next => action => {
     console.log('new state', store.getState(), action);
 }
 
-const store = createStore(reducer, applyMiddleware(logMiddleware));
+const  monitorMiddleware= store => next => action => {
+    const start = performance.now();
+    console.log('start:', start)
+    next(action);
+    const end = performance.now();
+    console.log('end:', end)
+    const diff = end - start
+    console.log('diff:', diff)
+}
+
+const store = createStore(reducer, applyMiddleware(logMiddleware, monitorMiddleware));
 
 store.dispatch({ type: "dev.iceice" });
