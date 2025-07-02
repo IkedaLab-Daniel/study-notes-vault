@@ -450,5 +450,7 @@ const enhancer = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_
 export const store = createStore(reducer, enhancer) 
 ```
 
-
+## Lesson: Connecting Increment and Decrement
+If have redux on a React project, should we never use useState()?
+- No. There are other types of state, like model state, that no need to be in Redux for their state management. One good example are Forms. We usually use useState() on changed of in the fields; if we were to use redux, there a lot of dispatch just for a simple state model
 
