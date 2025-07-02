@@ -250,3 +250,48 @@ const store = createStore(reducer, {}, monitorEnhancer)
 
 store.dispatch({ type: "dev.iceice" })
 ```
+
+## 11 - Enhancers Exercise
+- Make: console log the state before we call the reducer and console log it again afterwards
+- So no need to have console.log() on all the reducers - Make one enchancer to do that
+
+This is the sht i made:
+```js
+import {
+  createStore,
+  compose,
+  applyMiddleware,
+  bindActionCreators,
+  combineReducers
+} from 'redux';
+
+const reducer = state => state
+
+const logEnhancer = (createStore) => (reducer, initialState, enhancer) => {
+    const logState = (state, action) => {
+        // ? console log initial state
+        console.log("\nBefore:", state)
+        state += 1
+        const newState = state;
+        console.log("After:", newState)
+        
+        return newState;
+    }
+
+    return createStore(logState, initialState, enhancer)
+}
+
+const store = createStore(reducer, 1, logEnhancer)
+
+store.dispatch({ type: "dev.iceice" })
+```
+
+Output:
+```bash
+Before: 1
+After: 2
+
+Before: 2
+After: 3
+```
+
