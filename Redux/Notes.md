@@ -432,5 +432,7 @@ const  monitorMiddleware= store => next => action => {
 }
 ```
 
+## 16 - Connecting Redux into React
+
 
 
