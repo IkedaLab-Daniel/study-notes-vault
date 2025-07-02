@@ -7,22 +7,23 @@ import {
   combineReducers
 } from 'redux';
 
-const reducer = state => state
+const reducer = (state = { count: 1}) => state
 
 const logEnhancer = (createStore) => (reducer, initialState, enhancer) => {
-    const logState = (state, action) => {
-        // ? console log initial state
-        console.log("\nBefore:", state)
-        state += 1
-        const newState = state;
-        console.log("After:", newState)
-        
-        return newState;
+    const logReducer = (state, action) => {
+        console.log('old state', state, action);
+        const newState = reducer(state, action);
+        console.log('new state', newState, action)
+
+        return newState
     }
 
-    return createStore(logState, initialState, enhancer)
+    return createStore(logReducer, initialState, enhancer)
 }
 
-const store = createStore(reducer, 1, logEnhancer)
+const store = createStore(reducer, logEnhancer);
 
-store.dispatch({ type: "dev.iceice" })
+// ? if you have two or more enchancers
+// const store = createStore(reducer, compose(logEnhancer, anotherEnchanger, moreEnhancer));
+
+store.dispatch({ type: "dev.iceice" });
