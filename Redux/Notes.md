@@ -454,3 +454,72 @@ export const store = createStore(reducer, enhancer)
 If have redux on a React project, should we never use useState()?
 - No. There are other types of state, like model state, that no need to be in Redux for their state management. One good example are Forms. We usually use useState() on changed of in the fields; if we were to use redux, there a lot of dispatch just for a simple state model
 
+## Lesson: Binding Actions
+There many ways be can bind actions to useReducers in a component
+
+1. Standard:
+```jsx
+...
+const dispatch = useDispatch();
+...
+<button onClick={() => dispatch(increment())}>Increment</button>
+....
+```
+
+2. Using bindActionCreators() (from 'redux' toolkit):
+```js
+...
+const actions = bindActionCreators({ increment, decrement, set}, dispatch)
+...
+<button onClick={() => actions.increment()}>Increment</button>
+...
+```
+
+3. custom hook (use-action):
+- use-action.jsx:
+```js
+import { useDispatch } from "react-redux"
+import { bindActionCreators} from 'redux'
+
+export const useActions = (actions) => {
+    const dispatch = useDispatch();
+    return bindActionCreators(actions, dispatch)
+}
+```
+
+- components:
+```js
+const actions = useActions({increment, decrement, set});
+...
+<button onClick={() => actions.increment()}>Increment</button>
+```
+
+4. *take logic and make useCounter*
+- use-counter.jsx:
+```js
+import { useSelector } from "react-redux"
+import { useActions } from "./use-actions";
+import { increment, decrement, set } from "./action";
+
+export const useCounter = () => {
+    const count = useSelector(state => state.count);
+    const actions = useActions({increment, decrement, set})
+
+    return { count, ...actions}
+}
+```
+
+- use-actions.jsx: just like above
+- components:
+```js
+const { count, increment, decrement, set } = useCounter()
+...
+<button onClick={() => increment()}>Increment</button>
+...
+```
+
+
+
+
+
+

@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
-import { set, increment, decrement } from "./action";
 import { SetCounter } from "./SetCounter";
+import { useCounter } from "./use-counter";
+
 export const Counter = () => {
     const incident = 'Incident';
-    const count = useSelector(state => state.count);
-    const dispatch = useDispatch();
+    const { count, increment, decrement, set } = useCounter()
 
 
     return (
@@ -12,9 +11,9 @@ export const Counter = () => {
             <h1>Counter</h1>
             <p className="count">{count}</p>
                 <section className="controls">
-                    <button onClick={() => dispatch(increment())}>Increment</button>
-                    <button onClick={() => dispatch(set(0))}>Reset</button>
-                    <button onClick={() => dispatch(decrement())}>Decrement</button>
+                    <button onClick={() => increment()}>Increment</button>
+                    <button onClick={() => set(0)}>Reset</button>
+                    <button onClick={() => decrement()}>Decrement</button>
                 </section>
                 <SetCounter 
                     onSubmit = {value => dispatch(set(value))}
