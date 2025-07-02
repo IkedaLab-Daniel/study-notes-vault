@@ -21,9 +21,12 @@ const logEnhancer = (createStore) => (reducer, initialState, enhancer) => {
     return createStore(logReducer, initialState, enhancer)
 }
 
-const store = createStore(reducer, logEnhancer);
+const logMiddleware = store => next => action => {
+    console.log('old state', store.getState(), action);
+    next(action);
+    console.log('new state', store.getState(), action);
+}
 
-// ? if you have two or more enchancers
-// const store = createStore(reducer, compose(logEnhancer, anotherEnchanger, moreEnhancer));
+const store = createStore(reducer, applyMiddleware(logMiddleware));
 
 store.dispatch({ type: "dev.iceice" });

@@ -328,3 +328,36 @@ const store = createStore(reducer, logEnhancer);
 
 store.dispatch({ type: "dev.iceice" });
 ```
+
+## 13 - Middleware
+- applyMiddleware()
+    - middlewares are much more common
+    - gives you opportunity to do a bunch of things before you hit the reducer
+    - syntax is little bit cleaner
+
+```js
+const reducer = (state = { count: 1}) => state
+
+const logEnhancer = (createStore) => (reducer, initialState, enhancer) => {
+    const logReducer = (state, action) => {
+        console.log('old state', state, action);
+        const newState = reducer(state, action);
+        console.log('new state', newState, action)
+
+        return newState
+    }
+
+    return createStore(logReducer, initialState, enhancer)
+}
+
+const logMiddleware = store => next => action => {
+    console.log('old state', store.getState(), action);
+    next(action);
+    console.log('new state', store.getState(), action);
+}
+
+const store = createStore(reducer, applyMiddleware(logMiddleware));
+
+store.dispatch({ type: "dev.iceice" });
+```
+
