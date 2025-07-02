@@ -17,7 +17,6 @@ export const Counter = () => {
                 </section>
                 <SetCounter 
                     onSubmit = {value => dispatch(set(value))}
-
                 />
         </main>
     );

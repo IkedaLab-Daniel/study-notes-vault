@@ -531,7 +531,19 @@ const { count, increment, decrement, set } = useCounter()
 - ! - wrapping
 
 *project repo not working. Can't install dependencies due to dependency error*
+https://github.com/stevekinney/tip-calculator
 
+## Lesson: mapStateToProps & Connect API
+```js
+const mapDispatchToProps = {
+    updateTip // action
+};
+
+export const TipSelectContainer = connect(
+    mapStateTOProps,
+    mapDispatchToProps
+)(TipSelect);
+```
 
 
 
