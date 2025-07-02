@@ -140,4 +140,59 @@ actions.increment();
 console.log(store.getState)
 ```
  - Where *increment, add* are defined functiuons
- - *store.dispatch* is where it will bind
+ - *store.dispatch* is where it will bin
+ 
+ ## 9 - Combine Reducers
+ - combineReducers()
+ - When project gets bigger
+ - Split stuffs into 2 or more reducers
+
+Standard:
+```js
+const addTask = (title) => ({ type: ADD_TASK, payload: title});
+const addUser = (name) => ({ type: ADD_USER, payload: name});
+
+const reducer = (state = initialState, action) => {
+    if (action.type === ADD_USER){
+        return {
+            ...state,
+            users: [...state.users, action.payload]
+        };
+    }
+
+    if (action.type === ADD_TASK){
+        return{
+            ...state,
+            tasks: [...state.tasks, action.payload]
+        };
+    }
+};
+```
+
+Refactored:
+```js
+const addTask = (title) => ({ type: ADD_TASK, payload: title});
+const addUser = (name) => ({ type: ADD_USER, payload: name});
+
+const userReducer = (users = initialState.users, action) => {
+    if (action.type === ADD_USER){
+        return [...users, action.payload]
+    }
+
+    return users;
+};
+
+const taskReducer = (tasks = initialState.tasks, action) => {
+    if (action.type === ADD_TASK){
+        return [...tasks, action.payload]
+    }
+
+    return tasks
+}
+
+const reducer = combineReducers({ users: userReducer, tasks: taskReducer })
+const store = createStore(reducer);
+```
+
+- every action flows through every single reducer
+
