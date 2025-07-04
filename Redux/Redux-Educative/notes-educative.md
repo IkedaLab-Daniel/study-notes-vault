@@ -201,3 +201,10 @@ orders.milk.price -= 15;
 console.log("Price of Milk", orders.milk.price);
 ```
 To work around the nature of our beloved language, we have to use third-party libraries like deep-freeze, seamless-immutable, or Immutable.js.
+
+## 1.5 - Redux and React/Angular
+Redux began as a companion to React, but it has started to gather a major following with other frameworks, like Angular. Redux is fully framework-agnostic at its base, and it can easily be used with any JavaScript framework to handle state and changes.
+
+Note: Redux—or its concepts—is also used on the server-side, with implementations in Java, Python, and more. There are even implementations for other platforms, such as ReSwift for iOS.
+
+Third-party libraries provide a set of convenience functions for each framework to connect Redux seamlessly with different frameworks.
