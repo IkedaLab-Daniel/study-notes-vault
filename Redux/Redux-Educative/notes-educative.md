@@ -121,3 +121,83 @@ Middleware are the most powerful and versatile entities in Redux because they ha
 Unlike many other Flux implementations, Redux has a single store that holds the application information but no user logic. The role of the store is to receive actions, pass them through all the registered middleware, and then use reducers to calculate a new state and save it.
 
 When a shift in the state is made, the store will receive an action and in turn notify all registered listeners of the change. This allows various parts of the system, like the UI, to update themselves according to the new state.
+
+## 1.4 - General Concepts
+Redux is all about functional programming and pure functions. Understanding these concepts is crucial to understanding the underlying principles of Redux.
+
+Functional programming centers around avoiding changing state and mutable data—in other words, making your code predictable and free of side effects.
+
+JavaScript allows you to write code in a functional style, as it treats functions as first-class objects. However, JavaScript was not designed to be a functional programming language, so there are some caveats that you will need to keep in mind.
+
+### Pure and impure functions#
+A pure function returns values by using only its arguments: it uses no additional data, changes no data structures, touches no storage, and emits no external events (like network calls). This means that you can be completely sure that you will always get the same result every time you call the function with the same arguments. Here is an example of pure functions:
+```js
+function square(x) {
+  return x * x;
+}
+y = square(4)
+console.log("The square of 4 is", y)
+```
+If a function uses any variables not passed in as arguments or creates side effects, the function is impure. When a function depends on variables or functions outside of its lexical scope, you can never be sure that the function will behave the same every time it’s called. For example, the following is an impure function:
+```js
+function rand() {
+  return Math.random();
+}
+y = rand()
+console.log("Random number is", y)
+```
+### Mutating Objects
+Another important concept that often causes headaches for developers starting to work with Redux is immutability. JavaScript has limited tooling for managing immutable objects, and we are often required to use external libraries.
+
+Immutability means that something can’t be changed, guaranteeing developers that it will have the same properties and values forever if you create an object. For example, let’s declare a simple object as a constant:
+```js
+const colors = {
+  red: '#FF0000',
+  green: '#00FF00',
+  blue: '#0000FF'
+};
+
+console.log("Previous Value ", colors);
+
+colors.red = '#FFFFFF';
+console.log("New Value ", colors);
+```
+Even though the colors object is a constant, we can still change its content, as const will only check if the reference to the object has changed. To make the colors object appear immutable, we can use the Object.freeze() method:
+
+The value of the red property will now be '#FFFFFF' since we have already updated the value.
+```js
+const colors = {
+  red: '#FF0000',
+  green: '#00FF00',
+  blue: '#0000FF'
+};
+
+console.log("Previous Value ", colors);
+
+colors.red = '#FFFFFF';
+console.log("New Value ", colors);
+
+Object.freeze(colors);
+
+colors.red = '#000000';
+
+console.log("Value after freezing ", colors);
+```
+Here, once we used Object.freeze(), the colors object became immutable. In practice, things are often more complicated, though. JavaScript does not provide good native ways to make data structures fully immutable. For example, Object.freeze() won’t freeze nested objects:
+```js
+const orders = {
+  bread: {
+    price: 10
+  },
+  milk: {
+    price: 20
+  }
+};
+
+Object.freeze(orders);
+
+orders.milk.price -= 15;
+
+console.log("Price of Milk", orders.milk.price);
+```
+To work around the nature of our beloved language, we have to use third-party libraries like deep-freeze, seamless-immutable, or Immutable.js.
