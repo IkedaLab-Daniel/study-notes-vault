@@ -208,3 +208,19 @@ Redux began as a companion to React, but it has started to gather a major follow
 Note: Redux—or its concepts—is also used on the server-side, with implementations in Java, Python, and more. There are even implementations for other platforms, such as ReSwift for iOS.
 
 Third-party libraries provide a set of convenience functions for each framework to connect Redux seamlessly with different frameworks.
+
+# 2 - Basic Redux Implementation
+## 2.1 - Basic Structure
+People love Redux because of its simplicity. Thus, unlike other frameworks, where the only way to learn is to study the API, we can start by implementing Redux ourselves.
+
+The basic premise behind Redux is the idea that the store saves all the application states in one place. To use this idea in applications, we will need to find a way to:
+1. Modify the state as a result of events (user-generated or from the server).
+2. Monitor state changes so we can update the UI.
+
+The first part can be split into two blocks of functionality:
+- Notify the store that an action has happened.
+- Help the store figure out how to modify the state according to our application’s logic.
+
+Using this structure, let’s build a simple application that will implement a counter. Our application will use pure JavaScript and HTML and require no additional libraries in any modern browser.
+
+We will have two buttons that will allow us to increment and decrement a simple counter and a place where we can see the current counter value.
