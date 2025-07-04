@@ -349,3 +349,25 @@ npm start
 If everything went smoothly, you should be able to access http://localhost:8080 and see a page showing A simple Redux starter and a running counter.
 
 If you open the JavaScript console in the developer tools, you should also see Redux started in the console. The project is ready!
+
+## 3.2 - Skeleton Overview
+Let’s take a quick look at all the files included within the starter project. The main file we will be working with is app.js (index.js on our platform), but it is important to get familiar with the directory structure before working on any project. The project files are:
+
+### package.json
+While most fields in this file are irrelevant, it is important to note two sections, devDependencies and dependencies.
+
+The devDependencies contains a list of all the tools needed to build the project. It currently includes only Webpack-related packages, which enable us to run our app.
+
+The dependencies section lists all the packages we will bundle with our application. It includes only the redux library itself and jquery to make the DOM manipulation code look nicer.
+
+### webpack.config.js
+This is the main Webpack configuration file. This settings file instructs Webpack how to chain transpilation tools and how to build packages and usually holds most of the configuration of the project’s tooling.
+
+In our simple project, there is only one settings file. Our webpack.config.js file defines index.js as the main file, which acts as an entry point to our application and the output destination for the bundled project.
+
+### index.html, index.js
+Single-page applications, unlike their server-rendered cousins, have a single entry point.
+
+Every part and page of the application will be rendered in our project starting from index.html, and all the JavaScript-related startup code will be in index.js.
+
+## 3.3 - Setup
