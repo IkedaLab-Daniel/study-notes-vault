@@ -1,7 +1,7 @@
 # Ultimate Guide to Redux - Educative
 
-## Introduction to Redux
-### What is Flux?
+# 1 - Introduction to Redux
+## 1.1. - What is Flux?
 Redux is an excellent Flux implementation. In less than half a year, the library became the go-to framework for React developers.
 
 The official definition of Redux is “a predictable state container for JavaScript applications”. This means that all of your application states will be stored in one place so that you may query the state at any given point in time.
@@ -27,3 +27,97 @@ Here is the simplest Flux flow:
 4. Stores update their state based on the action.
 5. The view updates according to the new state in the stores.
 6. The next action can then be processed.
+
+This flow ensures that it’s easy to reason about how actions flow in the system, what will cause the state to change, and how it will change.
+
+### Flux as a library
+Facebook’s developers did not initially open-source their implementation of Flux but instead released only parts of it, like the dispatcher. The JavaScript community immediately began to utilize the concept of the Flux Flow. This caused many different open-source implementations to be built and released in quick succession.
+
+Some of the new Flux libraries followed the basic Flux pattern very closely, while others differed significantly from the original patterns.
+
+## 1.2 - Redux and Flux
+While Redux derives from Flux concepts, there are a few distinctions between the two architectures.
+
+In contrast to Flux, Redux only has a single store that holds no logic by itself. The store dispatches and handles Actions directly, eliminating the need for a standalone dispatcher. In turn, the store passes the actions to state-changing functions called reducers.
+
+### Application data
+While many other frameworks divide the data between different services and areas, in Redux, we keep all our data in a central repository accessible by all parts of the UI.
+
+### Changing the data
+Since all of our data is sitting in a single JavaScript object, there has to be a way to modify it in a clear and consistent fashion. But allowing various places in our code to access and modify our central repository directly will make it very hard to track changes and update the UI correctly.
+
+In Redux, sending an action initiates all changes to the store. This action is a plain JavaScript object containing all the information describing the required change. The action is dispatched to our store, which calculates the new state according to the action.
+
+Since the store is a generic implementation, in Redux, we use reducers to calculate what our current state will look like when an action is applied.
+
+### Updating the UI
+Each UI framework using Redux (React, Angular, etc.) is responsible for subscribing to the store to listen to its “store updated” events and updating the UI accordingly.
+
+The core concept of Redux is that our UI always reflects the state of the application in the store. Sending an action will cause our store to use our reducers to calculate a new state and notify the UI layer to update the UI accordingly.
+
+### Advanced flows
+Other parts of Redux make the application easier to build and manage, like the middleware. Every action gets passed through a pipeline of middleware. Unlike reducers, middleware can modify, stop, or add more actions.
+
+Examples might include logging middleware, an authorization middleware that checks if the user has the necessary permissions to run the action.
+
+## 1.3 - Redux Terminology
+
+### Actions and action creators
+The only way for an application to change its state is by processing actions.
+
+In most cases, actions in Redux are nothing more than plain JavaScript objects passed to the store that holds all the information needed for the store to be able to modify the state:
+```js
+{
+  type: 'INCREMENT',
+  payload: {
+    counterId: 'main',
+    amount: -10
+  }
+}
+```
+These objects are commonly wrapped in a function that can generate the objects based on a parameter because they often contain logic that can be used in multiple places in an application:
+```js
+function incrementAction(counterId, amount) {
+  return {
+    type: 'INCREMENT',
+    payload: {
+      counterId,
+      amount
+    }
+  };
+};
+```
+### Reducer
+When a store receives an action, the store must figure out how to change the state accordingly. To do so, it calls a function, passing it the current state and the received action:
+```js
+function calculateNextState(currentState, action) {
+  ...
+  return nextState;
+}
+```
+This function is called a reducer. In real Redux applications, there will be one root reducer function that will call additional reducer functions to calculate the nested state:
+```js
+function rootReducer(state, action) {
+  switch (action.type) {
+
+    case 'INCREMENT':
+      return Object.assign({}, state, {
+        counter: state.counter + action.payload.amount
+      });
+
+    default:
+      return state;
+  }
+}
+```
+This sample reducer copies the original state into a new JavaScript object and overwrites the counter key with an updated value. The reducer does not change the original state parameter passed to it, keeping it immutable.
+
+Note: Reducers never modify the original state; they always create a new copy with the needed modifications.
+
+### Middleware
+Middleware are the most powerful and versatile entities in Redux because they have has access to the actions, the dispatch() function, and the store. Middleware acts like interceptors for actions. Before reaching the store, middleware can modify, create, and suppress actions.
+
+### Store
+Unlike many other Flux implementations, Redux has a single store that holds the application information but no user logic. The role of the store is to receive actions, pass them through all the registered middleware, and then use reducers to calculate a new state and save it.
+
+When a shift in the state is made, the store will receive an action and in turn notify all registered listeners of the change. This allows various parts of the system, like the UI, to update themselves according to the new state.
