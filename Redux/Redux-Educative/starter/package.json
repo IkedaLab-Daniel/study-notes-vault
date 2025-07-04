@@ -1,0 +1,19 @@
+{
+  "name": "redux-book-started",
+  "version": "1.0.0",
+  "description": "Sample Redux Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot --progress"
+  },
+  "author": "Boris Dinkevich & Ilya Gelman",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "3.2.1",
+    "redux": "3.7.2"
+  },
+  "devDependencies": {
+    "webpack": "3.10.0",
+    "webpack-dev-server": "2.9.7"
+  }
+}

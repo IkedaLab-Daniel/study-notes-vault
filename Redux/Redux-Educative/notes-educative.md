@@ -327,3 +327,25 @@ store.subscribe(updateView);
 The last change is in the dispatch() method. As mentioned previously, our actions now need to have the type property. Thus, instead of sending the string 'INC' as the action, we now need to send { type: 'INC' }.
 
 Here is what the complete code will look like:
+
+# 3 - Cloning a Redux Boilerplate
+## 3.1 - Redux Boilerplate
+Modern client-side applications often require the use of some boilerplate to make development easier. The boilerplate may include directory structure, code transformation tools, testing infrastructure, and production pipeline tools.
+
+All the popular frameworks have optional command-line tools to help developers quickly bootstrap their projects with all the required settings. These include Create React App, Vue CLI, or the heavier Angular CLI that offers many more features than just project initiation. All of these settings ease the chore of setting up a new project.
+
+### Setting up on the local environment
+For our purposes, we will use a bare-bones boilerplate.
+
+To start things off, we’ll clone the starter project, install the needed packages, and verify that our environment is ready:
+
+Run the following commands:
+```bash
+git clone git@github.com:redux-book/starter.git
+cd starter
+npm install
+npm start
+```
+If everything went smoothly, you should be able to access http://localhost:8080 and see a page showing A simple Redux starter and a running counter.
+
+If you open the JavaScript console in the developer tools, you should also see Redux started in the console. The project is ready!
