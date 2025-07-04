@@ -371,3 +371,11 @@ Single-page applications, unlike their server-rendered cousins, have a single en
 Every part and page of the application will be rendered in our project starting from index.html, and all the JavaScript-related startup code will be in index.js.
 
 ## 3.3 - Setup
+
+# 4 - Complete Redux Project
+## 4.1 - Introduction
+To illustrate how to use different parts of Redux, we will be building a recipe book application.
+
+It will add recipes and ingredients for each recipe and fetch an initial recipe list from a remote server.
+
+The first step with any Redux-based app is to plan how data will be arranged in the store. Our recipe object will start out holding only the recipe’s name. To store the current list, we can use a regular array:
