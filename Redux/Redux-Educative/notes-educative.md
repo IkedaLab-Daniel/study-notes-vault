@@ -224,3 +224,106 @@ The first part can be split into two blocks of functionality:
 Using this structure, let’s build a simple application that will implement a counter. Our application will use pure JavaScript and HTML and require no additional libraries in any modern browser.
 
 We will have two buttons that will allow us to increment and decrement a simple counter and a place where we can see the current counter value.
+
+## 2.2 - Creating Functions
+To make our demo functional, let’s create a click handler for each button that will use the dispatch() function to notify our store that an action needs to be performed:
+
+We will come back to its implementation later. Also, let’s define a function that will update the counter's value in the HTML based on the application state received as an argument:
+
+Since we want our view to represent the current application state, we need consistent and reliable updates every time the state (and the counter) changes.
+
+We will use the subscribe() function, which we will also implement a bit later. The role of the function will be to call our callback every time anything in the state changes:
+
+## 2.3 - Implementing Reducer
+We have now:
+
+- created a basic application structure with a simple state
+- implemented a function that will be responsible for updating the HTML based on the state
+- defined two functions—dispatch() and subscribe().
+
+But there is still one thing missing. How will our mini-Redux know how to handle the events and change the application state?
+
+For this, we define an additional function. Redux will call our function on each action dispatched, passing it the current state and the action.
+
+To be compliant with Redux’s terminology, we will call the function a reducer. The reducer’s job will be to understand the action and, based on it, create a new state.
+
+An important thing to remember is that reducers must always return a new, modified copy of the state. They shouldn’t mutate the existing state, like in this example:
+```js
+// This is wrong!
+state.counter = state.counter + 1;
+```
+
+## 2.4 - Implementing Dispatch
+Now it’s time to implement the actual change of the state. Since we are building a generic framework, we will not include the code to increment/decrement the counter but rather will call a function that we expect the user to supply, a function called reducer().
+
+The dispatch() function calls the reducer() implemented by the application creator, passing it both the current state and the action that it received.
+
+We then check if the new state differs from the old one, and if it does, we replace the old state and notify all the listeners of the change:
+```js
+// dispatch() implementation
+let state = null;
+
+function dispatch(action) {
+  const newState = reducer(state, action);
+
+  if (newState !== state) {
+    state = newState;
+
+    listeners.forEach(listener => listener());
+  }
+}
+```
+One remaining task is to notify our view of the state change. We only have a single listener in our example, but we already can implement full listener support by allowing multiple callbacks to register for the state change event. We will implement this by keeping a list of all the registered callbacks:
+```js
+//subscribe() implementation 
+
+const listeners = [];
+
+function subscribe(callback) {
+  listeners.push(callback);
+}
+```
+This might surprise you, but we have just implemented a major part of the Redux framework. The real code isn’t much longer.
+
+## 2.5 - Final Implementation
+To complete our example, let’s switch to the real Redux library and see how similar the solution remains.
+
+First, add the Redux library, for now using unpkg:
+```js
+<script src="https://unpkg.com/redux/dist/redux.js" />
+```
+We then change our previous state definition to be a constant that only defines the initial value of the state:
+
+```js
+const initialState = {
+  counter: 3
+};
+```
+Now we can use it to create a Redux store:
+```js
+const store = Redux.createStore(reducer, initialState);
+```
+As you can see, we are using our reducer from before. The switch statement is the only change that needs to be made to the reducer. Instead of using just the action: switch (action), we include the mandatory type property, which indicates the type of action being performed:
+```js
+switch (action.type)
+```
+The Redux store will also give us all the features we implemented ourselves before, like subscribe() and dispatch(). Thus, we can safely delete these methods.
+
+To subscribe to store changes, we simply call the subscribe() method of the store:
+```js
+store.subscribe(updateView);
+```
+subscribe() does not pass the state to the callback, so we need to access it via store.getState():
+```js
+//Updating view by reading the state from the store
+
+// Function to update view (this might be React or Angular in a real app)
+function updateView() {
+  document.querySelector('#counter').innerText = store.getState().counter;
+}
+
+store.subscribe(updateView);
+```
+The last change is in the dispatch() method. As mentioned previously, our actions now need to have the type property. Thus, instead of sending the string 'INC' as the action, we now need to send { type: 'INC' }.
+
+Here is what the complete code will look like:
