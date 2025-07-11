@@ -214,17 +214,19 @@ For this lab, you will use the Docker Hub as your central registry. Docker Hub i
 Most organizations that use Docker extensively will set up their own registry internally. To simplify things, you will use  Docker Hub, but the following concepts apply to any registry.
 
 Log in to the Docker registry account by entering docker login on your terminal:
-
+```bash
 $ docker login
 Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
 Username: 
+```
 Tag the image with your username.
 
 The Docker Hub naming convention is to tag your image with [dockerhub username]/[image name]. To do this, tag your previously created image python-hello-world to fit that format.
-
+```bash
 $ docker tag python-hello-world [dockerhub username]/python-hello-world
+```
 After you properly tag the image, use the docker push command to push your image to the Docker Hub registry:
-
+```bash
 $ docker push jzaccone/python-hello-world
 The push refers to a repository [docker.io/jzaccone/python-hello-world]
 2bce026769ac: Pushed 
@@ -236,9 +238,62 @@ ed06208397d5: Mounted from library/python
 5accac14015f: Mounted from library/python 
 latest: digest: sha256:508238f264616bf7bf962019d1a3826f8487ed6a48b80bf41fd3996c7175fd0f size: 1786
 Check your image on Docker Hub in your browser.
-
+```
 Navigate to Docker Hub and go to your profile to see your uploaded image.
 
 Now that your image is on Docker Hub, other developers and operators can use the docker pull command to deploy your image to other environments.
 
 Remember: Docker images contain all the dependencies that they need to run an application within the image. This is useful because you no longer need to worry about environment drift (version differences) when you rely on dependencies that are installed on every environment you deploy to. You also don't need to follow more steps to provision these environments. Just one step: install docker, and that's it.
+
+## Deploy a change
+Update app.py by replacing the string "Hello World" with "Hello Beautiful World!" in app.py.
+
+Your file should have the following contents:
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello Beautiful World!"
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
+```
+Now that your application is updated, you need to rebuild your app and push it to the Docker Hub registry.
+
+Rebuild the app by using your Docker Hub username in the build command:
+```bash
+$  docker image build -t jzaccone/python-hello-world .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM python:3.6.1-alpine
+ ---> c86415c03c37
+Step 2/4 : RUN pip install flask
+ ---> Using cache
+ ---> ce41f2517c16
+Step 3/4 : CMD python app.py
+ ---> Using cache
+ ---> 0ab91286958b
+Step 4/4 : COPY app.py /app.py
+ ---> 3e08b2eeace1
+Removing intermediate container 23a955e881fc
+Successfully built 3e08b2eeace1
+Successfully tagged jzaccone/python-hello-world:latest
+```
+Notice the "Using cache" for Steps 1 - 3. These layers of the Docker image have already been built, and the docker image build command will use these layers from the cache instead of rebuilding them.
+```bash
+$ docker push jzaccone/python-hello-world
+The push refers to a repository [docker.io/jzaccone/python-hello-world]
+94525867566e: Pushed 
+64d445ecbe93: Layer already exists 
+18b27eac38a1: Layer already exists 
+3f6f25cd8b1e: Layer already exists 
+b7af9d602a0f: Layer already exists 
+ed06208397d5: Layer already exists 
+5accac14015f: Layer already exists 
+latest: digest: sha256:91874e88c14f217b4cab1dd5510da307bf7d9364bd39860c9cc8688573ab1a3a size: 1786
+There is a caching mechanism in place for pushing layers too. Docker Hub already has all but one of the layers from an earlier push, so it only pushes the one layer that has changed.
+```
+When you change a layer, every layer built on top of that will have to be rebuilt. Each line in a Dockerfile builds a new layer that is built on the layer created from the lines before it. This is why the order of the lines in your Dockerfile is important. You optimized your Dockerfile so that the layer that is most likely to change (COPY app.py /app.py) is the last line of the Dockerfile. Generally for an application, your code changes at the most frequent rate. This optimization is particularly important for CI/CD processes where you want your automation to run as fast as possible.
