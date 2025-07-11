@@ -174,3 +174,26 @@ Remember: You didn't have to install anything on your host (other than Docker) t
 Running multiple containers on the same host gives us the ability to use the resources (CPU, memory, and so on) available on single host. This can result in huge cost savings for an enterprise.
 
 Although running images directly from the Docker Store can be useful at times, it is more useful to create custom images and refer to official images as the starting point for these images. You'll learn to build your own custom images in the next lab.
+
+## Remove the containers
+Get a list of the running containers:
+```bash
+$ docker container ls
+```
+
+Stop the containers by running this command for each container in the list:
+```bash
+$ docker container stop [container id]
+```
+You can also use the names of the containers that you specified before:
+```bash
+$ docker container stop d67 ead af5
+d67
+ead
+af5
+```
+Tip: You need to enter only enough digits of the ID to be unique. Three digits is typically adequate.
+Remove the stopped containers. The following command removes any stopped containers, unused volumes and networks, and dangling images:
+```bash
+$ docker system prune
+```
