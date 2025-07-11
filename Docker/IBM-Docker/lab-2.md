@@ -21,3 +21,30 @@ Key Insights
 💾 Storage Efficiency: Because image layers are shared and read-only, running thousands of containers from the same image consumes minimal additional disk space—only a small writable layer per container—maximizing host resource utilization.
 🚀 Practical Lab Application: The hands-on lab reinforces theoretical concepts by guiding users through creating a Dockerfile, building and running images, pushing to Docker Hub, and observing caching effects during updates, providing practical understanding of Docker image layering and optimization.
 
+Notes:
+
+Docker Image
+- TAR file containing a container's filesystem + metadata
+- For sharing and redistribution
+
+Docker Registry
+- push and pull image from registry
+- default registry: Docker Hub
+    - Public and free for public image
+    - many pre-packaged images available
+- Private registry
+    - self-host or cloud provider options
+
+Create a Docker image - with docker build
+- Create a "Dockerfile"
+    - list of instructions for how to construct the container
+```bash
+docker build -f Dockerfile
+```
+```bash
+$ cat Dockerfile
+FROM ubuntu
+ADD myapp /
+EXPOSE 80
+ENTRYPOINT /myapp
+```
