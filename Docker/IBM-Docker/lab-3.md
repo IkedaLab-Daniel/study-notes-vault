@@ -36,7 +36,7 @@ To complete a lab about orchestrating an application that is deployed across mul
 
 Be sure you have a Docker Hub account.
 
-## Create your first swarm
+## 1 - Create your first swarm
 In this section, you will create your first swarm by using Play-with-Docker.
 
 1. Navigate to Play-with-Docker. You're going to create a swarm with three nodes.
@@ -76,3 +76,47 @@ Your node consists of one manager node and two workers nodes. Managers handle co
 All docker service commands for the rest of this lab need to be executed on the manager node (Node1).
 
 Note: Although you control the swarm directly from the node in which its running, you can control a Docker swarm remotely by connecting to the Docker Engine of the manager by using the remote API or by activating a remote host from your local Docker installation (using the $DOCKER_HOST and $DOCKER_CERT_PATH environment variables). This will become useful when you want to remotely control production applications, instead of using SSH to directly control production servers.
+
+## 2 - Deploy your first service
+Now that you have your three-node Swarm cluster initialized, you'll deploy some containers. To run containers on a Docker Swarm, you need to create a service. A service is an abstraction that represents multiple containers of the same image deployed across a distributed cluster.
+
+Let's do a simple example using NGINX. For now, you will create a service with one running container, but you will scale up later.
+
+1. On Node1 (manager node), deploy a service by using NGINX:
+```bash
+$ docker service create --detach=true --name nginx1 --publish 80:80  --mount source=/etc/hostname,target=/usr/share/nginx/html/index.html,type=bind,ro nginx:1.12 pgqdxr41dpy8qwkn6qm7vke0q
+```
+This command statement is declarative, and Docker Swarm will try to maintain the state declared in this command unless explicitly changed by another docker service command. This behavior is useful when nodes go down, for example, and containers are automatically rescheduled on other nodes. You will see a demonstration of that a little later in this lab.
+
+The --mount flag is useful to have NGINX print out the hostname of the node it's running on. You will use this later in this lab when you start load balancing between multiple containers of NGINX that are distributed across different nodes in the cluster and you want to see which node in the swarm is serving the request.
+
+You are using NGINX tag 1.12 in this command. You will see a rolling update with version 1.13 later in this lab.
+
+The --publish command uses the swarm's built-in routing mesh. In this case, port 80 is exposed on every node in the swarm. The routing mesh will route a request coming in on port 80 to one of the nodes running the container.
+
+2. Inspect the service.  Use the command docker service ls to inspect the service you just created:
+```bash
+$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+pgqdxr41dpy8        nginx1              replicated          1/1                 nginx:1.12          *:80->80/tcp
+```
+3. Check the running container of the service.
+
+To take a deeper look at the running tasks, use the command docker service ps. A task is another abstraction in Docker Swarm that represents the running instances of a service. In this case, there is a 1-1 mapping between a task and a container.
+```bash
+$ docker service ps nginx1
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
+iu3ksewv7qf9        nginx1.1            nginx:1.12          node1               Running             Running 8 minutes ago
+```
+If you know which node your container is running on (you can see which node based on the output from docker service ps), you can use the command docker container ls to see the container running on that specific node.
+
+4. Test the service.
+
+Because of the routing mesh, you can send a request to any node of the swarm on port 80. This request will be automatically routed to the one node that is running the NGINX container.
+
+Try this command on each node:
+```bash
+$ curl localhost:80
+node1
+```
+Curling will output the hostname where the container is running. For this example, it is running on node1, but yours might be different.
