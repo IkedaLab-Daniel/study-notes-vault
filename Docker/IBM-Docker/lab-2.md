@@ -59,3 +59,8 @@ Docker image layer
 - Advantages
     - more container per host
     - faster start-up/download time - base layers are cached
+
+## Lab overview
+In this lab, build on your knowledge from Lab 1 where you used Docker commands to run containers. Create a custom Docker image built from a Dockerfile. After you build the image, you will push it to a central registry where it can be pulled to be deployed on other environments.
+
+Also, you'll get a brief understanding of image layers and how Docker incorporates copy-on-write and the union file system to efficiently store images and run containers. You will use a few Docker commands in this lab. See the documentation on for information on available commands.
