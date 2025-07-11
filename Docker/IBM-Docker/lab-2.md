@@ -48,3 +48,14 @@ ADD myapp /
 EXPOSE 80
 ENTRYPOINT /myapp
 ```
+
+Secret sauce: Docker image layer
+
+Docker image layer
+- Union file system
+    - merge image layer into single file system for each container
+- copy-on-write
+    - copies file that are edited up to top writable layer 
+- Advantages
+    - more container per host
+    - faster start-up/download time - base layers are cached
