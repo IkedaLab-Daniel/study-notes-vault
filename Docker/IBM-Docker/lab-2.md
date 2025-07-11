@@ -205,3 +205,40 @@ $ docker container logs [container id]
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 172.17.0.1 - - [28/Jun/2017 19:35:33] "GET / HTTP/1.1" 200 -
 The Dockerfile is used to create reproducible builds for your application. A common workflow is to have your CI/CD automation run docker image build as part of its build process. After images are built, they will be sent to a central registry where they can be accessed by all environments (such as a test environment) that need to run instances of that application. In the next section, you will push your custom image to the public Docker registry, which is the Docker Hub, where it can be consumed by other developers and operators.
+
+## Push to a central registry
+Navigate to Docker Hub and create a free account if you haven't already.
+
+For this lab, you will use the Docker Hub as your central registry. Docker Hub is a free service to publicly store available images. You can also pay to store private images.
+
+Most organizations that use Docker extensively will set up their own registry internally. To simplify things, you will use  Docker Hub, but the following concepts apply to any registry.
+
+Log in to the Docker registry account by entering docker login on your terminal:
+
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: 
+Tag the image with your username.
+
+The Docker Hub naming convention is to tag your image with [dockerhub username]/[image name]. To do this, tag your previously created image python-hello-world to fit that format.
+
+$ docker tag python-hello-world [dockerhub username]/python-hello-world
+After you properly tag the image, use the docker push command to push your image to the Docker Hub registry:
+
+$ docker push jzaccone/python-hello-world
+The push refers to a repository [docker.io/jzaccone/python-hello-world]
+2bce026769ac: Pushed 
+64d445ecbe93: Pushed 
+18b27eac38a1: Mounted from library/python 
+3f6f25cd8b1e: Mounted from library/python 
+b7af9d602a0f: Mounted from library/python 
+ed06208397d5: Mounted from library/python 
+5accac14015f: Mounted from library/python 
+latest: digest: sha256:508238f264616bf7bf962019d1a3826f8487ed6a48b80bf41fd3996c7175fd0f size: 1786
+Check your image on Docker Hub in your browser.
+
+Navigate to Docker Hub and go to your profile to see your uploaded image.
+
+Now that your image is on Docker Hub, other developers and operators can use the docker pull command to deploy your image to other environments.
+
+Remember: Docker images contain all the dependencies that they need to run an application within the image. This is useful because you no longer need to worry about environment drift (version differences) when you rely on dependencies that are installed on every environment you deploy to. You also don't need to follow more steps to provision these environments. Just one step: install docker, and that's it.
