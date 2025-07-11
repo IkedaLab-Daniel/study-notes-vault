@@ -192,3 +192,31 @@ $ docker service ps nginx1
 ```
 
 You have successfully updated your application to the latest version of NGINX.
+
+## 5 - Reconcile problems with containers
+
+In the previous section, you updated the state of your service by using the command docker service update. You saw Docker Swarm in action as it recognized the mismatch between desired state and actual state, and attempted to solve the issue.
+
+The inspect-and-then-adapt model of Docker Swarm enables it to perform reconciliation when something goes wrong. For example, when a node in the swarm goes down, it might take down running containers with it. The swarm will recognize this loss of containers and will attempt to reschedule containers on available nodes to achieve the desired state for that service.
+
+You are going to remove a node and see tasks of your nginx1 service be rescheduled on other nodes automatically.
+
+1. To get a clean output, create a new service by copying the following line. Change the name and the publish port to avoid conflicts with your existing service. Also, add the --replicas option to scale the service with five instances:
+```bash
+$ docker service create --detach=true --name nginx2 --replicas=5 --publish 81:80  --mount source=/etc/hostname,target=/usr/share/nginx/html/index.html,type=bind,ro nginx:1.12
+aiqdh5n9fyacgvb2g82s412js
+```
+2. On node1, use the watch utility to watch the update from the output of the docker service ps command.
+Tip: watch is a Linux utility and might not be available on other operating systems.
+```bash
+$ watch -n 1 docker service ps nginx2
+```
+
+3. Press Ctrl+C to return to command prompt.
+4. Click node3 and enter the command to leave the swarm cluster:
+```bash
+$ docker swarm leave
+```
+Tip: This is the typical way to leave the swarm, but you can also kill the node and the behavior will be the same.
+
+5. Click node1 to watch the reconciliation in action. You should see that the swarm attempts to get back to the declared state by rescheduling the containers that were running on node3 to node1 and node2 automatically.
