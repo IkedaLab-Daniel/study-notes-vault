@@ -197,3 +197,14 @@ Remove the stopped containers. The following command removes any stopped contain
 ```bash
 $ docker system prune
 ```
+
+
+Lab 1 summary
+In this lab, you created your first Ubuntu, NGINX, and MongoDB containers.
+
+You should now understand more about containers:
+
+- Containers are composed of Linux namespaces and control groups that provide isolation from other containers and the host.
+- Because of the isolation properties of containers, you can schedule many containers on a single host without worrying about conflicting dependencies. This makes it easier to run multiple containers on a single host: using all resources allocated to that host and ultimately saving server costs.
+- That you should avoid using unverified content from the Docker Store when developing your own images because these images might contain security vulnerabilities or possibly even malicious software.
+- Containers include everything they need to run the processes within them, so you don't need to install additional dependencies on the host.
