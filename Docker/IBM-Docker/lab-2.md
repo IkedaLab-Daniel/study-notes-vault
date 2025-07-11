@@ -361,3 +361,32 @@ c86415c03c37        8 days ago          /bin/sh -c #(nop)  CMD ["python3"]      
 <missing>           9 days ago          /bin/sh -c #(nop) ADD file:cf1b74f7af8abcf...   4.81MB  
 ```
 Each line represents a layer of the image. You'll notice that the top lines match to the Dockerfile that you created, and the lines below are pulled from the parent Python image. Don't worry about the <missing> tags. These are still normal layers; they have just not been given an ID by the Docker system.
+
+## Remove the container
+Completing this lab results in a lot of running containers on your host. You'll stop and remove these containers.
+
+Get a list of the containers running by running the command docker container ls:
+```bash
+$ docker container ls
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS              PORTS                    NAMES
+0b2ba61df37f        python-hello-world   "python app.py"     7 minutes ago       Up 7 minutes        0.0.0.0:5001->5000/tcp   practical_kirch
+```
+Run docker container stop [container id] for each container in the list that is running:
+```bash
+$ docker container stop 0b2
+0b2
+```
+Remove the stopped containers by running docker system prune:
+```bash
+$ docker system prune
+WARNING! This will remove:
+        - all stopped containers
+        - all volumes not used by at least one container
+        - all networks not used by at least one container
+        - all dangling images
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+0b2ba61df37fb4038d9ae5d145740c63c2c211ae2729fc27dc01b82b5aaafa26
+
+Total reclaimed space: 300.3kB
+```
