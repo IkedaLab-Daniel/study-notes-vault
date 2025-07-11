@@ -233,3 +233,14 @@ You should have at least three manager nodes but typically no more than seven. M
 It is possible to have an even number of manager nodes, but it adds no value in terms of the number of node failures. For example, four manager nodes will tolerate only one node failure, which is the same tolerance as a three-manager node cluster. However, the more manager nodes you have, the harder it is to achieve a consensus on the state of a cluster.
 
 While you typically want to limit the number of manager nodes to no more than seven, you can scale the number of worker nodes much higher than that. Worker nodes can scale up into the thousands of nodes. Worker nodes communicate by using the gossip protocol, which is optimized to be perform well under a lot of traffic and a large number of nodes.
+
+## Summary
+
+In this lab, you got an introduction to problems that come with running containers in production, such as scheduling services across distributed nodes, maintaining high availability, implementing reconciliation, scaling, and logging. You used the orchestration tool that comes built-in to the Docker Engine, Docker Swarm, to address some of these issues.
+
+Remember these key points:
+
+- Docker Swarm schedules services by using a declarative language. You declare the state, and the swarm attempts to maintain and reconcile to make sure the actual state equals the desired state.
+- Docker Swarm is composed of manager and worker nodes. Only managers can maintain the state of the swarm and accept commands to modify it. Workers have high scalability and are only used to run containers. By default, managers can also run containers.
+- The routing mesh built into Docker Swarm means that any port that is published at the service level will be exposed on every node in the swarm. Requests to a published service port will be automatically routed to a container of the service that is running in the swarm.
+- You can use other tools to help solve problems with orchestrated, containerized applications in production, including Docker Swarm and the IBM Cloud Kubernetes Service.
