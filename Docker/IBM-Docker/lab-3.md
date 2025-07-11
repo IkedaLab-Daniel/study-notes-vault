@@ -120,3 +120,57 @@ $ curl localhost:80
 node1
 ```
 Curling will output the hostname where the container is running. For this example, it is running on node1, but yours might be different.
+
+## 3 - Scale your service
+Update your service with an updated number of replicas.
+
+Use the docker service command to update the NGINX service that you created previously to include 5 replicas. This is defining a new state for the service.
+```bash
+$ docker service update --replicas=5 --detach=true nginx1
+nginx1
+```
+When this command is run, the following events occur:
+
+The state of the service is updated to 5 replicas, which is stored in the swarm's internal storage.
+Docker Swarm recognizes that the number of replicas that is scheduled now does not match the declared state of 5.
+Docker Swarm schedules 5 more tasks (containers) in an attempt to meet the declared state for the service.
+This swarm is actively checking to see if the desired state is equal to actual state and will attempt to reconcile if needed.
+
+Check the running instances.
+
+After a few seconds, you should see that the swarm did its job and successfully started 9 more containers. Notice that the containers are scheduled across all three nodes of the cluster. The default placement strategy that is used to decide where new containers are to be run is the emptiest node, but that can be changed based on your needs.
+```bash
+$ docker service ps nginx1
+```
+
+Send a lot of requests to http://localhost:80.
+
+The --publish 80:80 parameter is still in effect for this service; that was not changed when you ran the docker service update command. However, now when you send requests on port 80, the routing mesh has multiple containers in which to route requests to. The routing mesh acts as a load balancer for these containers, alternating where it routes requests to.
+
+Try it out by curling multiple times. Note that it doesn't matter which node you send the requests. There is no connection between the node that receives the request and the node that that request is routed to.
+```bash
+$ curl localhost:80
+node3
+$ curl localhost:80
+node3
+$ curl localhost:80
+node2
+$ curl localhost:80
+node1
+$ curl localhost:80
+node1
+```
+You should see which node is serving each request because of the useful --mount command you used earlier.
+
+Limits of the routing mesh: The routing mesh can publish only one service on port 80. If you want multiple services exposed on port 80, you can use an external application load balancer outside of the swarm to accomplish this.
+
+Check the aggregated logs for the service.
+
+Another easy way to see which nodes those requests were routed to is to check the aggregated logs. You can get aggregated logs for the service by using the command docker service logs [service name]. This aggregates the output from every running container, that is, the output from docker container logs [container name].
+```bash
+$ docker service logs nginx1
+```
+
+Based on these logs, you can see that each request was served by a different container.
+
+In addition to seeing whether the request was sent to node1, node2, or node3, you can also see which container on each node that it was sent to. For example, nginx1.5 means that request was sent to a container with that same name as indicated in the output of the command docker service ps nginx1.
