@@ -174,3 +174,21 @@ $ docker service logs nginx1
 Based on these logs, you can see that each request was served by a different container.
 
 In addition to seeing whether the request was sent to node1, node2, or node3, you can also see which container on each node that it was sent to. For example, nginx1.5 means that request was sent to a container with that same name as indicated in the output of the command docker service ps nginx1.
+
+## 4 - Apply rolling updates
+1. Run the docker service update command:
+```bash
+$ docker service update --image nginx:1.13 --detach=true nginx1
+```
+This triggers a rolling update of the swarm. Quickly enter the command docker service ps nginx1 over and over to see the updates in real time.
+
+You can fine-tune the rolling update by using these options:
+
+- --update-parallelism: specifies the number of containers to update immediately (defaults to 1).
+- --update-delay: specifies the delay between finishing updating a set of containers before moving on to the next set.
+After a few seconds, run the command docker service ps nginx1 to see all the images that have been updated to nginx:1.13.
+```bash
+$ docker service ps nginx1
+```
+
+You have successfully updated your application to the latest version of NGINX.
