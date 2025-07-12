@@ -212,3 +212,38 @@ If you want all API calls to be authenticated in a class-based view that extends
 ```py
 Permission_classes = [IsAuthenticated]
 ```
+
+If you want to selectively enable authentication for some calls, like POST, PUT, PATCH and DELETE then you need to override the get_permission method in your class-based view like this.
+
+```py
+def get_permissions(self):
+        permission_classes = []
+        if self.request.method != 'GET':
+            permission_classes = [IsAuthenticated]
+            
+        return [permission() for permission in permission_classes]
+```
+
+This way, anyone will be able to make GET call, but other HTTP methods like POST, PUT, PATCH and DELETE will require authentication or a valid user token.
+
+#### Return items for the authenticated user only 
+Sometimes in a class-based view that extends a generic view, you may want to return resources created by the authenticated users only. In that case, you need to override the get_queryset method. The following code in a class-based view returns only those orders created by the authenticated user. 
+```py
+class OrderView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return Order.objects.all().filter(user=self.request.user)
+```
+
+#### Override default behavior 
+Though generic views automate everything, you still have full scope to change the default behavior by overriding any of the default methods. Here is an example that returns a simple static response instead of the resources. 
+```py
+class OrderView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer  
+    def get(self, request, *args, **kwargs):
+        return Response(‘new response’)
+```
+The other methods you can override are post(), put(), patch() and delete().
