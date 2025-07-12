@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'PlaygroundAPI'
+
+    # ? third party dependencies
+    'rest_framework',
+
+    # ? Apps
+    'PlaygroundAPI', # ? general playground
+    'DRF'# ? DRF playground
 ]
 
 MIDDLEWARE = [
