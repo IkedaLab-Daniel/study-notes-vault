@@ -532,3 +532,24 @@ The final step is to map this endpoint to an API endpoint. This time, you want t
 path('welcome',views.welcome)
 ```
 This greeting will now display if someone visits this endpoint. 
+
+#### CSV renderer
+CSV, or comma-separated values, is another popular format used by API developers. Unlike JSON or XML, every field in a database record is displayed separated by a comma and every record is on a new line. 
+
+**Step 1**
+DRF doesn’t come with a CSV renderer class by default. So the first step is to install a popular third-party package using pipenv. 
+```bash
+pipenv install djangorestframework-csv
+```
+
+**Step 2**
+Import this renderer in the views.py file.
+```py
+from rest_framework_csv.renderers import CSVRenderer
+```
+
+**Step 3**
+Add the renderer using the renderer_classes decorator to convert an API endpoint to display CSV instead of JSON. Add the following line of code in the menu-items function after the @api_view() decorator:
+```py
+@renderer_classes([CSVRenderer])
+```
