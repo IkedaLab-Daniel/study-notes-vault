@@ -402,3 +402,105 @@ urlpatterns = [
     path('category/<int:pk>',views.category_detail, name='category-detail')
 ]
 ```
+
+## M2: Different types of renderers
+
+### Introduction
+Renderers are the core classes in DRF that display the API output in different formats like JSON and XML. You’ve already learned how to use the Browsable API renderer, JSON renderer, and a third-party renderer called XMLRenderer. In this reading, you are going to learn about a few other useful renderers that you can use in your API projects in DRF.
+
+#### TemplateHTMLRenderer
+Sometimes, even in an API project, it might be required to display HTML output. For example, if you generate an invoicing API, you need to display the transaction and order details in a nicely formatted way using HTML and CSS. In such cases, DRF’s TemplateHTMLRenderer can help. 
+
+**Step 1**
+Using the TemplateHTMLRenderer, you can pass the data to an HTML file and then display that data using Django’s native templating language called DTL, or Django Templating Language. 
+
+To test this TemplateHTMLRenderer the menu items need to be displayed in an HTML file instead of JSON. To use this renderer, you first import it from the rest_framework.renderers module in the views.py file. You also need to import the renderer_classes decorator. 
+
+```py
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.decorators import api_view, renderer_classes
+```
+
+**Step 2**
+The second step is to create a new function called menu in the views.py file. 
+```py
+@api_view() 
+@renderer_classes ([TemplateHTMLRenderer])
+def menu(request):
+    items = MenuItem.objects.select_related('category').all()
+    serialized_item = MenuItemSerializer(items, many=True)
+    return Response({'data':serialized_item.data}, template_name='menu-items.html')
+```
+Note how the serialized data is passed as context to the HTML template file named menu-items.html. You need to put this HTML file inside the templates directory in your Django app, so the path of this file is: LittleLemon/LittleLemonAPI/templates/menu-item.html
+
+**Step 3**
+The third step is to add the following templating code to this HTML file. This code block accepts the template data and displays them in a HTML table. 
+
+```html
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Items</title>
+</head>
+<body>
+    <table width="100%" style="text-align: left;">
+        <tr>
+            <th>Item</th> <!-- item column heading -->
+            <th>Price</th> <!-- price column heading -->
+            <th>Price After Tax</th> <!-- price after tax column heading -->
+            <th>Stock</th> <!-- stock column heading -->
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.price_after_tax }}</td>
+            <td>{{ item.stock }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+```
+
+It's possible that once you run the code, you may get an error such as TemplateDoesNotExist. This could happen if the settings don't find the correct directory for the templates and the Base directory needs to be set up. 
+
+To fix this, go inside the settings.py file and make sure that the settings for the Templates are present. If they are not present, you can add code such as:
+
+```py
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],  # Add this line
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+Alternatively, if you see the code for the Templates and still get the error, try adding the code below:
+
+```py
+TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
+```
+
+**Step 4**
+The final step is to map the function to an API endpoint in the urls.py file so that it can be browsed as http://127.0.0.1:8000/api/menu.
+```py
+from django.urls import path 
+from . import views 
+urlpatterns = [ 
+    path('menu-items',views.menu_items),
+    path('menu-items/<int:id>',views.single_item)
+    path('menu',views.menu),
+]
+```
+Now the http://127.0.0.1:8000/api/menu API endpoint displays all the menu items in a nicely formatted HTML table.    
