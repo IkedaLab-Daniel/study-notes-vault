@@ -252,3 +252,6 @@ The other methods you can override are post(), put(), patch() and delete().
 
 ### Introduction
 You now know about serializers in DRF and you learned how to use model serializers to serialize model relationships. This reading has some interesting tips and tricks regarding serialization, like how to automatically display a nested model field using the depth option of the serializer. You will also learn how to display related model fields as hyperlinks by using the HyperlinkedRelatedField or by using a new type of serializer called the HyperlinkedModelSerializer. 
+
+### Nested fields
+If you were to visit the menu-items endpoint, you would note the category displays as a nested field with its id, title, and slug. 
