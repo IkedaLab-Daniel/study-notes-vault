@@ -45,7 +45,8 @@ INSTALLED_APPS = [
 
     # ? Apps
     'PlaygroundAPI', # ? general playground
-    'DRF'# ? DRF playground
+    'DRF', # ? DRF playground
+    'LittleLemonAPI', # ? API project
 ]
 
 MIDDLEWARE = [

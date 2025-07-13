@@ -21,8 +21,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('PlaygroundAPI.urls')),
-    path('drf/api/', include('DRF.urls'))
+    path('playground/api/', include('PlaygroundAPI.urls')),
+    path('drf/api/', include('DRF.urls')),
+    path('littlelemon/api/', include('LittleLemonAPI.urls'))
 ]
 
 if settings.DEBUG:
