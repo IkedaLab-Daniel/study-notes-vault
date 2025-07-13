@@ -571,3 +571,29 @@ Pass the YAMLRenderer class inside the renderer_classes decorator, just below th
 ```py
 @renderer_classes([YAMLRenderer])
 ```
+
+#### Global settings
+Instead of importing the CSV and YAML renderer classes individually in the views.py file and then passing them to the renderer_classes decorator above each function, you can make them available globally in your API project. In this way, the client can get the desired output with a valid Accept header. 
+
+To make these renderers available globally, add the following two lines in the settings.py file in the DEFAULT_RENDERER_CLASSES section.
+```py
+'rest_framework_csv.renderers.CSVRenderer',
+'rest_framework_yaml.renderers.YAMLRenderer',
+```
+This is what the DEFAULT_RENDERER_CLASSES section will be like after adding those two lines.
+```py
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
+        'rest_framework_csv.renderers.CSVRenderer', 
+        'rest_framework_yaml.renderers.YAMLRenderer', 
+    ]
+}
+```
+Now the client can send the following Accept headers to receive the API output in their desired format.
+|Response Type|Request Header|
+|-|-|
+|CSP|Accept: text/csv|
+|YAML|Accept: application/yaml|
