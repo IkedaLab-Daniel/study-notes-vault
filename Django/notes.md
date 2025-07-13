@@ -553,3 +553,21 @@ Add the renderer using the renderer_classes decorator to convert an API endpoint
 ```py
 @renderer_classes([CSVRenderer])
 ```
+
+#### YAML Renderer
+**Step 1**
+To display the output of your APIs in YAML, another popular data format, you need to install the djangorestframework-yaml using pipenv. 
+```bash
+pipenv install djangorestframework-yaml
+```
+**Step 2**
+To test it with the menu-items function, import this YAML renderer in the views.py file.
+```py
+from rest_framework_yaml.renderers import YAMLRenderer
+```
+
+**Step 3**
+Pass the YAMLRenderer class inside the renderer_classes decorator, just below the api_view decorator above the menu-items function.
+```py
+@renderer_classes([YAMLRenderer])
+```
