@@ -377,3 +377,28 @@ Note: The argument context={'request': request} lets the menu-items endpoint dis
     }
 ```	
 You can click on that hyperlink and check the category details. 
+
+**Method 2: HyperlinkedModelSerializer**
+But there is another way to display a category field as a hyperlink. With this method, you need to change the code in the serializers.py file. so that the MenuItemSerializer extends the serializers.HyperlinkedModelSerializer class instead of the serializers.ModelSerializer class.
+```py
+class MenuItemSerializer(serializers.HyperlinkedModelSerializer):
+    stock =  serializers.IntegerField(source='inventory')
+    price_after_tax = serializers.SerializerMethodField(method_name = 'calculate_tax')
+ 
+    class Meta:
+        model = MenuItem
+        fields = ['id','title','price','stock', 'price_after_tax','category']
+    
+    def calculate_tax(self, product:MenuItem):
+        return product.price * Decimal(1.1)
+```
+When you use the HyperlinkedModelSerializer the output of the menu-items endpoint produces the same output with a hyperlinked category field like in the screenshot in Method 1 but the code is much cleaner and simpler.
+
+Note: When you use a HyperlinkedModelSerializer, you still need the URL pattern with a view name as you did in the previous section. 
+```py
+urlpatterns = [ 
+    path('menu-items',views.menu_items),
+    path('menu-items/<int:id>',views.single_item),
+    path('category/<int:pk>',views.category_detail, name='category-detail')
+]
+```
