@@ -504,3 +504,31 @@ urlpatterns = [
 ]
 ```
 Now the http://127.0.0.1:8000/api/menu API endpoint displays all the menu items in a nicely formatted HTML table.    
+
+#### StaticHTMLRenderer
+You can use the StaticHTMLRenderer if any of your API endpoints need to display some HTML content without using any DTL code inside an HTML file.  
+
+**Step 1**
+The first step is to import the StaticHTMLRenderer class and renderer_classes decorator like before. 
+```py
+from rest_framework.renderers import StaticHTMLRenderer
+from rest_framework.decorators import api_view, renderer_classes
+```
+
+**Step 2**
+Then you need to create a new function called welcome in the views.py file. 
+
+```py
+@api_view(['GET'])
+@renderer_classes([StaticHTMLRenderer])
+def welcome(request):
+    data = '<html><body><h1>Welcome To Little Lemon API Project</h1></body></html>'
+    return Response(data)
+```
+
+**Step 3**
+The final step is to map this endpoint to an API endpoint. This time, you want to display this message whenever someone visits the endpoint http://127.0.0.1:8000/api/welcome. To do this, you need to open the urls.py file and add the following line to the urlpatterns list: 
+```py
+path('welcome',views.welcome)
+```
+This greeting will now display if someone visits this endpoint. 
