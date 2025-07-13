@@ -255,3 +255,57 @@ You now know about serializers in DRF and you learned how to use model serialize
 
 ### Nested fields
 If you were to visit the menu-items endpoint, you would note the category displays as a nested field with its id, title, and slug. 
+```json
+    {
+        "id": 1,
+        "title": "Sample",
+        "price": "1.00",
+        "stock": 1,
+        "price_after_tax": 1.1,
+        "category": {
+            "id": 1,
+            "slug": "icecream",
+            "title": "icecream"
+        }
+    }
+```
+This can be achieved in two ways.
+
+**Method 1**
+The first way to do this is to create a category serializer in serializers.py and include it in the menu item serializer as demonstrated in the code below. 
+```py
+from rest_framework import serializers
+from decimal import Decimal
+from .models import MenuItem, Category 
+class CategorySerializer (serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id','slug','title']
+ 
+class MenuItemSerializer(serializers.ModelSerializer):
+    stock =  serializers.IntegerField(source='inventory')
+    price_after_tax = serializers.SerializerMethodField(method_name = 'calculate_tax')
+    category = CategorySerializer()
+    class Meta:
+        model = MenuItem
+        fields = ['id','title','price','stock', 'price_after_tax','category']
+    
+    def calculate_tax(self, product:MenuItem):
+        return product.price * Decimal(1.1)
+```
+
+**Method 2**
+There is another way of doing this. Instead of declaring the category field as CategorySerializer you can specify that depth=1 is in the Meta class in MenuItemSerializer. This way, all relationships in this serializer will display every field related to that model.  You can change the code of the MenuItemSerializer as below. 
+```py
+class MenuItemSerializer(serializers.ModelSerializer):
+    stock =  serializers.IntegerField(source='inventory')
+    price_after_tax = serializers.SerializerMethodField(method_name = 'calculate_tax')
+    # category = CategorySerializer()
+    class Meta:
+        model = MenuItem
+        fields = ['id','title','price','stock', 'price_after_tax','category']
+        depth = 1
+    
+    def calculate_tax(self, product:MenuItem):
+        return product.price * Decimal(1.1)
+```
