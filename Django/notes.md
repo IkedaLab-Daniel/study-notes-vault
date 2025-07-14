@@ -712,3 +712,46 @@ def validate(self, attrs):
         return super().validate(attrs)
 ```
 Note:  You used the actual field name for validating the stock which is inventory.
+
+### Unique validation
+Sometimes API developers need to make sure that there is no duplicate entry made by the clients. In such cases, unique validators become useful. Using this validator, you can ensure the uniqueness of a single field or combination of fields. Let’s examine how to use this validator. For a single field, use UniqueValidator class and for the combination of fields, use UniqueTogetherValidator.
+
+**UniqueValidator**
+UniqueValidator
+```py
+from rest_framework.validators import UniqueValidator
+```
+Or
+```py
+from rest_framework.validators import UniqueTogetherValidator
+```
+To make sure that the title field remains unique in the MenuItems table, you can add the following code in the extra_kwargs section in the Meta class. Here's an example of using UniqueValidator for the title field.   
+```py
+extra_kwargs = {
+            'title': {
+                'validators': [
+                    UniqueValidator(
+                        queryset=MenuItem.objects.all()
+                    )
+                ]
+            }
+        }  
+```
+Or you can add it when declaring a field above Meta class, like this.
+```py
+title = serializers.CharField(
+        max_length=255,
+        validators=[UniqueValidator(queryset=MenuItem.objects.all())]
+    )
+```
+
+**UniqueTogetherValidator**
+When you want to use UniqueTogetherValidator validator, the code will be a little different. Here’s a sample code that will make the combination of title and price field unique. With this validation, there will be no duplicate entry of an item with the same price. This code goes directly inside the Meta class. 
+```py
+validators = [
+            UniqueTogetherValidator(
+                queryset=MenuItem.objects.all(),
+                fields=['title', 'price']
+            ),
+        ]
+```
