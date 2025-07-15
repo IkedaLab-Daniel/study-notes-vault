@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import requests
 from urllib.parse import quote
 
@@ -40,3 +40,10 @@ def get_author(isbn):
         return jsonify(message="Not found"), 404
     else:
         return jsonify(message="server error"), 500
+    
+@app.route("/template")
+def template():
+    return render_template('sample.html')
+
+if __name__ == "__main__":
+    app.run(debug=True)
