@@ -773,3 +773,97 @@ Returned by Flask view functions to send data back to clients.
 * Flask provides a `request` object for each client call with access to data, headers, and more.
 * Flask automatically builds a `response` object, or you can customize it.
 * Use attributes and helper methods to manage request and response behaviors efficiently.
+
+## 🌐 Calling External APIs and Using Dynamic Routes in Flask
+
+### 📥 Using `requests` to Call an External API
+
+#### 🔧 Setup
+1. Import `Flask`, `request`, and `requests`.
+2. Install the `requests` library if not already done.
+
+#### 📌 Example: Call OpenLibrary API
+
+```python
+from flask import Flask, jsonify
+import requests
+
+app = Flask(__name__)
+
+@app.route("/author")
+def get_author_books():
+    res = requests.get("https://openlibrary.org/search.json?author=Michael+Crichton")
+    if res.status_code == 200:
+        return res.json()
+    elif res.status_code == 404:
+        return {"message": "Something went wrong"}, 404
+    else:
+        return {"message": "Server error"}, 500
+```
+
+* ✅ **200** → Return response JSON.
+* ❌ **404** → Return message: “Something went wrong”.
+* ❗️ Any other → Return status `500`: “Server error”.
+
+---
+
+### 🔁 Dynamic Routing in Flask
+
+#### 📚 Example: Book Lookup by ISBN
+
+```python
+@app.route("/book/<isbn>")
+def get_book_by_isbn(isbn):
+    url = f"https://openlibrary.org/isbn/{isbn}.json"
+    res = requests.get(url)
+    if res.status_code == 200:
+        return res.json()
+    else:
+        return {"message": "Book not found"}, res.status_code
+```
+
+* `/<isbn>` makes ISBN dynamic.
+* Passes it to the function and uses it in the API call.
+
+---
+
+### 🔎 Parameter Types in Flask Routes
+
+| Type   | Description                         |
+| ------ | ----------------------------------- |
+| string | (default) accepts any text          |
+| int    | accepts only integers               |
+| float  | accepts floating point numbers      |
+| path   | like string but accepts slashes `/` |
+| uuid   | accepts UUIDs (GUIDs)               |
+
+#### 🛫 Example: Airport Terminals
+
+```python
+@app.route("/airport/<string:code>")
+def get_airport_info(code):
+    return {"airport": code.upper()}
+```
+
+#### 🔗 Example: UUID
+
+```python
+from uuid import UUID
+
+@app.route("/network/<uuid:net_id>")
+def get_network_info(net_id: UUID):
+    # logic to verify net_id
+    if is_valid_network(net_id):
+        return {"message": "Network found"}
+    else:
+        return {"error": "Network not found"}, 404
+```
+
+---
+
+### ✅ Summary
+
+* Use the `requests` library to call external APIs in Flask.
+* Return or process API responses based on their status codes.
+* Use **dynamic routing** in Flask to build flexible RESTful APIs.
+* Flask supports **parameter types** (string, int, float, path, uuid) for route validation.
