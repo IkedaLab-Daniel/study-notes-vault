@@ -25,3 +25,29 @@ Its rich and robust ecosystem provides developers with tools, libraries, and fun
 - Use 4 spaces is recommended than Tab
     - for appropriate readability
 - Use blank lines to seperate functions and classes
+- Use spaces around operators and commas
+    - improve code readability
+    - make commands look spacious and discrete
+- Use functions for blocks of codes
+    - create seperate function for functionalities
+    - increase the execution speed of the code
+    - support reusability
+- Naming functions and files
+    - Functions: use lowercase with underscores (sample_function())
+    - Package: avoid underscore (mypakage)
+    - Classes - Camecase
+        - well accepted in coding community
+        - Distinguish between classes and functions
+    - Constant - CAPITALIZE ALL WORDS
+
+## Static code analysis
+- evaluates style compliance without executing the code
+    - programming errors
+    - coding standard violations
+    - undefined values
+    - systax violations
+    - security vulnabilities
+- PyLint
+
+
+        
