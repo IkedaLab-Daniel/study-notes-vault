@@ -673,3 +673,103 @@ my_flask_app/
 5. **Project Structure**: Use proper directory structure for larger applications
 6. **Development Tools**: Use `--debug` flag for development convenience
 7. **Testing**: Test applications using browsers, curl, or other HTTP clients
+
+# 📘 Flask Request and Response Objects
+
+### 🚏 Defining Routes and Methods
+- Use `@app.route('/path')` to define routes (defaults to **GET**).
+- Use the `methods` parameter to allow other HTTP methods.
+
+```python
+@app.route("/health", methods=["GET", "POST"])
+```
+
+* Example:
+
+  * GET request → returns status OK, method GET
+  * POST request → returns status OK, method POST
+
+---
+
+### 📨 The Flask Request Object
+
+Each HTTP request in Flask includes a `request` object from `flask.Request`.
+
+#### 🔍 Request Attributes
+
+* `request.host`: server address (host\:port)
+* `request.headers`: all headers
+* `request.url`: full request URL
+* `request.access_route`: list of forwarded IPs
+* `request.full_path`: full path with query string
+* `request.is_secure`: `True` if HTTPS/WSS
+* `request.is_json`: `True` if body contains JSON
+* `request.cookies`: dict of cookies
+
+#### 📦 Header Attributes
+
+* `request.cache_control`: caching details
+* `request.accept`: acceptable content types
+* `request.accept_encoding`: encoding types
+* `request.user_agent`: client info (app/OS/version)
+* `request.accept_language`: language/locale
+* `request.host`: requested host and port
+
+---
+
+### 🧪 Inspecting Request Data
+
+| Property             | Description                           |
+| -------------------- | ------------------------------------- |
+| `request.get_data()` | Raw POST data (bytes)                 |
+| `request.get_json()` | Parsed JSON data                      |
+| `request.args`       | Query parameters (ImmutableMultiDict) |
+| `request.form`       | Form data (ImmutableMultiDict)        |
+| `request.files`      | Uploaded files                        |
+| `request.values`     | Combines `args` and `form`            |
+
+#### Example: Extracting Query Parameters
+
+```python
+from flask import Flask, request
+
+@app.route("/course")
+def get_course():
+    course = request.args["course"]         # KeyError if missing
+    rating = request.args.get("rating")     # Returns None if missing
+```
+
+---
+
+### 📤 The Flask Response Object
+
+Returned by Flask view functions to send data back to clients.
+
+#### 🔧 Common Response Attributes
+
+* `status_code`: success/failure code (e.g., 200, 404)
+* `headers`: extra response metadata
+* `content_type`: type of content (e.g., `text/html`)
+* `content_length`: size of response body
+* `content_encoding`: how content is encoded
+* `mimetype`: media type (e.g., `application/json`)
+* `expires`: expiration datetime
+
+#### 🛠️ Response Methods
+
+| Method            | Description                        |
+| ----------------- | ---------------------------------- |
+| `make_response()` | Create a custom response           |
+| `jsonify()`       | Return JSON data as a response     |
+| `redirect()`      | Return 302 redirect to another URL |
+| `abort()`         | Return an error response           |
+| `set_cookie()`    | Set a cookie on client             |
+| `delete_cookie()` | Delete a client-side cookie        |
+
+---
+
+### ✅ Summary
+
+* Flask provides a `request` object for each client call with access to data, headers, and more.
+* Flask automatically builds a `response` object, or you can customize it.
+* Use attributes and helper methods to manage request and response behaviors efficiently.
