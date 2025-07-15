@@ -9,6 +9,7 @@ djangorestframework = "*"
 djangorestframework-xml = "*"
 djoser = "*"
 django-debug-toolbar = "*"
+django-filter = "*"
 
 [dev-packages]
 
