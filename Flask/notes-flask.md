@@ -49,5 +49,97 @@ Its rich and robust ecosystem provides developers with tools, libraries, and fun
     - security vulnabilities
 - PyLint
 
+# Unit Testing Summary
 
-        
+## What is Unit Testing?
+
+Unit testing is a method to validate if units of code are operating as designed. A unit is a smaller, testable part of an application that can be tested independently.
+
+## Testing Process Overview
+
+The unit testing process follows these phases:
+
+1. **Local Testing** - Test the unit on your local system
+2. **Fix Issues** - If tests fail, determine the reason and fix the problem
+3. **Server Testing** - Test the unit in a server environment (CI/CD test server)
+4. **Integration** - Once the unit passes server tests, it's integrated into the final code base
+
+## Creating Unit Tests
+
+### File Structure
+- **Unit file**: `mymodule.py` (contains the actual functions)
+- **Test file**: `test_mymodule.py` (contains the unit tests)
+- Use "test" as prefix or suffix in test file names for clear differentiation
+
+### Basic Setup Steps
+
+1. **Import the unittest library**
+   ```python
+   import unittest
+   ```
+
+2. **Import functions to test**
+   ```python
+   from mymodule import square, doubler
+   ```
+
+3. **Create a test class**
+   ```python
+   class TestMyModule(unittest.TestCase):
+   ```
+   - Use "Test" prefix for class names
+   - Inherit from `unittest.TestCase`
+
+4. **Create test functions**
+   ```python
+   def test_square(self):
+   def test_doubler(self):
+   ```
+   - Function names must start with "test"
+
+5. **Add assertion methods**
+   ```python
+   self.assertEqual(square(2), 4)
+   ```
+
+## Key Assertion Method
+
+**assertEqual()** - Compares two values to determine if they are equal
+- **First parameter**: Actual value (function call result)
+- **Second parameter**: Expected value (what the function should return)
+
+## Test Results
+
+### Successful Test Output
+- Shows number of tests run and execution time
+- Displays "OK" to indicate all tests passed
+
+### Failed Test Output
+- Clearly identifies which test failed
+- Shows the specific assertion that failed
+- Provides detailed error information (e.g., "8 is not equal to 4")
+- Enables developers to identify and correct mistakes before deployment
+
+## Example
+
+```python
+# mymodule.py
+def square(number):
+    return number ** 2
+
+def doubler(number):
+    return number * 2
+
+# test_mymodule.py
+import unittest
+from mymodule import square, doubler
+
+class TestMyModule(unittest.TestCase):
+    def test_square(self):
+        self.assertEqual(square(2), 4)
+    
+    def test_doubler(self):
+        self.assertEqual(doubler(3), 6)
+```
+
+Unit testing ensures code quality and helps catch errors early in the development process before deployment to production.ity and helps catch errors early in the development process before deployment to production.
