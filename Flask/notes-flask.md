@@ -4,3 +4,18 @@ Python with Flask is a lightweight and flexible web application framework. It's 
 Flask is a good choice for smaller, simpler applications. However, 'micro' has more to do with what Flask is, rather than limiting its scalability potential. Flask can be used for large-scale systems and more complex applications with attention to specific requirements and constraints, careful planning, good architecture, and modular design, but it may require more effort to manage and scale compared to more robust and feature-rich frameworks.
 
 Its rich and robust ecosystem provides developers with tools, libraries, and functionalities to handle web development tasks such as routing, request handling, template rendering or similar tasks. Caching, load-balancing, replication and storing your data in a scalable manner can help achieve optimal results.
+
+## Application Development lifecycle phases
+1. Requirement gathering
+2. Analysis
+3. Design
+4. Code and test
+5. User and system testing
+6. Production
+7. Maintenance
+
+## Maintain multiple file
+- Requirements for functionalities vary
+- Best Practice: Code each functionality in a seperate file
+    - Make code maintainance efficient and easy
+    - Helps when new functionality is added
