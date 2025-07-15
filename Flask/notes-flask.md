@@ -472,3 +472,204 @@ Use `pip freeze` command in the virtual environment to see all built-in packages
 5. **Flexible approach** allows developers to choose their tools and extensions
 6. **Production-ready** with proper version pinning and virtual environment setup
 7. **Comparison with Django** shows Flask as lightweight and flexible vs Django's full-stack approach
+
+# Creating Your First Flask Application
+
+## Prerequisites
+
+Before creating your first Flask application, ensure that you have installed Flask.
+
+## Basic Flask Application Setup
+
+### Step 1: Create the Server File
+
+Create a Python file that will be your server. Let's name this file `app.py`.
+
+### Step 2: Write the Basic Code
+
+```python
+# Import the Flask class from the flask module
+from flask import Flask
+
+# Instantiate an object of the Flask class as your app
+app = Flask(__name__)
+
+# Add the first route
+@app.route("/")
+def hello_world():
+    return "<b>My first Flask application in action!</b>"
+```
+
+### Code Explanation
+
+1. **Import Flask**: Import the capital F Flask class from the small f Flask module
+2. **Instantiate Flask**: Create an object of the Flask class as your app
+3. **Constructor**: Takes a single argument of class Scaffold. The `__name__` variable is used to:
+   - Find resources on the filesystem
+   - Provide debugging information by extensions
+4. **Route Definition**: Use the `@app.route()` decorator to define a route
+5. **Return Content**: Return text or HTML from the method
+
+## Running Your Application
+
+### Method 1: Using Environment Variables
+
+#### Step 1: Set Environment Variables
+```bash
+export FLASK_APP=app.py
+export FLASK_ENV=development  # Will be deprecated in Flask 2.3
+```
+
+#### Step 2: Run the Application
+```bash
+flask run
+```
+
+### Method 2: Using Command Line Arguments
+```bash
+flask --app app.py --debug run
+```
+
+**Benefits of `--debug` flag:**
+- Enables development mode
+- Enables automatic restarts when source files change
+- Useful for seeing changes instantaneously during development
+
+### Default Configuration
+- Flask application runs by default on **port 5000**
+- Access your application at: `http://localhost:5000`
+
+## Testing Your Application
+
+### Browser Testing
+Navigate to `http://localhost:5000` to see your message.
+
+### Developer Tools Analysis
+When checking with browser developer tools, you should see:
+- **Requested URL**: `http://localhost:5000`
+- **Request Method**: HTTP GET
+- **Response Status**: 200 (successful response)
+- **Content Type**: `text/html`
+- **Server**: Werkzeug running with Python version
+
+## Returning JSON from Flask
+
+### Method 1: Return Serializable Objects
+
+```python
+@app.route("/")
+def hello_world():
+    return {"message": "Hello, World!", "status": "success"}
+```
+
+**Testing with curl:**
+```bash
+curl http://localhost:5000
+```
+
+**Response:**
+- Status: 200 OK
+- Content Type: `application/json`
+- Body: JSON format
+
+### Method 2: Using jsonify() Method
+
+```python
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return jsonify(message="Hello, World!", status="success")
+```
+
+**Key Points:**
+- Import `jsonify` from Flask
+- Pass key-value pairs to `jsonify`
+- Returns appropriate JSON response
+- Same result as Method 1
+
+## Flask Configuration Options
+
+### Core Configuration Variables
+
+| Variable | Description |
+|----------|-------------|
+| `ENV` | Indicates environment (production or development) |
+| `DEBUG` | Enables debug mode |
+| `TESTING` | Enables testing mode |
+| `SECRET_KEY` | Used to sign the session cookie |
+| `SESSION_COOKIE_NAME` | Name of the session cookie |
+| `SERVER_NAME` | Binds the host and port |
+| `JSONIFY` | Defaults to 'application/json' |
+
+### Configuration Methods
+
+#### 1. Using Config Object
+```python
+app.config['DEBUG'] = True
+app.config['SECRET_KEY'] = 'your-secret-key'
+```
+
+#### 2. Loading from Environment Variables
+```python
+app.config.from_envvar('FLASK_SETTINGS')
+```
+
+#### 3. Loading from JSON File
+```python
+app.config.from_file('config.json', load=json.load)
+```
+
+## Application Directory Structure
+
+As your app grows, create a proper directory structure instead of using a single Python file.
+
+### Recommended Structure
+
+```
+my_flask_app/
+├── app/                    # Main source code module directory
+│   ├── __init__.py
+│   ├── routes.py
+│   └── models.py
+├── config/                 # Configuration files
+│   ├── config.py
+│   └── config.json
+├── static/                 # Static assets
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── templates/              # Dynamic content templates
+│   ├── base.html
+│   └── index.html
+├── tests/                  # Test files
+│   ├── test_app.py
+│   └── test_routes.py
+├── venv/                   # Virtual environment
+├── app.py                  # Main application file
+└── requirements.txt        # Dependencies
+```
+
+### Directory Purpose
+
+- **app/**: Store main source code in its module directory
+- **config/**: Store all configurations in separate files
+- **static/**: Store static assets (images, JavaScript, CSS files)
+- **templates/**: Store dynamic content templates
+- **tests/**: Place all test files
+- **venv/**: Virtual environment for proper dependency management
+
+## Key Takeaways
+
+1. **Server Creation**: Create a server by instantiating the Flask class
+2. **URL Handlers**: Use the `@app.route()` decorator to create URL handlers
+3. **Response Types**: Return string messages or use `jsonify()` method for JSON objects
+4. **Configuration**: Set application configuration from:
+   - Environment variables
+   - Python files
+   - `app.config` object directly
+5. **Project Structure**: Use proper directory structure for larger applications
+6. **Development Tools**: Use `--debug` flag for development convenience
+7. **Testing**: Test applications using browsers, curl, or other HTTP clients
