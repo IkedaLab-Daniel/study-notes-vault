@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import requests
+from urllib.parse import quote
 
 app = Flask(__name__)
 
@@ -25,5 +26,17 @@ def sample_api_call():
         return jsonify(response.json())
     elif response.status_code == 404:
         return jsonify(message="something went wrong"), 404
+    else:
+        return jsonify(message="server error"), 500
+    
+@app.route('/sampleapicall/<isbn>')
+def get_author(isbn):
+    safe_isbn = quote(isbn)
+    res = requests.get(f"https://openlibrary.org/isbn/{safe_isbn}.json")
+
+    if res.status_code == 200:
+        return jsonify(res.json())
+    elif res.status_code == 404:
+        return jsonify(message="Not found"), 404
     else:
         return jsonify(message="server error"), 500
