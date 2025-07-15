@@ -143,3 +143,122 @@ class TestMyModule(unittest.TestCase):
 ```
 
 Unit testing ensures code quality and helps catch errors early in the development process before deployment to production.ity and helps catch errors early in the development process before deployment to production.
+
+# Python Modules, Packages, and Libraries Summary
+
+## Definitions
+
+### Python Module
+A Python module is a `.py` file containing Python definitions, statements, functions, and classes. You can import a module to other scripts and notebooks.
+
+**Example**: `module.py` with two functions:
+```python
+def square(number):
+    return number ** 2
+
+def doubler(number):
+    return number * 2
+```
+
+**Usage**:
+```python
+import module
+print(f"4^2 = {module.square(4)}")  # Output: 4^2 = 16
+print(f"2*4 = {module.doubler(4)}")  # Output: 2*4 = 8
+```
+
+### Package
+A package is a collection of Python modules into a directory with an `__init__.py` file, which distinguishes it from just a directory of Python scripts.
+
+**Structure**:
+```
+my_project/
+├── __init__.py
+├── module1.py
+└── module2.py
+```
+
+### Library
+A library is a collection of packages or it can be a single package. Examples include NumPy, PyTorch, and Pandas.
+
+**Note**: The terms "package" and "library" are often used interchangeably.
+
+## Creating a Python Package
+
+### Step-by-Step Process
+
+1. **Create a folder** with the package name
+2. **Create an empty `__init__.py` file**
+3. **Create the required modules**
+4. **In the `__init__.py` file**, add code to reference the modules needed in the package
+
+### Example Package Structure
+
+**Modules**:
+- `module1.py` - contains `square()` and `doubler()` functions
+- `module2.py` - contains `mean()` function
+
+**`__init__.py` contents**:
+```python
+from . import module1
+from . import module2
+```
+
+### Package Directory Structure
+```
+my_project/
+├── __init__.py
+├── module1.py
+└── module2.py
+```
+
+## Verifying the Package
+
+### Verification Steps
+
+1. **Open a bash terminal**
+2. **Navigate to the directory** where your package is located
+3. **Open Python interpreter** by running `python` in the shell
+4. **Import the package**: `import my_project`
+5. **If no errors occur**, the package is successfully loaded
+
+### Testing Package Functions
+
+**General structure**:
+```
+package_name.module_name.function_name(parameters)
+```
+
+**Example**:
+```python
+my_project.module1.square(2)  # Returns 4
+```
+
+## Using the Package in Other Scripts
+
+If the package folder is in the same directory as your script, you can import and use the functions:
+
+**Example usage in `test.py`**:
+```python
+from my_project.module1 import square, doubler
+from my_project.module2 import mean
+
+print(f"4^2 = {square(4)}")           # 4^2 = 16
+print(f"2*4 = {doubler(4)}")          # 2*4 = 8
+print(f"(2+1+3)/3 = {mean([2,1,3])}")  # (2+1+3)/3 = 2
+```
+
+## Key Points
+
+- **Module**: Single `.py` file with Python code
+- **Package**: Directory of modules with `__init__.py` file
+- **Library**: Collection of packages (or single package)
+- **Import behavior**: When you import a module or package, Python creates an object of type "module"
+- **File system distinction**: The difference between module and package exists only at the file system level
+- **Interchangeable terms**: "Package" and "library" are often used interchangeably in practice
+
+## Important Notes
+
+- The `__init__.py` file is required to make a directory a package
+- The package folder must be in the same directory as your script to import it directly
+- Popular libraries like NumPy, PyTorch, and Pandas are also referred to as packages
