@@ -19,3 +19,9 @@ Its rich and robust ecosystem provides developers with tools, libraries, and fun
 - Best Practice: Code each functionality in a seperate file
     - Make code maintainance efficient and easy
     - Helps when new functionality is added
+
+## Using Spaces for Indentation
+**PEP8 Guidelines**
+- Use 4 spaces is recommended than Tab
+    - for appropriate readability
+- Use blank lines to seperate functions and classes
