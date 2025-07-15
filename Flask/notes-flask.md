@@ -870,13 +870,6 @@ def get_network_info(net_id: UUID):
 
 ## 🚨 Flask Error Handling
 
-### 🎯 Learning Objectives
-- Describe different HTTP status codes used by APIs.
-- Explain how error handling works in Flask.
-- Show how to return appropriate errors from API endpoints.
-
----
-
 ### 📊 HTTP Status Code Categories
 
 | Range     | Meaning                      |
@@ -977,3 +970,154 @@ def server_error(e):
 * Flask returns **200 OK** by default unless you specify otherwise.
 * You can return custom codes with a tuple or `make_response`.
 * Flask supports **global error handlers** using `@app.errorhandler(...)`.
+
+---
+
+# 🚀 Flask Overview – CRUD, Templates, and Basic App Setup
+
+### 🧠 Key Concepts
+- Flask is a **micro-framework** in Python used to quickly build web applications.
+- Flask supports **CRUD operations** using HTTP methods:
+  - **POST** – Create
+  - **GET** – Read
+  - **PUT / PATCH** – Update
+  - **DELETE** – Delete
+
+---
+
+### 🔁 CRUD with Flask HTTP Methods
+
+| Method   | Operation | Usage Example               |
+|----------|-----------|-----------------------------|
+| POST     | Create    | Create user/data            |
+| GET      | Read      | Retrieve data from server   |
+| PUT/PATCH| Update    | Modify existing data        |
+| DELETE   | Delete    | Remove data or objects      |
+
+> Most apps use POST for creation/modification, and GET for fetching.
+
+---
+
+### 🛠️ Steps to Create a Flask Web App
+
+#### Step 1: Install Flask
+
+```bash
+pip install flask
+```
+
+#### Step 2: Import Flask
+
+```python
+from flask import Flask
+```
+
+#### Step 3: Create Flask App Object
+
+```python
+app = Flask("MyFirstWebApplication")
+```
+
+#### Step 4: Define a Route
+
+```python
+@app.route("/")
+def hello():
+    return "Hello World!"
+```
+
+* Defaults to `GET` if no method specified.
+
+#### Step 5: Add `__main__` Check and Run
+
+```python
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+---
+
+### 🌐 Accessing the App
+
+* Run your Python file.
+* Flask starts a development server at:
+  `http://127.0.0.1:5000`
+* Visiting the URL will display:
+  `Hello World!`
+
+---
+
+### 🖼️ Using Templates in Flask
+
+Templates are **HTML pages** served via Flask and can be:
+
+* **Static** – fixed content
+* **Dynamic** – content changes based on request data
+
+#### 📁 Directory Structure
+
+```
+/project
+│
+├── /templates/     ← HTML files
+├── /static/        ← Images, CSS, JS
+└── app.py
+```
+
+#### 🧪 Example: Rendering a Static HTML Page
+
+```python
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route("/sample")
+def get_sample_html():
+    return render_template("sample.html")
+```
+
+* HTML file `sample.html` should be in the `templates/` folder.
+* Static assets like images used in HTML should be in `static/`.
+
+---
+
+### 👤 Dynamic URL Parameters
+
+```python
+@app.route("/user/<username>", methods=["GET"])
+def greet_user(username):
+    return render_template("user.html", name=username)
+```
+
+* `<username>` is a dynamic route variable.
+* Passed into the HTML template as a parameter.
+
+---
+
+### 📥 Request Parameter Example
+
+```python
+from flask import request
+
+@app.route("/user", methods=["GET"])
+def user_by_param():
+    username = request.args.get("username")
+    return render_template("user.html", name=username)
+```
+
+* Username is passed as a **query parameter**:
+  `http://localhost:5000/user?username=John`
+
+---
+
+### ✅ Summary
+
+* Flask supports **CRUD operations** via HTTP methods.
+* To create a web app:
+
+  * Install Flask
+  * Import and instantiate Flask
+  * Define routes
+  * Run the app
+* Flask can **render both static and dynamic HTML templates**.
+* Dynamic data can be passed via **URL paths** or **request parameters**.
