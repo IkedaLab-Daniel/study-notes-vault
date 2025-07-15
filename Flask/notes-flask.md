@@ -867,3 +867,113 @@ def get_network_info(net_id: UUID):
 * Return or process API responses based on their status codes.
 * Use **dynamic routing** in Flask to build flexible RESTful APIs.
 * Flask supports **parameter types** (string, int, float, path, uuid) for route validation.
+
+## 🚨 Flask Error Handling
+
+### 🎯 Learning Objectives
+- Describe different HTTP status codes used by APIs.
+- Explain how error handling works in Flask.
+- Show how to return appropriate errors from API endpoints.
+
+---
+
+### 📊 HTTP Status Code Categories
+
+| Range     | Meaning                      |
+|-----------|------------------------------|
+| 100–199   | Informational                |
+| 200–299   | Success                      |
+| 300–399   | Redirection                  |
+| 400–499   | Client errors (request issue)|
+| 500–599   | Server errors (server issue) |
+
+---
+
+### ✅ Common HTTP Status Codes in Flask
+
+| Code | Description                                      |
+|------|--------------------------------------------------|
+| 200  | OK – Successful request (default in Flask)       |
+| 201  | Created – Resource successfully created           |
+| 202  | Accepted – Request accepted for processing        |
+| 204  | No Content – Success but no content returned      |
+| 400  | Bad Request – Invalid or missing request details  |
+| 401  | Unauthorized – Missing/invalid credentials        |
+| 403  | Forbidden – Access denied                         |
+| 404  | Not Found – Resource not found                    |
+| 405  | Method Not Allowed – Operation not supported      |
+| 422  | Unprocessable Entity – Missing query param, etc.  |
+| 500  | Internal Server Error – Something broke on server |
+
+---
+
+### 🔁 Returning Custom Status Codes
+
+#### Flask Default Behavior
+- Returning from a route returns status **200** automatically.
+- `jsonify(...)` also returns **200** by default.
+
+#### Override with Tuple
+
+```python
+@app.route("/")
+def home():
+    return "<h1>My First App</h1>", 200
+```
+
+#### Use `make_response`
+
+```python
+from flask import make_response
+
+@app.route("/")
+def custom_response():
+    res = make_response("<h1>My First App</h1>")
+    res.status_code = 200
+    return res
+```
+
+---
+
+### 🔍 Example: Error Handling in Route
+
+```python
+@app.route("/search")
+def search_response():
+    query = request.args.get("q")
+    if not query:
+        return {"message": "Input parameter missing"}, 422
+
+    result = fetch_from_database(query)
+    if result:
+        return result
+    else:
+        return {"message": "Resource not found"}, 404
+```
+
+* **No query param** → 422
+* **Valid resource** → 200
+* **Missing resource** → 404
+
+---
+
+### 🧱 Flask Application-Level Error Handlers
+
+```python
+@app.errorhandler(404)
+def not_found(e):
+    return {"message": "API not found"}, 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return {"message": "Something went wrong on the server"}, 500
+```
+
+---
+
+### ✅ Summary
+
+* HTTP responses include status codes to indicate success or error.
+* Flask returns **200 OK** by default unless you specify otherwise.
+* You can return custom codes with a tuple or `make_response`.
+* Flask supports **global error handlers** using `@app.errorhandler(...)`.
