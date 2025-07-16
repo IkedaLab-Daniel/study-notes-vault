@@ -184,3 +184,88 @@
 - RDBMS is ideal for **structured data**, offering **powerful querying**, **integrity**, and **flexibility**.
 - Tables relate through **common keys**, minimizing redundancy.
 - Despite the rise of NoSQL, **relational databases remain dominant** in many industries.
+
+## 🗃️ NoSQL Databases
+
+### 📌 What is NoSQL?
+- **NoSQL** = "Not Only SQL" (not "No SQL")
+- A **non-relational** database design offering:
+  - **Flexible schemas**
+  - **High performance**
+  - **Easy scalability**
+- Stores **structured**, **semi-structured**, and **unstructured** data
+- Does **not require fixed tables or schemas**
+- Some support SQL-like queries, but not mandatory
+
+---
+
+### 🧩 Types of NoSQL Databases
+
+#### 1. 🗝️ Key-Value Store
+- **Data Structure**: `{ "key": "value" }`
+- **Use Cases**:
+  - Session management
+  - Caching
+  - Real-time recommendations
+- **Examples**: Redis, Memcached, DynamoDB
+- **Limitation**: Poor for complex querying or relationships
+
+#### 2. 📄 Document-Based
+- **Data Structure**: JSON-like documents
+- **Use Cases**:
+  - E-commerce platforms
+  - Medical records
+  - CRMs & analytics
+- **Examples**: MongoDB, CouchDB, Cloudant
+- **Limitation**: Limited support for multi-operation transactions
+
+#### 3. 📊 Column-Based
+- **Data Structure**: Column families (not rows)
+- **Use Cases**:
+  - Time-series data
+  - IoT and sensor data
+  - High write throughput apps
+- **Examples**: Cassandra, HBase
+- **Limitation**: Less flexible for changing query patterns
+
+#### 4. 🌐 Graph-Based
+- **Data Structure**: Nodes (data) + Edges (relationships)
+- **Use Cases**:
+  - Social networks
+  - Fraud detection
+  - Access control
+- **Examples**: Neo4j, CosmosDB
+- **Limitation**: Not ideal for high-volume analytics
+
+---
+
+### 🚀 Advantages of NoSQL
+
+- **Scalability**: Easily scales across data centers and cloud
+- **Flexible schemas**: Supports dynamic and schema-less data
+- **High performance** for big data and real-time apps
+- **Low-cost** architecture: Uses commodity hardware
+- **Agility**: Easy to iterate and develop modern applications
+
+---
+
+### 🆚 NoSQL vs RDBMS
+
+| Feature                        | RDBMS                            | NoSQL                                 |
+|-------------------------------|----------------------------------|----------------------------------------|
+| Schema                        | Fixed, rigid schema              | Flexible or schema-less                |
+| Query Language                | SQL                              | Varies (no standard)                   |
+| Data Types                    | Structured                       | Structured, semi-, and unstructured    |
+| Scalability                   | Vertical                         | Horizontal (scale-out)                 |
+| Cost                          | High (commercial systems)        | Low (commodity hardware)               |
+| ACID Compliance               | Yes                              | Rarely (eventual consistency common)   |
+| Maturity                      | Very mature and stable           | Newer, evolving rapidly                |
+| Use Cases                     | OLTP, OLAP, BI                   | Big data, real-time web/mobile apps    |
+
+---
+
+### 🔚 Conclusion
+
+- NoSQL databases are ideal for **modern, cloud-native** applications.
+- Offer **performance, scalability, and flexibility** beyond traditional RDBMS.
+- Increasingly adopted for **mission-critical** use cases alongside traditional databases.
