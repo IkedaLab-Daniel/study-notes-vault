@@ -633,4 +633,170 @@ No need to write JOIN queries manually.
 
 > In this course, you’ll focus on **Django ORM**, a powerful and widely-used Python ORM tool.
 
+## 🧰 Django ORM: Simplifying Database Operations in Python
 
+### 🔄 What Is Django ORM?
+
+* Django ORM (Object-Relational Mapping) is a component of the **Django Web Framework**.
+* It **abstracts database interactions** by allowing developers to work with **Python classes and objects** instead of writing raw SQL queries.
+* Each **Django model** maps to a **database table**.
+* Each **object (instance of the model)** maps to a **row** in that table.
+* Each **field** in the model maps to a **column** in the table.
+
+---
+
+### 🧱 Mapping Models to Tables
+
+```python
+from django.db import models
+
+class User(models.Model):
+    first_name = models.CharField(max_length=50)
+    date_of_birth = models.DateField()
+```
+
+* Django automatically creates a `User` table with columns `first_name` (VARCHAR) and `date_of_birth` (DATE).
+* Fields include optional **parameters** like:
+
+  * `null=True`
+  * `blank=True`
+  * `default=value`
+  * `primary_key=True`
+
+---
+
+### 🔗 Modeling Relationships
+
+#### 1. **One-to-One Relationship**
+
+**ER Example**: A `User` can have one `Instructor` profile.
+
+```python
+class Instructor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_full_time = models.BooleanField()
+    total_learners = models.IntegerField()
+```
+
+> Django adds a foreign key in `Instructor` pointing to `User`.
+
+---
+
+#### 2. **Many-to-One Relationship**
+
+**ER Example**: A `Course` can have many `Projects`.
+
+```python
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+
+class Project(models.Model):
+    name = models.CharField(max_length=100)
+    grade = models.IntegerField()
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+```
+
+> A `ForeignKey` creates a many-to-one relationship. Multiple `Project`s can link to a single `Course`.
+
+---
+
+#### 3. **Many-to-Many Relationship**
+
+**ER Example**: `Course` and `Learner` have a many-to-many relationship.
+
+```python
+class Learner(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    occupation = models.CharField(max_length=100)
+
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    learners = models.ManyToManyField(Learner, through='Enrollment')
+```
+
+**Intermediate Model (with extra data):**
+
+```python
+class Enrollment(models.Model):
+    learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    date_enrolled = models.DateField()
+```
+
+> Use `through='Enrollment'` to customize and track details of the many-to-many link.
+
+---
+
+### 🧬 Inheritance in Django Models
+
+#### 1. **Multi-Table Inheritance**
+
+* Each class gets its own database table.
+
+```python
+class User(models.Model):
+    name = models.CharField(max_length=50)
+
+class Instructor(User):
+    is_full_time = models.BooleanField()
+```
+
+> Django automatically creates a **one-to-one** link between `Instructor` and `User`.
+
+#### 2. **Abstract Base Classes**
+
+```python
+class Person(models.Model):
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        abstract = True
+
+class Learner(Person):
+    occupation = models.CharField(max_length=100)
+```
+
+> `Person` does **not** create a database table. Only `Learner` does.
+
+#### 3. **Proxy Models**
+
+```python
+class CustomUser(User):
+    class Meta:
+        proxy = True
+
+    def custom_behavior(self):
+        return "Hello!"
+```
+
+> Use proxy models to change behavior without modifying fields.
+
+---
+
+### 📊 Final Data Model Summary
+
+| Model        | Relationship                                             |
+| ------------ | -------------------------------------------------------- |
+| `User`       | Base table with shared fields                            |
+| `Learner`    | Inherits from `User`, M2M with `Course` via `Enrollment` |
+| `Instructor` | Inherits from `User`, M2M with `Course`                  |
+| `Course`     | M2M with `Learner` and `Instructor`                      |
+| `Project`    | M2O with `Course`                                        |
+| `Enrollment` | Join table for `Course` ↔ `Learner`                      |
+
+---
+
+### ✅ Summary
+
+* Each **Django model** maps to a **table**.
+* Each **field** maps to a **column** (with type and constraints).
+* Django supports:
+
+  * **One-to-One**
+  * **Many-to-One**
+  * **Many-to-Many** (with or without custom join models)
+* **Model inheritance** allows sharing common fields or behavior.
+* Django automatically generates the SQL schema based on your model classes.
+
+With Django ORM, **you manage data like Python objects**, letting Django handle the SQL under the hood.
