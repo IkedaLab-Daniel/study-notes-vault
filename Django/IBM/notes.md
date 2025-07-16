@@ -445,3 +445,79 @@
 - Easily extendable and scalable.
 - Ideal for developers looking to deploy robust web applications efficiently.
 
+## 🧠 Object-Oriented Analysis and Design (OOAD)
+
+### 🎯 What is OOAD?
+- OOAD stands for **Object-Oriented Analysis and Design**
+- A methodology for **analyzing** and **designing** software systems
+- Used when development will be done using **object-oriented programming (OOP)** languages (e.g., Java, C++, Python)
+
+---
+
+### 🧱 Core Concepts of OOP
+
+#### 🔹 Objects
+- Represent real-world entities
+- Contain:
+  - **Data (attributes/properties)**
+  - **Behavior (methods/actions)**
+
+#### 🔹 Classes
+- **Blueprints/templates** for objects
+- Define:
+  - Attributes (e.g., `LastName`)
+  - Methods (e.g., `cancelAppointment()`)
+- Example:
+  - Class: `Patient`
+  - Object: `Nia Patel` (instance of `Patient`)
+
+#### 🔹 Instantiation
+- Creating an actual object from a class
+- Attributes are assigned specific values
+- Methods become usable to perform actions
+
+---
+
+### 🔄 Purpose of OOAD
+
+- Break down a system into **interacting objects**
+- Enables **modular design** and **parallel development**
+- Promotes **code reuse**, **flexibility**, and **scalability**
+
+---
+
+### 📊 UML Diagrams in OOAD
+
+#### 🔹 Class Diagram (Structural UML Diagram)
+- Represents the **structure** of a system
+- Shows:
+  - **Classes**
+  - **Attributes** (data)
+  - **Methods** (behavior)
+  - **Relationships** (e.g., inheritance, association)
+
+#### 🔹 Inheritance
+- Subclass inherits properties and methods from the **parent class**
+- May also define **additional attributes/methods**
+
+#### 🧬 Example:
+```
+
+MedicalPersonnel
+├── Nurse
+├── Doctor
+│   └── Specialist
+└── Technician
+
+```
+- `Doctor` inherits from `MedicalPersonnel`
+- `Specialist` inherits from `Doctor`
+
+---
+
+### 🧾 Summary
+- OOAD involves planning a system based on **interacting objects**
+- **Objects = Data + Behavior**
+- **Classes** serve as blueprints for objects
+- **Class diagrams** show object relationships, inheritance, and structure
+
