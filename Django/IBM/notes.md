@@ -521,3 +521,116 @@ MedicalPersonnel
 - **Classes** serve as blueprints for objects
 - **Class diagrams** show object relationships, inheritance, and structure
 
+## 🧠 Integrating SQL with Object-Oriented Programming (OOP) and ORM
+
+### 🗃️ The Role of Databases in Applications
+
+* Software developers often use **databases** as the main data store.
+* To access and manipulate data, they must integrate **SQL statements** into their **application code** using **database APIs**.
+* Data retrieved from the database is returned as a **Cursor**, a structure used to **iterate over result rows**.
+
+---
+
+### 🔄 Many-to-Many Relationships
+
+* **Entities**: `Course` and `Learner`
+* A **Course** can have many Learners, and a **Learner** can enroll in many Courses.
+* This **Many-to-Many relationship** is stored using an **associative table**.
+
+---
+
+### 🐍 Example: Executing SQL in Python
+
+1. **Connect** to SQLite:
+
+   ```python
+   import sqlite3
+   conn = sqlite3.connect('courses.db')
+   cursor = conn.cursor()
+   ```
+2. **Insert** a learner:
+
+   ```python
+   cursor.execute("INSERT INTO learner (first_name, last_name) VALUES (?, ?)", ("John", "Doe"))
+   ```
+3. **Query** the learner:
+
+   ```python
+   cursor.execute("SELECT * FROM learner")
+   print(cursor.fetchone())
+   ```
+
+---
+
+### 🧱 OOP vs SQL: Data Modeling
+
+| Aspect                | OOP                            | SQL                            |
+| --------------------- | ------------------------------ | ------------------------------ |
+| Entity Representation | Classes & Objects              | Tables, Rows & Columns         |
+| Data Manipulation     | Methods                        | SQL DML (INSERT, UPDATE, etc.) |
+| Relationships         | Inheritance, Association, etc. | JOIN, FOREIGN KEY              |
+
+Example:
+
+* `Course` class: has `name`, `description`, and a list of learners
+* `Learner` class: has `first_name`, `last_name`, `dob`, `occupation`, and a `print_profile()` method
+
+---
+
+### 🧩 Bridging the Gap: ORM (Object-Relational Mapping)
+
+* ORM allows developers to use **OOP to interact with databases**.
+* Maps class **objects** to database **rows** and vice versa.
+
+Example:
+
+```python
+course = Course.objects.get(name="Introduction to Python")
+learners = course.learners.all()
+```
+
+No need to write JOIN queries manually.
+
+---
+
+### 🛠️ Popular ORM Libraries
+
+| Language   | ORM Libraries          |
+| ---------- | ---------------------- |
+| Python     | Django ORM, SQLAlchemy |
+| Java       | Hibernate, OpenJPA     |
+| JavaScript | Sequelize, TypeORM     |
+
+---
+
+### ✅ Pros of ORM
+
+* Define databases with **class designs**
+* **No SQL required** for CRUD
+* **Multi-database support** through a unified interface
+* **Faster** development & deployment
+
+---
+
+### ❌ Cons of ORM
+
+* Imperfect mapping between **OOP & SQL models**
+* **Tight coupling** of data access and business logic
+* **Harder to debug** due to abstraction
+* **Potential performance issues** due to inefficient SQL generation
+
+---
+
+### 🧾 Summary
+
+* **SQL and OOP model data differently**
+* **ORM bridges** the two paradigms
+* ORM enables developers to work with databases **without writing SQL**
+* **Advantages**: ease, speed, consistency across databases
+* **Drawbacks**: mapping issues, debugging difficulty, performance limitations
+
+---
+
+> In this course, you’ll focus on **Django ORM**, a powerful and widely-used Python ORM tool.
+
+
