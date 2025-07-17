@@ -1,0 +1,71 @@
+body{
+    text-align: center;
+    margin: auto;
+}
+h1,p{
+    font-weight: bold;
+}
+table{
+    margin: auto;
+    border: 2px solid #000000;
+    margin-top: 50px;
+    border-radius: 15px;
+    background-color: white;
+    text-align: center;
+}
+th{
+    text-align: center;
+}
+
+.nav{
+    width: 200%;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.nav li{
+    margin-right:  6%;
+    margin-left:  6%;
+    font-size: large;
+    font-weight: bold;
+}
+.form{
+    margin: auto;
+    margin-top: 20px;
+    background-color: white;
+    text-align: center;
+    width: 50%;
+    height: 50%;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    width:100%;
+    padding: 10px;
+    text-align: left;
+    margin-top: 10px;
+    width: 100%;
+}
+input[type="text"],input[type="email"],input[type="tel"]{
+    width: 100%;
+}
+textarea{
+    width: 500px;
+    height: 200px;
+}
+.btn{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: left;
+    margin-left: 10px;
+}
+.active {
+    background-color: #007bff;
+    color: #fff;
+}
