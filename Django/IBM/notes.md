@@ -951,3 +951,132 @@ learner = Learner.objects.get(id=2)
 * You can **manage related objects dynamically** using `add()`, `create()`, `remove()`, `clear()`, and `set()` methods.
 
 This model API makes it easy to manipulate related data while keeping your code clean and avoiding direct SQL.
+
+## 🧩 Online Course App Models
+
+Entities used in the app:
+- **Content Models**: `Course`, `Lesson`, `Question`, `Choice`
+- **User Models**: `User`, `Instructor`, `Learner`
+- **Action Models**: `CourseEnrollment`, `Submission`
+
+---
+
+## 🛠️ Django Admin Site for Content Management
+
+### 🎯 Purpose
+- Separates **content publishers (admin)** from **users (learners)**
+- Instructors and site managers use the admin site to manage:
+  - Courses
+  - Lessons
+  - Questions
+  - Choices
+
+---
+
+## 👤 Create Superuser for Admin Site
+
+```bash
+python manage.py createsuperuser
+````
+
+> Prompts for username and password.
+> Once created, start server and log in via `/admin`.
+
+---
+
+## 📝 Register Models in Admin
+
+In `onlinecourse/admin.py`:
+
+```python
+from django.contrib import admin
+from .models import Course, Instructor
+
+admin.site.register(Course)
+admin.site.register(Instructor)
+```
+
+Refresh the admin page to see **Course** and **Instructor** under *Onlinecourse* section.
+
+---
+
+## 🧮 Model Field Widgets in Admin
+
+* Boolean: checkbox (`is_full_time`)
+* Integer: number input (`total_learners`)
+* Related model (`User`) is editable through the linked Instructor model
+* Some fields like `total_learners` are better calculated automatically, not managed manually
+
+---
+
+## 🧩 Customize Admin Form Fields
+
+To control **which fields are shown** and their order:
+
+```python
+class CourseAdmin(admin.ModelAdmin):
+    fields = ['pub_date', 'name', 'description']
+
+admin.site.register(Course, CourseAdmin)
+```
+
+Only `pub_date`, `name`, and `description` fields are now shown when adding/editing courses.
+
+---
+
+## 📚 Inline Models (Nested Forms)
+
+To edit related models (like `Lesson`) inside the parent model (`Course`) form:
+
+```python
+class LessonInline(admin.StackedInline):
+    model = Lesson
+    extra = 5  # max additional lesson forms
+
+class CourseAdmin(admin.ModelAdmin):
+    fields = ['pub_date', 'name', 'description']
+    inlines = [LessonInline]
+```
+
+Now, adding a Course also allows adding **up to 5 Lessons inline**.
+
+---
+
+## 📋 Display Fields in List View
+
+To control which fields show in the table view of a model:
+
+```python
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ['name', 'pub_date']
+```
+
+Now only `name` and `pub_date` appear in the course list.
+
+---
+
+## 🔍 Search & Filter in Admin List View
+
+To enable search and filters:
+
+```python
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ['name', 'pub_date']
+    search_fields = ['name']
+    list_filter = ['pub_date']
+```
+
+* Adds a **search box** to find courses by name
+* Adds a **filter sidebar** for pub\_date
+
+---
+
+## ✅ Summary
+
+* Django admin is a powerful, customizable tool for managing models.
+* You can:
+
+  * Control displayed fields with `fields` and `list_display`
+  * Add related models inline using `Inline` classes
+  * Add search and filter capabilities
+* Helps non-technical users manage content easily without extra code
