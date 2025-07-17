@@ -977,7 +977,7 @@ Entities used in the app:
 
 ```bash
 python manage.py createsuperuser
-````
+```
 
 > Prompts for username and password.
 > Once created, start server and log in via `/admin`.
@@ -1120,3 +1120,113 @@ class CourseAdmin(admin.ModelAdmin):
 - Django views handle requests and return responses.
 - You map views to URL patterns.
 - Status codes help indicate success or failure.
+
+# Django Templates Summary
+
+## What is a Django Template?
+A **Django template** is an HTML file embedded with Django **template tags** and **variables**. It's used to present data dynamically to the user, rendered by the Django template engine.
+
+---
+
+## Template Folder Structure
+To add a template to the `onlinecourse` app:
+
+```
+
+onlinecourse/
+├── templates/
+│   └── onlinecourse/
+│       └── course\_list.html
+
+```
+
+- The **first `onlinecourse`** is the app folder.
+- The **second `onlinecourse`** inside `templates` is for **namespace** to avoid name clashes with templates from other apps.
+
+---
+
+## Rendering a Template
+
+- Templates are rendered **with a context**—a dictionary-like object containing variables.
+- Django replaces variables with their values and executes tags like `{% if %}`, `{% for %}`, etc.
+- Example:
+  ```django
+  {% if course_list %}
+    {% for course in course_list %}
+      <h1>{{ course.name }}</h1>
+      <p>{{ course.description }}</p>
+    {% endfor %}
+  {% else %}
+    <p>No courses available.</p>
+  {% endif %}
+```
+
+---
+
+## Views and Context
+
+* Views gather data and **pass it to templates** using the `render()` method:
+
+  ```python
+  def index(request):
+      courses = Course.objects.all()
+      context = {'course_list': courses}
+      return render(request, 'onlinecourse/course_list.html', context)
+  ```
+
+* Parameters to `render()`:
+
+  1. `request`
+  2. Template path (relative to `templates/`)
+  3. `context` dictionary
+
+---
+
+## Output
+
+* The `course_list.html` template receives course data from the view and displays it dynamically.
+* Example output includes headers and paragraphs for:
+
+  * Introduction to Python
+  * Django Course
+
+---
+
+## Adding Static Files (CSS)
+
+* Use `{% load static %}` at the top of the HTML.
+
+* Reference static files using `{% static 'css/style.css' %}`.
+
+* Example:
+
+  ```html
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  ```
+
+* Add CSS classes to HTML elements to style:
+
+  ```html
+  <body class="main-body">
+    <p class="course-desc">{{ course.description }}</p>
+    <hr class="divider">
+  </body>
+  ```
+
+---
+
+## Result
+
+* CSS styles are applied:
+
+  * Light gray background
+  * Green course descriptions
+  * Horizontal line separators
+
+---
+
+## Key Takeaways
+
+* Django templates separate presentation from logic.
+* Views provide data using context dictionaries.
+* Static files like CSS enhance template design.
