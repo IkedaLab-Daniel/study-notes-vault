@@ -1486,3 +1486,118 @@ You now know how to:
 * Register and log out users
 * Use sessions and cookies
 * Assign permissions and groups
+
+## Using Bootstrap in Django Templates
+
+### 🎨 What is Bootstrap?
+
+Bootstrap is a free front-end framework for building responsive, interactive web pages. It provides:
+- Pre-designed HTML and CSS templates
+- A fast way to style Django templates
+- Easy-to-use UI components (e.g., navbars, cards, tables)
+
+---
+
+### ⚙️ How to Add Bootstrap to a Django Project
+
+The easiest way: use a CDN link.
+
+```html
+<!-- Add this to the <head> of your base.html template -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+```
+
+---
+
+## 🧭 Navigation Bar with Sign-In Form
+
+Use Bootstrap’s `navbar` component for site navigation.
+
+### HTML Structure:
+
+```html
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">OnlineCourse</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Home</a>
+    </li>
+  </ul>
+  <form class="form-inline" method="POST" action="{% url 'onlinecourse:login' %}">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username">
+    <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password">
+    <button class="btn btn-primary" type="submit">Sign In</button>
+    <a href="{% url 'onlinecourse:register' %}" class="btn btn-link">Sign Up</a>
+  </form>
+</nav>
+```
+
+---
+
+## 📦 Course Cards with Card Deck
+
+To display multiple courses:
+
+```html
+<div class="container mt-4">
+  <div class="card-deck">
+    {% for course in courses %}
+      <div class="card">
+        <img src="{{ course.image_url }}" class="card-img-top" alt="{{ course.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ course.name }}</h5>
+          <p class="card-text">{{ course.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+```
+
+* `container`: wraps content and aligns it nicely
+* `card-deck`: equal-width cards in a grid
+* `card`, `card-title`, `card-text`: basic Bootstrap card layout
+
+---
+
+## 📋 Student Table
+
+To show tabular data like a list of enrolled students:
+
+```html
+<div class="container mt-4">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+        <tr>
+          <td>{{ student.first_name }}</td>
+          <td>{{ student.last_name }}</td>
+          <td>{{ student.email }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+```
+
+---
+
+## ✅ Summary
+
+| Bootstrap Feature   | Purpose                            |
+| ------------------- | ---------------------------------- |
+| `navbar`            | Navigation menus                   |
+| `form-inline`       | Sign-in form aligned in the navbar |
+| `container`         | Layout wrapper with padding        |
+| `card`, `card-deck` | Stylish course previews            |
+| `table`             | Tabular view for student data      |
+
+Bootstrap helps build clean, interactive templates quickly inside Django.
