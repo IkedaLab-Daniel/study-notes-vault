@@ -1325,3 +1325,164 @@ onlinecourse/
 | Function-Based      | Clear, explicit       | Repetitive, not reusable       | Simple, custom views                       |
 | Class-Based         | Organized, reusable   | More complex, less transparent | Moderate to complex logic                  |
 | Generic Class-Based | Very concise for CRUD | Harder to customize deeply     | Standard CRUD operations and form handling |
+
+## Django Authentication and Authorization
+
+### 🔐 What is Authentication?
+
+Authentication is the process of verifying the identity of a user using credentials like:
+- Username and password
+- One-time passcodes (OTP)
+- Single sign-on (SSO)
+- Biometrics (face recognition, fingerprint)
+
+In Django, the **`User` model** is used to handle authentication.
+
+### ✅ User Login Flow
+
+1. **Login Form**:
+   - HTML form with `username` and `password` fields
+   - Sends a POST request to the login view
+
+2. **Login View**:
+   ```python
+   from django.contrib.auth import authenticate, login
+
+   def login_view(request):
+       username = request.POST['username']
+       password = request.POST['password']
+       user = authenticate(request, username=username, password=password)
+       if user is not None:
+           login(request, user)
+           return redirect('index')
+       else:
+           return HttpResponse("Invalid login")
+```
+
+3. **Session Management**:
+
+   * Django creates a **session ID** stored in a browser cookie.
+   * Server maps session ID to the authenticated user.
+
+4. **Accessing Session Info**:
+
+   ```python
+   request.COOKIES['sessionid']
+   request.session.get('user_id')
+   ```
+
+---
+
+### 🚪 Logging Out
+
+To log out a user:
+
+```python
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+```
+
+---
+
+### 📝 User Registration
+
+1. **Registration Form**:
+
+   * Similar to login form
+   * Sends POST request to registration view
+
+2. **Registration View**:
+
+   ```python
+   from django.contrib.auth.models import User
+
+   def register_view(request):
+       username = request.POST['username']
+       password = request.POST['password']
+       user = User.objects.create_user(username=username, password=password)
+       login(request, user)
+       return redirect('index')
+   ```
+
+---
+
+### 🔒 What is Authorization?
+
+After authentication, **authorization** checks a user’s permissions to access resources.
+
+Managed via:
+
+* `User` model
+* `Permission` model
+* `Group` model
+
+---
+
+### 🔧 Permissions in Django
+
+Each model automatically gets 4 basic permissions:
+
+* `Can view`
+* `Can add`
+* `Can change`
+* `Can delete`
+
+You can manage these via:
+
+* Django Admin site (easiest)
+* Python code (programmatically)
+
+---
+
+### 👥 User Groups
+
+Groups allow easy permission management for multiple users.
+
+**Example**:
+
+* **Instructors** group:
+
+  * Permissions: Add, Change, Delete, View Course
+* **Learners** group:
+
+  * Permissions: View Course only
+
+Assign a user to a group to grant all group permissions:
+
+```python
+from django.contrib.auth.models import Group
+
+group = Group.objects.get(name='Instructors')
+user.groups.add(group)
+```
+
+---
+
+### 🔁 Extending the User Model
+
+To add custom roles like `Instructor` or `Learner`, you can:
+
+* Extend `AbstractUser` or `AbstractBaseUser`
+* Link additional data via one-to-one relationships
+
+---
+
+### ✅ Summary
+
+| Concept          | Purpose                              |
+| ---------------- | ------------------------------------ |
+| Authentication   | Verifies user identity               |
+| Authorization    | Grants/restricts access to resources |
+| User Model       | Stores basic user info               |
+| Permission Model | Manages access rights to models      |
+| Group Model      | Manages permissions for user roles   |
+
+You now know how to:
+
+* Authenticate users
+* Register and log out users
+* Use sessions and cookies
+* Assign permissions and groups
