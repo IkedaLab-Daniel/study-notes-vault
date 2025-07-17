@@ -1121,3 +1121,4 @@ def user_by_param():
   * Run the app
 * Flask can **render both static and dynamic HTML templates**.
 * Dynamic data can be passed via **URL paths** or **request parameters**.
+

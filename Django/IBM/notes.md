@@ -800,3 +800,30 @@ class CustomUser(User):
 * Django automatically generates the SQL schema based on your model classes.
 
 With Django ORM, **you manage data like Python objects**, letting Django handle the SQL under the hood.
+
+## 🔄 Django Model CRUD Operations
+
+Django provides full **Create, Read, Update, Delete (CRUD)** support via its model APIs, abstracting raw SQL queries.
+
+---
+
+### 📦 Models Overview
+- `User`: Base model (shared fields).
+- `Instructor` & `Learner`: Inherit from `User`.
+  - `Instructor`: Fields like `is_full_time`, `total_learners`.
+  - `Learner`: Fields like `occupation`, `social_link`.
+- `Course`: Many-to-Many with `Instructor` and `Learner`.
+- `Project`: Many-to-One with `Course`.
+
+---
+
+### ✅ CREATE
+
+Create and save an object:
+
+```python
+course_cloud_app = Course(name="Cloud App Dev")
+course_cloud_app.save()
+
+project1 = Project(name="Project A", course=course_cloud_app)
+project1.save()
