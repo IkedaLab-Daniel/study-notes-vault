@@ -269,3 +269,76 @@
 - NoSQL databases are ideal for **modern, cloud-native** applications.
 - Offer **performance, scalability, and flexibility** beyond traditional RDBMS.
 - Increasingly adopted for **mission-critical** use cases alongside traditional databases.
+
+## 📘 Relational Model & ER Model 
+
+### ✅ Why the Relational Model?
+- **Most widely used** data model
+- Offers:
+  - **Logical data independence**
+  - **Physical data independence**
+  - **Physical storage independence**
+- Data is stored in **tables** (rows and columns)
+
+---
+
+### 🧩 Entity Relationship (ER) Model
+
+- Alternative to the relational model
+- Used as a **design tool** for relational databases
+- Represents:
+  - **Entities** (objects/nouns like books, authors)
+  - **Attributes** (properties of entities)
+  - **Relationships** (how entities interact)
+
+#### 📐 ER Diagram Elements
+| Component      | Representation  | Example                     |
+|----------------|------------------|------------------------------|
+| Entity         | Rectangle         | `Book`, `Author`, `Loan`     |
+| Attribute      | Oval              | `Title`, `Edition`, `Year`   |
+| Relationship   | Diamond (not shown here) | `Writes`, `Borrows`         |
+
+---
+
+### 🏗️ Mapping ER Model to Relational Model
+
+- **Entity ➝ Table**
+- **Attribute ➝ Column**
+- **Instance ➝ Row**
+
+#### 🧾 Example: Book Entity ➝ Book Table
+
+| Column       | Data Type    | Description                           |
+|--------------|--------------|---------------------------------------|
+| Title        | `VARCHAR`    | Variable-length character string      |
+| Edition      | `INTEGER`    | Numeric edition number                |
+| Year         | `INTEGER`    | Year the book was written             |
+| ISBN         | `CHAR`       | Contains dashes, fixed length         |
+
+---
+
+### 🔑 Keys in Relational Databases
+
+#### Primary Key
+- **Uniquely identifies** each row (tuple) in a table
+- **Prevents duplication**
+- **Used to create relationships**
+
+#### Foreign Key
+- A primary key from another table
+- **Creates a link** between related tables
+
+---
+
+### 🧠 Key Concepts Recap
+
+- **Relational model** offers flexibility and independence
+- **Entities** = objects; **Attributes** = properties of entities
+- Tables are mapped from entities; attributes become columns
+- Common data types:
+  - `CHAR`, `VARCHAR` – for text
+  - `INTEGER`, `DECIMAL` – for numbers
+  - `DATE`, `TIME`, `TIMESTAMP` – for date/time
+- **Primary key** ensures uniqueness
+- **Foreign key** maintains relationships
+
