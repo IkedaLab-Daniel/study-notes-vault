@@ -1080,3 +1080,43 @@ class CourseAdmin(admin.ModelAdmin):
   * Add related models inline using `Inline` classes
   * Add search and filter capabilities
 * Helps non-technical users manage content easily without extra code
+Í
+## Django Function-Based Views Summary
+
+- A **Django view** is a Python function that takes an **HTTP request** and returns an **HTTP response**.
+- The **request object** includes read-only metadata:
+  - `method` (e.g. GET, POST)
+  - headers
+  - parameters
+  - payload
+
+### Example View Logic:
+- Query the first course from the database.
+- Pass the course name into an HTML template.
+- Return an `HttpResponse` object with HTML content.
+
+### HttpResponse Constructor Can Accept:
+- A string
+- An HTML page
+- A byte string
+
+### Mapping URL to View:
+- Done in the app’s `urls.py` file (URLConf).
+- Use the `path()` function:
+  - **First argument**: `route` (URL pattern)
+  - **Second argument**: view function
+  - **Third (optional)**: `name` (reference for reverse URL lookup)
+
+### Namespacing with app_name:
+- Use `app_name = "onlinecourse"` to namespace views.
+- Reference views using `onlinecourse:course`.
+
+### HTTP Status Codes:
+- `200 OK`: Request processed successfully.
+- `404 Not Found`: Course not found or error occurred.
+- Use `HttpResponse(content, status=404)` to return custom error messages or pages.
+
+### Recap:
+- Django views handle requests and return responses.
+- You map views to URL patterns.
+- Status codes help indicate success or failure.
