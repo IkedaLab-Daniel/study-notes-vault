@@ -1230,3 +1230,98 @@ onlinecourse/
 * Django templates separate presentation from logic.
 * Views provide data using context dictionaries.
 * Static files like CSS enhance template design.
+
+## Django Views: Function-Based vs Class-Based
+
+### Function-Based Views (FBVs)
+
+- Simple Python functions that handle requests and return responses.
+- Example:
+```python
+  def course_view(request):
+      course = Course.objects.first()
+      return HttpResponse(f"Course: {course.name}")
+```
+
+#### ✅ Pros:
+
+* Easy to read and understand.
+* Explicit control over logic.
+
+#### ❌ Cons:
+
+* Not easily reusable or extendable.
+* Requires manual method checks (`if request.method == 'POST'`).
+
+---
+
+### Class-Based Views (CBVs)
+
+* Views written as Python classes, subclassing `django.views.View`.
+* Organize code by HTTP method (`get()`, `post()`, etc.).
+* Example:
+
+  ```python
+  from django.views import View
+
+  class CourseView(View):
+      def get(self, request):
+          course = Course.objects.first()
+          return HttpResponse(f"Course: {course.name}")
+  ```
+
+  URL configuration:
+
+  ```python
+  path('course/', CourseView.as_view(), name='course')
+  ```
+
+#### How It Works:
+
+1. `.as_view()` returns a callable view.
+2. The `dispatch()` method routes to the correct handler (`get`, `post`, etc.).
+
+#### ✅ Pros:
+
+* Better structure for handling different methods.
+* Supports mixins and inheritance.
+
+#### ❌ Cons:
+
+* More abstract and complex.
+* Can be harder to trace and debug.
+
+---
+
+### Generic Class-Based Views (GCBVs)
+
+* Built-in CBVs for common patterns like displaying a list, handling forms, etc.
+* Example:
+
+  ```python
+  from django.views.generic.detail import DetailView
+
+  class CourseDetailView(DetailView):
+      model = Course
+      template_name = "onlinecourse/course_detail.html"
+  ```
+
+#### ✅ Pros:
+
+* Less code for common tasks.
+* Easy to build CRUD views.
+
+#### ❌ Cons:
+
+* Less flexible if customization is needed.
+* More layers of abstraction.
+
+---
+
+### Summary Table
+
+| Type                | Pros                  | Cons                           | Best For                                   |
+| ------------------- | --------------------- | ------------------------------ | ------------------------------------------ |
+| Function-Based      | Clear, explicit       | Repetitive, not reusable       | Simple, custom views                       |
+| Class-Based         | Organized, reusable   | More complex, less transparent | Moderate to complex logic                  |
+| Generic Class-Based | Very concise for CRUD | Harder to customize deeply     | Standard CRUD operations and form handling |
