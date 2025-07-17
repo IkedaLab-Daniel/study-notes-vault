@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'onlinecourse/course.css' %}">
+    <meta charset="UTF-8">
+    <title>Online Courses</title>
+</head>
+<body>
+<!--Authentication section-->
+{% if user.is_authenticated %}
+    <div class="rightalign">
+        <div class="dropdown">
+            <button class="dropbtn">{{user.first_name}}</button>
+            <div class="dropdown-content">
+                <a href="{% url 'onlinecourse:logout' %}">Logout</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="rightalign">
+        <div class="dropdown">
+            <form action="{% url 'onlinecourse:registration' %}" method="get">
+                <input class="dropbtn"  type="submit" value="Visitor">
+                <div class="dropdown-content">
+                    <a href="{% url 'onlinecourse:registration' %}">Signup</a>
+                    <a href="{% url 'onlinecourse:login' %}">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endif %}
+
+<h2>Popular courses list</h2>
+<hr>
+{% if course_list %}
+    <ul>
+    {% for course in course_list %}
+        <div class="container">
+          <div class="row">
+              <div class="column-33">
+                <img src="{{MEDIA_URL}}/{{ course.image }}" width="360" height="360" >
+            </div>
+            <div class="column-66">
+                <h1 class="xlarge-font"><b>{{ course.name }}</b></h1>
+                <p style="color:MediumSeaGreen;"><b>{{course.total_enrollment}} enrolled</b></p>
+                <p> {{ course.description }}</p>
+                <form action="{% url 'onlinecourse:enroll' course.id %}" method="post">
+                    {% csrf_token %}
+                <input class="button"  type="submit"  value="Enroll">
+              </form>
+            </div>
+          </div>
+        </div>
+        <hr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No courses are available.</p>
+{% endif %}
+</body>
+</html>
