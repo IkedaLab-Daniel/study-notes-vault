@@ -1601,3 +1601,52 @@ To show tabular data like a list of enrolled students:
 | `table`             | Tabular view for student data      |
 
 Bootstrap helps build clean, interactive templates quickly inside Django.
+
+## Django Static Files Management
+
+* To add static files (HTML templates, images, CSS) to Django apps:
+
+  * Create a `static/` folder inside each app.
+  * Inside `static/`, create a subfolder named after the app (e.g., `onlinecourse/`) for namespacing, to avoid filename conflicts across apps.
+
+* Django settings:
+
+  * Use `STATICFILES_DIRS` in `settings.py` to include additional external static directories.
+  * Django uses `STATICFILES_FINDERS`:
+
+    * `AppDirectoriesFinder`: finds app-specific static files.
+    * `FileSystemFinder`: finds static files in `STATICFILES_DIRS`.
+
+* Development environment:
+
+  * Static files may be scattered across multiple folders.
+
+* Deployment:
+
+  * Use Django’s built-in `staticfiles` app to gather all static files in one location.
+  * Define:
+
+    * `STATIC_ROOT`: absolute path where static files will be collected.
+    * `STATIC_URL`: URL prefix to serve static files (e.g., `/static/`).
+  * Run `collectstatic` to copy all static files into `STATIC_ROOT`.
+
+* Example structure after `collectstatic`:
+
+  ```
+  STATIC_ROOT/
+  ├── onlinecourse/
+  │   ├── css/
+  │   ├── fonts/
+  │   └── images/
+  ```
+
+* Serving static files:
+
+  * Locally by Django development server.
+  * Remotely by a dedicated web server using the path: `DOMAIN + STATIC_URL + relative file path`
+    e.g., `example.com/static/onlinecourse/course.css`
+
+* Summary:
+
+  * In development: static files are per-app and customizable.
+  * In production: static files are centralized using `collectstatic` for easier serving.
