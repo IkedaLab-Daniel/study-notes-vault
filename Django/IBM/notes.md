@@ -801,29 +801,153 @@ class CustomUser(User):
 
 With Django ORM, **you manage data like Python objects**, letting Django handle the SQL under the hood.
 
-## 🔄 Django Model CRUD Operations
+## 🔗 Django Model Relationships
 
-Django provides full **Create, Read, Update, Delete (CRUD)** support via its model APIs, abstracting raw SQL queries.
+### 📌 Key Relationships in Our Models
 
----
-
-### 📦 Models Overview
-- `User`: Base model (shared fields).
-- `Instructor` & `Learner`: Inherit from `User`.
-  - `Instructor`: Fields like `is_full_time`, `total_learners`.
-  - `Learner`: Fields like `occupation`, `social_link`.
-- `Course`: Many-to-Many with `Instructor` and `Learner`.
-- `Project`: Many-to-One with `Course`.
+* `User` → `Instructor` and `Learner`: **One-to-One**
+* `Course` → `Instructor` and `Learner`: **Many-to-Many**
+* `Project` → `Course`: **Many-to-One**
 
 ---
 
-### ✅ CREATE
+### ➡️ Forward vs. ⬅️ Backward Relationships
 
-Create and save an object:
+#### ✅ **Forward (Explicit) Access**
+
+You define this manually in your model using `ForeignKey`, `OneToOneField`, or `ManyToManyField`.
 
 ```python
-course_cloud_app = Course(name="Cloud App Dev")
-course_cloud_app.save()
+class Learner(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+```
 
-project1 = Project(name="Project A", course=course_cloud_app)
-project1.save()
+Access user from learner:
+
+```python
+learner.user
+```
+
+#### 🔁 **Backward (Implicit) Access**
+
+Django **automatically adds** reverse accessors for relationships.
+
+From `User` to `Learner`:
+
+```python
+user.learner
+```
+
+> Django names the reverse access using the lowercase model name, unless specified otherwise via `related_name`.
+
+---
+
+### 🧬 Inheritance as One-to-One
+
+When a model **inherits** another model, Django implicitly creates a one-to-one link.
+
+```python
+class Learner(User):
+    ...
+```
+
+* Forward access:
+
+  ```python
+  learner.user_ptr
+  ```
+
+* Backward access (from `User`):
+
+  ```python
+  user.learner
+  ```
+
+---
+
+### 🔄 Many-to-One Example: Project → Course
+
+```python
+class Project(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+```
+
+* **Forward access** (explicit):
+
+  ```python
+  project.course
+  ```
+
+* **Backward access** (implicit):
+
+  ```python
+  course.project_set.all()
+  ```
+
+> `_set` is the default suffix unless overridden.
+
+---
+
+### 🔗 Many-to-Many Example: Course ↔ Instructor
+
+```python
+class Course(models.Model):
+    instructors = models.ManyToManyField(Instructor)
+```
+
+* Forward:
+
+  ```python
+  course.instructors.all()
+  ```
+
+* Backward:
+
+  ```python
+  instructor.course_set.all()
+  ```
+
+---
+
+## 🗑️ `on_delete` Options for ForeignKey
+
+When the **related object is deleted**, these behaviors apply:
+
+| Option        | Behavior Description                                                        |
+| ------------- | --------------------------------------------------------------------------- |
+| `CASCADE`     | Delete related objects too (default).                                       |
+| `PROTECT`     | Prevent deletion if related objects exist.                                  |
+| `SET_NULL`    | Set ForeignKey to `NULL` (only if `null=True`).                             |
+| `SET_DEFAULT` | Set to default value.                                                       |
+| `SET(...)`    | Set to a given value or callable.                                           |
+| `DO_NOTHING`  | Does nothing – may cause **referential integrity errors**. Not recommended. |
+
+---
+
+## 🛠️ Managing Related Objects (Reverse Relations)
+
+Assume:
+
+```python
+course = Course.objects.get(id=1)
+learner = Learner.objects.get(id=2)
+```
+
+| Action      | Code Example                                |
+| ----------- | ------------------------------------------- |
+| Add         | `course.learners.add(learner)`              |
+| Create      | `course.learners.create(user=some_user)`    |
+| Remove      | `course.learners.remove(learner)`           |
+| Clear All   | `course.learners.clear()`                   |
+| Replace All | `course.learners.set([learner1, learner2])` |
+
+---
+
+### ✅ Summary
+
+* **Only define relationships on one side (forward)**.
+* **Django auto-generates reverse access** (backward relationships).
+* **On deletion**, you can **control how related objects behave** via `on_delete`.
+* You can **manage related objects dynamically** using `add()`, `create()`, `remove()`, `clear()`, and `set()` methods.
+
+This model API makes it easy to manipulate related data while keeping your code clean and avoiding direct SQL.
