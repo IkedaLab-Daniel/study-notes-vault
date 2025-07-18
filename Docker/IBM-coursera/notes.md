@@ -899,3 +899,149 @@ kubectl \[command] \[type] \[name] \[flags]
 * `kubectl` is the primary CLI for Kubernetes operations.
 * Use **imperative** for quick tasks, **imperative config** for reusability, and **declarative config** for production.
 * Declarative is the **recommended approach** for version control, team collaboration, and automation.
+
+## 🤖 Kubernetes ReplicaSet & Deployment
+
+### 🚫 Why a Single Pod is Insufficient
+- **Cannot handle increased traffic** or surges in request volume
+- **Single point of failure** — No redundancy
+- **No fault tolerance** — Cannot recover from pod crashes
+- ❌ No load balancing or scaling capabilities
+
+---
+
+### ✅ Solution: ReplicaSet
+
+#### What is a ReplicaSet?
+- Ensures **a specified number of pod replicas** are running at all times
+- **Maintains desired state** by:
+  - Replacing failed pods
+  - Scaling pods up/down
+  - Deleting excess pods
+- **Uses pod labels** to identify pods it manages
+- Supersedes the older `ReplicationController`
+
+---
+
+#### How ReplicaSets Work
+- Created **automatically** when a **Deployment** is created
+- Managed **indirectly** via **Deployments** (best practice)
+- ReplicaSets themselves do **not "own" pods** — they match pods using **labels**
+- ReplicaSets created manually require `.spec.replicas` and `.selector.matchLabels`
+
+---
+
+### 📦 Deployment + ReplicaSet
+
+#### Benefits of Deployment:
+- Manages ReplicaSets
+- Sends **declarative updates**
+- Automatically:
+  - Rolls out updates
+  - Rolls back changes
+  - Maintains availability
+
+---
+
+## 🧪 Creating a ReplicaSet (YAML)
+
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-replicaset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+```
+
+* Run: `kubectl apply -f replicaset.yaml`
+* Confirm:
+
+```sh
+  kubectl get pods
+  kubectl get rs
+```
+
+---
+
+### 📈 Scaling Deployments
+
+1. **Create a deployment**:
+
+```sh
+   kubectl create deployment hello-kubernetes --image=nginx
+```
+
+2. **Scale it**:
+
+```sh
+   kubectl scale deployment hello-kubernetes --replicas=3
+```
+
+3. **Confirm**:
+
+```sh
+   kubectl get pods
+```
+
+   Example output:
+
+```
+   hello-kubernetes-5mflw
+   hello-kubernetes-hbt7v
+   hello-kubernetes-xxxxxx
+```
+
+---
+
+### 🔄 Maintaining Desired State
+
+#### When a Pod is Deleted:
+
+* Run:
+
+  ```sh
+  kubectl delete pod hello-kubernetes-5mflw
+  ```
+* ReplicaSet **automatically creates a replacement** pod
+* Confirm:
+
+```sh
+  kubectl get pods
+```
+
+---
+
+### When a Pod is Created Manually:
+
+* Manually add a pod:
+
+```sh
+  kubectl apply -f newpod.yaml
+```
+* ReplicaSet notices the **extra pod** and **deletes it**
+* Desired state of 3 pods is restored
+
+---
+
+### 🧠 Key Learnings
+
+* A **ReplicaSet** provides:
+
+  * **High availability**
+  * **Fault tolerance**
+  * **Scaling**
+* Best practice: **Use a Deployment to manage ReplicaSets**
+* ReplicaSet uses **labels** to track and maintain pods
+* Kubernetes always **reconciles desired state with actual state**
