@@ -60,3 +60,47 @@
 * They reduce deployment time and costs, increase efficiency, and support cutting-edge architectures like microservices.
 * Adoption brings major benefits but also requires overcoming security, management, and migration challenges.
 
+## Docker Overview
+
+Docker is an open platform (available since 2013) for developing, shipping, and running applications as containers.
+
+### Key Characteristics
+
+* **Written in:** Go programming language
+* **Uses:** Linux kernel features, including namespaces
+* **Isolation:** Separates applications from hardware, OS, and container runtime
+
+### How It Works
+
+* Uses **namespaces** to isolate environments into containers
+* Each container has a unique set of namespaces
+* Each component (process, network, mount, etc.) runs within its own namespace
+
+### Core Benefits
+
+* Stable deployments through consistent, isolated environments
+* Faster deployments—often within seconds
+* Small, reusable Docker images speed up development
+* Automation reduces errors and simplifies maintenance
+* Supports Agile, CI/CD, and DevOps methodologies
+* Easy versioning enables faster testing, rollback, and redeployment
+* Promotes collaboration and scalability
+* Platform-independent—highly portable across systems
+
+### Ecosystem and Tools
+
+* Docker CLI
+* Docker Compose
+* Prometheus (for monitoring)
+* Various storage and functionality plugins
+* Supports orchestration tools: Docker Swarm and Kubernetes
+* Encourages microservices and serverless architecture
+
+### Limitations
+
+Docker is **not suitable** for applications that:
+
+* Require **high performance** or **high security**
+* Use **monolithic architecture**
+* Depend heavily on **rich GUI features**
+* Are intended for **standard desktop or limited functions**
