@@ -104,3 +104,77 @@ Docker is **not suitable** for applications that:
 * Use **monolithic architecture**
 * Depend heavily on **rich GUI features**
 * Are intended for **standard desktop or limited functions**
+
+## Docker Container Development Process
+
+### Steps to Create and Run a Docker Container
+
+1. **Create a Dockerfile**
+
+   * Contains instructions for building a container image
+   * Example:
+
+     ```Dockerfile
+     FROM alpine
+     CMD ["echo", "hello world"]
+     ```
+
+2. **Build the Docker Image**
+
+   * Command:
+
+     ```bash
+     docker build -t my-app:v1 .
+     ```
+   * Output includes:
+
+     * `Sending build context to Docker Daemon`
+     * `Successfully built <image_id>`
+     * `Successfully tagged my-app:v1`
+
+3. **Verify Image Creation**
+
+   * Command:
+
+     ```bash
+     docker images
+     ```
+   * Output includes:
+
+     * Repository (`my-app`)
+     * Tag (`v1`)
+     * Image ID
+     * Created date
+     * Image size
+
+4. **Run the Container**
+
+   * Command:
+
+     ```bash
+     docker run my-app:v1
+     ```
+   * Output:
+
+     ```
+     hello world
+     ```
+
+5. **Check Running Containers**
+
+   * Command:
+
+     ```bash
+     docker ps -a
+     ```
+
+### Key Docker CLI Commands
+
+| Command         | Description                                |
+| --------------- | ------------------------------------------ |
+| `docker build`  | Builds an image from a Dockerfile          |
+| `docker images` | Lists available images                     |
+| `docker run`    | Creates and runs a container from an image |
+| `docker ps -a`  | Lists all containers (running and exited)  |
+| `docker push`   | Uploads an image to a Docker registry      |
+| `docker pull`   | Downloads an image from a Docker registry  |
