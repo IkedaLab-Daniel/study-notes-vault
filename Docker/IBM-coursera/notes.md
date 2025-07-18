@@ -1155,3 +1155,103 @@ spec:
   * VPA: adjusts pod **resources**
   * CA: adjusts **node** count
 * Use together for **stable**, **cost-effective**, and **scalable** infrastructure
+
+## 🔄 Rolling Updates and Rollbacks in Kubernetes
+
+### ✅ Purpose of Rolling Updates
+- Apply app changes **automatically and incrementally**
+- Prevent **downtime** with **zero-interruption** deployment
+- Enable **easy rollback** if issues occur
+
+---
+
+## 🛠️ Preparing for Rolling Updates
+
+### Add Probes to Deployment
+- **Liveness Probe**: Checks if app is alive
+- **Readiness Probe**: Marks pod ready for traffic
+
+### Update Strategy Example (YAML)
+```yaml
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 2
+```
+
+* `maxUnavailable`: 0 for **zero downtime**
+* `maxSurge`: Number or percent of extra pods allowed during update
+* `minReadySeconds`: Time to wait before marking pod ready
+
+---
+
+## 🚀 Performing a Rolling Update
+
+1. **Build & tag** new image (outside Kubernetes)
+2. **Push** image to Docker Hub
+3. **Apply new image to deployment**:
+
+```sh
+kubectl set image deployment/hello-kubernetes hello-kubernetes=<new-image>
+```
+
+4. **Monitor rollout**:
+
+```sh
+kubectl rollout status deployment/hello-kubernetes
+```
+
+---
+
+## ↩️ Performing a Rollback
+
+* Revert to previous version:
+
+```sh
+kubectl rollout undo deployment/hello-kubernetes
+```
+
+* Confirm with:
+
+```sh
+kubectl get pods
+```
+
+---
+
+## 🧬 Rollout Strategies
+
+### 📦 All-at-once Rollout
+
+* Replace all pods **simultaneously**
+* **Risk**: User access interruption during transition
+
+#### Rollback (All-at-once)
+
+* Replace all new pods with old version **in one go**
+* Again, **interrupts user access**
+
+---
+
+### 🔁 One-at-a-time Rollout (RollingUpdate)
+
+* **Staggered pod replacement**
+* **Ensures high availability** during update
+
+#### Rollback (One-at-a-time)
+
+* Gradually reverts to previous version **one pod at a time**
+* **No user disruption**
+
+---
+
+## 🧠 Key Takeaways
+
+* Rolling updates allow **safe deployment of new app versions**
+* **Zero downtime** possible with maxUnavailable: `0`
+* Rollbacks are simple using `kubectl rollout undo`
+* Choose between:
+
+  * **All-at-once**: faster but risky
+  * **One-at-a-time**: safer, staggered approach
