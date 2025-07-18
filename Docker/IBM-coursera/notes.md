@@ -1045,3 +1045,113 @@ spec:
 * Best practice: **Use a Deployment to manage ReplicaSets**
 * ReplicaSet uses **labels** to track and maintain pods
 * Kubernetes always **reconciles desired state with actual state**
+
+## ⚙️ Kubernetes Auto-Scaling
+
+### 🎯 Why Auto-Scale?
+- Avoid always running a fixed number of replicas
+- Optimize **resource usage** and **costs**
+- Automatically adjust to **demand changes**
+
+---
+
+## 🔧 Auto-Scaling Layers
+### Cluster/Node Level
+- Adjusts the **number of nodes**
+
+### Pod Level
+- Adjusts **replica count** or **resource allocation**
+
+---
+
+## 📊 Types of Autoscalers
+
+### 🟦 Horizontal Pod Autoscaler (HPA)
+- **Scales pods in/out** (adds or removes pod replicas)
+- Based on:
+  - CPU usage
+  - Memory usage
+  - Custom metrics
+- Operates on **Deployments**, **ReplicaSets**, or **StatefulSets**
+
+#### Example Scenario:
+- Morning (low load): 1 pod
+- Peak (11 AM): 3 pods
+- Afternoon drop: pod count reduces accordingly
+
+#### Create HPA via CLI:
+```sh
+kubectl autoscale deployment my-deploy --min=2 --max=5 --cpu-percent=50
+```
+
+#### Or via YAML:
+
+```yaml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-deploy
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
+```
+
+---
+
+### 🟥 Vertical Pod Autoscaler (VPA)
+
+* **Scales up/down resources** (CPU, memory) of pods
+* Best for workloads that **can't scale horizontally**
+* Should **not** be used with HPA on the same metrics (CPU/memory)
+
+#### Example Scenario:
+
+* Morning (low load): low CPU/mem
+* Peak (11 AM): VPA increases CPU/mem
+* Afternoon: VPA scales resources back down
+
+---
+
+### 🟩 Cluster Autoscaler (CA)
+
+* **Scales cluster nodes**
+* Triggered when:
+
+  * Pods can't be scheduled due to resource shortage
+  * Cluster has idle nodes due to decreased demand
+
+#### Example Scenario:
+
+* Morning: existing nodes suffice
+* Peak (11 AM): new node added automatically
+* Afternoon: idle node deleted
+
+---
+
+## ✅ Best Practices
+
+* Use **HPA** for scaling stateless applications
+* Use **VPA** for apps that can't scale horizontally
+* Use **CA** to manage node count for efficient resource usage
+* **Combine all three** for:
+
+  * **High availability**
+  * **Performance optimization**
+  * **Cost efficiency**
+
+---
+
+## 🧠 Key Takeaways
+
+* Auto-scaling works at both **cluster** and **pod** levels
+* Autoscaler types:
+
+  * HPA: adjusts pod **count**
+  * VPA: adjusts pod **resources**
+  * CA: adjusts **node** count
+* Use together for **stable**, **cost-effective**, and **scalable** infrastructure
