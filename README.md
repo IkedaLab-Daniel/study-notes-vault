@@ -9,6 +9,21 @@ I once lost all my notes on UX, React, and even SCSS... and let's just say, I fe
 
 ---
 
+# 🧭 Quick Navigation
+
+- [Labs](Docker/IBM-Docker/)  
+  - [Lab 1: Containers](Docker/IBM-Docker/lab-1.md)
+  - [Lab 2: Docker Images & CI/CD](Docker/IBM-Docker/lab-2.md)
+  - [Lab 3: Orchestration](Docker/IBM-Docker/lab-3.md)
+- [Cheat Sheets](Docker/IBM-coursera/Cheat Sheets/)
+  - [Docker CLI](Docker/IBM-coursera/Cheat%20Sheets/1%20-%20Docker%20CLI.pdf)
+  - [Kubernetes Architecture](Docker/IBM-coursera/Cheat%20Sheets/2%20-%20Kubernetes%20Architecture.pdf)
+- [Notes](Docker/IBM-coursera/notes.md)
+- [Kubernetes YAML Examples](Docker/IBM-coursera/Lab%201-2-3/2_IntroKubernetes/)
+- [All Study Notes](../)
+
+---
+
 ## 🗂️ What You'll Find Here
 
 - 📒 Notes on stuff I study  
