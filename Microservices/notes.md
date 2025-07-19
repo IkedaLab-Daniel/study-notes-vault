@@ -510,3 +510,88 @@ Serverless computing is a cloud-native development model where developers build 
 * It is best suited for event-driven, short-lived, and unpredictable workloads.
 * Limitations include latency, lack of control, and difficulty in debugging.
 * Serverless, containers, and traditional computing each have their place—often used together for optimal solutions.
+
+## Introduction to the FaaS Model
+
+### What is FaaS?
+
+* **Function-as-a-Service (FaaS)** is a cloud computing service enabling you to run code in response to events, without managing infrastructure.
+* It is a **subset of serverless computing**.
+* Applications are composed of **small, independent functions**, each performing a single task.
+* Functions are written in any supported programming language.
+* FaaS functions are **stateless**, but state can be preserved using external services like caches.
+* Functions execute in **milliseconds**, handle requests in **parallel**, and scale **automatically**.
+* Billing is based on **execution time**, not server size or idle time.
+* FaaS can be deployed in **hybrid or on-prem environments**.
+
+---
+
+### Benefits of FaaS
+
+* **No infrastructure management**: Focus entirely on application logic.
+* **Cost-efficient**: Pay only when code is executed—no costs for idle time.
+* **Automatic scalability**: Functions scale up or down independently based on demand.
+* **High availability**: Functions are deployed across regions/availability zones without extra cost.
+* **Faster time-to-market**: Quick deployment cycles accelerate product delivery.
+* **Efficient resource use**: Functions are lightweight and event-driven.
+
+---
+
+### Serverless Stack Components
+
+1. **FaaS** – Executes application logic/functions.
+2. **BaaS** – Provides backend services like databases, storage, messaging, etc.
+3. **API Gateway** – Routes external requests to appropriate functions.
+
+#### Workflow Example:
+
+* Events (HTTP, webhooks, scheduled jobs) reach the **API Gateway**.
+* The gateway invokes relevant **FaaS functions**.
+* Functions process the events, potentially interacting with **BaaS services**.
+* Responses return through the API Gateway to the client.
+
+---
+
+### Real-World Example: Image Upload
+
+* A user uploads a profile image to object storage.
+* This event triggers a cloud function (e.g., IBM Cloud Function).
+* The function creates a thumbnail image.
+* The thumbnail is stored for use on the website.
+
+---
+
+### FaaS Best Practices
+
+* Functions should perform **a single task** (micro-function).
+* Keep functions **lightweight, efficient, and fast-loading**.
+* Avoid excessive use of third-party libraries (slows initialization).
+* Don’t over-divide logic—**too many functions** increase cost and complexity.
+* Leverage **external storage/cache** for persistence (e.g., Redis, Memcached).
+
+---
+
+### Managed FaaS Providers
+
+* **AWS Lambda**
+* **Google Cloud Functions**
+* **Azure Functions**
+* **IBM Cloud Functions**
+* **OpenShift Cloud Functions**
+* Others: Netlify, Oracle, Twilio
+
+### Self-Managed FaaS Platforms
+
+* **Fission** – Kubernetes-native serverless functions
+* **Fn Project** – Container-native platform
+* **Knative** – Kubernetes-based FaaS framework
+* **OpenFaaS** – Turns Linux/Windows processes into functions
+
+---
+
+### Summary
+
+* FaaS enables execution of code in response to events without infrastructure overhead.
+* It's cost-effective, scalable, and ideal for microservice-style architectures.
+* A serverless stack includes FaaS, BaaS, and an API Gateway.
+* Multiple managed and self-managed FaaS options are available depending on needs.
