@@ -595,3 +595,72 @@ Serverless computing is a cloud-native development model where developers build 
 * It's cost-effective, scalable, and ideal for microservice-style architectures.
 * A serverless stack includes FaaS, BaaS, and an API Gateway.
 * Multiple managed and self-managed FaaS options are available depending on needs.
+
+## The Serverless Framework
+
+### What is the Serverless Framework?
+- Free, open-source web framework written in **Node.js**
+- Originally built for **AWS Lambda**, but supports:
+  - **Microsoft Azure**
+  - **Google Cloud Platform**
+  - **Apache OpenWhisk**
+- Provides a **CLI** for:
+  - Structure
+  - Automation
+  - Best practices
+- Enables building **event-driven** serverless architectures
+
+---
+
+### Core Concepts
+
+#### Function
+- Independent unit of execution (like a microservice)
+- Performs a **single task**
+- Triggered by **events**
+
+#### Event
+- Source that triggers a function
+- Examples:
+  - HTTP request (API Gateway)
+  - File uploaded to an S3 bucket
+
+#### Resource
+- Infrastructure components used by functions
+- Examples:
+  - **Databases**
+  - **S3 buckets**
+
+#### Service
+- Organizational unit in Serverless Framework
+- Defined using `serverless.yml`
+- Includes definitions for:
+  - **Functions**
+  - **Events**
+  - **Resources**
+- Entire service is deployed using CLI in one go
+
+---
+
+### Hello World Demo (AWS + Python)
+
+1. **Install CLI**  
+   `npm install -g serverless`
+
+2. **Create a service**  
+   Run `serverless` command to go through setup wizard
+
+3. **Deploy**  
+   - CLI outputs a **URL**
+   - Access the URL to see result
+
+4. **Modify Function Code**  
+   - Change return value to `"Hello World"`
+   - **Redeploy** and test again
+
+---
+
+### Key Takeaways
+- Serverless Framework helps you define and deploy functions, events, and resources via `serverless.yml`
+- Functions are small units of code triggered by events
+- Each service is self-contained and managed via the CLI
