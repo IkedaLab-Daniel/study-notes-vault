@@ -1,5 +1,7 @@
 # IBM: Application Development using Microservices and Serverless
 
+> Module 1
+
 ## 🧱 Twelve-Factor App Methodology
 
 ### 🎯 Objectives
@@ -341,3 +343,90 @@ CEX.IO, a cryptocurrency exchange, uses a REST API to expose market data. Develo
 * They operate over HTTP using POST, GET, PUT, and DELETE.
 * REST defines a standard method for network communication.
 * Used widely in microservices and modern web architectures.
+
+> Module 3
+
+## Introduction to Serverless Computing
+
+### What is Serverless Computing?
+
+Serverless computing is a cloud-native development model where developers build and run applications without managing servers. The cloud provider handles infrastructure tasks like provisioning, scaling, patching, and managing servers.
+
+> Defined by CNCF:
+> “The concept of building and running applications that do not require server management. It describes a finer-grained deployment model where applications, bundled as one or more functions, are uploaded to a platform and then executed, scaled, and billed in response to the exact demand needed at the moment.”
+
+---
+
+### Core Components
+
+* **Function-as-a-Service (FaaS):** Run application logic in the form of functions triggered by events.
+* **Backend-as-a-Service (BaaS):** Utilize backend services like databases, queues, and storage without managing infrastructure.
+
+---
+
+### Evolution of Computing Models
+
+| Model            | Deployment Time | Lifespan   | Description                                                |
+| ---------------- | --------------- | ---------- | ---------------------------------------------------------- |
+| Traditional      | Weeks/Months    | Years      | Physical machines with high upfront cost.                  |
+| Virtual Machines | Minutes         | Days/Weeks | Virtualized infrastructure with better provisioning.       |
+| Containers       | Seconds         | Hours      | OS-level virtualization with rapid scaling.                |
+| **Serverless**   | Milliseconds    | Seconds    | Event-driven, fine-grained, infrastructure-free functions. |
+
+---
+
+### Key Characteristics
+
+* **Hostless**: No server management required.
+* **Elastic**: Instant auto-scaling based on demand.
+* **Automated Load Balancing**: Distributes traffic across systems.
+* **Stateless**: Each function call is isolated, improving scalability and performance.
+* **Event-Driven**: Functions run only in response to specific triggers.
+* **High Availability**: Built-in, with no extra effort needed.
+* **Usage-Based Billing**: Pay only for compute time, not idle time.
+
+---
+
+### Serverless Function Lifecycle
+
+1. Developer writes function code (e.g., Python, Node.js, Java).
+2. Uploads function to cloud provider.
+3. Defines events/triggers (e.g., HTTP request, file upload).
+4. Trigger invokes function.
+5. Cloud executes and manages runtime environment.
+
+---
+
+### Developer Benefits
+
+* Focus on core logic, not infrastructure.
+* Build with any major programming language.
+* Easier testing and optimization.
+* Extend apps by chaining simple, single-responsibility functions.
+* Improve overall user experience and deployment speed.
+
+---
+
+### Comparison: Cloud Service Models
+
+| Responsibility | Traditional | IaaS   | PaaS   | **Serverless** | SaaS   |
+| -------------- | ----------- | ------ | ------ | -------------- | ------ |
+| Applications   | You         | You    | You    | **You**        | Vendor |
+| Data           | You         | You    | You    | **You**        | Vendor |
+| Runtime        | You         | You    | Vendor | Vendor         | Vendor |
+| Middleware     | You         | You    | Vendor | Vendor         | Vendor |
+| OS             | You         | Vendor | Vendor | Vendor         | Vendor |
+| Virtualization | You         | Vendor | Vendor | Vendor         | Vendor |
+| Servers        | You         | Vendor | Vendor | Vendor         | Vendor |
+| Storage        | You         | Vendor | Vendor | Vendor         | Vendor |
+| Networking     | You         | Vendor | Vendor | Vendor         | Vendor |
+
+---
+
+### Summary
+
+* Serverless allows code execution without server management.
+* It includes FaaS for running code and BaaS for using cloud-based services.
+* It improves scalability, flexibility, and developer productivity.
+* Cloud providers manage the entire stack except the application logic.
+* You only pay for what you use, making it cost-efficient.
