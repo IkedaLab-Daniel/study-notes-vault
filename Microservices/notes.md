@@ -254,3 +254,54 @@ Microservices architecture is a design approach in which a single application is
 * **Strangler** enables staged migration from monoliths.
 * **Service Discovery** handles dynamic microservice communication.
 * **Entity/Aggregate and Adapter** address domain modeling and integration.
+
+## Microservices Anti-Patterns
+
+### Don’t Build Microservices
+
+* Avoid starting with microservices from the beginning.
+* Only consider microservices when your monolithic application becomes too complex to update and maintain.
+* Refactor into services *only* after experiencing real pain points in scalability or manageability.
+
+### Not Taking Automation Seriously
+
+* Microservices introduce multiple codebases, test pipelines, and deployments.
+* Without proper **automation** (CI/CD, monitoring, testing) or **cloud services**, managing microservices becomes chaotic.
+* Embrace **DevOps** practices or use **managed cloud solutions** early.
+
+### Don’t Build Nanoservices
+
+* Over-splitting leads to *nanoservices*—so small they increase complexity more than they add value.
+* Prefer larger services until:
+
+  * Deployment becomes hard
+  * Data models grow too complex
+  * Scaling requirements diverge
+
+### Don’t Turn Into SOA
+
+* Avoid confusing microservices with SOA.
+* Microservices must be **fine-grained** and maintain **independent data storage** per service.
+* Avoid falling into traditional, heavyweight SOA patterns—this compromises microservice agility.
+
+### Don’t Build a Gateway for Each Service
+
+* Don’t embed orchestration, authentication, routing, etc., into each service.
+* Use a **central API Gateway** to handle:
+
+  * Authentication
+  * Throttling
+  * Routing
+  * Analytics
+  * Transformation
+* Promotes consistency and reduces duplication.
+
+### Conclusion
+
+Microservices aim to:
+
+* Improve customer experience
+* Adapt to new requirements
+* Cut costs with granular business functions
+
+But failing to avoid these **anti-patterns** can make microservices more of a burden than a benefit.
