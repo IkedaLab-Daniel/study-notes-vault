@@ -121,3 +121,63 @@ Microservices architecture is a design approach in which a single application is
 * Components **scale individually** as needed.
 * They **reduce risk** during updates or changes.
 * **Failures are isolated** to the affected service, not the entire application.
+
+## Monolithic vs SOA vs Microservices Architecture
+
+### Monolithic Architecture
+
+* **Definition**: All or most functionality exists within a single process and codebase.
+* **Structure**: Managed in internal layers (UI, security, data access, etc.) that are tightly coupled.
+* **Advantages**:
+
+  * Simplicity
+  * Easier to develop and deploy initially
+* **Disadvantages**:
+
+  * Becomes complex as scope increases
+  * Difficult to modify or adopt new technology
+* **Example**: Windows Forms Application with UI, business logic, and data access all in one.
+
+### Service-Oriented Architecture (SOA)
+
+* **Definition**: Built around service provider/consumer model with reusable, loosely coupled services.
+* **Components**:
+
+  * **Interface**: Executes requests
+  * **Contract**: Defines interaction rules
+  * **Implementation**: Service logic
+* **Advantages**:
+
+  * Supports parallel development
+  * Enables reusability and reliability
+* **Disadvantages**:
+
+  * Complex to implement
+  * Costly, requiring significant resources and expertise
+* **Scope**: Enterprise-wide
+* **Example**: Banking system exposing business functions over service interfaces.
+
+### Microservices Architecture
+
+* **Definition**: Application is broken into small, independent services with specialized responsibilities.
+* **Characteristics**:
+
+  * Each service is independently deployable and scalable
+  * Services do not share data
+  * Freedom to choose different tech stacks per service
+* **Advantages**:
+
+  * Flexibility to scale and innovate
+  * Better modularity and targeted upgrades
+* **Disadvantages**:
+
+  * Complex security management (e.g., TLS for each service)
+  * Debugging becomes harder due to distributed nature
+* **Scope**: Application-level
+* **Example**: E-commerce app with separate services for orders, security, and analytics.
+
+### Summary
+
+* **Monolithic**: Interconnected and interdependent
+* **SOA**: Reusable and enterprise-integrated services
+* **Microservices**: Scalable, flexible, and independently deployable components
