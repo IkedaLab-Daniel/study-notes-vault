@@ -430,3 +430,83 @@ Serverless computing is a cloud-native development model where developers build 
 * It improves scalability, flexibility, and developer productivity.
 * Cloud providers manage the entire stack except the application logic.
 * You only pay for what you use, making it cost-efficient.
+
+## Serverless Pros and Cons
+
+### Benefits of Serverless Computing
+
+* **No Infrastructure Management**: Cloud providers handle provisioning, maintenance, patching, and scaling.
+* **Cost-Effective**: Pay only per request; no charges for idle compute.
+* **High Availability & Fault Tolerance**: Built-in by the cloud provider.
+* **Faster Time to Market**: Functions deploy in milliseconds; teams focus solely on code.
+* **Optimized Resource Usage**: Functions run only when triggered.
+* **Built-in IDEs**: Accelerate development and deployment.
+* **Supports Multiple Languages**: Use any popular programming language (as supported by provider).
+* **Strong Third-Party Integration**: For auth, databases, messaging, and more.
+* **Greener Computing**: Reduced compute waste due to idle-free architecture.
+* **Encourages Innovation**: Low-cost experimentation is viable.
+
+---
+
+### Constraints of Serverless Computing
+
+* **Not Ideal for Long-Running Workloads**: Pay-per-use model becomes costly.
+* **Vendor Lock-In**: Deep dependency on specific cloud platforms and tools.
+* **Cold Starts**: Latency introduced when functions are idle for long periods.
+* **High Latency**: Not suited for real-time or time-critical applications (e.g. banking, healthcare).
+* **Security Challenges**: Broader attack surface; relies on provider’s security.
+* **Difficult Monitoring & Debugging**: Hard to simulate and trace distributed serverless environments.
+* **Limited Language Support**: Tied to what cloud providers offer.
+* **No Server Optimization**: Cannot tune performance or utilization.
+* **No State Persistence**: Each invocation is stateless; use external caches like Redis/Memcached.
+
+---
+
+### Serverless vs Containers
+
+#### Serverless – Pros (vs Containers)
+
+* Lower operational cost (pay-per-use)
+* Zero infrastructure management
+* Instant auto-scaling
+* Millisecond-level deployment
+* Accelerated development cycle
+
+#### Containers – Pros (vs Serverless)
+
+* Easier local and cloud testing
+* Highly portable (OS, language, and provider agnostic)
+* Minimal latency, suitable for real-time workloads
+* Ideal for long-running processes and batch jobs
+* Full control over configuration and resources
+* Support for any programming language
+
+> **Hybrid Use**: Serverless and containers can be combined.
+> *Industry guidance: “Build serverless first, then use containers if needed.”*
+
+---
+
+### Serverless vs Traditional Computing
+
+#### Serverless – Pros (vs Traditional)
+
+* No need to set up or maintain infrastructure
+* Cost-efficient: pay only for usage
+* Automatic scalability
+* Access to built-in integrations and libraries
+
+#### Traditional – Pros (vs Serverless)
+
+* Full control of data and infrastructure
+* Use of standard networking (IP-based access)
+* Security contained within organizational boundaries
+* Minimal vendor lock-in
+
+---
+
+### Summary
+
+* Serverless simplifies development and enhances scalability and cost-efficiency.
+* It is best suited for event-driven, short-lived, and unpredictable workloads.
+* Limitations include latency, lack of control, and difficulty in debugging.
+* Serverless, containers, and traditional computing each have their place—often used together for optimal solutions.
