@@ -305,3 +305,39 @@ Microservices aim to:
 * Cut costs with granular business functions
 
 But failing to avoid these **anti-patterns** can make microservices more of a burden than a benefit.
+
+## What is REST?
+
+REST (Representational State Transfer) is an architectural style for designing networked applications, particularly APIs, that provides a flexible and lightweight method of communication.
+
+### Key Characteristics of RESTful APIs
+
+* **HTTP-based**: All requests are made using standard HTTP methods.
+* **Stateless**: Each request from client to server must contain all the information needed to understand and process it. No session state is stored on the server.
+* **Client-server architecture**: Separation between the client and server, enabling independent development.
+* **Uniform interface**: Standardized way of interacting with resources via URIs.
+
+### HTTP Methods Used in REST
+
+* **POST**: Create a new resource.
+* **GET**: Retrieve a resource.
+* **PUT**: Update a resource.
+* **DELETE**: Delete a resource.
+
+### Benefits of REST APIs
+
+* **Scalability**: Stateless nature supports scaling across servers.
+* **Simplicity**: Uses HTTP and JSON, making it easy to implement and consume.
+* **Consistency**: Uniform interface ensures consistent access to resources.
+* **Language-agnostic**: Can be used across various programming environments.
+
+### Real-world Example: CEX.IO API
+
+CEX.IO, a cryptocurrency exchange, uses a REST API to expose market data. Developers can retrieve data like the last price of a currency pair using standard HTTP requests. Their documentation includes request/response formats and code samples in multiple programming languages.
+
+### Summary
+
+* REST APIs offer scalable, stateless, and consistent interfaces.
+* They operate over HTTP using POST, GET, PUT, and DELETE.
+* REST defines a standard method for network communication.
+* Used widely in microservices and modern web architectures.
