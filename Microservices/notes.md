@@ -181,3 +181,76 @@ Microservices architecture is a design approach in which a single application is
 * **Monolithic**: Interconnected and interdependent
 * **SOA**: Reusable and enterprise-integrated services
 * **Microservices**: Scalable, flexible, and independently deployable components
+
+## Microservices Patterns
+
+### Single-Page Application (SPA) Pattern
+
+* **Purpose**: Enhances front-end user experience through dynamic content updates without full page reloads.
+* **Architecture**:
+
+  * Built with HTML, CSS, JavaScript
+  * Interacts with backend REST APIs
+* **Pros**:
+
+  * Seamless user experience
+  * Faster client-side interactions
+* **Cons**:
+
+  * Shifts complexity to backend
+  * Not optimized for multi-channel (mobile + web) experiences
+
+### Backend for Frontend (BFF) Pattern
+
+* **Purpose**: Tailors backends to specific frontend channels (e.g., mobile vs. desktop).
+* **How It Works**:
+
+  * Each user interface (mobile, desktop) has its own backend microservice
+  * These BFF services call other backend services as needed
+* **Benefits**:
+
+  * Optimized user experience per platform
+  * Separation of concerns improves maintainability
+
+### Strangler Pattern
+
+* **Purpose**: Gradually migrate monolithic applications to microservices.
+* **Steps**:
+
+  1. **Transform**: Create a parallel microservice version.
+  2. **Coexist**: Run both monolith and microservices side-by-side.
+  3. **Eliminate**: Fully replace monolith functionality with microservices.
+* **Analogy**: Like a vine slowly replacing a tree.
+
+### Service Discovery Pattern
+
+* **Purpose**: Enables services to dynamically find and communicate with each other.
+* **Why It's Needed**:
+
+  * Microservices scale dynamically
+  * IPs and instances change due to failures or updates
+* **Use Cases**:
+
+  * Load balancing
+  * Health checks
+  * Auto-scaling coordination
+
+### Additional Patterns
+
+* **Entity and Aggregate Pattern**:
+
+  * Used to group related entities (e.g., an order with multiple products)
+  * Helps manage complex domain relationships
+
+* **Adapter Pattern**:
+
+  * Translates between incompatible interfaces (e.g., legacy systems or third-party APIs)
+  * Acts like a plug adapter converting between formats or protocols
+
+### Summary
+
+* **SPA** improves user experience via dynamic updates.
+* **BFF** supports customized frontend logic per platform.
+* **Strangler** enables staged migration from monoliths.
+* **Service Discovery** handles dynamic microservice communication.
+* **Entity/Aggregate and Adapter** address domain modeling and integration.
