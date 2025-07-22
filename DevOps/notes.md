@@ -299,3 +299,60 @@ The CNCF **trail map** provides a **recommended path** for adopting cloud native
 - Provides **project stewardship**, **community collaboration**, and **technical guidance**
 - Projects mature through **Sandbox → Incubated → Graduated**
 - The **trail map** helps organizations **navigate and adopt cloud native tools** in a logical order
+
+## Overview of Hybrid Cloud
+
+* **Hybrid Cloud Definition**:
+  A hybrid cloud combines one or more public clouds with one or more private cloud environments.
+
+* **Cloud Types in a Hybrid Cloud**:
+
+  * **Public Cloud**:
+
+    * Hosted by external vendors.
+    * Multi-tenant hardware infrastructure.
+    * Scalable across multiple locations.
+  * **Hosted Private Cloud**:
+
+    * Managed by an external vendor but dedicated to one organization.
+  * **On-Premises Private Cloud**:
+
+    * Managed and hosted internally by the organization.
+  * **On-Premises Legacy Data Center**:
+
+    * Requires full internal hardware/software ownership and maintenance.
+
+* **Capabilities & Limitations**:
+
+  * **Public & Hosted Private Clouds**:
+
+    * Support on-demand PaaS and IaaS.
+    * Allow rapid updates with new technology.
+    * Vendors offer Security as a Service (SaaS).
+    * Access to IBM Cloud catalog for ready-to-deploy apps (databases, APIs, etc.).
+  * **On-Premises Clouds & Legacy Data Centers**:
+
+    * Offer more control (essential for sensitive data and strict regulations).
+    * Require advance planning for scaling.
+    * Carry higher risk with long-term technology commitments.
+    * Internal resource demand for full security coverage and application deployment.
+
+* **Hybrid Cloud Benefits**:
+
+  * **Cloud Paks**:
+
+    * Enable open data access across environments.
+    * Support containerized software/middleware consistently.
+  * **Hybrid Integration Platforms (HIPs)**:
+
+    * Manage automated hybrid cloud environments.
+  * **Combined with DAPs**:
+
+    * Allow dynamic management and visibility of hybrid IT resources.
+
+* **Summary**:
+
+  * Hybrid clouds integrate public, private, and on-premises components.
+  * Enable flexible, on-demand infrastructure.
+  * Reduce long-term financial and tech upgrade burdens.
+  * Support developer productivity by removing infrastructure constraints.
