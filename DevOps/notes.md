@@ -203,3 +203,99 @@ This **commoditization** means development teams can focus on building features 
 - Cloud native apps use microservices and containers to improve scalability and resilience
 - The **cloud native stack** defines the architecture and roles of components
 - **Standardization and commoditization** empower innovation and agility in modern cloud app development
+
+## Cloud Native Computing Foundation (CNCF)
+
+### Learning Objectives
+By the end of this module, you will be able to:
+- Describe the **role and mission of CNCF**
+- Discuss the **CNCF’s areas of responsibility**
+- List the **maturity stages of CNCF projects**
+- Explain the purpose of the **CNCF trail map**
+
+---
+
+### Overview of CNCF
+- The **Cloud Native Computing Foundation (CNCF)** was founded by the **Linux Foundation** in 2015 after the release of **Kubernetes 1.0**
+- CNCF is a **neutral, open governance body** that brings together top tech contributors to standardize cloud native development
+- **Founding members** include: IBM, RedHat, Google, Docker, Intel, Twitter, Cisco, VMware, and more
+
+---
+
+### CNCF's Mission
+> “To make cloud native computing ubiquitous and cloud native innovations accessible for everyone.”
+
+---
+
+### CNCF Technologies
+- Technologies include:  
+  - **Containers**  
+  - **Service meshes**  
+  - **Microservices**  
+  - **Immutable infrastructure**  
+  - **Declarative APIs**
+- Designed to support applications in **modern, dynamic cloud environments**: public, private, and hybrid clouds
+
+---
+
+### CNCF Areas of Responsibility
+1. **Project Stewardship**  
+   - Maintains and governs open-source projects
+   - Ensures consistent use of logos, trademarks, and branding
+2. **Ecosystem Growth & Evolution**  
+   - Evaluates and integrates new technologies
+   - Encourages community contributions
+3. **Technical Standards**  
+   - Develops and promotes **common, standardized guidance**
+4. **Education & Promotion**  
+   - Hosts **events**, **conferences**, and developer collaborations
+5. **Accessibility & Reliability**  
+   - Provides **qualified builds** and maintains a **reference architecture**
+
+---
+
+### CNCF Project Maturity Levels
+
+| Stage     | Description                                                                 |
+|-----------|-----------------------------------------------------------------------------|
+| **Sandbox** | Early-stage projects under evaluation                                      |
+| **Incubated** | Projects with growing adoption, defined goals, and community support       |
+| **Graduated** | Stable, widely adopted, production-ready projects with strong governance |
+
+- Maturity level influences the **amount of CNCF marketing and promotion** a project receives
+
+---
+
+### CNCF Technical Oversight Committee (TOC)
+- The **TOC** evaluates submitted projects for alignment with CNCF goals
+- Accepts projects based on integration potential and ecosystem advancement
+
+---
+
+### CNCF Trail Map
+
+The CNCF **trail map** provides a **recommended path** for adopting cloud native technologies in sequence:
+
+1. **Containerization**
+2. **CI/CD**
+3. **Orchestration & Application Definition**
+4. **Observability & Analysis**
+5. **Service Proxy, Discovery, & Mesh**
+6. **Networking, Policy, & Security**
+7. **Distributed Database & Storage**
+8. **Streaming & Messaging**
+9. **Container Registry & Runtime**
+10. **Software Distribution**
+
+- At each step, companies can:
+  - Build the solution themselves
+  - Use a vendor offering
+  - Choose not to implement the technology
+
+---
+
+### Summary
+- **CNCF** supports the **standardization and promotion** of cloud native technologies
+- Provides **project stewardship**, **community collaboration**, and **technical guidance**
+- Projects mature through **Sandbox → Incubated → Graduated**
+- The **trail map** helps organizations **navigate and adopt cloud native tools** in a logical order
