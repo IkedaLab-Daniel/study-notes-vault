@@ -130,3 +130,76 @@ Cloud computing is the **on-demand delivery** of computing resources—such as s
 - It is defined by five essential characteristics: **self-service, broad access, resource pooling, elasticity,** and **measured usage**.
 - It can be deployed through **public, private, hybrid,** or **community** models.
 - Services are delivered through **IaaS, PaaS,** and **SaaS** models, catering to different layers of the technology stack.
+
+## Cloud Native Applications
+
+### Learning Objectives
+After completing this module, you will be able to:
+- Describe the **difference between monolithic and cloud native applications**
+- List the **layers of the cloud native solution stack**
+- Discuss the **benefits of cloud native applications**
+
+---
+
+### Monolithic vs. Cloud Native Applications
+
+#### Monolithic Applications:
+- Built as a **single, tightly-coupled unit** combining UI, business logic, and data layers
+- Typically **stateful** and rely on **load balancing**
+- **Difficult to scale** and **prone to outages** causing poor user experience
+- Example: A legacy enterprise app deployed on a few centralized servers
+
+#### Cloud Native Applications:
+- Composed of **independent microservices** working together
+- Microservices are often packaged in **containers**
+- **Stateless**, scalable, and resilient to failure
+- Support **continuous delivery** and **agile development**
+- Designed for **public, private, hybrid, or multi-cloud environments**
+
+---
+
+### Software as a Service (SaaS) & The Twelve-Factor App Methodology
+- SaaS: Software centrally hosted and accessed via the internet
+- Examples: Online reservation systems, tax-filing platforms, email clients
+- **Twelve-Factor App Methodology** provides best practices for building scalable and maintainable cloud apps
+- Microservices and twelve-factor methodology are often used together (but not required)
+
+---
+
+### Layers of the Cloud Native Solution Stack
+
+| Layer                          | Description |
+|-------------------------------|-------------|
+| **Cloud Infrastructure**      | Environment setup for public, private, hybrid, or multi-cloud |
+| **Scheduling & Orchestration**| Tools like **Kubernetes**, **Istio**, and **Knative** that manage deployments |
+| **Application & Data Services**| Backing services (databases, APIs, message queues) integrated into your app |
+| **Application Runtimes**      | Middleware for running cloud apps |
+| **Application Code**          | The actual microservices and app logic |
+
+---
+
+### Standardization in Cloud Native Apps
+To support scalability and maintainability:
+- Use **standardized logging**
+- Emit **standardized events**
+- Provide a **standard service catalog** used across microservices
+- Implement **standardized tracing** for monitoring
+
+This **commoditization** means development teams can focus on building features instead of reinventing infrastructure components.
+
+---
+
+### Benefits of Cloud Native Applications
+- **Scalability**: Microservices can scale independently
+- **Resilience**: Faults in one service don't crash the entire app
+- **Agility**: Faster development and deployment cycles
+- **Innovation**: Focus on application logic instead of support systems
+- **Cost-efficiency**: Take advantage of the commoditized solution stack
+
+---
+
+### Summary
+- Monolithic apps are hard to scale and recover from outages
+- Cloud native apps use microservices and containers to improve scalability and resilience
+- The **cloud native stack** defines the architecture and roles of components
+- **Standardization and commoditization** empower innovation and agility in modern cloud app development
