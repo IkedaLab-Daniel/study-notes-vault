@@ -319,3 +319,82 @@ Bootstrap simplifies the process of building layouts, formatting content, and de
 - Bootstrap uses a responsive 12-column grid system for building flexible layouts.
 - It offers a variety of typography and utility classes to format content.
 - Bootstrap provides complete support for building user-friendly and styled forms, including input styling, validation, layout control, and spacing utilities.
+
+## Layouts, Contents, and Forms in Bootstrap
+
+Bootstrap helps developers efficiently create structured layouts, styled content, and responsive forms using predefined HTML/CSS classes and utilities.
+
+---
+
+### 🧱 Layouts with Bootstrap
+
+- **12-Column Grid System**:
+  - Responsive and flexible
+  - Columns adjust based on screen size
+  - Combine columns for custom layouts
+
+- **Core Classes**:
+  - `.container`: Fixed-width container for content
+  - `.row`: Wraps columns into a horizontal group
+  - `.col`, `.col-sm`, `.col-md`, `.col-lg`: Width per screen size
+  - `.col-offset-*`: Adds spacing to shift columns
+
+- **Common Layout Patterns**:
+  - **Two-Column Layout**: Stacked on small screens
+  - **Three-Column Layout**: Equal-width, responsive stacking
+  - **Sidebar Layout**: Main + sidebar stacked on small screens
+
+---
+
+### 📄 Content Formatting in Bootstrap
+
+- **Text & Typography**:
+  - `.text-primary`, `.text-success`, `.text-info`: Text color
+  - `.h1`–`.h6`: Heading sizes
+  - `.lead`: Larger paragraph
+  - `.text-muted`: Subdued/muted text
+
+- **List Styles**:
+  - `.list-unstyled`: No bullets/numbers
+  - `.list-inline`: Horizontal list items
+
+- **Utility Classes**:
+  - Alignment: `.text-left`, `.text-center`, `.text-right`
+  - Transformation: `.text-uppercase`, `.text-lowercase`, `.text-capitalize`
+  - Weight/Style: `.text-bold`, `.text-italic`
+  - Decoration: `.text-decoration-none`
+
+- **Images & Media**:
+  - `.img-fluid`: Responsive images
+  - `.embed-responsive`, `.embed-responsive-16by9`: Maintain media aspect ratios
+
+---
+
+### 📝 Forms in Bootstrap
+
+- **Form Components**:
+  - Inputs: text, password, checkboxes, radio buttons, dropdowns
+  - Styled using `.form-control`
+
+- **Form Structure**:
+  - Wrap with `<form>` using `.form`
+  - Group related inputs with `.input-group`
+
+- **Validation States**:
+  - Valid: `.is-valid`, `.valid-feedback`
+  - Invalid: `.is-invalid`, `.invalid-feedback`
+
+- **Form Layouts**:
+  - `.form-inline`: Horizontal form
+  - `.form-horizontal`, `.form-row`: Structured multi-field forms
+
+- **Spacing Utilities**:
+  - Margin/padding: `.mt-*`, `.mx-*`, `.p-*`, etc.
+
+---
+
+## ✅ Summary
+
+- Bootstrap's **grid system** allows responsive, flexible layout design.
+- Use **content utility classes** for typography, lists, and media.
+- Bootstrap provides **form components**, layout options, and built-in validation for user-friendly forms.
