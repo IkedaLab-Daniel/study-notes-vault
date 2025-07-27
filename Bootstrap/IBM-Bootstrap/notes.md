@@ -571,3 +571,49 @@ $primary: #6610f2;
 * Components include navbar, buttons, forms, modals, etc.
 * Customize with CSS overrides, Sass variables, or custom classes.
 * Follow best practices to maintain performance, usability, and responsiveness.
+
+## Bootstrap Utilities
+
+Bootstrap provides predefined CSS utility classes to enhance web development and design. These classes can be applied to elements for quick styling and functionality.
+
+### Typography Utilities
+
+- **Text Alignment**: Use `.text-left`, `.text-center`, `.text-right`, `.text-justify` to align text.
+- **Text Transformation**: Use `.text-lowercase`, `.text-uppercase` to transform text.
+- **Text Decoration**: Use `.text-decoration-none`, `.text-decoration-underline` for text styling.
+- **Font Weight & Style**: Use `.font-weight-bold`, `.font-weight-normal` to modify text weight and style.
+
+### Color Utilities
+
+- Use `.text-primary`, `.text-secondary`, `.bg-primary`, `.bg-secondary`, `.text-danger`, `.bg-dark` to control text and background colors.
+
+### Spacing Utilities
+
+- **Non-Responsive Spacing**: Use `.m-1` to `.m-5`, `.p-1` to `.p-5` for margins and paddings.
+- **Responsive Spacing**: Add breakpoints to spacing classes, e.g. `.mx-sm-1`, `.px-md-2`.
+
+### Display Utilities
+
+- Use `.d-none`, `.d-inline`, `.d-block`, `.d-flex` to control element display.
+
+### Visibility Utilities
+
+- Use `.invisible`, `.d-lg-none`, `.d-print-none` to manage element visibility across viewports and print layouts.
+
+### Flexbox Utilities
+
+- **Flex Containers**: Use `.d-flex` to enable flex layout.
+- **Flex Items**: Use `.flex-fill`, `.flex-grow-1`, `.flex-shrink-1` to control item behavior.
+- **Flex Direction**: Use `.flex-row-reverse` to reverse item order.
+
+### Float Utilities
+
+- Use `.float-left`, `.float-right` to align elements horizontally.
+
+### Position Utilities
+
+- Use `.position-static`, `.position-relative`, `.position-fixed` to control element positioning.
+
+### Border Utilities
+
+- Use `.border`, `.border-top`, `.border-primary` to add and style borders.
