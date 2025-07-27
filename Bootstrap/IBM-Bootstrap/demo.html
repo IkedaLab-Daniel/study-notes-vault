@@ -6,7 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- > Bootstrap CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+  .custom-shadow {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+</style>
 </head>
+
 <body class="p-4 bg-dark text-light">
 
   <!-- ? Layout: Two-column example -->
@@ -66,6 +72,87 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
+
+  <div class="container my-5">
+    <h2 class="mb-4">Getting Started with Bootstrap Components</h2>
+
+    <h4>Navbar Example</h4>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">Brand</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+        </ul>
+        </div>
+        </div>
+    </nav>
+
+    <h4>Buttons and Custom Button</h4>
+    <button class="btn btn-primary mb-2">Default Primary</button>
+    <button class="btn btn-primary custom-shadow mb-4">Custom Shadow</button>
+
+    <h4>Card Example</h4>
+    <div class="card mb-4" style="width: 18rem;">
+        <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">Card Title</h5>
+        <p class="card-text">This is a sample card using Bootstrap styles.</p>
+        <a href="#" class="btn btn-success">Go somewhere</a>
+        </div>
+    </div>
+
+    <h4>Form Example</h4>
+    <form class="mb-4">
+        <div class="form-group">
+        <label for="exampleInputEmail">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+        <label for="exampleInputPassword">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-warning">Submit</button>
+    </form>
+
+    <h4>Modal Trigger</h4>
+    <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch Demo Modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            This is a Bootstrap modal example.
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <h4>Progress Bar</h4>
+    <div class="progress mb-4">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 60%;">60%</div>
+    </div>
+
+    <h4>Alert Example</h4>
+    <div class="alert alert-warning" role="alert">
+        This is a warning alert—check it out!
+    </div>
+    </div>
 
   <!-- Bootstrap JS CDN (Optional, for components like dropdowns or modals) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
