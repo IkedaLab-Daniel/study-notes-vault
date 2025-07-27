@@ -461,3 +461,113 @@ Bootstrap helps developers efficiently create structured layouts, styled content
 - Browser compatibility is key for user access, experience, and reach.
 - Bootstrap uses multiple strategies to ensure consistency across browsers.
 - Developers play a crucial role by testing and following best practices.
+
+> Module 2
+
+## Getting Started with Bootstrap Components
+
+### What Are Bootstrap Components?
+
+Bootstrap components are **reusable UI elements** designed to simplify the development of responsive, mobile-first websites. These components are:
+
+- Flexible
+- Responsive
+- Easy to implement
+
+---
+
+### Commonly Used Bootstrap Components
+
+| Component     | Description |
+|---------------|-------------|
+| **Navbar**     | Creates navigation menus with responsive, sticky, or fixed behavior. |
+| **Buttons**    | Offers multiple styles (primary, danger, success, etc.) and sizes. |
+| **Forms**      | Includes styled input fields, checkboxes, radios, selects, etc. |
+| **Cards**      | Flexible containers for content like posts, products, profiles. |
+| **Modals**     | Pop-up dialogs for messages or actions. |
+| **Carousels**  | Slideshow for images or content. |
+| **Alerts**     | Message banners for info, success, warning, and errors. |
+| **Dropdowns**  | Toggled menus or option selectors. |
+| **Progress Bars** | Visual indicators of progress on a task. |
+
+---
+
+### How to Use Components
+
+1. **Include Bootstrap**: Add Bootstrap CSS and JS via CDN or local files.
+2. **Use Bootstrap Markup**: Use predefined classes and HTML structures.
+
+Example – Button:
+```html
+<button class="btn btn-primary">Click Me</button>
+```
+
+---
+
+### Customizing Bootstrap Components
+
+There are **three main methods**:
+
+#### 1. Override Default Styles
+
+* Target Bootstrap classes in your own CSS and apply custom styles.
+
+```css
+.btn-primary {
+  background-color: #6610f2;
+  border-radius: 10px;
+}
+```
+
+#### 2. Modify Bootstrap Sass Variables
+
+* Change global values for colors, spacing, fonts, etc.
+* Requires using Bootstrap source files and a build tool.
+
+```scss
+$primary: #6610f2;
+@import "bootstrap";
+```
+
+#### 3. Add Custom CSS Classes
+
+* Apply new custom classes alongside Bootstrap ones.
+
+```html
+<button class="btn btn-primary custom-shadow">Click Me</button>
+```
+
+```css
+.custom-shadow {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+```
+
+---
+
+### Best Practices for Using Components
+
+* **Read Documentation**: Understand each component's features and limitations.
+* **Use Correct Classes**: Avoid breaking functionality by misusing class names.
+* **Plan Layouts First**: Design your layout before implementation.
+* **Use the Grid System**: Create flexible and responsive designs.
+* **Optimize Performance**: Only include necessary CSS/JS.
+* **Test on Devices**: Ensure consistent performance across screen sizes.
+
+---
+
+### Resources for Bootstrap Components
+
+* 📘 [Bootstrap Official Docs](https://getbootstrap.com/)
+* 💡 Bootstrap Expo (real-world examples)
+* 🎨 Bootstrap Themes (custom templates)
+* 🎯 [Bootstrap Icons](https://icons.getbootstrap.com/)
+
+---
+
+### Summary
+
+* Bootstrap components are essential, reusable UI elements.
+* Components include navbar, buttons, forms, modals, etc.
+* Customize with CSS overrides, Sass variables, or custom classes.
+* Follow best practices to maintain performance, usability, and responsiveness.
