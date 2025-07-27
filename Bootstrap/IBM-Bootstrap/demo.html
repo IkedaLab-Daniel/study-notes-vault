@@ -2,159 +2,667 @@
 <html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Bootstrap Layout & Forms Demo</title>
+  <title>Comprehensive Bootstrap 5 Showcase</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- > Bootstrap CSS CDN -->
+  <!-- Bootstrap CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
   <style>
   .custom-shadow {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   }
+  .demo-section {
+    border: 1px solid #495057;
+    border-radius: 0.375rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
 </style>
 </head>
-
 <body class="p-4 bg-dark text-light">
 
-  <!-- ? Layout: Two-column example -->
-  <div class="container mb-5">
-    <h2 class="mb-4">Two-Column Layout</h2>
-    <div class="row">
-      <div class="col-md-6 bg-secondary p-3">
-        <h5>Main Content</h5>
-        <p class="text-muted">This is the left column, taking 6 out of 12 columns on medium+ screens.</p>
-      </div>
-      <div class="col-md-6 bg-primary text-white p-3">
-        <h5>Sidebar</h5>
-        <p>This is the right column, also 6 columns wide.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ? Content Styling -->
-  <div class="container mb-5">
-    <h2 class="mb-4">Styled Content</h2>
-    <p class="lead">This is a lead paragraph to grab attention.</p>
-    <p class="text-success">Success message using <code>.text-success</code>.</p>
-    <p class="text-uppercase text-primary">Uppercase primary colored text.</p>
-
-    <ul class="list-inline">
-      <li class="list-inline-item">List 1</li>
-      <li class="list-inline-item">List 2</li>
-      <li class="list-inline-item">List 3</li>
-    </ul>
-
-    <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" alt="Sample" class="img-fluid" width="250px">
-  </div>
-
-  <!-- Form Example -->
-  <div class="container">
-    <h2 class="mb-4">Bootstrap Form</h2>
-    <form>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control is-valid" id="email" placeholder="name@example.com">
-        <div class="valid-feedback">Looks good!</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control is-invalid" id="password" placeholder="Enter password">
-        <div class="invalid-feedback">Please choose a stronger password.</div>
-      </div>
-
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="remember">
-        <label class="form-check-label" for="remember">
-          Remember me
-        </label>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
-
-  <div class="container my-5">
-    <h2 class="mb-4">Getting Started with Bootstrap Components</h2>
-
-    <h4>Navbar Example</h4>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container-fluid">
-        <a class="navbar-brand" href="#">Brand</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="bi bi-bootstrap"></i> Bootstrap Showcase</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#layout">Layout</a></li>
+          <li class="nav-item"><a class="nav-link" href="#components">Components</a></li>
+          <li class="nav-item"><a class="nav-link" href="#forms">Forms</a></li>
+          <li class="nav-item"><a class="nav-link" href="#utilities">Utilities</a></li>
         </ul>
-        </div>
-        </div>
-    </nav>
-
-    <h4>Buttons and Custom Button</h4>
-    <button class="btn btn-primary mb-2">Default Primary</button>
-    <button class="btn btn-primary custom-shadow mb-4">Custom Shadow</button>
-
-    <h4>Card Example</h4>
-    <div class="card mb-4" style="width: 18rem;">
-        <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" class="card-img-top" alt="...">
-        <div class="card-body">
-        <h5 class="card-title">Card Title</h5>
-        <p class="card-text">This is a sample card using Bootstrap styles.</p>
-        <a href="#" class="btn btn-success">Go somewhere</a>
-        </div>
+      </div>
     </div>
+  </nav>
 
-    <h4>Form Example</h4>
-    <form class="mb-4">
-        <div class="form-group">
-        <label for="exampleInputEmail">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-        <label for="exampleInputPassword">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-warning">Submit</button>
-    </form>
+  <!-- Add top margin to account for fixed navbar -->
+  <div style="margin-top: 80px;">
 
-    <h4>Modal Trigger</h4>
-    <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <!-- Hero Section -->
+  <div class="container mb-5">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <h1 class="display-4 fw-bold text-primary">Bootstrap 5 Showcase</h1>
+        <p class="lead">A comprehensive demonstration of Bootstrap components, utilities, and layout features in dark mode.</p>
+        <a href="#layout" class="btn btn-primary btn-lg me-3">Get Started</a>
+        <a href="#" class="btn btn-outline-light btn-lg">Learn More</a>
+      </div>
+      <div class="col-lg-6">
+        <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" alt="Bootstrap" class="img-fluid rounded">
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout Section -->
+  <section id="layout" class="demo-section">
+    <div class="container">
+      <h2 class="mb-4"><i class="bi bi-grid-3x3-gap"></i> Layout System</h2>
+      
+      <!-- Grid System -->
+      <h4>Responsive Grid System</h4>
+      <div class="row mb-4">
+        <div class="col-12 col-md-4 mb-2">
+          <div class="bg-primary p-3 text-center rounded">Col 1</div>
+        </div>
+        <div class="col-12 col-md-4 mb-2">
+          <div class="bg-secondary p-3 text-center rounded">Col 2</div>
+        </div>
+        <div class="col-12 col-md-4 mb-2">
+          <div class="bg-success p-3 text-center rounded">Col 3</div>
+        </div>
+      </div>
+
+      <!-- Flex Utilities -->
+      <h4>Flexbox Utilities</h4>
+      <div class="d-flex justify-content-between align-items-center bg-secondary p-3 rounded mb-4">
+        <span>Start</span>
+        <span>Center</span>
+        <span>End</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Components Section -->
+  <section id="components" class="demo-section">
+    <div class="container">
+      <h2 class="mb-4"><i class="bi bi-puzzle"></i> Components</h2>
+
+      <!-- Buttons -->
+      <h4>Buttons & Button Groups</h4>
+      <div class="mb-4">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-success">Success</button>
+        <button class="btn btn-danger">Danger</button>
+        <button class="btn btn-warning">Warning</button>
+        <button class="btn btn-info">Info</button>
+        <button class="btn btn-light">Light</button>
+        <button class="btn btn-dark">Dark</button>
+        <button class="btn btn-outline-primary">Outline</button>
+        <button class="btn btn-primary" disabled>Disabled</button>
+      </div>
+
+      <div class="btn-group mb-4" role="group">
+        <button type="button" class="btn btn-outline-primary">Left</button>
+        <button type="button" class="btn btn-outline-primary">Middle</button>
+        <button type="button" class="btn btn-outline-primary">Right</button>
+      </div>
+
+      <!-- Cards -->
+      <h4>Cards</h4>
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card with Image</h5>
+              <p class="card-text">Some quick example text to build on the card title.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-header">Featured</div>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in.</p>
+              <a href="#" class="btn btn-success">Go somewhere</a>
+            </div>
+            <div class="card-footer text-muted">2 days ago</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-primary text-white">
+            <div class="card-body">
+              <h5 class="card-title">Colored Card</h5>
+              <p class="card-text">Cards can have different background colors.</p>
+              <a href="#" class="btn btn-light">Button</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion -->
+      <h4>Accordion</h4>
+      <div class="accordion mb-4" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+              Accordion Item #1
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              This is the first item's accordion body. You can modify any of this with custom CSS.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+              Accordion Item #2
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              This is the second item's accordion body.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel -->
+      <h4>Carousel</h4>
+      <div id="carouselExample" class="carousel slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+
+      <!-- Dropdown -->
+      <h4>Dropdowns</h4>
+      <div class="dropdown mb-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Dropdown button
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+
+      <!-- Modal Trigger -->
+      <h4>Modal</h4>
+      <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch Demo Modal
-    </button>
+      </button>
+
+      <!-- Tabs -->
+      <h4>Tabs</h4>
+      <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button">Home</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button">Profile</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button">Contact</button>
+        </li>
+      </ul>
+      <div class="tab-content mb-4">
+        <div class="tab-pane fade show active" id="home">Home content goes here.</div>
+        <div class="tab-pane fade" id="profile">Profile content goes here.</div>
+        <div class="tab-pane fade" id="contact">Contact content goes here.</div>
+      </div>
+
+      <!-- Progress Bars -->
+      <h4>Progress Bars</h4>
+      <div class="mb-2">
+        <div class="progress mb-2">
+          <div class="progress-bar" style="width: 25%">25%</div>
+        </div>
+        <div class="progress mb-2">
+          <div class="progress-bar bg-success" style="width: 50%">50%</div>
+        </div>
+        <div class="progress mb-2">
+          <div class="progress-bar bg-warning" style="width: 75%">75%</div>
+        </div>
+        <div class="progress mb-4">
+          <div class="progress-bar bg-danger" style="width: 100%">100%</div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <h4>Badges</h4>
+      <div class="mb-4">
+        <span class="badge bg-primary">Primary</span>
+        <span class="badge bg-secondary">Secondary</span>
+        <span class="badge bg-success">Success</span>
+        <span class="badge bg-danger">Danger</span>
+        <span class="badge bg-warning text-dark">Warning</span>
+        <span class="badge bg-info text-dark">Info</span>
+        <span class="badge bg-light text-dark">Light</span>
+        <span class="badge bg-dark">Dark</span>
+        <span class="badge rounded-pill bg-primary">Pill badge</span>
+      </div>
+
+      <!-- List Group -->
+      <h4>List Group</h4>
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <ul class="list-group">
+            <li class="list-group-item active">An active item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+            <li class="list-group-item">A fourth item</li>
+            <li class="list-group-item disabled">A disabled item</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">List group item heading</h5>
+                <small>3 days ago</small>
+              </div>
+              <p class="mb-1">Some placeholder content in a paragraph.</p>
+              <small>And some small print.</small>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">List group item heading</h5>
+                <small class="text-muted">3 days ago</small>
+              </div>
+              <p class="mb-1">Some placeholder content in a paragraph.</p>
+              <small class="text-muted">And some muted small print.</small>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Forms Section -->
+  <section id="forms" class="demo-section">
+    <div class="container">
+      <h2 class="mb-4"><i class="bi bi-card-checklist"></i> Forms</h2>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <h4>Basic Form</h4>
+          <form class="mb-4">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control is-valid" id="email" placeholder="name@example.com">
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control is-invalid" id="password" placeholder="Enter password">
+              <div class="invalid-feedback">Please choose a stronger password.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <select class="form-select" id="country">
+                <option selected>Choose...</option>
+                <option value="1">United States</option>
+                <option value="2">Canada</option>
+                <option value="3">Mexico</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea class="form-control" id="message" rows="3" placeholder="Your message..."></textarea>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="" id="remember">
+              <label class="form-check-label" for="remember">
+                Remember me
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-lg-6">
+          <h4>Input Groups & Sizes</h4>
+          
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <div class="input-group">
+              <span class="input-group-text">@</span>
+              <input type="text" class="form-control" id="username" placeholder="Username">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="website" class="form-label">Website</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="website" placeholder="Your website">
+              <span class="input-group-text">.com</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="text" class="form-control" id="price" placeholder="0.00">
+              <span class="input-group-text">.00</span>
+            </div>
+          </div>
+
+          <h5>Form Sizes</h5>
+          <input class="form-control form-control-lg mb-2" type="text" placeholder="Large input">
+          <input class="form-control mb-2" type="text" placeholder="Default input">
+          <input class="form-control form-control-sm mb-3" type="text" placeholder="Small input">
+
+          <h5>Radio Buttons</h5>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">Default radio</label>
+          </div>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">Default checked radio</label>
+          </div>
+
+          <h5>Switches</h5>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Utilities Section -->
+  <section id="utilities" class="demo-section">
+    <div class="container">
+      <h2 class="mb-4"><i class="bi bi-tools"></i> Utilities</h2>
+
+      <!-- Typography -->
+      <h4>Typography</h4>
+      <div class="mb-4">
+        <h1>h1. Bootstrap heading</h1>
+        <h2>h2. Bootstrap heading</h2>
+        <h3>h3. Bootstrap heading</h3>
+        <h4>h4. Bootstrap heading</h4>
+        <h5>h5. Bootstrap heading</h5>
+        <h6>h6. Bootstrap heading</h6>
+        <p class="lead">This is a lead paragraph. It stands out from regular paragraphs.</p>
+        <p>This is a regular paragraph with <mark>highlighted text</mark>, <del>deleted text</del>, <s>strikethrough text</s>, <ins>inserted text</ins>, <u>underlined text</u>, <small>small text</small>, <strong>bold text</strong>, and <em>italicized text</em>.</p>
+      </div>
+
+      <!-- Colors -->
+      <h4>Text Colors</h4>
+      <div class="mb-4">
+        <p class="text-primary">Primary text</p>
+        <p class="text-secondary">Secondary text</p>
+        <p class="text-success">Success text</p>
+        <p class="text-danger">Danger text</p>
+        <p class="text-warning">Warning text</p>
+        <p class="text-info">Info text</p>
+        <p class="text-light bg-dark p-2 rounded">Light text</p>
+        <p class="text-dark bg-light p-2 rounded text-dark">Dark text</p>
+        <p class="text-muted">Muted text</p>
+        <p class="text-white bg-dark p-2 rounded">White text</p>
+      </div>
+
+      <!-- Background Colors -->
+      <h4>Background Colors</h4>
+      <div class="row mb-4">
+        <div class="col-md-3 mb-2"><div class="bg-primary text-white p-3 rounded">Primary</div></div>
+        <div class="col-md-3 mb-2"><div class="bg-secondary text-white p-3 rounded">Secondary</div></div>
+        <div class="col-md-3 mb-2"><div class="bg-success text-white p-3 rounded">Success</div></div>
+        <div class="col-md-3 mb-2"><div class="bg-danger text-white p-3 rounded">Danger</div></div>
+        <div class="col-md-3 mb-2"><div class="bg-warning text-dark p-3 rounded">Warning</div></div>
+        <div class="col-md-3 mb-2"><div class="bg-info text-dark p-3 rounded">Info</div></div>
+        <div class="col-md-3 mb-2"><div class="bg-light text-dark p-3 rounded">Light</div></div>
+        <div class="col-md-3 mb-2"><div class="bg-dark text-white p-3 rounded">Dark</div></div>
+      </div>
+
+      <!-- Spacing -->
+      <h4>Spacing (Margin & Padding)</h4>
+      <div class="mb-4">
+        <div class="bg-secondary p-2 rounded mb-2">Padding: p-2</div>
+        <div class="bg-secondary p-4 rounded mb-2">Padding: p-4</div>
+        <div class="bg-secondary px-5 py-2 rounded mb-2">Padding: px-5 py-2</div>
+        <div class="bg-secondary p-3 m-3 rounded">Padding: p-3, Margin: m-3</div>
+      </div>
+
+      <!-- Borders -->
+      <h4>Borders</h4>
+      <div class="row mb-4">
+        <div class="col-md-3 mb-2">
+          <div class="border p-3">Border</div>
+        </div>
+        <div class="col-md-3 mb-2">
+          <div class="border border-primary p-3">Border Primary</div>
+        </div>
+        <div class="col-md-3 mb-2">
+          <div class="border border-3 p-3">Border 3px</div>
+        </div>
+        <div class="col-md-3 mb-2">
+          <div class="border rounded-pill p-3">Rounded Pill</div>
+        </div>
+      </div>
+
+      <!-- Display -->
+      <h4>Display Utilities</h4>
+      <div class="mb-4">
+        <div class="d-inline p-2 bg-primary text-white rounded">d-inline</div>
+        <div class="d-inline p-2 bg-secondary text-white rounded">d-inline</div>
+        <div class="d-block p-2 bg-success text-white rounded mb-2">d-block</div>
+        <div class="d-flex justify-content-between p-2 bg-warning text-dark rounded">
+          <span>Flex start</span>
+          <span>Flex end</span>
+        </div>
+      </div>
+
+      <!-- Position -->
+      <h4>Position</h4>
+      <div class="position-relative bg-secondary p-4 rounded mb-4" style="height: 150px;">
+        <div class="position-absolute top-0 start-0 bg-primary text-white p-2 rounded">Top Start</div>
+        <div class="position-absolute top-0 end-0 bg-success text-white p-2 rounded">Top End</div>
+        <div class="position-absolute bottom-0 start-0 bg-warning text-dark p-2 rounded">Bottom Start</div>
+        <div class="position-absolute bottom-0 end-0 bg-danger text-white p-2 rounded">Bottom End</div>
+      </div>
+
+      <!-- Icons -->
+      <h4>Bootstrap Icons</h4>
+      <div class="mb-4">
+        <i class="bi bi-house-door fs-1 text-primary me-3"></i>
+        <i class="bi bi-heart-fill fs-1 text-danger me-3"></i>
+        <i class="bi bi-star-fill fs-1 text-warning me-3"></i>
+        <i class="bi bi-gear-fill fs-1 text-secondary me-3"></i>
+        <i class="bi bi-bell-fill fs-1 text-info me-3"></i>
+        <i class="bi bi-person-fill fs-1 text-success"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alerts -->
+  <section class="demo-section">
+    <div class="container">
+      <h2 class="mb-4"><i class="bi bi-exclamation-triangle"></i> Alerts & Notifications</h2>
+      
+      <div class="alert alert-primary" role="alert">
+        <i class="bi bi-info-circle"></i> A simple primary alert—check it out!
+      </div>
+      <div class="alert alert-secondary" role="alert">
+        A simple secondary alert—check it out!
+      </div>
+      <div class="alert alert-success" role="alert">
+        <i class="bi bi-check-circle"></i> A simple success alert—check it out!
+      </div>
+      <div class="alert alert-danger" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> A simple danger alert—check it out!
+      </div>
+      <div class="alert alert-warning" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> A simple warning alert—check it out!
+      </div>
+      <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i> A simple info alert—check it out!
+      </div>
+      
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Well done!</strong> You successfully read this important alert message.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+
+      <!-- Toast -->
+      <h4>Toast Notification</h4>
+      <button type="button" class="btn btn-primary" onclick="showToast()">Show Toast</button>
+      
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert">
+          <div class="toast-header">
+            <i class="bi bi-bell text-primary me-2"></i>
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+          </div>
+          <div class="toast-body">
+            Hello, world! This is a toast message.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </div> <!-- End margin-top div -->
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+            <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-window"></i> Bootstrap Modal</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            This is a Bootstrap modal example.
+              <p>This is a Bootstrap modal example with enhanced content.</p>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Modal Features:</h6>
+                  <ul class="list-unstyled">
+                    <li><i class="bi bi-check text-success"></i> Responsive design</li>
+                    <li><i class="bi bi-check text-success"></i> Backdrop click to close</li>
+                    <li><i class="bi bi-check text-success"></i> Keyboard navigation</li>
+                    <li><i class="bi bi-check text-success"></i> Focus management</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <img src="https://c.tenor.com/iYxImvPgPnIAAAAd/tenor.gif" class="img-fluid rounded" alt="Modal image">
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
         </div>
     </div>
 
-    <h4>Progress Bar</h4>
-    <div class="progress mb-4">
-        <div class="progress-bar bg-success" role="progressbar" style="width: 60%;">60%</div>
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-5 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5><i class="bi bi-bootstrap"></i> Bootstrap Showcase</h5>
+          <p>A comprehensive demonstration of Bootstrap 5 components and utilities.</p>
+        </div>
+        <div class="col-md-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="#layout" class="text-light text-decoration-none">Layout</a></li>
+            <li><a href="#components" class="text-light text-decoration-none">Components</a></li>
+            <li><a href="#forms" class="text-light text-decoration-none">Forms</a></li>
+            <li><a href="#utilities" class="text-light text-decoration-none">Utilities</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Contact</h5>
+          <p><i class="bi bi-envelope"></i> info@bootstrap-showcase.com</p>
+          <p><i class="bi bi-phone"></i> +1 (555) 123-4567</p>
+          <div>
+            <a href="#" class="text-light me-3"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="#" class="text-light me-3"><i class="bi bi-twitter fs-4"></i></a>
+            <a href="#" class="text-light me-3"><i class="bi bi-instagram fs-4"></i></a>
+            <a href="#" class="text-light"><i class="bi bi-github fs-4"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="text-center">
+        <p>&copy; 2024 Bootstrap Showcase. Built with Bootstrap 5.</p>
+      </div>
     </div>
+  </footer>
 
-    <h4>Alert Example</h4>
-    <div class="alert alert-warning" role="alert">
-        This is a warning alert—check it out!
-    </div>
-    </div>
-
-  <!-- Bootstrap JS CDN (Optional, for components like dropdowns or modals) -->
+  <!-- Bootstrap JS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    function showToast() {
+      const toastElement = document.getElementById('liveToast');
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
