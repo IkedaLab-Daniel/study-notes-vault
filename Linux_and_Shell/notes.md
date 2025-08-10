@@ -205,3 +205,195 @@
 * **gedit** simplifies editing for beginners and general-purpose work.
 * **nano** provides command-line editing with intuitive shortcuts.
 * **vim** offers powerful, fast editing through a two-mode system, suited for experienced users.
+
+## Overview of Common Linux Shell Commands — Summary
+
+### 1. **What is a Shell?**
+
+* User interface for Unix-like operating systems.
+* Interprets commands and runs programs.
+* Functions as:
+
+  * **Interactive language**
+  * **Scripting language** (can automate tasks)
+* Common shells: **Bash** (default in most Linux systems), sh, ksh, tcsh, zsh, fish.
+* Check default shell:
+
+  ```bash
+  printenv SHELL
+  ```
+* Switch to Bash:
+
+  ```bash
+  bash
+  ```
+
+---
+
+### 2. **Applications of Shell Commands**
+
+* **Getting information** about the system and user.
+* **Navigating** and working with files/directories.
+* **Printing contents** of files or strings.
+* **File compression & archiving**.
+* **Networking operations**.
+* **System monitoring**.
+* **Batch job automation** (e.g., ETL).
+
+---
+
+### 3. **Common Shell Commands**
+
+#### **Getting Information**
+
+| Command  | Purpose                    |
+| -------- | -------------------------- |
+| `whoami` | Username of current user   |
+| `id`     | User ID and group IDs      |
+| `uname`  | OS name                    |
+| `ps`     | Running processes & IDs    |
+| `top`    | Processes + resource usage |
+| `df`     | Mounted file system info   |
+| `man`    | Manual for a command       |
+| `date`   | Current date               |
+
+---
+
+#### **Working with Files**
+
+| Command | Purpose                        |
+| ------- | ------------------------------ |
+| `cp`    | Copy files                     |
+| `mv`    | Move/rename files              |
+| `rm`    | Delete files                   |
+| `touch` | Create/update empty file       |
+| `chmod` | Change file permissions        |
+| `wc`    | Count lines, words, characters |
+| `grep`  | Search file for patterns       |
+
+---
+
+#### **Navigating Directories**
+
+| Command | Purpose                |
+| ------- | ---------------------- |
+| `ls`    | List files/directories |
+| `find`  | Search for files       |
+| `pwd`   | Show current directory |
+| `mkdir` | Create directory       |
+| `cd`    | Change directory       |
+| `rmdir` | Remove directory       |
+
+---
+
+#### **Printing File/String Contents**
+
+| Command | Purpose                  |
+| ------- | ------------------------ |
+| `cat`   | Print entire file        |
+| `more`  | View file page-by-page   |
+| `head`  | First N lines            |
+| `tail`  | Last N lines             |
+| `echo`  | Print string or variable |
+
+---
+
+#### **Compression & Archiving**
+
+| Command | Purpose        |
+| ------- | -------------- |
+| `tar`   | Archive files  |
+| `zip`   | Compress files |
+| `unzip` | Extract files  |
+
+---
+
+#### **Networking**
+
+| Command    | Purpose                           |
+| ---------- | --------------------------------- |
+| `hostname` | Show hostname                     |
+| `ping`     | Send test packets to host         |
+| `ifconfig` | Show/configure network interfaces |
+| `curl`     | Show URL contents                 |
+| `wget`     | Download file from URL            |
+
+---
+
+### 4. **Running Linux on Windows**
+
+* **Dual boot** (separate partition).
+* **Virtual machine** installation.
+* **Linux emulators** (e.g., CygWin).
+* **Windows Subsystem for Linux (WSL)** — run Linux binaries natively.
+
+---
+
+### **Key Takeaways**
+
+* Shell = interactive + scripting environment for running commands.
+* Used for file management, system monitoring, networking, and automation.
+* `echo` prints strings/variables, `cat` and `tail` display file contents.
+* `curl` and `wget` work with files from the web.
+
+## File and Directory Navigation Commands
+
+### Commands Overview
+
+* **ls**: Lists files and directories in a given directory.
+
+  * `ls` → lists current directory contents.
+  * `ls Downloads` → lists contents of `Downloads`.
+  * `ls -l` → detailed list with permissions, owner, and modification date.
+
+* **pwd**: Prints the current working directory.
+
+* **cd**: Changes the current working directory.
+
+  * **Relative path**: `cd Documents` (moves into Documents from current location).
+  * **Parent directory**: `cd ..` (moves up one level).
+  * **Home directory**: `cd ~` (absolute path to home).
+  * **Absolute path**: `cd /path/to/Notes` (direct path navigation).
+
+* **find**: Searches for files matching a specified pattern.
+
+  * `find . -name "a.txt"` → case-sensitive search in current directory.
+  * `find . -iname "a.txt"` → case-insensitive search.
+
+### Key Takeaways
+
+* **ls** → list directory contents.
+* **pwd** → see current location.
+* **cd** → navigate directories using relative or absolute paths.
+* **find** → locate files matching specific names or patterns.
+
+## File and Directory Management Commands
+
+### Creating and Deleting
+
+* **mkdir** → create a new directory.
+
+  * Example: `mkdir test` → creates folder `test`.
+* **rm file** → remove a file.
+* **rm -r folder** → remove a directory and all its contents (use with caution).
+* **rmdir folder** → remove an empty directory safely.
+* **touch file.txt** → create an empty file, or update timestamp of an existing file.
+
+### Copying and Moving
+
+* **cp source dest** → copy file to destination.
+* **cp -r source\_folder dest\_folder** → copy entire directory.
+* **mv source dest** → move (or rename) file/directory.
+
+### File Permissions
+
+* **chmod +x file.sh** → make a file executable.
+* Use `ls -l` to view permissions (`r` = read, `w` = write, `x` = execute).
+
+### Key Takeaways
+
+* **touch** → create/update files.
+* **mkdir / rmdir** → create/remove empty directories.
+* **rm / rm -r** → delete files/directories (recursive deletion is dangerous).
+* **cp / mv** → copy or move files and directories.
+* **chmod** → adjust read/write/execute permissions.
