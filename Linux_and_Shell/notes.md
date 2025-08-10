@@ -397,3 +397,164 @@
 * **rm / rm -r** → delete files/directories (recursive deletion is dangerous).
 * **cp / mv** → copy or move files and directories.
 * **chmod** → adjust read/write/execute permissions.
+
+## Viewing File Content
+
+### Displaying Files
+
+* **cat file.txt** → prints the entire file to the terminal (can flood screen for long files).
+* **more file.txt** → view file page-by-page; press `space` for next page, `q` to quit.
+
+### Viewing Sections of a File
+
+* **head file.txt** → shows first 10 lines.
+
+  * **head -n 3 file.txt** → shows first 3 lines.
+* **tail file.txt** → shows last 10 lines.
+
+  * **tail -n 3 file.txt** → shows last 3 lines.
+
+### Counting Lines, Words, and Characters
+
+* **wc file.txt** → returns `lines words characters filename`.
+
+  * **wc -l file.txt** → lines only.
+  * **wc -w file.txt** → words only.
+  * **wc -c file.txt** → characters (includes newline characters).
+
+### Key Points
+
+* Use **cat** for quick full-file viewing, **more** for large files.
+* **head** and **tail** help preview file beginnings and endings.
+* **wc** provides precise file statistics, counting even hidden newlines.
+
+## Useful Commands for Wrangling Text Files
+
+### Sorting Files
+
+* **sort file.txt** → sorts lines alphabetically/numerically.
+* **sort -r file.txt** → sorts in reverse order.
+
+### Removing Duplicate Lines
+
+* **uniq file.txt** → removes *consecutive* duplicate lines.
+
+  * To remove all duplicates regardless of order: `sort file.txt | uniq`
+
+### Searching for Patterns
+
+* **grep "pattern" file.txt** → shows lines containing the pattern.
+* **grep -i "pattern" file.txt** → case-insensitive search.
+
+### Extracting Parts of Lines
+
+* **cut -c 2-9 file.txt** → extracts characters from positions 2 to 9.
+* **cut -d " " -f 2 file.txt** → extracts second field (using space as delimiter).
+
+### Merging Multiple Files
+
+* **paste file1.txt file2.txt file3.txt** → merges lines into columns (tab-separated).
+* **paste -d "," file1.txt file2.txt file3.txt** → merges lines with comma delimiter.
+
+### Key Points
+
+* **sort** orders lines, **uniq** removes consecutive duplicates.
+* **grep** filters by pattern, **cut** extracts sections or fields.
+* **paste** combines files line-by-line into structured tables.
+
+## File Archiving and Compression Commands
+
+### Archiving vs Compression
+
+* **Archiving**: Combines multiple files/directories into a single file (no size reduction).
+* **Compression**: Reduces file size by removing redundancy.
+* Often used together: archive first, then compress.
+
+---
+
+### `tar` Command (Tape Archiver)
+
+* **Create archive**:
+
+  ```bash
+  tar -cf notes.tar notes
+  ```
+
+  * `c` → create
+  * `f` → filename of archive
+
+* **Create & compress with gzip**:
+
+  ```bash
+  tar -czf notes.tar.gz notes
+  ```
+
+  * `z` → compress with gzip
+
+* **List contents**:
+
+  ```bash
+  tar -tf notes.tar
+  ```
+
+* **Extract archive**:
+
+  ```bash
+  tar -xf notes.tar
+  ```
+
+* **Extract compressed archive**:
+
+  ```bash
+  tar -xzf notes.tar.gz
+  ```
+
+---
+
+### `zip` & `unzip`
+
+* **Create compressed zip**:
+
+  ```bash
+  zip -r notes.zip notes
+  ```
+
+  * `r` → recursive, include subdirectories
+
+* **Unzip archive**:
+
+  ```bash
+  unzip notes.zip
+  ```
+
+---
+
+### Key Differences
+
+* **tar + gzip** → bundles first, compresses second.
+* **zip** → compresses files individually, then bundles.
+
+---
+
+### Main Benefits of Compression
+
+* Saves storage space.
+* Speeds up file transfers.
+* Reduces bandwidth usage.
+
+## Shell Scripting Basics
+
+* A script is a list of commands run by a scripting language interpreter.
+* Scripts are interpreted at runtime, making them slower than compiled languages but faster to develop.
+* Common uses include automation (ETL jobs, backups, system administration), application integration, and plugin/web development.
+* Shell scripts are executable text files starting with a *shebang* (`#!`) directive that specifies the interpreter.
+* Examples: `#!/bin/sh` for Bourne shell, `#!/bin/bash` for Bash, `#!/usr/bin/env python3` for Python.
+* Example “Hello World” shell script steps:
+
+  1. Create file (`hello_world.sh`).
+  2. Add shebang and echo command to file.
+  3. Make file executable (`chmod +x`).
+  4. Run script (`./hello_world.sh`).
+* File permissions use `r` (read), `w` (write), and `x` (execute) for owner, group, and others.
+* Shell scripts execute commands and other programs.
+* Scripting languages trade speed for ease and speed of development.
