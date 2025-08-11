@@ -212,3 +212,20 @@ Summary & Highlights - Introduction to DevSecOps
 * TLS works effectively when the server has an up-to-date certificate and TLS version support.
 
 * OpenSSL is an open-source toolkit that uses a command line and software libraries to ensure secure communication with cryptography for all types of communication, from personal to commercial and e-commerce transactions.
+
+## Vulnerability Scanning and Threat Modeling
+
+Vulnerability scanning is the search for security vulnerabilities from within the code and from the outside of an application. Scanners search in code languages such as C, C++, Java, Python, and PHP, targeting vulnerabilities like SQL injection, cross-site scripting, and path traversal. Scans should be based on platform configuration, patch levels, or application composition, and may require user credentials to analyze the full application flow across the stack and supporting platforms. Popular scanning tools include:
+
+* **Coverity** – incremental analysis for C, C++, Java, Python.
+* **CodeSonar** – uses abstraction to model code and find weaknesses.
+* **Snyk Code** – integrated semantic analysis tool for coding and security bugs.
+* **Static Reviewer** – eliminates known vulnerabilities, compliant with OWASP, CVEs, and NIST.
+
+Threat modeling is identifying, categorizing, and enumerating security threats, analyzing ongoing threats, and eliminating potential software weaknesses. It uses diagrams to represent data flows in applications and is best applied during the design phase of the SDLC to reduce vulnerabilities. Common models include:
+
+* **PASTA** – risk-based, linking business objectives with technical requirements.
+* **VAST** – agile, with application and operational threat models using process-flow diagrams.
+* **STRIDE** – identifies Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privileges.
+
+Vulnerability scanning ensures complete coverage of the application flow, while early threat modeling helps eliminate weaknesses in applications.
