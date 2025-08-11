@@ -423,3 +423,34 @@ Threat monitoring improves security by identifying and addressing vulnerabilitie
 * Focuses on **runtime behavior**, providing real and accurate results.
 * Best for finding vulnerabilities that occur during actual execution.
 * Complements static analysis by catching issues in **dynamic code paths**.
+
+## Code Review Overview
+
+**Definition**
+
+* Code review is a security testing method that uses **automated static analysis** and/or **manual inspection** to detect vulnerabilities, logic flaws, and implementation errors.
+* Focuses on security-critical components and exposed threats.
+
+**When to Perform**
+
+* Most effective **early in the SDLC** to quickly address bugs.
+* Can be implemented at any stage, but reviewing smaller chunks (e.g., pull requests) is more efficient than reviewing large volumes later.
+
+**Types of Code Review**
+
+1. **Automated Review**
+
+   * Best for large codebases; runs fast and efficiently.
+   * Integrates with continuous integration (CI) to scan code before merging pull requests.
+   * Uses SAST tools to uncover vulnerabilities in real time during coding.
+2. **Manual Review**
+
+   * Performed by experienced developers to detect issues automated tools might miss.
+   * Requires understanding complex control and logic flows.
+   * More time-consuming; better suited for smaller code changes (e.g., 50–100 lines per PR).
+
+**Key Takeaways**
+
+* Review **every pull request** manually to catch nuanced issues.
+* Automated tools handle speed and scale; manual reviews ensure deeper logical accuracy.
+* Combining both methods strengthens security coverage.
