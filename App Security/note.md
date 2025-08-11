@@ -27,3 +27,43 @@
   * Learn defensive coding practices.
   * Be prepared to secure applications before deployment.
 * Emphasis on **collaboration**, **team-based learning**, and **practical exercises**.
+
+## Security by Design Summary
+
+* **Security by Design**: Integrating security from the start rather than treating it as an afterthought.
+* **Collaboration**: Involve security teams early and regularly to ensure secure coding practices.
+
+### Secure Software Development Lifecycle (SDLC)
+
+Stages:
+
+1. **Requirements** – Understand customer expectations.
+2. **Design** – Make design decisions based on requirements.
+3. **Develop** – Implement the design.
+4. **Test** – Verify functionality and quality.
+5. **Deploy** – Release the tested product to production.
+
+### Secure SDLC Enhancements
+
+* Integrates security practices into each SDLC phase.
+* Activities:
+
+  * Risk assessment
+  * Threat modeling & design review
+  * Static analysis
+  * Security testing & code review
+  * Security assessment & configuration
+
+### Mapping DevOps to Secure SDLC
+
+* **Requirements**: Risk assessment, define security requirements, identify sensitive data, attack profiling.
+* **Design**: Threat modeling, identify vulnerabilities in architecture, secure design, secure CI/CD pipeline setup, automate security tests.
+* **Develop**: Static analysis, validate automated data, apply secure scrum, integrate security tasks.
+* **Test**: Vulnerability scans, security testing, risk assessment before launch, break testing, parallelize tests using scanners with unit and functional tests.
+* **Deploy**: Automated deployment scripts, deploy & rollback processes, production security testing simulating real-world attacks.
+
+### Key Takeaways
+
+* Collaboration with security teams enhances feature implementation.
+* Secure SDLC embeds security best practices into all development phases.
+* Risk assessment and proactive threat analysis reduce vulnerabilities.
