@@ -161,3 +161,22 @@ Summary & Highlights - Introduction to DevSecOps
 * OSI = **Physical → Data Link → Network → Transport → Session → Presentation → Application**.
 * Developers should **prioritize security** at layers 5–7 to protect against threats like man-in-the-middle attacks.
 * HTTPS, encryption, and secure session handling are essential for user trust.
+
+## Securing Layers for Application Development
+
+* Importance: Securing each layer is essential for protecting applications.
+
+* Four security layers:
+
+  1. **Web Application Layer** – Includes front end (JavaScript, CSS, HTML with HTTPS), middle layer (API in Python, Java, Ruby), and back end (databases). Secure by running vulnerability scanners, tests, and audits before production.
+  2. **Cloud Infrastructure Layer** – Protect cloud databases (usernames, passwords, confidential info). Avoid storing admin credentials in code. Use security groups to restrict access, implement two-factor authentication, and apply strong authentication measures.
+  3. **Communications Layer** – Secure connections with SSH, HTTPS, SSL/TLS to prevent man-in-the-middle attacks. Use SSH for safe remote server connections when uploading, deploying, and testing code.
+  4. **Security Code Delivery Pipeline Layer** – Restrict code repositories (e.g., GitHub) with permissions, periodic audits, and two-factor authentication. Configure IAM for cloud assets based on roles and needs. Store secrets (passwords, certificates, encryption keys) in services like HashiCorp Vault.
+
+* **Logging** – Collect and store logs to identify anomalies (e.g., unauthorized admin login attempts). Restrict log access to trusted reviewers.
+
+* **Intrusion Detection** – Detect ongoing threats through:
+
+  * Endpoint security (protect systems, servers, devices).
+  * Network security (monitor with tools like Nmap, Snort).
+  * System-call auditing (analyze kernel-level calls, e.g., Linux kernel).
