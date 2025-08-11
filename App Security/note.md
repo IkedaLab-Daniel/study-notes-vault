@@ -99,3 +99,65 @@ Summary & Highlights - Introduction to DevSecOps
 * DevSecOps automates security integration throughout the concept, implementation, testing, deployment, and delivery SDLC process. 
 
 * DevSecOps provides higher-quality software, improved security, vulnerability fixings, and faster recovery after a security incident. 
+
+## **The OSI Model Overview**
+
+* **Purpose**: A standardized 7-layer framework for sending and receiving data globally.
+* **Goal**: Enable consistent, interoperable communication for present and future technologies.
+
+---
+
+### **The Seven Layers** (bottom to top):
+
+1. **Physical Layer**
+
+   * Transmits raw bits over a physical channel.
+   * Example: Cables, connectors, voltage signals.
+
+2. **Data Link Layer**
+
+   * Converts raw bits into **error-free frames**.
+   * Uses acknowledgments to confirm correct reception.
+   * Example: Ethernet, MAC addresses.
+
+3. **Network Layer**
+
+   * Handles routing and delivery of packets.
+   * Determines optimal path from source to destination.
+   * Example: IP addressing, routing tables.
+
+4. **Transport Layer**
+
+   * Splits data into smaller packets and ensures correct order and delivery.
+   * Example: TCP (ordered, reliable) and UDP (faster, no ordering guarantee).
+
+5. **Session Layer**
+
+   * Manages sessions between devices.
+   * Provides dialog control, token management, and synchronization for long transmissions.
+
+6. **Presentation Layer**
+
+   * Translates, compresses, encrypts, and decrypts data.
+   * Example: JPEG, ASCII, TLS encryption.
+
+7. **Application Layer**
+
+   * Interface for user applications and network services.
+   * Example: HTTP, HTTPS, FTP, email.
+
+---
+
+### **Developer Focus** – Top 3 Layers:
+
+* **Session Layer** – Manages client-server sessions.
+* **Presentation Layer** – Secure socket encryption, data format handling.
+* **Application Layer** – Use HTTPS (port 443) for secure communication, avoid unsecured HTTP.
+
+---
+
+### **Key Takeaways**
+
+* OSI = **Physical → Data Link → Network → Transport → Session → Presentation → Application**.
+* Developers should **prioritize security** at layers 5–7 to protect against threats like man-in-the-middle attacks.
+* HTTPS, encryption, and secure session handling are essential for user trust.
