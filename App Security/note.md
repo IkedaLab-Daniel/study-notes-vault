@@ -180,3 +180,17 @@ Summary & Highlights - Introduction to DevSecOps
   * Endpoint security (protect systems, servers, devices).
   * Network security (monitor with tools like Nmap, Snort).
   * System-call auditing (analyze kernel-level calls, e.g., Linux kernel).
+
+## What is OpenSSL
+
+* **Confidentiality** – Keeps data secret from unauthorized users, even on insecure networks, using cryptographic keys (private/public). Ensures e-commerce transactions remain secure.
+* **Integrity** – Guarantees data has not been altered during or after transmission. Methods like file checksums verify data authenticity and prevent tampering.
+* **OpenSSL** – An open-source toolkit implementing the SSL protocol to provide secure communications.
+
+  * Features: Symmetric & public key cryptography, message digests, hash algorithms, pseudorandom number generator, key management, and support for common certificate formats.
+  * Usage: Can be integrated into applications or run via command line (`openssl` on Linux/Mac, `openssl.exe` on Windows). Offers configuration files for defaults and customization.
+* **Message Digest Algorithms** – Cryptographic hash functions that compute checksums of data blocks, sign data, and verify signatures.
+* **Symmetric Ciphers** – Encryption using the same key for both encryption and decryption.
+* **Public Key Cryptography** – Uses public and private keys.
+
+  * **RSA**: Popular implementation providing secrecy, authentication, encryption, and prime number generation for private keys with various key lengths.
