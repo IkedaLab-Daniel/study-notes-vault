@@ -1,5 +1,7 @@
 ## Application Security for Developers and DevOps Professionals Summary
 
+>> Module 1
+
 * Focus: Application security for software engineers, not infrastructure security.
 * Security issues from decades ago still persist today (many appear in OWASP Top 10).
 * IBM report:
@@ -322,3 +324,46 @@ Threat monitoring improves security by identifying and addressing vulnerabilitie
 * **Wireshark** – Network protocol analysis and discovery.
 
 **Note:** Use Nmap ethically and with permission to avoid legal violations.
+
+>> Moduule 2
+
+## Introduction to Security Testing and Mitigation Strategies
+
+**Security Testing**
+
+* Compares the state of an application or system to a secure baseline.
+* Detects vulnerabilities introduced by new code changes.
+* Should be applied throughout the **SDLC**, especially in the **Test** phase alongside code review.
+
+**Functional Security Testing**
+
+* Ensures code meets defined security requirements.
+* Requires a list of functional requirements.
+* Types:
+
+  * **Ad hoc testing:** Performed when a vulnerability is discovered.
+  * **Exploratory testing:** Performed outside formal testing, often to test a theory or idea.
+
+**Automated Security Testing**
+
+* **Unit testing:** Tests individual classes/methods to verify API contracts.
+* **Integration testing:** Tests interactions between multiple components across tiers.
+* Frameworks:
+
+  * **BDD-Security:** Behavior-driven development for security.
+  * **Mittn:** Integrates into CI pipelines.
+  * **Gauntlt:** Connects to various security tools for streamlined testing.
+
+**Five Key Mitigation Strategies**
+
+1. **Use JSON** for API data payloads instead of XML for simpler, faster, and more secure data handling.
+2. **Implement secure coding practices** and communicate standards across the team.
+3. **Use vulnerability scanners** and automate scanning where possible.
+4. **Apply threat modeling** to anticipate attack methods and plan containment.
+5. **Stay updated on OWASP Top 10** to address the most critical security risks.
+
+**Key Takeaways**
+
+* Security testing should be continuous, not limited to a single SDLC stage.
+* Both manual and automated approaches are valuable.
+* Combining secure coding with proactive mitigation strategies significantly reduces security risks.
