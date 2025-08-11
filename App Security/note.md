@@ -89,3 +89,13 @@ Stages:
 
 * **Key Takeaway**:
   DevSecOps = DevOps with **security built-in at every step**, enabling continuous, automated, and adaptive protection from development to production.
+
+Summary & Highlights - Introduction to DevSecOps
+
+* The secure software development lifecycle (SDLC) is a process that involves security testing and its best practices in the existing development model. 
+
+* SDLC stages are requirements, design, development, testing, and deployment. You can map secure SDLC to these stages by undertaking risk assessments and looking at how individuals may attack your code. 
+
+* DevSecOps automates security integration throughout the concept, implementation, testing, deployment, and delivery SDLC process. 
+
+* DevSecOps provides higher-quality software, improved security, vulnerability fixings, and faster recovery after a security incident. 
