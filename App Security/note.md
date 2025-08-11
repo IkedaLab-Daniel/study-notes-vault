@@ -397,3 +397,29 @@ Threat monitoring improves security by identifying and addressing vulnerabilitie
 * Static analysis is proactive—finds problems **before** code runs.
 * Best used early and continuously in development for fast feedback.
 * Depth, speed, and accuracy make it a cornerstone of secure coding practices.
+
+## Dynamic Analysis Overview
+
+**Definition**
+
+* Dynamic analysis tests and evaluates an application **while it’s running**.
+* Performed on **fully built applications** in staging, pre-production, or even production environments.
+* Known as **Dynamic Application Security Testing (DAST)**, which acts like an attacker using **black-box testing** (no source code access).
+
+**How It Works**
+
+* Simulates real-world attacks to detect vulnerabilities, memory issues, and crashes.
+* Examines the app from the **outside in** through its front end.
+* Crawls the application’s interface from the root URL, interacting with forms, links, and user inputs.
+
+**Key Benefits**
+
+1. **Interface Crawling** – Probes for breakpoints and vulnerabilities by dynamically scanning and attempting to exploit weaknesses.
+2. **Behavior Insights** – Tests reveal how the application responds to various inputs, highlighting crashes, errors, or unexpected execution.
+3. **Fault Detection in Dynamic Paths** – Identifies issues missed in static analysis, pinpointing changes needed for stability and security.
+
+**Key Takeaways**
+
+* Focuses on **runtime behavior**, providing real and accurate results.
+* Best for finding vulnerabilities that occur during actual execution.
+* Complements static analysis by catching issues in **dynamic code paths**.
