@@ -367,3 +367,33 @@ Threat monitoring improves security by identifying and addressing vulnerabilitie
 * Security testing should be continuous, not limited to a single SDLC stage.
 * Both manual and automated approaches are valuable.
 * Combining secure coding with proactive mitigation strategies significantly reduces security risks.
+
+## Static Analysis Overview
+
+**Definition**
+
+* Static analysis inspects source code or compiled binaries **without executing them** to detect vulnerabilities and errors.
+* Also called **Static Application Security Testing (SAST)**.
+* Can be integrated into DevOps pipelines via APIs, even before code is complete.
+
+**When It Happens in the SDLC**
+
+* Performed **early** in the development phase, before dynamic testing.
+* In DevOps, it’s part of the **Develop** stage and provides an **automatic feedback loop** to catch issues as soon as they’re introduced.
+
+**Why It’s Called “Static”**
+
+* Code is analyzed **in place** on the file system.
+* “Static” means the code isn’t run during the analysis process.
+
+**Key Benefits**
+
+1. **Depth** – Covers more possible execution paths than traditional testing, providing in-depth reports on potential problem areas.
+2. **Speed** – Automated scanning is much faster than manual review, identifies exact issue locations, and helps fix problems early (saving cost and time).
+3. **Accuracy** – Automated tools have up-to-date vulnerability knowledge and can analyze every line consistently, reducing human oversight errors.
+
+**Key Takeaways**
+
+* Static analysis is proactive—finds problems **before** code runs.
+* Best used early and continuously in development for fast feedback.
+* Depth, speed, and accuracy make it a cornerstone of secure coding practices.
