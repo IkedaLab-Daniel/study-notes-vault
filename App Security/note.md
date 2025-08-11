@@ -452,5 +452,36 @@ Threat monitoring improves security by identifying and addressing vulnerabilitie
 **Key Takeaways**
 
 * Review **every pull request** manually to catch nuanced issues.
-* Automated tools handle speed and scale; manual reviews ensure deeper logical accuracy.
-* Combining both methods strengthens security coverage.
+* Automated tools handle speed and scale; manual reviews ensure deeper
+
+## Vulnerability Analysis Overview
+
+**Definition**
+
+* Method for identifying flaws that could jeopardize an application’s security.
+* Code can become vulnerable over time due to newly discovered flaws in your code or its dependencies.
+
+**Why It’s Important**
+
+* A system secure today may be vulnerable tomorrow if a weakness is discovered.
+* Vulnerability reports are published daily; staying updated is crucial.
+
+**Tools**
+
+1. **Snyk** – Secures code, dependencies, containers, and infrastructure as code.
+2. **Burp Suite** – Web app vulnerability scanner with passive, active, and JavaScript analysis phases.
+3. **Nessus** – Cross-platform vulnerability scanner with scripting and plugins for targeted detection.
+4. **OWASP Zed Attack Proxy (Zap)** – Open-source scanner using spiders for active/passive scans of web apps and AJAX applications.
+
+**Best Practices**
+
+1. **Train Developers on Security** – Most critical step to prevent vulnerabilities.
+2. **Policy Analysis & Updates** – Keep security policies relevant and current.
+3. **Automation** – Automate vulnerability scanning to detect and alert on issues without manual intervention.
+
+**Key Takeaways**
+
+* Vulnerability analysis is ongoing, not a one-time task.
+* Use reliable scanning tools and stay informed on new security reports.
+* Combine training, updated policies, and automation for robust protection.
+
