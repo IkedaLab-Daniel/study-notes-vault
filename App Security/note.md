@@ -229,3 +229,21 @@ Threat modeling is identifying, categorizing, and enumerating security threats, 
 * **STRIDE** – identifies Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privileges.
 
 Vulnerability scanning ensures complete coverage of the application flow, while early threat modeling helps eliminate weaknesses in applications.
+
+## Threat Monitoring
+
+Threat monitoring is scanning code repositories and containers to identify security issues such as password mishandling, protocol insecurities, and incorrect permissions. It is integrated into the **Develop**, **Test**, and **Deploy** stages of the SDLC, using code scanning in IDEs and SCM tools to incorporate security checks throughout the development process.
+
+**Code scanning tools** reference vulnerability databases like OWASP Top 10 and use code checkers to detect issues in syntax, style, documentation, and security, providing insights for fixes.
+
+**Repository scanning** integrates threat monitoring into SCM tools (e.g., GitHub) to:
+
+* Scan source code for vulnerabilities.
+* Generate automatic fix pull requests.
+* Report vulnerabilities and provide insights.
+* Scan and test every pull request.
+* Sign commits with PGP keys to verify trusted sources.
+
+**Container scanning** examines container images and their dependencies for vulnerabilities, scanning not only the base image but all layered images to reduce security risks.
+
+Threat monitoring improves security by identifying and addressing vulnerabilities in both code repositories and containerized environments.
