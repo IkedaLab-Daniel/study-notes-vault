@@ -1,0 +1,29 @@
+## Application Security for Developers and DevOps Professionals Summary
+
+* Focus: Application security for software engineers, not infrastructure security.
+* Security issues from decades ago still persist today (many appear in OWASP Top 10).
+* IBM report:
+
+  * Average breach detection time: **212 days** (7+ months).
+  * Average breach cost: **\$9.4M (US)**, **\$4.3M (global)**.
+* Many breaches result from poorly implemented security features.
+* Goal: Practice **security by design**.
+* Topics covered:
+
+  * **DevSecOps**: Proactive integration of security into development.
+  * **Network security**: TLS, OpenSSL.
+  * **Security planning**: Mapping security into the development process to recover and prevent attacks.
+  * **Vulnerability scanning**, **threat modeling**, **threat monitoring**.
+  * **Security testing**: Tools and procedures to mitigate risks.
+* Hands-on labs:
+
+  * Static & dynamic analysis tools.
+  * OWASP Top 10 vulnerabilities & exploitation.
+  * Vault secrets manager (UI & programmatic access).
+  * Checking/testing code, dependencies, and environments.
+* Outcome:
+
+  * Understand common risks and vulnerabilities.
+  * Learn defensive coding practices.
+  * Be prepared to secure applications before deployment.
+* Emphasis on **collaboration**, **team-based learning**, and **practical exercises**.
