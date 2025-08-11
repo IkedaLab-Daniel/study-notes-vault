@@ -194,3 +194,22 @@ Summary & Highlights - Introduction to DevSecOps
 * **Public Key Cryptography** – Uses public and private keys.
 
   * **RSA**: Popular implementation providing secrecy, authentication, encryption, and prime number generation for private keys with various key lengths.
+
+## Summary and Highlights - Understanding the Role of Network Security
+
+* OSI model is a system that allows for present and future types of communication to be used by everyone globally.
+
+* The OSI model consists of seven layers for sending and receiving data. The first layer is the physical layer, then the data link layer, the network layer, the transport layer, the session layer, the presentation layer, and finally the application layer.
+
+* Securing the communications layer is important to manage using SSH, HTTPS, SSL/TLS, or the secure sockets layer.
+
+* When application developers need to commit code to an application project, the security code delivery pipeline layer should be secured and restricted.
+
+* Security patterns are a set of rules that represent and define a reusable solution to recurring security threats or issues.
+
+* Transport Layer Security (or TLS) and Secure Sockets Layer (or SSL) are protocols for establishing secure connections or communications between networked computers, specifically a server and a client.
+
+* TLS works effectively when the server has an up-to-date certificate and TLS version support.
+
+* OpenSSL is an open-source toolkit that uses a command line and software libraries to ensure secure communication with cryptography for all types of communication, from personal to commercial and e-commerce transactions.
+
