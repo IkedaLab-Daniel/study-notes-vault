@@ -272,3 +272,53 @@ Threat monitoring improves security by identifying and addressing vulnerabilitie
 * Performing security tests alongside other pipeline tests.
 * Continuously detecting and reporting threats after deployment.
 * Integrating runtime security to detect production threats.
+
+## Getting Started with Network and Port Scanning with Nmap
+
+**Nmap (Network Mapper)** is an open-source network scanning and security auditing tool used to detect network devices, services, operating systems, and vulnerabilities. Developed by Gordon Lyon ("Fyodor") in 1997, it maps network structures and is widely used in security audits, penetration testing, and system administration.
+
+### Users of Nmap
+
+* **Network Administrators:** Map assets, monitor network health, detect misconfigurations, and limit exposed services.
+* **Security Professionals / Penetration Testers:** Identify open ports, services, vulnerabilities, and simulate attacks.
+* **System Administrators:** Troubleshoot connectivity and ensure correct service/port configurations.
+* **IT Managers:** Assess infrastructure security and control effectiveness.
+* **Security Consultants:** Advise on risk mitigation.
+* **Compliance/Audit Professionals:** Verify security standards compliance.
+* **Researchers/Educators:** Study and teach network scanning and security.
+* **Open-Source Enthusiasts:** Explore networking and contribute to development.
+
+### Purpose
+
+* **Network Discovery:** Identify active hosts, open ports, and running services.
+* **Security Auditing:** Assess vulnerabilities and weak points in network infrastructure.
+
+### Common Nmap Scan Types & Examples
+
+* **TCP Connect Scan**: `nmap -sT target`
+* **SYN Stealth Scan**: `nmap -sS target`
+* **UDP Scan**: `nmap -sU target`
+* **ACK Scan**: `nmap -sA target`
+* **Version Detection**: `nmap -sV target`
+* **OS Detection**: `nmap -O target`
+* **Script Scanning**: `nmap -sC target`
+* **Ping Scan**: `nmap -PE target`
+* **Traceroute**: `nmap --traceroute target`
+* **TCP Null Scan**: `nmap -sN target`
+* **TCP FIN Scan**: `nmap -sF target`
+* **TCP Xmas Scan**: `nmap -sX target`
+
+### Evolution & History
+
+* Started as a basic scanner, evolved to include **OS detection**, **version detection**, **scripting engine (NSE)**, and **performance optimization**.
+* Maintained and expanded by an active community.
+
+### Similar Tools
+
+* **Zmap** – High-speed, large-scale network surveys.
+* **Masscan** – Extremely fast internet-scale scanning.
+* **OpenVAS** – Comprehensive vulnerability scanning.
+* **Zenmap** – GUI for Nmap.
+* **Wireshark** – Network protocol analysis and discovery.
+
+**Note:** Use Nmap ethically and with permission to avoid legal violations.
