@@ -247,3 +247,28 @@ Threat monitoring is scanning code repositories and containers to identify secur
 **Container scanning** examines container images and their dependencies for vulnerabilities, scanning not only the base image but all layered images to reduce security risks.
 
 Threat monitoring improves security by identifying and addressing vulnerabilities in both code repositories and containerized environments.
+
+## Security Concepts and Terminology
+
+**Authentication** is verifying a user’s identity to ensure they are who they claim to be.
+**Authorization** determines what actions or resources an authenticated user is allowed to access.
+
+**Encryption** encodes information so only users with authorized access can decode it:
+
+* **Symmetric encryption** uses the same key for encryption and decryption.
+* **Asymmetric encryption** uses different keys for encryption and decryption.
+
+**Integrity** ensures data has not been altered by an unauthenticated source, often implemented using secure hash algorithms to detect tampering.
+
+**CI/CD** (Continuous Integration/Continuous Delivery or Deployment) automates the application development pipeline:
+
+* **Continuous integration** regularly builds, tests, and merges code changes.
+* **Continuous delivery** automatically releases tested changes to non-production environments.
+* **Continuous deployment** automatically deploys releases to production.
+
+**Security in CI/CD** includes:
+
+* Scanning source code early in CI.
+* Performing security tests alongside other pipeline tests.
+* Continuously detecting and reporting threats after deployment.
+* Integrating runtime security to detect production threats.
