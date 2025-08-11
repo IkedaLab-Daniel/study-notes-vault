@@ -212,4 +212,3 @@ Summary & Highlights - Introduction to DevSecOps
 * TLS works effectively when the server has an up-to-date certificate and TLS version support.
 
 * OpenSSL is an open-source toolkit that uses a command line and software libraries to ensure secure communication with cryptography for all types of communication, from personal to commercial and e-commerce transactions.
-
