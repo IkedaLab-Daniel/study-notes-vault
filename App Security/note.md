@@ -67,3 +67,25 @@ Stages:
 * Collaboration with security teams enhances feature implementation.
 * Secure SDLC embeds security best practices into all development phases.
 * Risk assessment and proactive threat analysis reduce vulnerabilities.
+
+## What is DevSecOps Summary
+
+* **Definition**:
+  DevSecOps integrates security practices across the **entire SDLC**—from design to delivery—embedding security into DevOps workflows to reduce risks and align with enterprise IT goals.
+
+* **Core Components**:
+
+  * **Development** – New releases and updates
+  * **Security** – Accessibility, integrity, confidentiality
+  * **Operations** – Performance, reliability, scalability
+
+* **Key Benefits**:
+
+  1. **High-quality, cost-effective software delivery** – Reduces delays, avoids redundant reviews/rebuilds, lowers development costs.
+  2. **Proactive security** – Detect and remediate vulnerabilities early; improves compliance; allows security teams to focus on higher-value tasks.
+  3. **Faster vulnerability patching** – Integrates scanning and patching into release cycles to reduce exposure time.
+  4. **Modern automation** – Security tests (static/dynamic), CI/CD integration, automated dependency checks, immutable infrastructure for stronger protection.
+  5. **Repeatable & adaptable processes** – Uniform security application across evolving environments; supports orchestration, containers, serverless computing for faster recovery after incidents.
+
+* **Key Takeaway**:
+  DevSecOps = DevOps with **security built-in at every step**, enabling continuous, automated, and adaptive protection from development to production.
