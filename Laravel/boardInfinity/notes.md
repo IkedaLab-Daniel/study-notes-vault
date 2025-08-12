@@ -37,3 +37,41 @@
 * **Wide Range of Packages** – Speeds up development.
 * **Scalable** – Handles high traffic efficiently.
 * **Secure by Default** – Strong out-of-the-box security features.
+
+---
+
+## **Setting Up Laravel Development Environment**
+
+### **Prerequisites**
+
+* **PHP**
+* **Composer**
+* **Web server** (Apache recommended)
+* **Database** (MySQL for this exercise)
+* Add dependencies to **environment variables** for easy terminal access.
+
+---
+
+### **Setup Steps**
+
+1. **Create a directory** for Laravel projects.
+2. **Install Laravel installer globally**:
+
+   ```bash
+   composer global require laravel/installer
+   ```
+3. **Create a new project**:
+
+   ```bash
+   laravel new demo_project
+   ```
+4. **Choose options**:
+
+   * Starter kits (optional) – authentication system or none.
+   * Testing framework – PHP Unit (commonly preferred).
+   * Git repository – optional initialization.
+5. Laravel automatically:
+
+   * Generates a project structure with basic code architecture.
+   * Runs `php artisan key:generate`.
+   * Prompts for database selection (MySQL in this example).
