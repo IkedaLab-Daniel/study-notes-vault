@@ -75,3 +75,46 @@
    * Generates a project structure with basic code architecture.
    * Runs `php artisan key:generate`.
    * Prompts for database selection (MySQL in this example).
+
+### **Laravel Project Structure Overview**
+
+#### **1. `app/`**
+
+* **Heart of the application** — contains most of your custom code.
+* **`Http/`**
+
+  * **Controllers**: Handle incoming HTTP requests and return responses.
+  * **Middleware**: Filter requests before they reach your application.
+* **`Providers/`**: Service providers that bind classes and perform tasks during bootstrapping.
+* **`Console/`**: Your custom Artisan commands.
+* **`Exceptions/`**: Custom exception classes to handle and categorize errors.
+
+---
+
+#### **2. `bootstrap/`**
+
+* Holds files needed to **bootstrap the Laravel application**.
+* **`app.php`**: Initializes the app and loads service providers.
+
+---
+
+#### **3. `config/`**
+
+* Stores all **configuration files** for Laravel components (e.g., database connections, mail settings, cache).
+
+---
+
+#### **4. `public/`**
+
+* **Web-accessible directory** — the entry point of your application.
+* **`index.php`**: Main entry point for all incoming requests.
+* **`favicon.ico`**: The site’s favicon.
+
+---
+
+### **Tips from the video**
+
+1. **Use namespaces** to organize code for easier access.
+2. Stick to Laravel’s given folder structure (controllers, models, views already separated).
+3. Use **descriptive file and folder names**.
+4. **Document your code** so you (and others) can understand it later.
