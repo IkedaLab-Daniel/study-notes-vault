@@ -132,3 +132,19 @@
 * **Views** are returned using the `view()` function, stored in **`resources/views/`** as Blade templates (`.blade.php`).
 * Data can be passed from routes/controllers to views for dynamic HTML output.
 
+## Laravel Controllers and Views
+
+* **Controllers** handle incoming HTTP requests, perform tasks (e.g., retrieving data, validating input), and return responses.
+* **Views** generate HTML for the user; Blade templates enable dynamic content generation.
+* Tips:
+
+  * Use dependency injection for testable, reusable code.
+  * Use view composers to pass common data to multiple views.
+  * Document controllers and views for maintainability.
+* Controller methods handle specific routes (e.g., GET `/user` or POST `/login`).
+* Logic should be in controllers, keeping route files clean.
+* Create controllers with `php artisan make:controller`.
+* Map routes to controller methods using `[Controller::class, 'method']`.
+* Pass data from controllers to views (e.g., fetching user data from DB).
+* Use **migrations** (`php artisan migrate`) to create tables and **seeders** (`php artisan db:seed`) to populate initial data.
+* Ensure proper imports for models, controllers, and routes to avoid errors.
