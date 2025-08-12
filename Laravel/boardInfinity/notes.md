@@ -118,3 +118,17 @@
 2. Stick to Laravel’s given folder structure (controllers, models, views already separated).
 3. Use **descriptive file and folder names**.
 4. **Document your code** so you (and others) can understand it later.
+
+## Laravel Routing, Controllers, and Views
+
+* **Routing** matches incoming requests to specific code in your application.
+* Defined using the `Route` class methods (e.g., `Route::get()` for HTTP GET requests).
+* Routes are stored in the **`routes/`** directory:
+
+  * **`web.php`**: For web interface routes, includes session state & CSRF protection.
+  * **`api.php`**: For stateless API routes with API middleware group.
+* Example: `Route::get('/user', function () { return 'User loaded'; });`
+* **Artisan CLI** (`php artisan serve`) runs the local development server.
+* **Views** are returned using the `view()` function, stored in **`resources/views/`** as Blade templates (`.blade.php`).
+* Data can be passed from routes/controllers to views for dynamic HTML output.
+
