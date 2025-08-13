@@ -148,3 +148,12 @@
 * Pass data from controllers to views (e.g., fetching user data from DB).
 * Use **migrations** (`php artisan migrate`) to create tables and **seeders** (`php artisan db:seed`) to populate initial data.
 * Ensure proper imports for models, controllers, and routes to avoid errors.
+
+## Laravel Views Summary
+
+Views in Laravel are Blade templates used to generate the HTML shown to users. To use a view, you return it from a controller method using the `view()` function, which typically takes two parameters:
+
+1. **View name** – e.g., `user.profile` refers to `resources/views/user/profile.blade.php`.
+2. **Data array** – key-value pairs, such as `['user' => $user]`, where `$user` is retrieved from the controller (often from the database).
+
+Blade templates can access these passed variables and display their properties (e.g., `{{ $user->name }}`). You can enhance the display with HTML tags like `<h1>` to style the output.
