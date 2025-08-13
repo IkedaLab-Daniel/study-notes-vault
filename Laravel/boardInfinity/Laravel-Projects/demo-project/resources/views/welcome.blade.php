@@ -116,6 +116,16 @@
                                 Deploy now
                             </a>
                         </li>
+                        <li>
+                            <a href="/course" class="inline-block dark:bg-[#3E3E3A] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:bg-[#62605b] dark:hover:border-[#62605b] hover:bg-[#007bff] hover:border-[#007bff] px-5 py-1.5 bg-[#007bff] rounded-sm border border-[#007bff] text-white text-sm leading-normal">
+                                View Courses
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/1" class="inline-block dark:bg-transparent dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b] hover:bg-[#f8f9fa] hover:border-[#dee2e6] px-5 py-1.5 bg-transparent rounded-sm border border-[#dee2e6] text-[#1b1b18] text-sm leading-normal">
+                                User Profile
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="bg-[#fff2f2] dark:bg-[#1D0002] relative lg:-ml-px -mb-px lg:mb-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg aspect-[335/376] lg:aspect-auto w-full lg:w-[438px] shrink-0 overflow-hidden">
