@@ -157,3 +157,35 @@ Views in Laravel are Blade templates used to generate the HTML shown to users. T
 2. **Data array** – key-value pairs, such as `['user' => $user]`, where `$user` is retrieved from the controller (often from the database).
 
 Blade templates can access these passed variables and display their properties (e.g., `{{ $user->name }}`). You can enhance the display with HTML tags like `<h1>` to style the output.
+
+## Laravel Database Migrations & Eloquent ORM Summary
+
+Database migrations and Eloquent ORM simplify database schema management and data interaction.
+
+* **Migrations**
+
+  * Located in `database/migrations/`.
+  * Create and modify tables with version control.
+  * Contain `up()` (apply changes) and `down()` (revert changes).
+  * Run using `php artisan migrate`.
+  * Use descriptive names for clarity.
+  * Default scripts create core tables like `users` with constraints and nullable fields.
+
+* **Eloquent ORM**
+
+  * Model classes map to database tables.
+  * Define `$fillable` and `$hidden` attributes for mass assignment and JSON visibility.
+  * Extend Laravel’s `Authenticatable` or `Model` base classes.
+  * Use relationships to define table associations.
+  * Scopes help filter and sort data efficiently.
+
+* **Seeders & Factories**
+
+  * Populate tables with initial or test data.
+  * Factories generate multiple random records (e.g., 10 users).
+
+**Best Practices:**
+
+* Keep model and table names consistent.
+* Document migrations and models.
+* Use relationships and scopes for cleaner queries.
