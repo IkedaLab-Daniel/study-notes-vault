@@ -189,3 +189,40 @@ Database migrations and Eloquent ORM simplify database schema management and dat
 * Keep model and table names consistent.
 * Document migrations and models.
 * Use relationships and scopes for cleaner queries.
+
+## Laravel Eloquent ORM Summary
+
+Eloquent ORM is Laravel’s built-in object-relational mapper that allows interaction with the database using PHP objects instead of raw SQL.
+
+* **Model Basics**
+
+  * Each database table typically has a corresponding model class in `app/Models/`.
+  * Models extend `Illuminate\Database\Eloquent\Model`.
+  * Created with `php artisan make:model ModelName`.
+  * Can explicitly set the `$table` property to match the database table.
+
+* **Core Operations**
+
+  * `all()` – retrieve all records.
+  * `find($id)` – retrieve a record by ID.
+  * Supports creating, updating, and deleting records.
+  * Allows complex queries via Eloquent’s query builder.
+
+* **Integration with Migrations & Seeders**
+
+  * Migrations define and create the table schema.
+  * Seeders populate tables with test or initial data (`php artisan db:seed --class=SeederName`).
+  * If a table is missing, run or refresh migrations (`php artisan migrate:refresh`).
+
+* **Controller Usage**
+
+  * Import models into controllers.
+  * Use Eloquent methods inside controller actions to fetch and manipulate data.
+  * Ensure model property names match migration column definitions.
+
+* **Best Practices**
+
+  * Keep column and attribute names consistent.
+  * Validate data before saving.
+  * Use Eloquent relationships for linked tables.
+  * Leverage scopes for reusable query filters.
