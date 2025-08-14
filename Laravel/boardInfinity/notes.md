@@ -930,3 +930,92 @@ Handling user input is a critical aspect of web development, and Laravel provide
 | POST      | store      | Add new data         |
 | PUT/PATCH | update     | Modify existing data |
 | DELETE    | destroy    | Remove data          |
+
+
+## Implementing Store, Index, and Show Methods in Laravel API Controller
+
+### **1. Store (POST)**
+
+* **Purpose**: Add new data to the server.
+* **Steps**:
+
+  1. Accept `Request` as input.
+  2. Validate incoming data.
+
+     ```php
+     $validated = $request->validate([
+         'courseName' => 'required|string|max:255',
+         'courseDescription' => 'required|string'
+     ]);
+     ```
+  3. Create and save the course.
+  4. Return JSON response with `201` status.
+
+**Example**:
+
+```php
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'courseName' => 'required|string|max:255',
+        'courseDescription' => 'required|string'
+    ]);
+
+    $course = Course::create($validated);
+
+    return response()->json([
+        'message' => 'Course created successfully',
+        'course' => $course
+    ], 201);
+}
+```
+
+---
+
+### **2. Index (GET all)**
+
+* **Purpose**: Retrieve all courses from the database.
+* **Steps**:
+
+  1. Fetch all courses.
+  2. Return JSON response.
+
+**Example**:
+
+```php
+public function index()
+{
+    $courses = Course::all();
+    return response()->json($courses);
+}
+```
+
+---
+
+### **3. Show (GET single)**
+
+* **Purpose**: Retrieve a single course by ID.
+* **Steps**:
+
+  1. Accept course ID as parameter.
+  2. Find course in DB.
+  3. Return JSON response.
+
+**Example**:
+
+```php
+public function show($id)
+{
+    $course = Course::findOrFail($id);
+    return response()->json($course);
+}
+```
+
+---
+
+### **Notes**
+
+* Always **validate** before saving data.
+* Return JSON for all API responses.
+* Use `response()->json()` for consistent formatting.
+* Laravel automatically prefixes API routes with `/api`.
