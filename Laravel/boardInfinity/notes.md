@@ -872,3 +872,61 @@ Handling user input is a critical aspect of web development, and Laravel provide
 ---
 
 > **Example in Laravel:** Start by creating models, migrations, and then an API controller to handle resource operations.
+
+
+## Creating a RESTful API Controller in Laravel
+
+### **Controller Organization**
+
+* **Folder Structure**:
+
+  * `Controllers/Web` → For controllers handling web views.
+  * `Controllers/API` → For controllers handling RESTful APIs.
+
+---
+
+### **Creating the API Controller**
+
+1. **Artisan Command**
+
+   ```bash
+   php artisan make:controller API/CourseAPIController
+   ```
+
+   * Creates `CourseAPIController` under `Controllers/API`.
+
+2. **Import the Model**
+
+   ```php
+   use App\Models\Course;
+   ```
+
+3. **Add `$fillable` in Model**
+
+   * Ensures only specific fields can be mass-assigned (used for `create` & `update`).
+
+   ```php
+   protected $fillable = ['field1', 'field2', 'field3'];
+   ```
+
+---
+
+### **Mapping API Routes**
+
+* In `routes/api.php`:
+
+  ```php
+  Route::apiResource('courses', CourseAPIController::class);
+  ```
+* `apiResource` automatically sets up RESTful routes for CRUD operations.
+
+---
+
+### **HTTP Methods & Actions**
+
+| Method    | Action     | Purpose              |
+| --------- | ---------- | -------------------- |
+| GET       | index/show | Fetch data           |
+| POST      | store      | Add new data         |
+| PUT/PATCH | update     | Modify existing data |
+| DELETE    | destroy    | Remove data          |
