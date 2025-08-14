@@ -426,3 +426,31 @@ Middleware in Laravel allows intercepting and filtering HTTP requests before the
 1. **Unauthenticated user** → visits `/home` → Middleware checks guard → redirect to login.
 2. **User logs in** → Guard stores session → Middleware lets request through.
 3. **User logs out** → Guard clears session → Middleware denies access until login again.
+
+## Laravel Blade Templating System
+
+Blade is Laravel’s built-in templating engine that allows developers to create dynamic HTML pages using PHP files with a `.blade.php` extension, typically stored in the `resources/views` directory.
+
+**Key Points:**
+
+* **Blade Directives**: Special syntax for controlling template flow and generating dynamic HTML (e.g., conditionals, loops, filters).
+* **Naming**: Use descriptive template names for better project organization.
+* **Layouts & Partials**:
+
+  * **Layouts** act as master templates (page skeletons).
+  * **Partials** are reusable HTML snippets (e.g., header, footer).
+* **`@yield` & `@include`**:
+
+  * `@include` pulls in partial views.
+  * `@yield` defines dynamic content sections.
+* **`@extends` & `@section`**: Allow child templates to inherit from layouts and populate specific content areas.
+* **Best Practices**:
+
+  * Keep Blade logic in templates and UI-related work in JavaScript when appropriate.
+  * Document your code for better collaboration and maintenance.
+
+**Example Flow:**
+
+1. `app.blade.php` defines HTML skeleton with `@include('partials.header')` and `@yield('content')`.
+2. `profile.blade.php` uses `@extends('layouts.app')` and fills in `@section('title', 'Profile Page')` and `@section('content', 'Profile content here')`.
+3. Changing the Blade file dynamically updates the page without rewriting layout HTML.
