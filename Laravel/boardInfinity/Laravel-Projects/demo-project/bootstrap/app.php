@@ -11,7 +11,18 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Register custom middleware
+        $middleware->alias([
+            'check.headers' => \App\Http\Middleware\CheckHeaders::class,
+        ]);
+        
+        // Or add it to global middleware stack (applies to all routes)
+        // $middleware->append(\App\Http\Middleware\CheckHeaders::class);
+        
+        // Or add it to web middleware group
+        // $middleware->web(append: [
+        //     \App\Http\Middleware\CheckHeaders::class,
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
