@@ -316,3 +316,36 @@ Laravel offers an elegant way to interact with databases through database migrat
 * **Database Seeding**
   * Database seeding is the process of populating your database with initial data
   * Laravel's database seeder makes it straightforward to create records for testing or bootstrapping your application
+
+## Laravel Middleware
+
+Middleware in Laravel allows intercepting and filtering HTTP requests before they reach controllers, enabling tasks like authentication, authorization, logging, and request validation.
+
+* **Creating Middleware**
+
+  * Use `php artisan make:middleware Name` to generate a middleware class.
+  * Middleware contains a `handle` method that receives the request, performs checks/changes, and then calls `$next($request)` to pass it forward.
+
+* **Registering Middleware**
+
+  * In `app/Http/Kernel.php`:
+
+    * **Global Middleware** – runs on all requests.
+    * **Middleware Groups** – e.g., `web` for browser requests, `api` for API requests.
+    * **Route Middleware (aliases)** – assign names to middleware for route-specific use.
+
+* **Using Middleware in Routes**
+
+  * Apply to routes in `routes/web.php` using `->middleware('aliasName')`.
+
+* **Example Implementation**
+
+  * Middleware checks request headers (e.g., `User-Agent`).
+  * Blocks certain browsers by redirecting to an "unauthorized" view if the condition matches.
+  * Logs events using Laravel’s `Log` class (`error`, `warning`, `debug`, etc.).
+
+* **Best Practices**
+
+  * Keep middleware focused on one responsibility.
+  * Use global middleware for app-wide concerns, and route middleware for specific features.
+  * Always validate and sanitize incoming request data before processing.
