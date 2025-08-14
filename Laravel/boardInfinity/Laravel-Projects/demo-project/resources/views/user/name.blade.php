@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Profile</title>
+    <title>{{fake()->name()}}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,6 +51,7 @@
             <h1>User Profile</h1>
             <div class="user-info">
                 <p><strong>Name:</strong> {{ $user->name }}</p>
+                <p><strong>Fake Name:</strong> {{ fake()->name() }}</p>
                 <p><strong>Email:</strong> {{ $user->email }}</p>
                 <p><strong>User ID:</strong> {{ $user->id }}</p>
                 <p><strong>Member since:</strong> {{ $user->created_at->format('F d, Y') }}</p>
@@ -64,6 +65,6 @@
         
         <a href="{{ url('/') }}" class="back-link">← Back to Home</a>
     </div>
-    
+
 </body>
 </html>
