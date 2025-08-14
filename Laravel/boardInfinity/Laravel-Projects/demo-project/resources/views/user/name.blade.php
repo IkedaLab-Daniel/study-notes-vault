@@ -64,5 +64,6 @@
         
         <a href="{{ url('/') }}" class="back-link">← Back to Home</a>
     </div>
+    
 </body>
 </html>

@@ -285,7 +285,7 @@
                     }
                 });
                 
-                // Show/hide section based on whether it has visible commands
+                // ? Show/hide section based on whether it has visible commands
                 if (hasVisibleCommands || searchTerm === '') {
                     section.style.display = 'block';
                 } else {
