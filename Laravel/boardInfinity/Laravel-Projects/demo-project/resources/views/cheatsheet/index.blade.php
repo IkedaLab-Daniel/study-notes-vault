@@ -8,20 +8,21 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
-            color: #333;
+            color: #e2e8f0;
         }
         
         .container {
-            background: white;
+            background: #1e293b;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             overflow: hidden;
+            border: 1px solid #334155;
         }
         
         .header {
-            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            background: linear-gradient(135deg, #dc2626, #ea580c);
             color: white;
             text-align: center;
             padding: 40px 20px;
@@ -46,13 +47,14 @@
         .section {
             margin-bottom: 40px;
             border-radius: 10px;
-            background: #f8f9fa;
+            background: #2d3748;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid #4a5568;
         }
         
         .section-header {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             color: white;
             padding: 15px 20px;
             font-size: 1.3em;
@@ -68,16 +70,18 @@
         
         .command-item {
             margin-bottom: 15px;
-            background: white;
+            background: #374151;
             border-radius: 8px;
             padding: 15px;
-            border-left: 4px solid #4facfe;
+            border-left: 4px solid #3b82f6;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid #4b5563;
         }
         
         .command-item:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            background: #4b5563;
         }
         
         .command-item:last-child {
@@ -86,46 +90,49 @@
         
         .command {
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            background: #2d3748;
-            color: #68d391;
+            background: #111827;
+            color: #34d399;
             padding: 8px 12px;
             border-radius: 5px;
             font-size: 0.9em;
             display: inline-block;
             margin-bottom: 8px;
             word-break: break-all;
+            border: 1px solid #374151;
         }
         
         .description {
-            color: #666;
+            color: #cbd5e1;
             line-height: 1.5;
             font-size: 0.95em;
         }
         
         .navigation {
-            background: #343a40;
+            background: #111827;
             padding: 15px 20px;
             text-align: center;
+            border-top: 1px solid #374151;
         }
         
         .nav-link {
-            color: white;
+            color: #e2e8f0;
             text-decoration: none;
             margin: 0 15px;
             padding: 10px 20px;
-            background: #007bff;
+            background: #3b82f6;
             border-radius: 5px;
             display: inline-block;
             transition: background-color 0.3s ease;
         }
         
         .nav-link:hover {
-            background: #0056b3;
+            background: #1d4ed8;
             text-decoration: none;
+            color: white;
         }
         
         .copy-btn {
-            background: #28a745;
+            background: #059669;
             color: white;
             border: none;
             padding: 4px 8px;
@@ -137,22 +144,29 @@
         }
         
         .copy-btn:hover {
-            background: #218838;
+            background: #047857;
         }
         
         .search-box {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e9ecef;
+            border: 2px solid #4b5563;
             border-radius: 8px;
             font-size: 1em;
             margin-bottom: 20px;
             box-sizing: border-box;
+            background: #374151;
+            color: #e2e8f0;
         }
         
         .search-box:focus {
             outline: none;
-            border-color: #4facfe;
+            border-color: #3b82f6;
+            background: #4b5563;
+        }
+        
+        .search-box::placeholder {
+            color: #9ca3af;
         }
         
         @media (max-width: 768px) {
@@ -224,10 +238,10 @@
             navigator.clipboard.writeText(command).then(function() {
                 // Show success feedback
                 event.target.textContent = 'Copied!';
-                event.target.style.background = '#28a745';
+                event.target.style.background = '#059669';
                 setTimeout(() => {
                     event.target.textContent = 'Copy';
-                    event.target.style.background = '#28a745';
+                    event.target.style.background = '#059669';
                 }, 2000);
             }).catch(function(err) {
                 console.error('Could not copy text: ', err);
