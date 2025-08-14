@@ -13,4 +13,7 @@ class Course extends Model
         'courseName',
         'courseDescription'
     ];
+    
+    // Timestamps disabled - if you want to enable them, remove this line and run the migration
+    public $timestamps = false;
 }
