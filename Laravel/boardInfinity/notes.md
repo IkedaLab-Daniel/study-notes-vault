@@ -630,3 +630,47 @@ Laravel supports using external PHP libraries, and there are **two main ways** t
 
 * Keep Laravel, dependencies, and server OS updated.
 * Educate users about CSRF risks and secure browsing habits.
+
+## Validating User Input in Laravel
+
+### **Importance**
+
+* Prevents vulnerabilities like **SQL Injection** and **Cross-Site Scripting (XSS)**.
+* Ensures user-provided data is safe and in the correct format.
+
+---
+
+### **Key Tools & Features**
+
+1. **Built-in Request Validation**
+
+   * Define rules in controllers using `validate()` method.
+   * Automatically returns errors if data fails rules.
+   * Example:
+
+     * `name`: required, string, max length 255
+     * `email`: required, valid email format
+
+2. **HTML Purification**
+
+   * Use **Pro Purifier** to sanitize user-generated HTML.
+   * Removes harmful elements like `<script>` tags and inline JavaScript.
+
+3. **Query Builder & Eloquent ORM**
+
+   * Protects against **SQL Injection**.
+   * Forces use of safe, parameterized queries.
+   * Automatically escapes and sanitizes inputs.
+
+4. **Cross-Site Scripting (XSS) Protection**
+
+   * Blade templates automatically escape output.
+   * Always use Blade to render user content safely.
+
+5. **Custom Validation Rules**
+
+   * Create application-specific validation logic for unique requirements.
+
+---
+
+**Best Practice:** Always combine validation, sanitization, and Laravel’s built-in protections to ensure maximum security.
