@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CheatsheetController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,3 +22,6 @@ Route::get('/user/{id}', [UserController::class, 'getUser']);
 Route::get('/course', [CourseController::class, 'index']);
 Route::get('/course/{id}', [CourseController::class, 'findCourse'])->middleware('check.headers');
 Route::get('/cheatsheet', [CheatsheetController::class, 'index']);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
