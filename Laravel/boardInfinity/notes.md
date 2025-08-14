@@ -349,3 +349,80 @@ Middleware in Laravel allows intercepting and filtering HTTP requests before the
   * Keep middleware focused on one responsibility.
   * Use global middleware for app-wide concerns, and route middleware for specific features.
   * Always validate and sanitize incoming request data before processing.
+
+## Authentication
+
+### **1. What Authentication Is in Laravel**
+
+* **Authentication** = verifying *who* a user is.
+* Laravel supports:
+
+  * **HTTP Basic Auth** (good for APIs)
+  * **Form-based Auth** (login forms)
+  * **OAuth** (Google, Facebook, etc.).
+* **Guards** act as gatekeepers — they decide *if* a user is authenticated for a given request.
+
+---
+
+### **2. Guards vs. Middleware**
+
+* **Guards** handle the logic of checking if a user is logged in (e.g., `session` guard for web, `api` guard for token-based).
+* **Middleware** uses those guards to:
+
+  * Restrict access to routes (`auth` middleware).
+  * Implement extra rules (e.g., 2FA).
+* They often work together:
+  Route → Middleware checks guard → Controller runs if allowed.
+
+---
+
+### **3. Configuring Guards**
+
+* Guards are defined in **`config/auth.php`**.
+* Common built-ins:
+
+  * `session` (default for web login)
+  * `token` or `sanctum` (API token auth).
+
+---
+
+### **4. Example Project Setup**
+
+* New Laravel project with:
+
+  ```bash
+  composer create-project laravel/laravel auth-example
+  ```
+* DB configured in `.env`.
+* Used **Laravel UI** to scaffold authentication:
+
+  ```bash
+  composer require laravel/ui
+  php artisan ui bootstrap --auth
+  npm install && npm run dev
+  ```
+* This creates:
+
+  * **Login/Register views** (`resources/views/auth/...`)
+  * **Controllers** (`LoginController`, `RegisterController`, etc.)
+  * Pre-configured **auth routes**.
+
+---
+
+### **5. How `auth` Middleware Works**
+
+* Protects routes:
+
+  ```php
+  Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
+  ```
+* If not logged in, Laravel redirects to login.
+* After login, the user can access the route.
+
+---
+
+### **6. Flow in Action**
+
+1. **Unauthenticated user** → visits `/home` → Middleware checks guard → redirect to login.
+2. **User logs in** → Guard stores session → Middleware lets request through.
+3. **User logs out** → Guard clears session → Middleware denies access until login again.
