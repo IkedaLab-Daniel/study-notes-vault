@@ -124,3 +124,63 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
   4. Utilities
 
   * Order is predefined by Tailwind; the order you write them in your CSS doesn’t matter.
+
+## 4. Theme Layer & Custom Colors
+
+* **Purpose:** Lets you define your own design tokens (colors, fonts, spacing).
+* **Example:** You can add a `brand` color alongside Tailwind’s default palette.
+* **Shade Pattern:** Tailwind uses numbered shades (`blue-600`, `blue-500`, etc.), but you can use your own naming like `brand`, `brand-light`, `brand-dark`.
+* **Benefits:**
+
+  * Once set in the **theme layer**, you can use it anywhere:
+
+    ```html
+    <div class="bg-brand text-white"></div>
+    ```
+  * Changing the CSS variable updates it **globally**.
+
+---
+
+## **Variants (Responsive, State, etc.)**
+
+* Tailwind has **built-in responsive breakpoints**:
+
+  * `sm`, `md`, `lg`, `xl`, `2xl`.
+  * Prefixing with `md:` applies styles only from that breakpoint upward.
+
+  Example:
+
+  ```html
+  <div class="w-full md:w-1/2"></div>
+  ```
+
+  → Full width on mobile, half width from `md` up.
+
+* **State variants** like `hover:`, `focus:`, `active:` can be **stacked** with responsive variants.
+
+  Example:
+
+  ```html
+  <button class="bg-brand md:hover:bg-brand-dark">
+    Click Me
+  </button>
+  ```
+
+  → Changes background color only when hovered on **medium and larger screens**.
+
+* **Why it’s powerful:**
+  Instead of verbose CSS:
+
+  ```css
+  @media (min-width: 768px) {
+    .btn:hover {
+      background-color: var(--brand-dark);
+    }
+  }
+  ```
+
+  You write:
+
+  ```html
+  <button class="md:hover:bg-brand-dark">Click Me</button>
+  ```
