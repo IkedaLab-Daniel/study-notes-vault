@@ -212,3 +212,42 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
 * **Custom utilities & variants**
 
   * Possible to define your own responsive or state variants for special cases.
+
+## 6. Tailwind Setup & Tools Overview
+
+### **Project Setup**
+
+* Clone the **Tailwind Skatepark** repo.
+* Install dependencies:
+
+  ```bash
+  npm install
+  npm start
+  ```
+* Project uses **Svelte** for simplicity (React/Angular concepts still apply).
+
+### **Recommended Tools**
+
+* **Tailwind CSS IntelliSense** (VS Code)
+
+  * Autocompletes Tailwind classes.
+  * Sorts classes automatically to prevent style order debates.
+* **Prettier Plugin** (optional)
+
+  * Ensures consistent class name ordering.
+* **Color Palette Tools**
+
+  * UI Colorless (generate Tailwind palettes, export as CSS variables).
+  * Semantic color palette generator (e.g., `error`, `warning`, `destructive` instead of `red`, `blue`).
+  * Figma plugin for syncing design & CSS variables.
+
+### **Preflight**
+
+* Tailwind’s **Preflight** strips browser default styles.
+* Normalizes styles across browsers.
+* Leaves elements like buttons looking unstyled, ready for Tailwind utilities.
+
+### **Future Topics**
+
+* JavaScript libraries for merging/diffing class names in design systems.
+* Handling style overrides (e.g., default blue button overridden with pink).
