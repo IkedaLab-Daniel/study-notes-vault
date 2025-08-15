@@ -93,4 +93,34 @@ Tailwind scans your project for **full class names** in plain text and includes 
 
 If styles aren’t showing up, **the first debugging step** should be: *“Did Tailwind strip this class because it didn’t see it in my code?”*
 
-I can show you exactly **how to safelist classes** in the Tailwind config so you never lose them. Want me to do that next?
+## 3. Tailwind CSS Best Practices & Layers
+
+* **CSS Layers in Tailwind:**
+
+  * **Theme layer:** Defines CSS variables (colors, spacing, fonts) → becomes Tailwind utility classes.
+  * **Base layer:** Styles raw HTML elements (body, lists, inputs, etc.).
+  * **Components layer:** Styles specific UI components (e.g., buttons).
+  * **Utilities layer:** Adds one-off utility classes to extend Tailwind.
+
+* **Customization:**
+
+  * Override or add colors, fonts, and sizes in the **theme layer** to generate new Tailwind classes.
+  * Brand-specific tokens (e.g., `brand`, `success`, `error`) can replace defaults like `blue`.
+
+* **Best practice:**
+
+  * Keep base HTML elements minimal and style through utility classes in markup for flexibility.
+  * Use base layer changes when migrating from older codebases or enforcing consistent defaults.
+
+* **IntelliSense & tooling:**
+
+  * Use the **Tailwind IntelliSense plugin** in VS Code for class autocompletion, especially with custom utilities or theme variables.
+
+* **CSS Layer Order in Tailwind:**
+
+  1. Theme
+  2. Base
+  3. Components
+  4. Utilities
+
+  * Order is predefined by Tailwind; the order you write them in your CSS doesn’t matter.
