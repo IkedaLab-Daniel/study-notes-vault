@@ -1019,3 +1019,108 @@ public function show($id)
 * Return JSON for all API responses.
 * Use `response()->json()` for consistent formatting.
 * Laravel automatically prefixes API routes with `/api`.
+
+## Developing RESTful API in Laravel
+
+### **1. Set Up Laravel Project**
+
+* Create new project via Laravel installer or Composer.
+
+---
+
+### **2. Define Routes**
+
+* Use `routes/api.php` for API-specific routes.
+* Example:
+
+```php
+Route::get('/posts', [PostController::class, 'index']);
+Route::post('/posts', [PostController::class, 'store']);
+Route::put('/posts/{id}', [PostController::class, 'update']);
+Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+```
+
+---
+
+### **3. Use Resource Routes**
+
+* Simplifies CRUD mapping:
+
+```php
+Route::apiResource('posts', PostController::class);
+```
+
+This automatically registers routes for `index`, `store`, `show`, `update`, and `destroy`.
+
+---
+
+### **4. Create API Controllers**
+
+* Generate with:
+
+```bash
+php artisan make:controller API/PostController --api
+```
+
+* Extends base `Controller`.
+
+---
+
+### **5. Implement Controller Methods**
+
+* `index()` → GET all resources.
+* `show($id)` → GET single resource.
+* `store(Request $request)` → POST new resource.
+* `update(Request $request, $id)` → PUT/PATCH update resource.
+* `destroy($id)` → DELETE resource.
+
+---
+
+### **6. Data Validation**
+
+* Use Laravel’s built-in validation:
+
+```php
+$request->validate([
+    'title' => 'required|string|max:255',
+    'content' => 'required|string',
+]);
+```
+
+---
+
+### **7. API Responses**
+
+* Return JSON with proper HTTP codes:
+
+```php
+return response()->json(['message' => 'Created'], 201);
+```
+
+---
+
+### **8. Authentication & Authorization**
+
+* Use **Laravel Passport** or **Sanctum** for API auth.
+
+---
+
+### **9. Middleware**
+
+* Handle authentication, rate limiting, or formatting via middleware.
+
+---
+
+### **10. Testing**
+
+* Write unit tests using **PHPUnit** to ensure endpoint reliability.
+
+---
+
+### **Key Points for API Controllers**
+
+* Located in `app/Http/Controllers`.
+* Handle request input, validation, model interaction, and response.
+* Always return standardized JSON responses.
+* Use correct HTTP status codes (`200`, `201`, `404`, `422`, etc.).
+* Perfect for implementing RESTful CRUD structure with resourceful routes.
