@@ -59,6 +59,11 @@ class CourseAPIController extends Controller
 
     // > Deleting data from server, DELETE
     public function destroy($id){
-        return response()->json();
+        $course = Course::find($id);
+        if (!$course){
+            return response()->json(['message'=>'Course not found'], HttpResponse::HTTP_NOT_FOUND);
+        }
+        $course->delete();
+        return response()->json(['message'=>'Course is deleted'], HttpResponse::HTTP_OK);
     }
 }
