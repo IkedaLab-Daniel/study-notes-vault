@@ -80,3 +80,17 @@
 * Tailwind is a **CSS-first, framework-agnostic** system.
 * Best used with **components + build tooling**.
 * Trades semantic class names for **speed, consistency, and bundle size efficiency**.
+
+## 2. How Tailwind CSS works
+
+Tailwind scans your project for **full class names** in plain text and includes only those in the final CSS. It does **not** analyze your code’s logic — it’s essentially pattern-matching strings.
+
+* ✅ **Works:** Writing the full class name anywhere in your HTML, JS, or TS files (e.g., `const success = "bg-green-400";`).
+* ❌ **Doesn’t work:** Dynamically building class names with concatenation or template strings (e.g., `` `bg-${color}-400` ``) — Tailwind won’t detect them.
+* **Safelisting:** If you know some classes won’t appear directly in your code (like ones injected from a third-party library), you can explicitly safelist them so Tailwind doesn’t strip them out.
+* **Plugins & customization:** You can extend Tailwind via JavaScript-based plugins and customize colors, spacing, fonts, etc. Everything is configurable.
+* **Ignore list:** Tailwind ignores certain files by default (e.g., `.gitignore` entries, CSS files, lock files).
+
+If styles aren’t showing up, **the first debugging step** should be: *“Did Tailwind strip this class because it didn’t see it in my code?”*
+
+I can show you exactly **how to safelist classes** in the Tailwind config so you never lose them. Want me to do that next?
