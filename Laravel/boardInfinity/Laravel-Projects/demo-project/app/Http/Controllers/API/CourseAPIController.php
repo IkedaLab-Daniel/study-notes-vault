@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use GuzzleHttp\Psr7\Response;
 
 class CourseAPIController extends Controller
 {
@@ -33,7 +34,11 @@ class CourseAPIController extends Controller
 
     // > Fetching single record from server, GET
     public function show($id){
-        return response()->json();
+        $course = Course::find($id);
+        if (!$course){
+            return response()->json(['message'=>'Course not found!'], 404);
+        }
+        return response()->json($course);
     }
 
     // > Updating data on server, PATCH
