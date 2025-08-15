@@ -141,7 +141,7 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
 
 ---
 
-## **Variants (Responsive, State, etc.)**
+### **Variants (Responsive, State, etc.)**
 
 * Tailwind has **built-in responsive breakpoints**:
 
@@ -184,3 +184,31 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
   ```html
   <button class="md:hover:bg-brand-dark">Click Me</button>
   ```
+
+## 5. Tailwind Patterns & Anti-Patterns
+
+### **Anti-Patterns**
+
+* **One-off classes without `@utility`**
+
+  * Works for direct usage (`my-button`) but **breaks with variants** (`hover:my-button` won’t work).
+* **Excessive arbitrary values (`[value]` syntax)**
+
+  * Great for rare, one-time needs.
+  * Overuse leads to hard-to-maintain code and painful refactoring.
+
+### **Patterns**
+
+* **Use `@utility` for custom classes**
+
+  * Makes them compatible with variants (`hover:`, `md:`, etc.).
+* **Define theme variables for reusable styles**
+
+  * Ensures consistency and easy global changes.
+* **Keep styling in markup**
+
+  * Most Tailwind usage should happen in HTML/JSX/Svelte/Angular templates.
+  * Limit direct CSS edits except for theme tweaks.
+* **Custom utilities & variants**
+
+  * Possible to define your own responsive or state variants for special cases.
