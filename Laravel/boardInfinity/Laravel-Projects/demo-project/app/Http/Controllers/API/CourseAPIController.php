@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\Response as HttpResponse;
 
 class CourseAPIController extends Controller
 {
@@ -36,14 +37,24 @@ class CourseAPIController extends Controller
     public function show($id){
         $course = Course::find($id);
         if (!$course){
-            return response()->json(['message'=>'Course not found!'], 404);
+            return response()->json(['message'=>'Course not found!'], HttpResponse::HTTP_NOT_FOUND);
         }
         return response()->json($course);
     }
 
     // > Updating data on server, PATCH
     public function update(Request $request, $id){
-
+        $course = Course::find($id);
+        if (!$course){
+            return response()->json(['message'=>'Course not found'], HttpResponse::HTTP_NOT_FOUND);
+        }
+        $validateDate = $request->validate([
+            'courseName'=>'string|max:255',
+            'courseDescription'=>'required|string'
+        ]);
+        $course->fill($request->all());
+        $course->save();
+        return response()->json(['message'=>'Course Updated','course'=>$course], HttpResponse::HTTP_OK);
     }
 
     // > Deleting data from server, DELETE
