@@ -28,6 +28,50 @@
             <p class="mt-1">This is a description for the card component.</p>
         </div> 
 
+        <!-- Color Comparison Section -->
+        <div class="mt-8 space-y-4">
+            <h2 class="text-2xl font-semibold mb-4">Slate vs Gray Comparison</h2>
+            
+            <!-- Gray Scale -->
+            <div class="space-y-2">
+                <h3 class="text-lg font-medium">Gray Scale (True Neutral)</h3>
+                <div class="grid grid-cols-5 gap-2">
+                    <div class="bg-gray-50 h-12 rounded flex items-center justify-center text-xs font-medium">gray-50</div>
+                    <div class="bg-gray-200 h-12 rounded flex items-center justify-center text-xs font-medium">gray-200</div>
+                    <div class="bg-gray-400 h-12 rounded flex items-center justify-center text-xs font-medium text-white">gray-400</div>
+                    <div class="bg-gray-600 h-12 rounded flex items-center justify-center text-xs font-medium text-white">gray-600</div>
+                    <div class="bg-gray-900 h-12 rounded flex items-center justify-center text-xs font-medium text-white">gray-900</div>
+                </div>
+            </div>
+            
+            <!-- Slate Scale -->
+            <div class="space-y-2">
+                <h3 class="text-lg font-medium">Slate Scale (Cool-toned)</h3>
+                <div class="grid grid-cols-5 gap-2">
+                    <div class="bg-slate-50 h-12 rounded flex items-center justify-center text-xs font-medium">slate-50</div>
+                    <div class="bg-slate-200 h-12 rounded flex items-center justify-center text-xs font-medium">slate-200</div>
+                    <div class="bg-slate-400 h-12 rounded flex items-center justify-center text-xs font-medium text-white">slate-400</div>
+                    <div class="bg-slate-600 h-12 rounded flex items-center justify-center text-xs font-medium text-white">slate-600</div>
+                    <div class="bg-slate-900 h-12 rounded flex items-center justify-center text-xs font-medium text-white">slate-900</div>
+                </div>
+            </div>
+            
+            <!-- Side by Side Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div class="rounded-md p-4 border-2 bg-gray-50">
+                    <h4 class="font-semibold text-lg text-gray-900">Gray Card</h4>
+                    <p class="mt-1 text-gray-600">Pure neutral gray background with gray text colors.</p>
+                    <button class="mt-2 bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm">Gray Button</button>
+                </div>
+                
+                <div class="rounded-md p-4 border-2 bg-slate-50">
+                    <h4 class="font-semibold text-lg text-slate-900">Slate Card</h4>
+                    <p class="mt-1 text-slate-600">Cool-toned slate background with slate text colors.</p>
+                    <button class="mt-2 bg-slate-600 hover:bg-slate-700 text-white px-3 py-1 rounded text-sm">Slate Button</button>
+                </div>
+            </div>
+        </div>
+
         <div class="form space-y-1">
             <h2 class="text-2xl font-semibold">Form</h2>
             <label for="username " class="block font-medium text-slate-900">Input Label:</label>

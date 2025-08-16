@@ -474,3 +474,45 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
 * While focused: blue outline.
 * If left empty → `user-invalid` adds red outline only **after blur**.
 * If valid email entered → `user-valid` adds green outline.
+
+## Focus Within & Checkbox Styling in Tailwind
+
+* **`focus`** → Styles the element when it’s directly focused.
+* **`focus-visible`** → Styles only when focus comes via **keyboard navigation**, not mouse clicks.
+* **`focus-within`** → Styles a **parent container** if *any* child element inside is focused.
+* Great for wrapping inputs, checkboxes, or grouped UI where the whole container should highlight.
+* **Checkbox styling**:
+
+  * Use `accent-*` to change the checkmark color (`accent-purple-400`, etc.).
+  * Works for checkboxes, radios, and range inputs.
+* **Practical use cases**:
+
+  * Highlighting form groups when any field inside is active.
+  * Making custom UI components (e.g., input with a button inside) behave as a single focusable unit.
+  * Styling parent containers consistently without extra JS.
+
+---
+
+### Demo Snippet
+
+```html
+<div class="p-4 rounded-lg border border-slate-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200">
+  <label class="flex items-center gap-2 cursor-pointer">
+    <input type="checkbox" class="accent-purple-500 w-5 h-5" />
+    <span class="text-slate-700">Subscribe to newsletter</span>
+  </label>
+</div>
+
+<div class="mt-4 p-4 rounded-lg border border-slate-300 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-200">
+  <label class="flex items-center gap-2 cursor-pointer">
+    <input type="checkbox" class="accent-green-500 w-5 h-5" />
+    <span class="text-slate-700">Enable notifications</span>
+  </label>
+</div>
+```
+
+✅ Behavior:
+
+* Clicking or tabbing into the checkbox applies `focus-within` to the **parent container**, highlighting the box.
+* `accent-purple-500` / `accent-green-500` changes the checkmark color.
+* Works seamlessly across multiple checkboxes — only the parent of the focused one highlights.
