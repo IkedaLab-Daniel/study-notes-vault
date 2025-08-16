@@ -516,3 +516,53 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
 * Clicking or tabbing into the checkbox applies `focus-within` to the **parent container**, highlighting the box.
 * `accent-purple-500` / `accent-green-500` changes the checkmark color.
 * Works seamlessly across multiple checkboxes — only the parent of the focused one highlights.
+
+## Group & Peer in Tailwind
+
+* **`group`**
+
+  * Placed on a **parent** element.
+  * Enables children to react to parent states (`group-hover`, `group-focus`, etc.).
+  * Example: hover anywhere on a card → change title color & enlarge button.
+* **`peer`**
+
+  * Placed on an **input (or any element)**.
+  * Allows **subsequent siblings** to react to its state (`peer-invalid`, `peer-checked`, etc.).
+  * Limitation: only works on elements that **come after** the peer in DOM order.
+* **Use cases**:
+
+  * `group`: Coordinated hover/focus effects across entire components (cards, menus, buttons inside containers).
+  * `peer`: Form validation or input-driven styling (checkbox → strike through label, input invalid → show error).
+* **Gotchas**:
+
+  * `peer` won’t affect elements before it in DOM order. Workarounds include reordering, flex-reverse, or modern CSS (`:has()` in newer browsers).
+
+---
+
+### Demo Snippet
+
+```html
+<!-- Group Example -->
+<div class="group border rounded-lg p-4 hover:shadow-lg transition">
+  <h2 class="text-lg font-semibold group-hover:text-blue-600">
+    Premium Plan
+  </h2>
+  <p class="text-slate-600">Get access to all features.</p>
+  <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md transform transition group-hover:scale-105">
+    Buy Now
+  </button>
+</div>
+
+<!-- Peer Example -->
+<div class="mt-6">
+  <input type="checkbox" id="todo" class="peer hidden" />
+  <label for="todo" class="cursor-pointer text-slate-800 peer-checked:text-green-600 peer-checked:line-through">
+    Finish Tailwind lesson
+  </label>
+</div>
+```
+
+✅ Behavior:
+
+* Hover anywhere on the **card** → the title changes color & button grows.
+* Check the **checkbox** → label turns green with a strikethrough.
