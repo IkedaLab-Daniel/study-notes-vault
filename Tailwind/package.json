@@ -1,0 +1,25 @@
+{
+  "name": "tailwind-playground",
+  "version": "1.0.0",
+  "description": "Tailwind CSS learning playground",
+  "main": "index.html",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "serve-alt": "php -S localhost:8000"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  },
+  "keywords": [
+    "tailwind",
+    "css",
+    "playground"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6"
+  }
+}

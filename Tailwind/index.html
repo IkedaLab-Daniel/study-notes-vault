@@ -3,9 +3,64 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tailwind 4</title>
+        <title>Tailwind CSS Playground</title>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
-        <h1>The Tailwind Playground</h1>
+    <body class="bg-gray-100 p-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold text-gray-800 mb-8">Tailwind CSS Playground</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- > Card 1 -->
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Primary Button</h2>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Click me
+                    </button>
+                </div>
+                
+                <!-- > Card 2 -->
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Alert Card</h2>
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        <strong class="font-bold">Alert!</strong>
+                        <span class="block sm:inline"> Something went wrong.</span>
+                    </div>
+                </div>
+                
+                <!-- > Card 3 -->
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Form Elements</h2>
+                    <input type="text" placeholder="Enter text..." 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            
+            <!-- More examples -->
+            <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Responsive Design</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="bg-gradient-to-r from-purple-400 to-pink-400 text-white p-4 rounded-lg text-center">
+                        <p class="font-semibold">Responsive</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-green-400 to-blue-400 text-white p-4 rounded-lg text-center">
+                        <p class="font-semibold">Grid</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-yellow-400 to-orange-400 text-white p-4 rounded-lg text-center">
+                        <p class="font-semibold">Layout</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-red-400 to-purple-400 text-white p-4 rounded-lg text-center">
+                        <p class="font-semibold">System</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <section class="bg-white mt-8 p-4 rounded-lg shadow-md">
+                <h1>Section 2</h1>
+                <button class="rounded-md bg-blue-500 text-white px-3 py-2 shadow-md" >Button</button>
+            </section>
+        </div>
     </body>
 </html>
