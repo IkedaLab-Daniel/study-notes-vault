@@ -566,3 +566,48 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
 
 * Hover anywhere on the **card** → the title changes color & button grows.
 * Check the **checkbox** → label turns green with a strikethrough.
+
+## Tailwind CSS: `has()` Utility
+
+* **`group`** → Children style themselves based on the **parent state** (hover, focus, active, etc.).
+* **`peer`** → Siblings style themselves based on the **state of a sibling before them**.
+* **`has()`** → A parent can style itself based on the **state of its children**.
+* Supported in modern browsers (not IE11, poor in Opera Mini).
+* Replaces many JavaScript use cases (form validation, conditional styling, dynamic layout).
+* **Powerful when combined** with `group` (children ↔ parent awareness).
+
+### Key Points
+
+* **Example use cases**:
+
+  * Change parent styling when a child input is `:checked` or `:invalid`.
+  * Update card layout dynamically (e.g., if it **has** an `<img>`).
+  * Toggle styling based on whether a `<details>` element is open.
+  * Disable/enable submit buttons based on form validity (pure CSS).
+* **Mixing utilities**:
+
+  * `group` → parent → children.
+  * `has()` → children → parent.
+  * Together → **bidirectional state awareness**.
+
+---
+
+### Demo Snippet
+
+```html
+<div class="p-6 border rounded-lg has-[input:checked]:bg-green-100">
+  <label class="flex items-center space-x-2">
+    <input type="checkbox" class="peer">
+    <span class="peer-checked:line-through">Accept terms</span>
+  </label>
+  <p class="text-sm text-gray-500 group-has-[input:checked]:text-green-700">
+    Checkbox checked → parent background + text change
+  </p>
+</div>
+```
+
+✅ Features in the snippet:
+
+* **`has-[input:checked]`** → Parent turns green if any child input is checked.
+* **`peer-checked`** → Sibling text line-through when checkbox is checked.
+* **`group-has-[...]`** → Demonstrates chaining `group` + `has` for more advanced styling.
