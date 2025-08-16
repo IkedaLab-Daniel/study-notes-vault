@@ -394,3 +394,41 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
 2. Try **divide utilities** for visual separators.
 3. Explore **flexbox** for alignment.
 4. Experiment with **grid** for multi-card layouts.
+
+### Form Input
+
+* Inputs in Tailwind are just elements styled with utility classes; unlike Bootstrap, they don’t come with a strong preset “look.”
+* You build input components (label + input + optional description/error) with utility classes, and reuse via templating or Storybook instead of repeating styles.
+* Use `block` to stack label/input vertically.
+* Font weights: `font-medium` (500), `font-semibold` (600), `font-bold` (700), etc.
+* Color palettes (`slate`, `gray`, etc.) are customizable.
+* Styling inputs: `rounded`, `p-*` for padding, `outline-*` for focus states, `bg-white`, `w-full`.
+* Use `space-y-*` on parent containers to space children instead of repetitive margins.
+* Use `focus:*` variants for focus states.
+* Placeholder styling supported via `placeholder:*` and `placeholder-italic`.
+* Negative values (`-mt-2`, `-mb-4`, etc.) are supported for most spacing utilities.
+* For outlines vs rings: use `outline-*` for outside highlight, `ring-*` for more flexible focus styles.
+* Use `space-*` for simple spacing, flexbox when alignment/justification is needed.
+
+---
+
+### Demo Snippet
+
+```html
+<div class="space-y-2 w-full max-w-sm">
+  <label for="email" class="block text-slate-700 font-medium">
+    Email Address
+  </label>
+  <input
+    id="email"
+    type="email"
+    placeholder="you@example.com"
+    class="block w-full rounded-md bg-white px-3 py-2
+           outline outline-1 outline-slate-300
+           focus:outline-2 focus:outline-blue-400
+           placeholder:text-slate-400 placeholder:italic"
+  />
+  <p class="text-sm text-slate-500">We’ll never share your email.</p>
+  <p class="text-sm text-red-600">This field is required.</p>
+</div>
+```
