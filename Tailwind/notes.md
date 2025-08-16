@@ -432,3 +432,45 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
   <p class="text-sm text-red-600">This field is required.</p>
 </div>
 ```
+
+## Input States and Variants in Tailwind
+
+* Inputs have many states (required, valid, invalid, focus, focus-visible, etc.), mapped to CSS pseudo-classes.
+* `invalid` marks required empty fields as invalid immediately (not user-friendly).
+* `user-invalid` and `user-valid` trigger **after user interaction** (focus + blur), solving premature error display.
+* Most styling is done for “sad states” (invalid, out-of-range) but positive states (valid, success) can be styled too.
+* Tailwind utilities (`invalid:*`, `user-invalid:*`, `focus:*`, etc.) replace verbose CSS selectors, keeping logic in class lists instead of custom CSS/JS.
+* Using these avoids manual state management in frameworks (React, Angular, etc.), reducing complexity.
+* Some pseudo-classes like `:has` (supported in modern browsers) enable even more advanced styling without JS.
+
+---
+
+### Demo Snippet
+
+```html
+<div class="space-y-3 w-full max-w-sm">
+  <!-- Required input with validation states -->
+  <label for="email" class="block text-slate-700 font-medium">Email</label>
+  <input
+    id="email"
+    type="email"
+    required
+    placeholder="you@example.com"
+    class="block w-full rounded-md px-3 py-2
+           outline outline-1 outline-slate-300
+           focus:outline-2 focus:outline-blue-400
+           placeholder:text-slate-400
+           invalid:outline-red-500
+           user-invalid:outline-red-600
+           user-valid:outline-green-500"
+  />
+  <p class="text-sm text-slate-500">We’ll never share your email.</p>
+</div>
+```
+
+✅ Behavior:
+
+* Default: neutral outline.
+* While focused: blue outline.
+* If left empty → `user-invalid` adds red outline only **after blur**.
+* If valid email entered → `user-valid` adds green outline.
