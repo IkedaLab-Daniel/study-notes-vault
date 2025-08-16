@@ -611,3 +611,37 @@ If styles aren’t showing up, **the first debugging step** should be: *“Did T
 * **`has-[input:checked]`** → Parent turns green if any child input is checked.
 * **`peer-checked`** → Sibling text line-through when checkbox is checked.
 * **`group-has-[...]`** → Demonstrates chaining `group` + `has` for more advanced styling.
+
+## Using `:has` and `group` in Tailwind to Show Required Field Indicators
+
+The **`:has` selector** lets a parent element style itself based on its children. Combined with Tailwind’s `group`, you can style labels depending on whether their associated input fields are required—without writing any JavaScript.
+
+### Key Idea
+
+* `group`: Allows children to style themselves based on their parent’s state.
+* `:has`: Allows the parent to style itself depending on its children.
+* Together, they make it possible to handle patterns (like required fields) that previously needed JavaScript or hacky workarounds.
+
+### Demo Snippet (HTML body only)
+
+```html
+<div class="group flex items-center gap-2">
+  <label class="after:content-['*'] after:ml-1 after:text-red-600 group-has-[input:required]:after:inline-block group-has-[input:required]:after:text-red-600">
+    Email
+  </label>
+  <input type="email" required class="border p-2 rounded" />
+</div>
+
+<div class="group flex items-center gap-2 mt-4">
+  <label class="after:content-['*'] after:ml-1 after:text-red-600 group-has-[input:required]:after:inline-block group-has-[input:required]:after:text-red-600">
+    Username
+  </label>
+  <input type="text" class="border p-2 rounded" />
+</div>
+```
+
+### How It Works
+
+* By default, the label won’t show a red dot or asterisk.
+* When the `input` inside has `required`, the label’s `after` pseudo-element becomes visible.
+* All styling is done purely in **Tailwind + CSS**, no JavaScript needed.
