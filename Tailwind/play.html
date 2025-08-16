@@ -27,5 +27,100 @@
             <h2 class="font-semibold text-lg">Card Title</h2>
             <p class="mt-1">This is a description for the card component.</p>
         </div> 
+
+        <div class="form space-y-1">
+            <h2 class="text-2xl font-semibold">Form</h2>
+            <label for="username " class="block font-medium text-slate-900">Input Label:</label>
+            <input 
+                type="text" 
+                name="usernam" 
+                placeholder="Enter text"
+                class="block outline w-full bg-white outline-2 outline-slate-400 rounded-sm px-2 py-1 focus:outline-blue-400"
+                >
+            <label for="email" class="block font-medium text-slate-900 mt-4">Email:</label>
+            <input 
+                type="email" 
+                name="email" 
+                placeholder="Enter email"
+                class="block outline w-full bg-white outline-2 outline-slate-400 rounded-sm px-2 py-1 focus:outline-blue-400"
+            >
+
+            <label for="email" class="block font-medium text-slate-900 mt-4">Email User-Valid:</label>
+            <input 
+                type="email" 
+                name="email" 
+                placeholder="Enter email"
+                class="block outline w-full bg-white outline-2 outline-slate-400 rounded-sm px-2 py-1 focus:outline-blue-400 invalid:outline-red-500"
+            >
+
+            <label for="password" class="block font-medium text-slate-900 mt-4">Password:</label>
+            <input 
+                type="password" 
+                name="password" 
+                placeholder="Enter password"
+                class="block outline w-full bg-white outline-2 outline-slate-400 rounded-sm px-2 py-1 focus:outline-blue-400"
+            >
+
+            <label for="disabled" class="block font-medium text-slate-500 mt-4">Disabled Input:</label>
+            <input 
+                type="text" 
+                name="disabled" 
+                placeholder="Disabled input"
+                disabled
+                class="block outline w-full bg-slate-100 outline-2 outline-slate-300 rounded-sm px-2 py-1 text-slate-500 cursor-not-allowed placeholder:font-light"
+            >
+
+            <label for="error" class="block font-medium text-red-700 mt-4">Error State:</label>
+            <input 
+                type="text" 
+                name="error" 
+                placeholder="Error input"
+                class="block outline w-full bg-white outline-2 outline-red-400 rounded-sm px-2 py-1 focus:outline-red-500 placeholder:text-red-500"
+            >
+            <p class="text-red-600 text-sm mt-1">This field has an error</p>
+
+            <label for="success" class="block font-medium text-green-700 mt-4">Success State:</label>
+            <input 
+                type="text" 
+                name="success" 
+                placeholder="Success input"
+                class="block outline w-full bg-white outline-2 outline-green-400 rounded-sm px-2 py-1 focus:outline-green-500 placeholder:italic"
+            >
+            <p class="text-greenw-600 text-sm mt-1">This field is valid</p>
+
+            <label for="select" class="block font-medium text-slate-900 mt-4">Select Dropdown:</label>
+            <select 
+                name="select"
+                class="block outline w-full bg-white outline-2 outline-slate-400 rounded-sm px-2 py-1 focus:outline-blue-400"
+            >
+                <option value="">Choose an option</option>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+            </select>
+
+            <label for="textarea" class="block font-medium text-slate-900 mt-4">Textarea:</label>
+            <textarea 
+                name="textarea" 
+                placeholder="Enter description"
+                rows="3"
+                class="block outline w-full bg-white outline-2 outline-slate-400 rounded-sm px-2 py-1 focus:outline-blue-400 resize-none"
+            ></textarea>
+
+            <div class="mt-4">
+                <input type="checkbox" id="checkbox" name="checkbox" class="mr-2">
+                <label for="checkbox" class="font-medium text-slate-900">I agree to the terms</label>
+            </div>
+
+            <div class="mt-4">
+                <input type="radio" id="radio1" name="radio" value="option1" class="mr-2">
+                <label for="radio1" class="font-medium text-slate-900 mr-4">Option 1</label>
+                <input type="radio" id="radio2" name="radio" value="option2" class="mr-2">
+                <label for="radio2" class="font-medium text-slate-900">Option 2</label>
+            </div>
+
+            <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-sm transition-colors">
+                Submit
+            </button>
+        </div>
     </body>
 </html>
