@@ -798,3 +798,62 @@ This is possible in **Tailwind CSS** using `peer` and structural hierarchy. Howe
 ✅ On **mobile**, these cards stack in a column.
 ✅ On **tablet/desktop**, they snap into a row with spacing.
 ✅ `items-center` / `justify-center` can be added on the wrapper to align differently.
+
+## 📝 Summary: Flexbox Nav Bar in Tailwind
+
+* **Start:** list of links doesn’t look like a real nav bar.
+* **Step 1:** Apply `flex` → items align horizontally.
+* **Step 2:** Add `gap-*` for spacing between links.
+* **Step 3:** Use `justify-between` to push logo left and links right.
+* **Step 4:** Add `items-center` for vertical centering.
+* **Step 5:** Style links with padding, hover states, and bottom borders.
+* **Step 6:** Use utility classes (`font-bold`, `text-xl`, etc.) to style brand name.
+
+👉 Core utilities:
+
+* `flex`, `flex-row`, `gap-*`
+* `justify-between`, `items-center`
+* `border-b-*`, `hover:*`, `group-hover:*`
+* `font-bold`, `text-xl`
+
+---
+
+## Demo Snippet: Tailwind Navigation Bar
+
+```html
+<nav class="bg-slate-100 px-6 py-3 shadow">
+  <div class="flex justify-between items-center">
+    <!-- Brand -->
+    <div class="text-xl font-extrabold">Unicorn Corp</div>
+
+    <!-- Nav Links -->
+    <ul class="flex gap-6">
+      <li>
+        <a href="#" class="px-4 py-2 border-b-4 border-transparent hover:border-red-500 hover:bg-red-100 rounded transition">
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="#" class="px-4 py-2 border-b-4 border-transparent hover:border-red-500 hover:bg-red-100 rounded transition">
+          About
+        </a>
+      </li>
+      <li>
+        <a href="#" class="px-4 py-2 border-b-4 border-transparent hover:border-red-500 hover:bg-red-100 rounded transition">
+          Services
+        </a>
+      </li>
+      <li>
+        <a href="#" class="px-4 py-2 border-b-4 border-transparent hover:border-red-500 hover:bg-red-100 rounded transition">
+          Contact
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+```
+
+✅ Logo aligned left, links aligned right.
+✅ Flexbox powers layout (`flex justify-between items-center`).
+✅ Hover states highlight links with bottom border + background.
+✅ Easy to extend with dropdowns or responsive tweaks (`md:flex-col` etc).
