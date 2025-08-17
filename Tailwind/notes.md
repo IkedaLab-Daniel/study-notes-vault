@@ -697,3 +697,36 @@ This is possible in **Tailwind CSS** using `peer` and structural hierarchy. Howe
 
 ✅ Checking **Project Folder** dims and disables its children files (visually representing "all selected").
 ⚠️ Child checkboxes aren’t *actually* checked — they’re just styled to look inactive/selected.
+
+## Input Field with Attached Button (Accessible UI)
+
+* Use a **screen-reader-only label (`sr-only`)** for accessibility while keeping the interface clean.
+* Wrap the input and button inside a **flex container** to style them as a single unit.
+* Apply **Tailwind utilities** for padding, colors, and rounded corners.
+* Add **focus states with `ring`** for better UX.
+* Use the **`:has()` selector** to style parent based on child input validity (e.g., highlight invalid states).
+
+---
+
+### Demo Snippet (HTML Body Section Only)
+
+```html
+<div class="p-6 max-w-md">
+  <form class="flex items-center gap-2 outline outline-slate-600 rounded-2xl px-3 py-1.5 has-[input:invalid]:ring-2 has-[input:invalid]:ring-red-600 focus-within:ring-2 focus-within:ring-purple-500">
+    <label for="task" class="sr-only">New Task</label>
+    <input 
+      id="task" 
+      type="text" 
+      required 
+      placeholder="Add a new task..."
+      class="flex-grow bg-transparent outline-none px-2 py-1"
+    >
+    <button 
+      type="submit"
+      class="bg-purple-600 text-white px-4 py-1.5 rounded-xl hover:bg-purple-700 transition"
+    >
+      Add
+    </button>
+  </form>
+</div>
+```
