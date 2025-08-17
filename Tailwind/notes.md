@@ -645,3 +645,55 @@ The **`:has` selector** lets a parent element style itself based on its children
 * By default, the label won’t show a red dot or asterisk.
 * When the `input` inside has `required`, the label’s `after` pseudo-element becomes visible.
 * All styling is done purely in **Tailwind + CSS**, no JavaScript needed.
+
+## File Tree with `peer` in Tailwind
+
+The conversation is about simulating a **file/folder picker** where checking the **parent folder checkbox** gives the *visual appearance* that its children (files) are also selected — **without writing JavaScript**.
+
+This is possible in **Tailwind CSS** using `peer` and structural hierarchy. However, it's important to note:
+
+* This only affects **visuals**, not actual checked states of child inputs.
+* For true accessibility (ARIA, screen readers), you’d still need **JavaScript**.
+
+---
+
+### Demo Snippet (HTML Body Only)
+
+```html
+<div class="p-4 space-y-4">
+  <!-- Folder -->
+  <div class="space-y-2">
+    <label class="flex items-center space-x-2">
+      <input type="checkbox" id="folder-1" class="peer" />
+      <span class="font-semibold">📁 Project Folder</span>
+    </label>
+
+    <!-- Files inside the folder -->
+    <ul class="ml-6 space-y-1">
+      <li class="flex items-center space-x-2 peer-checked:opacity-50 peer-checked:pointer-events-none">
+        <input type="checkbox" disabled />
+        <span>📄 index.html</span>
+      </li>
+      <li class="flex items-center space-x-2 peer-checked:opacity-50 peer-checked:pointer-events-none">
+        <input type="checkbox" disabled />
+        <span>📄 style.css</span>
+      </li>
+      <li class="flex items-center space-x-2 peer-checked:opacity-50 peer-checked:pointer-events-none">
+        <input type="checkbox" disabled />
+        <span>📄 script.js</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Another sibling file -->
+  <div class="flex items-center space-x-2">
+    <input type="checkbox" />
+    <span>📄 readme.md</span>
+  </div>
+</div>
+```
+
+---
+
+✅ Checking **Project Folder** dims and disables its children files (visually representing "all selected").
+⚠️ Child checkboxes aren’t *actually* checked — they’re just styled to look inactive/selected.

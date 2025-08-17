@@ -277,6 +277,23 @@
                     </label>
                 </div>
             </div>
+
+            <div class="bg-slate-100 outline outline-2 outline-slate-500 rounded-sm p-3">
+                <h2 class="before:content-['#']">5 - Has hidden</h2>
+                <input 
+                    type="checkbox"
+                    name="show-cb"
+                    class="peer accent-green-300"
+                >
+                <label for="show-cd">Show form</label>
+                <form action="" class="hidden peer-checked:block">
+                    <label for="username" class="block">Username:</label>
+                    <input type="email" name="username" required
+                    placeholder="Enter text..."
+                    class="w-full py-1 px-2 outline outline-2 outline-slate-500 rounded-sm focus:invalid:outline-red-500 focus:valid:outline-green-500 focus:valid:text-green-800 focus:valid:bg-green-50">
+                    <button class="group-has-['input:invalid']:hidden">Submit</button>
+                </form>
+            </div>
         </div>
     </body>
 </html>
