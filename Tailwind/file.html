@@ -7,46 +7,14 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
 
-    <body class="bg-slate-900 text-white">
-        <section class="p-4">
-            <div>
-                <input type="checkbox" class="peer" id="folder">
-                <label for="folder">Folder</label>
-
-                <ul class="pointer-events-none ml-8 peer-checked:opacity-60">
-                    <li>
-                        <input type="checkbox" id="file-1">
-                        <label for="file-1">File</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="file-2">
-                        <label for="file-2">File</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="file-3">
-                        <label for="file-3">File</label>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <input type="checkbox" class="peer" id="folder">
-                <label for="folder">Folder</label>
-
-                <ul class="pointer-events-none ml-8 peer-checked:opacity-60">
-                    <li>
-                        <input type="checkbox" id="file-1">
-                        <label for="file-1">File</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="file-2">
-                        <label for="file-2">File</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="file-3">
-                        <label for="file-3">File</label>
-                    </li>
-                </ul>
-            </div>
-        </section>
+    <body class="p-2">
+        <form class="outline outline-2 outline-slate-600 px-3 py-1.5 rounded flex focus-within:ring-2 ring-purple-300 has-[:invalid]:outline-red-500">
+            <label for="new-task" class="sr-only">What do you need to do?</label>
+            <input type="email" name="new-task" id="new-task" placeholder="New task..."
+            required
+            class="flex-1 focus:outline-none"
+            >
+            <button class="bg-purple-600 px-3 py-1.5 rounded text-white">Submit</button>
+        </form>
     </body>
 </html>

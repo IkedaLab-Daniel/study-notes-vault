@@ -730,3 +730,71 @@ This is possible in **Tailwind CSS** using `peer` and structural hierarchy. Howe
   </form>
 </div>
 ```
+
+## Flexbox
+
+1. **`flex` basics in Tailwind**
+
+   * `flex` makes children flex items.
+   * `flex-row` (default) lays them left-to-right.
+   * `flex-col` stacks them top-to-bottom.
+   * `gap-x-*` / `gap-y-*` (or just `gap-*`) provides spacing between flex items.
+
+2. **Responsive flex direction**
+
+   * Start with one layout and switch at breakpoints:
+
+     ```html
+     <div class="flex flex-col md:flex-row">
+     ```
+
+     → column on mobile, row on medium screens & up.
+
+3. **Alignment (`items-*`, `justify-*`)**
+
+   * `items-center` = align vertically center.
+   * `justify-center` = center horizontally.
+   * `justify-between`, `justify-end`, etc. are all available.
+
+4. **Quick alignment hack**
+
+   * Classic CSS struggle: “How do I vertically center something?”
+   * In Tailwind:
+
+     ```html
+     class="flex items-center justify-center"
+     ```
+
+---
+
+## Demo Snippet: Responsive Card List with Flexbox
+
+```html
+<div class="p-6">
+  <h2 class="text-xl font-bold mb-4">Responsive Card List</h2>
+
+  <div class="flex flex-col md:flex-row gap-4 bg-slate-100 p-4 rounded-2xl">
+    <!-- Card 1 -->
+    <div class="flex-1 bg-white shadow rounded-xl p-4">
+      <h3 class="font-semibold mb-2">Card One</h3>
+      <p class="text-sm text-slate-600">This is a sample card with some text.</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="flex-1 bg-white shadow rounded-xl p-4">
+      <h3 class="font-semibold mb-2">Card Two</h3>
+      <p class="text-sm text-slate-600">Cards line up horizontally on medium+ screens, vertically on mobile.</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="flex-1 bg-white shadow rounded-xl p-4">
+      <h3 class="font-semibold mb-2">Card Three</h3>
+      <p class="text-sm text-slate-600">Spacing handled with <code>gap-4</code>.</p>
+    </div>
+  </div>
+</div>
+```
+
+✅ On **mobile**, these cards stack in a column.
+✅ On **tablet/desktop**, they snap into a row with spacing.
+✅ `items-center` / `justify-center` can be added on the wrapper to align differently.
