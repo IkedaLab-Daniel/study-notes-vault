@@ -857,3 +857,76 @@ This is possible in **Tailwind CSS** using `peer` and structural hierarchy. Howe
 ✅ Flexbox powers layout (`flex justify-between items-center`).
 ✅ Hover states highlight links with bottom border + background.
 ✅ Easy to extend with dropdowns or responsive tweaks (`md:flex-col` etc).
+
+## Grid
+
+* **Flexbox vs Grid**
+
+  * Flexbox → best for one-dimensional layouts (row OR column).
+  * Grid → handles two-dimensional layouts (rows AND columns).
+
+* **Getting Started**
+
+  * `grid` → turns container into grid.
+  * `gap-*` → spacing between cells.
+  * `grid-cols-*` → define number of columns.
+  * `grid-rows-*` → define number of rows.
+
+* **Responsive Design**
+
+  * Tailwind makes media queries simple:
+
+    * `grid-cols-1` (mobile)
+    * `md:grid-cols-2` (tablet)
+    * `xl:grid-cols-3` (desktop)
+  * Classes stack mobile-first → unprefixed class = base layout.
+
+* **Fraction Units (fr)**
+
+  * Example: `grid-cols-[24rem_1fr_57px]` → fixed + flexible sizes.
+  * `fr` = fraction of remaining free space.
+  * Ratios: `2fr 3fr 1fr` → columns distributed proportionally.
+
+* **Spanning Cells**
+
+  * `col-span-*` and `row-span-*` → items span multiple rows/columns.
+  * Can be made **responsive** with breakpoints (e.g. `md:col-span-2`).
+
+* **Ordering Items**
+
+  * `order-*` changes order in the grid or flex.
+  * Combine with breakpoints (`md:order-1`) for responsive reordering.
+  * Lets you rearrange without JS or duplicate DOM elements.
+
+* **Use Cases**
+
+  * Card layouts (equal grids).
+  * Blog-style layouts (header, sidebar, main content, footer).
+  * Hero + supporting elements with reordering at breakpoints.
+
+---
+
+## Demo Snippet: Responsive Grid with Spans & Ordering
+
+```html
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 p-6">
+  <!-- Hero (spans 2 cols on large screens) -->
+  <div class="bg-red-300 min-h-48 md:col-span-2 xl:col-span-2 order-1 md:order-none">
+    Hero
+  </div>
+
+  <!-- Sidebar -->
+  <div class="bg-blue-300 min-h-24 order-2">Sidebar</div>
+
+  <!-- Content spans rows -->
+  <div class="bg-green-300 md:row-span-2 min-h-48 order-3">Content</div>
+
+  <!-- Extra cards -->
+  <div class="bg-yellow-300 min-h-24 order-4">Card 1</div>
+  <div class="bg-purple-300 min-h-24 order-5">Card 2</div>
+</div>
+```
+
+✅ Mobile → stacked one column.
+✅ Tablet → two columns, hero spans across.
+✅ Desktop → three columns, content spans rows, hero repositions.
