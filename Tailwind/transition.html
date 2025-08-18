@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+  <body class="flex items-center justify-center h-screen bg-gray-800">
+
+    <!-- Button with hover transition -->
+    <button
+      class="px-6 py-3 rounded-lg bg-blue-500 text-white font-semibold
+            transition-colors duration-300 hover:bg-blue-600">
+      Hover Me
+    </button>
+
+    <!-- Loading placeholder with pulse -->
+    <div class="ml-8 w-32 h-10 bg-gray-300 rounded animate-pulse"></div>
+
+    <!-- Fade-in card using starting-style -->
+    <div class="ml-8 p-6 w-40 bg-white rounded-lg shadow 
+                opacity-100 [@starting-style]:opacity-0 
+                transition-opacity duration-700">
+      Fades In
+    </div>
+
+    <!-- Spinning icon -->
+    <svg class="ml-8 w-8 h-8 text-purple-500 animate-spin" 
+        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+    </svg>
+
+  </body>
+</html>
