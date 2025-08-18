@@ -930,3 +930,84 @@ This is possible in **Tailwind CSS** using `peer` and structural hierarchy. Howe
 ✅ Mobile → stacked one column.
 ✅ Tablet → two columns, hero spans across.
 ✅ Desktop → three columns, content spans rows, hero repositions.
+
+## 🌙 Tailwind CSS Dark Mode Overview
+
+1. **Two main dark mode strategies in Tailwind:**
+
+   * **System preference (default)**
+     Uses the OS/browser `prefers-color-scheme: dark`.
+
+     ```js
+     // tailwind.config.js
+     module.exports = {
+       darkMode: 'media', // default
+     }
+     ```
+   * **Class-based (toggle with JS)**
+     Add `dark` class (usually on `<html>` or `<body>`) to force dark mode.
+
+     ```js
+     // tailwind.config.js
+     module.exports = {
+       darkMode: 'class', 
+     }
+     ```
+
+     → lets you add your own toggle switch.
+
+2. **Using `dark:` variant**
+
+   * Works like responsive variants (`md:`, `lg:`).
+   * Example:
+
+     ```html
+     <div class="bg-slate-100 text-black dark:bg-slate-800 dark:text-white">
+       Card content
+     </div>
+     ```
+
+3. **Custom triggers (beyond `dark`)**
+
+   * Can hook into **data attributes** if you need multiple themes:
+
+     ```js
+     // tailwind.config.js
+     module.exports = {
+       darkMode: ['class', '[data-theme="dark"]'], 
+     }
+     ```
+   * Allows things like `data-theme="dark"` or `data-theme="dim"`.
+
+4. **Workflow Tip**
+
+   * Think of **light mode as the base styles**, then layer on dark mode overrides with `dark:`.
+   * Exactly like you’d layer responsive styles (`sm:`, `md:`).
+
+---
+
+### 🎨 Demo: Dark Mode Card
+
+```html
+<html class="dark"> <!-- remove 'dark' to see light mode -->
+  <body class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-sm rounded-xl border border-gray-200 dark:border-gray-700 
+                bg-white dark:bg-gray-800 p-6 shadow-lg">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Card Title</h2>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        This card supports light and dark mode.
+      </p>
+      <button class="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white 
+                     hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+        Action
+      </button>
+    </div>
+  </body>
+</html>
+```
+
+✅ Base = light mode.
+✅ `dark:` variants kick in automatically when:
+
+* User’s OS prefers dark, OR
+* You add `class="dark"` (JS toggle)
