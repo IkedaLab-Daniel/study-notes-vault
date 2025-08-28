@@ -166,3 +166,55 @@ Cloud computing, as defined by the **US National Institute of Standards and Tech
 * Applications run in the **cloud**, not installed locally.
 * Consumed directly over the internet by end users.
 * Examples: **Gmail, Google Docs, Google Drive** (Google Workspace).
+
+## Google Cloud Offerings and Infrastructure
+
+### Three Layers of Google Cloud
+
+1. **Networking and Security** – Foundation for all Google infrastructure and applications.
+2. **Compute and Storage** – Decoupled so they can **scale independently**.
+3. **Big Data and Machine Learning** – Tools for ingesting, storing, processing, and delivering insights and ML models without managing infrastructure.
+
+### Compute Services
+
+* **Compute Engine** – Virtual machines.
+* **Google Kubernetes Engine (GKE)** – Managed Kubernetes.
+* **App Engine** – Fully managed application hosting.
+* **Cloud Run** – Serverless container deployment.
+* **Cloud Functions** – Event-driven, serverless code execution.
+
+### Storage Services
+
+* **Cloud Storage** – Object storage.
+* **Cloud SQL** – Managed relational database.
+* **Spanner** – Global relational database with strong consistency.
+* **Bigtable** – NoSQL database for large-scale workloads.
+* **Firestore** – NoSQL document database.
+
+### Big Data & Machine Learning Products
+
+* **Cloud Storage, Dataproc, Bigtable, BigQuery, Dataflow, Firestore, Pub/Sub, Looker, Spanner**
+* **AutoML** – Custom ML model training.
+* **Vertex AI** – Unified ML platform for building and deploying models.
+
+### Google’s Global Network
+
+* **Largest of its kind**, with **billions invested**.
+* Over **100 content caching nodes worldwide** for low latency and high throughput.
+* Data centers in **North America, South America, Europe, Asia, and Australia**.
+
+### Regions and Zones
+
+* **Regions** = independent geographic areas (e.g., *europe-west2* = London).
+* **Zones** = areas within regions where resources run.
+
+  * Example: A Compute Engine VM runs in a specified zone.
+* **Zonal resources** – Operate in a single zone (downtime if zone unavailable).
+* **Regional/multi-regional resources** – Increase redundancy and availability.
+
+  * Example: **Spanner multi-region** replicates across multiple regions for low-latency global access.
+
+### Scale and Availability
+
+* Currently: **121 zones in 40 regions** (expanding).
+* Latest information: [cloud.google.com/about/locations](https://cloud.google.com/about/locations).
