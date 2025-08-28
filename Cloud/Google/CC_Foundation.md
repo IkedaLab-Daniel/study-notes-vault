@@ -42,3 +42,24 @@ By completing labs and challenge labs, learners can earn the following badges:
 * **Prepare Data for ML APIs on Google Cloud**
 
 Each badge involves hands-on labs leading to a **final Challenge Lab** as a capstone.
+
+## Module 1: So, What's the Cloud Anyway?
+
+### Learning Objectives
+
+By the end of this module, you will be able to:
+
+* Identify what cloud computing is and its impact on technology and business.
+* Explore the concept of **cloud computing**.
+* Compare and contrast **physical, virtual, and cloud architectures**.
+* Differentiate between **IaaS, PaaS, and SaaS**.
+* Get introduced to **Google Cloud compute, storage, big data, and ML services**.
+* Examine the **Google network** and how it powers cloud computing.
+
+### Module Flow
+
+1. Definition of **cloud computing**.
+2. Comparison of **cloud vs. traditional architecture**.
+3. Exploration of **IaaS, PaaS, and SaaS** models.
+4. Overview of **Google Cloud architecture**.
+5. **Quiz and recap** of the topics covered.
