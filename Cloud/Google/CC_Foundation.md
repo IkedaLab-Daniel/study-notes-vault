@@ -86,3 +86,46 @@ Cloud computing, as defined by the **US National Institute of Standards and Tech
 
 * The course will cover **Google Cloud infrastructure services**.
 * Learners will gain familiarity with what these services do and how to begin using them.
+
+## Cloud Architecture and Evolution
+
+### From Traditional to Cloud
+
+* **First Wave: Colocation**
+
+  * Users rented **physical space** in data centers instead of owning infrastructure.
+  * Provided financial efficiency but still relied on physical servers.
+
+* **Second Wave: Virtualization**
+
+  * Data centers used **virtual devices** (servers, CPUs, disks, load balancers, etc.).
+  * Allowed flexibility but enterprises still had to **maintain and configure infrastructure**.
+
+* **Third Wave: Container-Based Cloud (Google’s Model)**
+
+  * Fully **automated, elastic cloud** architecture.
+  * Infrastructure provisioning and configuration handled automatically.
+  * Enables scalable data and services for faster application deployment.
+  * Currently available to Google Cloud customers.
+
+### Google’s Vision
+
+* Future businesses will differentiate through **technology and software**.
+* **High-quality data** is central to great software.
+* Every company is becoming a **data company**.
+
+### Energy and Sustainability
+
+* Data centers use about **2% of the world’s electricity**.
+* Google focuses on **efficiency and sustainability**:
+
+  * First data centers to achieve **ISO 14001 certification** (resource efficiency, waste reduction).
+  * Example: **Hamina, Finland Data Center**
+
+    * Uses seawater cooling from the Bay of Finland.
+    * First system of its kind globally, reducing energy use.
+* Google’s sustainability milestones:
+
+  * **Carbon neutral** in its first decade.
+  * **100% renewable energy** in its second decade.
+  * Goal: **Carbon-free operations by 2030**.
