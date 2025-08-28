@@ -129,3 +129,40 @@ Cloud computing, as defined by the **US National Institute of Standards and Tech
   * **Carbon neutral** in its first decade.
   * **100% renewable energy** in its second decade.
   * Goal: **Carbon-free operations by 2030**.
+
+## IaaS, PaaS, SaaS, and Serverless
+
+### Infrastructure as a Service (IaaS)
+
+* Provides **raw compute, storage, and networking** resources.
+* Organized virtually, similar to a physical data center.
+* **Customers pay** for resources they **allocate ahead of time**.
+
+### Platform as a Service (PaaS)
+
+* Provides **libraries and infrastructure bindings** for applications.
+* Developers focus more on **application logic** instead of infrastructure.
+* **Customers pay** only for the **resources actually used**.
+
+### Shift Toward Managed Services
+
+* Cloud computing has moved toward **managed infrastructure and services**.
+* Benefits:
+
+  * Less time and money spent on infrastructure maintenance.
+  * Faster and more reliable delivery of products and services.
+
+### Serverless Computing
+
+* Removes need for server configuration and infrastructure management.
+* Developers focus **only on code**.
+* Google’s serverless technologies:
+
+  * **Cloud Run** – Deploys containerized microservices in a fully managed environment.
+  * **Cloud Functions** – Manages event-driven code with **pay-as-you-go** pricing.
+
+### Software as a Service (SaaS)
+
+* Applications run in the **cloud**, not installed locally.
+* Consumed directly over the internet by end users.
+* Examples: **Gmail, Google Docs, Google Drive** (Google Workspace).
