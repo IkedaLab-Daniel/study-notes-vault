@@ -63,3 +63,26 @@ By the end of this module, you will be able to:
 3. Exploration of **IaaS, PaaS, and SaaS** models.
 4. Overview of **Google Cloud architecture**.
 5. **Quiz and recap** of the topics covered.
+
+## Introduction to Cloud Computing
+
+### Definition
+
+Cloud computing, as defined by the **US National Institute of Standards and Technology (NIST)**, is a model of using IT resources that has **five key traits**:
+
+1. **On-demand and self-service** – Users can provision computing resources (processing, storage, network) through a web interface without human intervention.
+2. **Accessible over the internet** – Resources can be accessed from anywhere with a connection.
+3. **Resource pooling** – Providers maintain a large pool of resources, allocate them to users as needed, and achieve cost efficiency through bulk purchasing.
+4. **Elasticity** – Resources can scale up or down quickly depending on demand.
+5. **Pay-as-you-go** – Customers only pay for what they use or reserve; charges stop when usage stops.
+
+### Infrastructure Analogy
+
+* **Infrastructure** = underlying framework of facilities and systems.
+* Example: A **city's infrastructure** includes transportation, power, water, and communication.
+* In IT, infrastructure includes the services and systems that support applications and users.
+
+### Google Cloud Focus
+
+* The course will cover **Google Cloud infrastructure services**.
+* Learners will gain familiarity with what these services do and how to begin using them.
