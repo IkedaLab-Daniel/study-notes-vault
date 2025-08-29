@@ -348,3 +348,59 @@ By the end of this module, you will be able to:
 ### Cost Estimation
 
 * Use the **Google Cloud Pricing Calculator**: [cloud.google.com/products/calculator](https://cloud.google.com/products/calculator).
+
+### 🌩️ What is Google Cloud SDK?
+
+* A **set of command-line tools** for managing resources and applications on Google Cloud, directly from your desktop.
+* Useful for developers and admins who want to interact with Google Cloud without always using the web console.
+
+---
+
+### 📦 Main Tools Included:
+
+1. **`gcloud` CLI**
+
+   * The primary tool for most Google Cloud products and services.
+   * Example: deploying apps, managing Compute Engine instances, configuring APIs.
+
+2. **`gcloud storage`**
+
+   * Lets you interact with **Cloud Storage** (upload, download, list, manage buckets).
+
+3. **`bq` (BigQuery CLI)**
+
+   * Used to run queries, manage datasets, and interact with **BigQuery** from the command line.
+
+---
+
+### 📂 Installation
+
+1. Go to [cloud.google.com/sdk](https://cloud.google.com/sdk).
+2. Select your **operating system** (Windows, macOS, Linux).
+3. Download and install following the OS-specific instructions.
+4. All tools get installed inside the **`bin` directory**.
+
+---
+
+### ⚙️ Initial Configuration
+
+* After installing, run:
+
+  ```bash
+  gcloud init
+  ```
+* You’ll be prompted to:
+
+  * **Login** with your Google Cloud credentials.
+  * Set your **default project**.
+  * Choose a **default region and zone** for resources.
+
+---
+
+👉 Once configured, you can immediately start using commands like:
+
+```bash
+gcloud compute instances list
+gcloud storage buckets list
+bq query "SELECT name FROM dataset.table LIMIT 10"
+```
