@@ -306,3 +306,45 @@ By the end of this module, you will be able to:
 
    * Top-level of the hierarchy.
    * Encompasses all folders, projects, and resources within the organization.
+
+## Google Cloud Billing
+
+### Project-Level Billing
+
+* Billing is established at the **project level**.
+* Each project is linked to a **billing account** where payment options and billing information are configured.
+* Projects without a billing account can only access **free services**.
+* Billing accounts are charged automatically and invoiced monthly or at threshold limits.
+* **Sub accounts** can separate billing by project, often used by resellers for their clients.
+
+### Cost Management Tools
+
+1. **Budgets**
+
+   * Defined at billing account or project level.
+   * Can be a fixed limit or tied to metrics (e.g., % of previous month’s spend).
+
+2. **Alerts**
+
+   * Notify users when expenses approach budget limits.
+   * Common thresholds: **50%, 90%, 100%** (customizable).
+   * Example: \$20,000 budget with a 90% alert → notification at \$18,000.
+
+3. **Reports**
+
+   * Visual tool in the console.
+   * Monitors expenditure by project or service.
+
+4. **Quotas**
+
+   * Prevent over-consumption due to errors or malicious attacks.
+   * Applied at the project level.
+   * **Types of Quotas**:
+
+     * **Rate Quotas**: Reset after a specific time (e.g., GKE → 1,000 API calls every 100 seconds).
+     * **Allocation Quotas**: Limit on number of resources (e.g., 5 VPC networks per project by default).
+   * Some quotas can be increased via Google Cloud Support.
+
+### Cost Estimation
+
+* Use the **Google Cloud Pricing Calculator**: [cloud.google.com/products/calculator](https://cloud.google.com/products/calculator).
