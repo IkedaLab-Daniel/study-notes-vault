@@ -244,3 +244,25 @@ By the end of this module, you will be able to:
 7. Exploring **Google Cloud APIs**.
 8. Managing services with the **Cloud Mobile App**.
 9. **Quiz and summary** of the topics covered.
+
+### Four Ways to Access Google Cloud
+
+1. **Google Cloud Console (GUI)** – Web-based interface to manage and monitor resources.
+2. **Google Cloud SDK & Cloud Shell** – Command-line tools for managing resources.
+3. **Google Cloud APIs** – Programmatic access for developers.
+4. **Google Cloud Mobile App** – Manage resources on the go.
+
+---
+
+### Google Cloud Console (focus)
+
+* It’s the **Graphical User Interface (GUI)** for Google Cloud.
+* Lets you **deploy, scale, and troubleshoot** production workloads.
+* Provides features like:
+
+  * Resource search & health checks.
+  * Full management control over resources.
+  * Budget setup & spend control.
+  * **In-browser SSH** access to instances.
+
+👉 To access: go to **[console.cloud.google.com](https://console.cloud.google.com/)**
