@@ -266,3 +266,43 @@ By the end of this module, you will be able to:
   * **In-browser SSH** access to instances.
 
 👉 To access: go to **[console.cloud.google.com](https://console.cloud.google.com/)**
+
+## Google Cloud Resource Hierarchy
+
+### Levels of the Hierarchy
+
+1. **Resources**
+
+   * Examples: Virtual Machines, Cloud Storage buckets, BigQuery tables, etc.
+   * Represent the fundamental components in Google Cloud.
+
+2. **Projects**
+
+   * Basis for enabling and using Google Cloud services.
+   * Used for managing APIs, billing, collaborators, and other services.
+   * Each resource belongs to exactly one project.
+   * Projects are billed and managed separately.
+
+   **Project Identifiers**
+
+   * **Project ID**: Globally unique, assigned by Google, immutable.
+   * **Project Name**: User-created, not unique, changeable.
+   * **Project Number**: Unique numeric ID, assigned by Google, used internally.
+
+   **Project Management**
+
+   * Managed with the **Resource Manager API**.
+   * Functions include listing, creating, updating, deleting, and recovering projects.
+   * Accessible through RPC and REST APIs.
+
+3. **Folders**
+
+   * Used to group projects under an organization.
+   * Enable grouping by departments or teams.
+   * Allow delegation of administrative rights for independent team management.
+   * Require an organization node.
+
+4. **Organization Node**
+
+   * Top-level of the hierarchy.
+   * Encompasses all folders, projects, and resources within the organization.
