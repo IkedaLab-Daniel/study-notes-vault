@@ -218,3 +218,29 @@ Cloud computing, as defined by the **US National Institute of Standards and Tech
 
 * Currently: **121 zones in 40 regions** (expanding).
 * Latest information: [cloud.google.com/about/locations](https://cloud.google.com/about/locations).
+
+## Module 2: Start with a Solid Platform
+
+### Learning Objectives
+
+By the end of this module, you will be able to:
+
+* Explore the **Google Cloud Console**.
+* Understand how **projects** are the basis for enabling and using services.
+* Identify how **billing** works in Google Cloud.
+* Install and configure the **Google Cloud SDK**.
+* Recognize use cases for **Cloud Shell** and the **Cloud Shell code editor**.
+* Explore how **APIs** work in Google Cloud.
+* Manage Google Cloud services using the **Cloud Mobile App**.
+
+### Module Flow
+
+1. Introduction to the **Google Cloud Console**.
+2. Understanding **projects**.
+3. Overview of **billing options**.
+4. Installing and configuring the **Cloud SDK**.
+5. Using **Cloud Shell** and the **Cloud Shell code editor**.
+6. Completing **two hands-on labs**.
+7. Exploring **Google Cloud APIs**.
+8. Managing services with the **Cloud Mobile App**.
+9. **Quiz and summary** of the topics covered.
