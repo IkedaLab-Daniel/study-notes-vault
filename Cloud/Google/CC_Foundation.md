@@ -428,3 +428,31 @@ bq query "SELECT name FROM dataset.table LIMIT 10"
 * Allows real-time file editing inside the Cloud Shell environment.
 * Useful for **code-first applications** and **container-based workloads**.
 * Supports both the built-in code editor and traditional text editors from the command prompt.
+
+## Application Programming Interfaces (APIs)
+
+* **Definition**: APIs provide a clean, well-defined interface that abstracts away implementation details, making software easier to develop and maintain.
+* **Purpose**:
+
+  * Allows developers to interact with services without needing to know their internal workings.
+  * Underlying implementations can change as long as the API remains consistent.
+
+### APIs in Google Cloud
+
+* All Google Cloud services expose APIs for programmatic control.
+* The **Google APIs Explorer** (in the console) lists available APIs and their versions.
+
+### Developer Support
+
+* Developers don’t need to code from scratch when using Google Cloud APIs.
+* Google provides **Cloud Client Libraries** and **Google API Client Libraries** to simplify API usage.
+* Supported programming languages:
+
+  * **Java**
+  * **Python**
+  * **PHP**
+  * **C#**
+  * **Go**
+  * **Node.js**
+  * **Ruby**
+  * **C++**
