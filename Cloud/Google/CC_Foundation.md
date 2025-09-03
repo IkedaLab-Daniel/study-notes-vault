@@ -492,3 +492,13 @@ bq query "SELECT name FROM dataset.table LIMIT 10"
 ### Access
 
 * Download at: **[cloud.google.com/console-app](https://cloud.google.com/console-app)**
+
+## Module 2 Recap: Start with a Solid Platform
+
+* **Google Cloud Console**: Explored the web-based GUI for managing resources.
+* **Projects**: Learned how projects form the foundation for enabling and using Google Cloud services.
+* **Billing**: Reviewed billing options, budgets, alerts, and quotas.
+* **Google Cloud SDK**: Learned how to install, configure, and use command-line tools.
+* **Cloud Shell & Code Editor**: Explored browser-based access and real-time code editing.
+* **APIs**: Understood how APIs and client libraries enable interaction with Google Cloud services.
+* **Cloud Mobile App**: Learned how to manage services, billing, and monitoring from a mobile device.
