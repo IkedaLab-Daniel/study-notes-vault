@@ -718,3 +718,45 @@ A **fully managed, serverless platform** that lets you build and deploy scalable
 * Notifications and alerts
 * Data transformation pipelines
 * Connecting services together
+
+## **Containerizing and Orchestrating Apps with GKE**
+
+### **Why Containers?**
+
+* Provide **independent scalability** like PaaS but with **flexibility** of IaaS.
+* Encapsulate code + dependencies into a portable unit.
+* Start in **seconds** (lighter than VMs).
+* **Portable** across environments (laptop → staging → production → cloud).
+* Enable **microservices architecture** (apps split into modular containers).
+
+### **Benefits**
+
+* Ultra-portable code.
+* Scales quickly and efficiently.
+* Easier deployment, management, and updates.
+* Lower cost than traditional VMs.
+
+### **Docker**
+
+* Tool to package applications into containers.
+* Ensures apps run anywhere (laptops, servers, cloud).
+
+### **Kubernetes**
+
+* Open-source container orchestration tool.
+* Manages clusters of containers (networking, storage, rollouts, rollbacks, monitoring).
+* Works both **on-premises** and in the **cloud**.
+* Built from Google’s own internal systems.
+
+### **Google Kubernetes Engine (GKE)**
+
+* Managed Kubernetes service on Google Cloud.
+* Runs containerized apps at scale on Compute Engine instances.
+* Offers:
+
+  * Automated operations & scaling.
+  * Resource efficiency.
+  * Open-source flexibility.
+* Supports hybrid and multi-cloud deployments.
+
+✅ **In short**: GKE combines the **portability of containers** with the **automation and orchestration of Kubernetes**, fully managed by Google.
