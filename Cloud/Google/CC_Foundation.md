@@ -502,3 +502,27 @@ bq query "SELECT name FROM dataset.table LIMIT 10"
 * **Cloud Shell & Code Editor**: Explored browser-based access and real-time code editing.
 * **APIs**: Understood how APIs and client libraries enable interaction with Google Cloud services.
 * **Cloud Mobile App**: Learned how to manage services, billing, and monitoring from a mobile device.
+
+> Module 3
+
+## Module 3: Use Google Cloud to Build Your Apps
+
+* **Compute Options**: Explore the role of compute in the cloud.
+* **Virtual Machines**: Learn how to build and manage VMs.
+* **Elastic Applications**: Examine autoscaling for flexible resource usage.
+* **PaaS with App Engine**: Leverage App Engine for platform-based development.
+* **Event-Driven Services**: Build with Cloud Run functions.
+* **Containers & Orchestration**: Identify how to containerize and orchestrate apps using Google Kubernetes Engine (GKE).
+* **Cloud Run**: Develop and deploy scalable containerized applications.
+
+**Extras**: Includes five hands-on labs, followed by a quiz and a summary.
+
+## Compute Options in the Cloud
+
+* **Compute Engine**: Best for general workloads needing dedicated resources.
+* **App Engine**: Platform as a Service (PaaS) option for building applications.
+* **Cloud Run Functions**: Serverless option for event-driven code execution.
+* **Google Kubernetes Engine (GKE)**: Managed Kubernetes platform for running containers.
+* **Cloud Run**: Fully managed serverless platform for developing and deploying scalable containerized applications.
+
+Each of these compute services will be explored in this module.
