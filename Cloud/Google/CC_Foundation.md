@@ -592,3 +592,92 @@ Each of these compute services will be explored in this module.
 6. **More Info**
 
    * Specs for available VM machine types: [Google Cloud Machine Types Docs](https://cloud.google.com/compute/docs/machine-types)
+
+## **Google App Engine (GAE)**
+
+A **fully managed, serverless platform** that lets you build and deploy scalable applications without managing infrastructure (servers, clusters, or OS).
+
+### **Key Benefits**
+
+* No server management (Google handles availability, scaling, and infrastructure).
+* High availability without complex architectures.
+* Automatic scaling based on demand.
+* Built-in services:
+
+  * **Datastore (NoSQL)**, **Memcache**, **Load Balancing**, **Health checks**, **Logging**, **User Authentication API**, etc.
+* Supports popular tools (Eclipse, IntelliJ, PyCharm, Maven, Git, Jenkins).
+* SDKs for local development + deployment to the cloud.
+
+---
+
+## **Environments**
+
+### **1. App Engine Standard**
+
+* **Based on preconfigured containers** with a fixed set of supported languages/versions:
+
+  * Java, Python, PHP, Go, Node.js, Ruby.
+* **Features:**
+
+  * Persistent storage with queries/transactions
+  * Automatic scaling + load balancing
+  * Task queues (async work)
+  * Cron-like scheduled tasks
+  * Secure sandbox (isolated from OS/hardware)
+* **Constraints:**
+
+  * Must use supported language versions.
+  * Runs in a **sandbox** (no SSH access, no local disk writes).
+* **Pros:**
+
+  * **Fast startup** (seconds).
+  * Free tier available, then pay **per instance class** (with auto shutdown).
+
+---
+
+### **2. App Engine Flexible**
+
+* **Runs apps inside Docker containers** on Compute Engine VMs.
+* Supports same languages (Python, Java, Go, Node.js, PHP, Ruby), **plus custom runtimes** with Dockerfiles or custom images.
+* **Features:**
+
+  * Full VM access (SSH into instances, use local disk, install third-party software).
+  * Managed VM health checks, OS updates, colocation in regions.
+  * Supports microservices, SQL/NoSQL databases, traffic splitting, logging, versioning, security scanning, CDNs.
+* **Pros:**
+
+  * More control + flexibility (custom OS/runtime).
+  * Supports **Docker-based customization**.
+* **Cons:**
+
+  * **Slower startup** (minutes, not seconds).
+  * Pay **per resource allocation per hour** (no auto-shutdown).
+
+---
+
+## **Comparison: Standard vs Flexible**
+
+| Feature                    | **Standard**                          | **Flexible**                                     |
+| -------------------------- | ------------------------------------- | ------------------------------------------------ |
+| **Startup time**           | Seconds                               | Minutes                                          |
+| **Infrastructure control** | Minimal                               | High (SSH, local disk, Dockerfiles)              |
+| **Languages**              | Fixed supported versions              | Custom versions & Docker images                  |
+| **Scaling**                | Automatic                             | Automatic, but heavier                           |
+| **Pricing**                | Per instance class (auto shutdown)    | Per VM resource per hour (no shutdown)           |
+| **Use Case**               | Quick deployment, simple scaling apps | Custom runtimes, more control, heavier workloads |
+
+---
+
+## **App Engine vs Kubernetes Engine**
+
+* **App Engine Standard** → Maximum simplicity (Google manages nearly everything).
+* **App Engine Flexible** → Middle ground (you manage some things, Google still manages infrastructure).
+* **Google Kubernetes Engine (GKE)** → Maximum flexibility (you manage Kubernetes clusters, networking, scaling policies, etc.).
+
+---
+
+✅ **Key Idea**:
+
+* Use **Standard** if you want simplicity, speed, and don’t need deep control.
+* Use **Flexible** if you need custom runtimes, VM-level control, or heavier workloads.
+* Use **Kubernetes Engine** if you want full control of container orchestration.
