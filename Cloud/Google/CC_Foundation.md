@@ -681,3 +681,40 @@ A **fully managed, serverless platform** that lets you build and deploy scalable
 * Use **Standard** if you want simplicity, speed, and don’t need deep control.
 * Use **Flexible** if you need custom runtimes, VM-level control, or heavier workloads.
 * Use **Kubernetes Engine** if you want full control of container orchestration.
+
+## **Cloud Run Functions (Event-Driven Programs)**
+
+### **What it is**
+
+* A **serverless, event-driven compute service**.
+* Runs lightweight, **single-purpose functions** in response to cloud events.
+* No need to manage servers or runtimes.
+
+### **How it works (Example)**
+
+* User uploads an image → triggers a function.
+* Function processes image:
+
+  * Converts to standard format.
+  * Creates thumbnails.
+  * Stores processed files.
+* Runs only when triggered (saves resources).
+
+### **Key Features**
+
+* **Asynchronous, event-based execution.**
+* Connects and extends cloud services.
+* **Billing**: per 100 ms of execution (only while code runs).
+* **Languages supported**: JavaScript, Node.js, Python, Go.
+* **Triggers**:
+
+  * Cloud Storage events
+  * Pub/Sub events
+  * HTTP invocation (synchronous)
+
+### **Use Cases**
+
+* File/image processing
+* Notifications and alerts
+* Data transformation pipelines
+* Connecting services together
