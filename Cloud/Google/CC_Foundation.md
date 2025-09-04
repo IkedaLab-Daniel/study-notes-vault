@@ -552,3 +552,43 @@ Each of these compute services will be explored in this module.
 * **Tools**:
 
   * Google Cloud Pricing Calculator for estimates and discount projections.
+
+
+## **Elastic Applications with Autoscaling**
+
+1. **Choosing Machine Properties**
+
+   * Compute Engine lets you choose:
+
+     * Number of **vCPUs**
+     * Amount of **memory**
+   * Options include:
+
+     * **Predefined machine types** (ready-made configs)
+     * **Custom machine types** (your own CPU/RAM combo)
+
+2. **Autoscaling**
+
+   * Automatically **adds or removes VM instances** depending on load metrics (like CPU utilization or traffic).
+   * Helps optimize costs while ensuring performance.
+
+3. **Load Balancing**
+
+   * Distributes incoming traffic across VMs to keep workloads balanced.
+   * Google Cloud’s **VPC** provides different load balancing options (to be covered later).
+
+4. **Scaling Options**
+
+   * **Scale up** → Use bigger VMs (useful for memory-heavy databases or CPU-intensive analytics).
+   * **Scale out** → Use more smaller VMs (most customers start here because it’s flexible and cost-efficient).
+
+5. **Constraints**
+
+   * Maximum CPUs per VM depend on:
+
+     * The **machine family**
+     * The **quota** assigned to your project (which is zone-dependent).
+
+6. **More Info**
+
+   * Specs for available VM machine types: [Google Cloud Machine Types Docs](https://cloud.google.com/compute/docs/machine-types)
