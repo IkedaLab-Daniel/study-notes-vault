@@ -404,3 +404,27 @@ gcloud compute instances list
 gcloud storage buckets list
 bq query "SELECT name FROM dataset.table LIMIT 10"
 ```
+
+## Cloud Shell
+
+* **Definition**: Cloud Shell provides command-line access to Google Cloud resources directly from a browser.
+* **Environment**:
+
+  * Debian-based virtual machine.
+  * Comes with a **persistent 5 GB home directory**.
+  * Preinstalled with **Google Cloud SDK (`gcloud`)** and other utilities.
+  * Always **up to date** and **fully authenticated**.
+
+### Accessing Cloud Shell
+
+* Go to **[console.cloud.google.com](https://console.cloud.google.com)**.
+* Click the **Activate Cloud Shell** icon in the toolbar.
+* A terminal window opens at the bottom of the console.
+
+### Cloud Shell Code Editor
+
+* Can be launched from the terminal window.
+* Opens in a **new browser page**.
+* Allows real-time file editing inside the Cloud Shell environment.
+* Useful for **code-first applications** and **container-based workloads**.
+* Supports both the built-in code editor and traditional text editors from the command prompt.
