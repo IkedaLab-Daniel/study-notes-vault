@@ -526,3 +526,29 @@ bq query "SELECT name FROM dataset.table LIMIT 10"
 * **Cloud Run**: Fully managed serverless platform for developing and deploying scalable containerized applications.
 
 Each of these compute services will be explored in this module.
+
+## Compute Engine: Building and Deploying Applications
+
+* **Overview**:
+
+  * Create and run VMs in Google’s data centers and on its global fiber network.
+  * No upfront investment; scalable to thousands of virtual CPUs.
+  * Offers consistent, fast performance.
+
+* **Virtual Machine Capabilities**:
+
+  * Full operating system functionality.
+  * Configure CPU, memory, storage, and OS (Linux, Windows Server, or custom images).
+  * Supports web hosting, app hosting, and application backends.
+  * Manage instances via Google Cloud Console or gcloud CLI.
+
+* **Pricing and Discounts**:
+
+  * **Per-second billing** with one-minute minimum.
+  * **Sustained-use discounts** apply automatically for VMs running over 25% of a month.
+  * **Committed-use discounts**: up to 57% savings for 1- or 3-year commitments.
+  * **Preemptible VMs**: Up to 90% savings for interruptible workloads (e.g., batch jobs).
+
+* **Tools**:
+
+  * Google Cloud Pricing Calculator for estimates and discount projections.
