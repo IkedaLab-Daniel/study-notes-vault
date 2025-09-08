@@ -797,3 +797,13 @@ A **fully managed, serverless platform** that lets you build and deploy scalable
 * Others: **COBOL, Haskell, Perl** (any Linux 64-bit binary).
 
 ✅ **In short**: Cloud Run is a **flexible, fully managed, serverless container platform** that scales instantly, charges only when in use, and supports virtually any language.
+
+### Module Recap: *Use Google Cloud to Build Your Apps* ✅
+
+* **Explored compute options** in Google Cloud.
+* **Built and managed VMs** with Compute Engine.
+* **Learned autoscaling** for elastic applications.
+* **Leveraged App Engine** as a PaaS option.
+* **Built event-driven services** with Cloud Functions.
+* **Containerized and orchestrated apps** with Google Kubernetes Engine (GKE).
+* **Developed and deployed scalable containerized apps** with Cloud Run.
