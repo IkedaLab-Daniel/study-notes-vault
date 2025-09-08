@@ -760,3 +760,40 @@ A **fully managed, serverless platform** that lets you build and deploy scalable
 * Supports hybrid and multi-cloud deployments.
 
 ✅ **In short**: GKE combines the **portability of containers** with the **automation and orchestration of Kubernetes**, fully managed by Google.
+
+## **Managed Serverless Computing with Cloud Run**
+
+### **What is Cloud Run?**
+
+* Managed **serverless compute platform**.
+* Runs **stateless containers** triggered by **HTTP requests** or **Pub/Sub events**.
+* Built on **Knative** (open API & runtime on Kubernetes).
+* Can run **fully managed on Google Cloud**, on **GKE**, or anywhere Knative runs.
+
+### **Key Features**
+
+* **Serverless** → no infrastructure management.
+* **Scales instantly** from 0 to N containers.
+* **Pay-per-use** (down to 100 ms granularity).
+* Transparent & flexible → supports **container-based** and **source-based** workflows.
+* Built-in **HTTPS** with free SSL certs & custom domain support.
+
+### **Developer Workflow**
+
+1. Write your application (any language).
+2. Package as a **container image** (or deploy source directly with Buildpacks).
+3. Deploy to Cloud Run → get a unique HTTPS endpoint.
+
+### **Pricing**
+
+* Pay only while container is **handling requests**.
+* Small fee per **1M requests**.
+* Cost scales with allocated **CPU & memory** (up to 4 vCPUs, 8 GB RAM).
+* No charges when idle.
+
+### **Language & Runtime Support**
+
+* Popular: **Java, Python, Node.js, PHP, Go, C++**.
+* Others: **COBOL, Haskell, Perl** (any Linux 64-bit binary).
+
+✅ **In short**: Cloud Run is a **flexible, fully managed, serverless container platform** that scales instantly, charges only when in use, and supports virtually any language.
