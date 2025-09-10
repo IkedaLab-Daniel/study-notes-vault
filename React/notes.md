@@ -39,3 +39,37 @@
 * Past experience: Snowflake, Microsoft, LinkedIn, Netflix, Reddit.
 * Background in frontend and Node.js.
 * Hobbies: snowboarding, cycling, beers, scotch, Marvel Rivals.
+
+## Setup & Tools
+
+* **Node.js**: Requires Node ≥20.16 (using v22.14 LTS).
+* **Node version managers**: Fast Node Manager (preferred), NVM, or Volta.
+* **Alternative runtimes**:
+
+  * Bun: \~65% chance course works (not tested).
+  * Deno: \~50% chance it won’t work.
+* **Editor**: VS Code (primary), occasionally Copilot and Cursor.
+* **AI completions**: Disabled during course for focus.
+* **Browser**: Firefox (to support non-Chromium).
+* **Terminal**: VS Code terminal or terminal.app.
+* **Fonts & Themes**:
+
+  * Editor: MonaLisa (paid) or Cascadia Code (free).
+  * Terminal: zsh, Dracula theme, Starship prompt, Nerd Fonts.
+
+## AI Disclaimer
+
+* All course text/code written by Brian Holt.
+* AI (Claude) only used for:
+
+  * Generating sample data (SQLite).
+  * SEO content (summaries/keywords).
+* Stance: AI is powerful if you understand the code and review it like an intern’s work; risky if relied on without depth.
+
+## React 19 Notes
+
+* React 19 recently released after long testing (used internally by Facebook for \~2 years).
+* Stable despite being “new.”
+* Major feature: React Server Components (RSCs).
+* Other new features (like React Compiler) covered in **Complete Intro to React v9**, not this course.
+* Course focuses primarily on RSCs and their practical use.
