@@ -218,3 +218,22 @@
 
 👉 **Bottom line**:
 SSR ≠ universally better. It’s a **tradeoff between complexity and user experience**. Always measure with real-world conditions before committing.
+
+## Writing SSR by Hand
+
+* Created a new directory `SSR` and initialized it with `npm init -y`.
+* Installed dependencies: `fastify`, `react`, `react-dom`, and `vite`.
+* Recommended locking versions by copying his `package.json` to avoid version drift issues.
+* Added scripts in `package.json`:
+
+  * `build`: runs `vite build`.
+  * `start`: runs `node server.js`.
+  * Also included `"type": "module"`.
+* Built a simple `index.html` with a `div#root` as the mount point.
+* Warned that **SSR + client hydration is highly sensitive to whitespace**, which can cause hydration errors.
+* Explained hydration: server generates markup → client re-checks with a hash → mismatch causes React to discard SSR and re-render, losing SSR benefits.
+* Created `app.js` without JSX (using `React.createElement` syntax):
+
+  * Defined a simple `App` component with `useState` to show interactivity.
+  * Rendered `h1`, `p`, and a `button` that increments a counter.
+* Highlighted how tedious non-JSX code is, making JSX more appreciated.
