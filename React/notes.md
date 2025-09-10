@@ -73,3 +73,37 @@
 * Major feature: React Server Components (RSCs).
 * Other new features (like React Compiler) covered in **Complete Intro to React v9**, not this course.
 * Course focuses primarily on RSCs and their practical use.
+
+## Render Modes & Server Components
+
+* **Render modes**: Four different ways to write React (not official terms, Brian’s own). They can be mixed, not mutually exclusive.
+* **Client-Side React (CSR)**:
+
+  * Traditional SPA approach (10+ years old, still widely used).
+  * Ships HTML + JS bundle, browser handles rendering.
+  * Server only sends `index.html`.
+  * Default starting point for most projects.
+* **Server-side features (SSR, SSG, RSCs)**:
+
+  * Optional, not always a win.
+  * Should solve a real problem (performance, SEO, etc.).
+  * Adds complexity—measure if it’s worth it.
+* **Static Site Generation (SSG)**:
+
+  * Pre-renders content to static HTML.
+  * Great for marketing/tutorial sites, mostly text/images, minimal interactivity.
+  * Example: This course site uses Next.js SSG and is hosted free on GitHub Pages.
+  * Markdown → HTML pages workflow.
+* **Next.js**:
+
+  * Excellent for hybrid approaches.
+  * SSG, SSR, and RSC support out of the box.
+  * Brian uses it extensively (Neon, other companies).
+* **Setup demo**:
+
+  * `mkdir SSG && cd SSG`
+  * `npm init -y`
+  * `npm install react@19 react-dom@19`
+  * Use **ES modules** (`"type": "module"`) in `package.json`.
+  * Skip JSX/Babel to stay simple (focus is Node, not React syntax).
+  * Create `index.html` with a `div#root` and special comment placeholder for React render.
