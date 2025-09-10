@@ -107,3 +107,47 @@
   * Use **ES modules** (`"type": "module"`) in `package.json`.
   * Skip JSX/Babel to stay simple (focus is Node, not React syntax).
   * Create `index.html` with a `div#root` and special comment placeholder for React render.
+
+## Static Site Generation with React (No JSX)
+
+* **App.js setup**
+
+  * Import `createElement` as `h` (old convention, avoids JSX).
+  * Define `App` function returning elements:
+
+    * `div` → `h1` (“Hello Frontend Masters”) + `p` (“This is SSG”).
+  * `export default App`.
+  * Simpler than JSX—no Babel/Vite/Webpack needed.
+
+* **Build.js process**
+
+  * Import `renderToStaticMarkup` from `react-dom/server`.
+  * Import `h` (createElement) + `App`.
+  * Import Node modules: `fs`, `path`, `url` helpers.
+  * Handle `__dirname` workaround for ES modules (`fileURLToPath`).
+  * Read `index.html` shell file.
+  * Render `App` → string with `renderToStaticMarkup`.
+  * Replace placeholder in `index.html` with rendered string.
+  * Ensure `dist/` exists:
+
+    * If not → create it.
+    * If yes → empty it, then write new `index.html`.
+
+* **Result**
+
+  * Running `node build` generates static HTML in `dist/`.
+  * No React reference in output—just plain HTML.
+  * This is the essence of **Static Site Generation (SSG)**.
+
+* **Takeaways**
+
+  * Frameworks like Next.js, Astro, Gatsby automate this process.
+  * Custom code shows the *first principles* of SSG.
+  * Great for content-driven sites (docs, tutorials, marketing).
+  * Can still add React interactivity on top (SPA feel, routers).
+  * Markdown → HTML → React components possible (e.g., **MDX**).
+
+* **State of the art**:
+
+  * **Next.js** + **Astro** are leading tools today.
+  * Gatsby less maintained after Netlify acquisition.
