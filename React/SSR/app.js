@@ -1,7 +1,7 @@
 import { createElement as h, useState } from "react";
 
 function App(){
-    const [count, setCount] = useState()
+    const [count, setCount] = useState(0)
     return h(
         "div",
         null,
