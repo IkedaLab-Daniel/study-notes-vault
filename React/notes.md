@@ -272,3 +272,35 @@ SSR ≠ universally better. It’s a **tradeoff between complexity and user expe
   * SSR improves perceived performance by sending usable markup immediately.
   * Hydration errors are often caused by **whitespace mismatches** between server and client render.
   * Frameworks usually handle this automatically, but writing SSR by hand highlights how sensitive it is.
+
+## SSR Questions and Answers
+
+* **Whitespace & Prettier Issues**
+
+  * Hydration errors only matter in `index.html`.
+  * Extra whitespace in `index.html` can break hydration because React compares hashes of server vs. client markup.
+  * Whitespace in other files doesn’t matter.
+
+* **Changing Counter Start Value**
+
+  * Modify `App` component to set initial state (e.g., `useState(5)`).
+  * Since no dev mode is running, changes require:
+
+    1. `npm run build`
+    2. Restarting the server
+
+* **Splitting HTML for SSR**
+
+  * `server.js` splits `index.html` at the root div.
+  * First part (head + script tags) is sent immediately so browser begins downloading assets.
+  * Async + defer attributes are critical so scripts don’t block rendering.
+  * Then render React output in the root div.
+  * Finally send closing HTML.
+  * For multiple “islands” (e.g., micro frontends), split at each root and inject corresponding markup.
+
+* **Render to String vs. Pipeable Stream**
+
+  * `renderToString`: waits until React finishes rendering, then sends one complete chunk.
+  * `renderToPipeableStream`: streams chunks as React renders them (e.g., nav first, then body).
+  * For small apps, both behave the same. Pipeable streams only help with complex apps needing progressive rendering.
+  * If no complexity/size benefits, SSR may not be worth using.
