@@ -237,3 +237,38 @@ SSR ≠ universally better. It’s a **tradeoff between complexity and user expe
   * Defined a simple `App` component with `useState` to show interactivity.
   * Rendered `h1`, `p`, and a `button` that increments a counter.
 * Highlighted how tedious non-JSX code is, making JSX more appreciated.
+
+## Client and Server Setup for SSR
+
+* **Client Setup (`client.js`)**
+
+  * Created `client.js` to handle hydration on the browser.
+  * Used `hydrateRoot` instead of `createRoot` to attach React to existing server-rendered markup.
+  * Imported `createElement` and the `App` component.
+  * Called `hydrateRoot(document.getElementById("root"), h(App))`.
+  * Safe place to add browser-only logic (e.g., Google Analytics), since this code never runs on the server.
+
+* **Server Setup (`server.js`)**
+
+  * Imported dependencies: `fastify`, `fastify-static`, `fs`, `path`, `fileURLToPath`, `renderToString`, and `App`.
+  * Used `renderToString` (not `renderToStaticMarkup`) to include React metadata for hydration.
+  * Read `dist/index.html` as a shell and split it at the `ROOT` placeholder.
+  * On `GET /`:
+
+    * Flushed the **head part** (`parts[0]`) first so the browser can start downloading CSS/JS while React renders.
+    * Rendered the app with `renderToString(h(App))` and streamed it.
+    * Flushed the closing part (`parts[1]`) and ended the response.
+  * Registered `fastify-static` to serve built files.
+  * Added a `<script type="module" async defer src="./client.js">` in `index.html` to load the client bundle.
+
+* **Build & Run**
+
+  * Needed `vite build` so that the correct hashed script files exist in `dist/`.
+  * Then started server with `npm run start`.
+  * Verified SSR by checking **View Page Source**, which showed complete markup before React hydration.
+
+* **Key Notes**
+
+  * SSR improves perceived performance by sending usable markup immediately.
+  * Hydration errors are often caused by **whitespace mismatches** between server and client render.
+  * Frameworks usually handle this automatically, but writing SSR by hand highlights how sensitive it is.
