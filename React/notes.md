@@ -304,3 +304,46 @@ SSR ≠ universally better. It’s a **tradeoff between complexity and user expe
   * `renderToPipeableStream`: streams chunks as React renders them (e.g., nav first, then body).
   * For small apps, both behave the same. Pipeable streams only help with complex apps needing progressive rendering.
   * If no complexity/size benefits, SSR may not be worth using.
+
+## React Server Components (RSCs)
+
+* **Definition & Difference from SSR**
+
+  * SSR: does one initial render, then client-side React takes over.
+  * RSCs: only render on the server, maintaining an ongoing relationship between client and server.
+  * They are independent concepts—you can use SSR, RSCs, both, or neither.
+
+* **Key Properties**
+
+  * Client never receives the server component’s code—only markup (or React Flight protocol).
+  * Enables writing database queries or using secrets directly inside React components safely.
+  * Most of the app’s non-interactive parts can stay on the server, reducing hydration needs.
+  * Client bundle shrinks since server components don’t ship to the browser.
+
+* **Benefits & Trade-offs**
+
+  * Less JavaScript downloaded, smaller client bundle.
+  * Simplifies workflows (e.g., forms writing directly to DB without separate API endpoints).
+  * Great for securely handling API keys/secrets.
+  * Downsides: added cognitive load—developers must track “client vs. server” components.
+  * Cannot use client-only features (e.g., `useState`) inside RSCs.
+  * Performance depends: fewer downloads but more server requests → slow connections may suffer.
+
+* **Framework Support**
+
+  * Next.js: RSCs by default (must opt into client components).
+  * TanStack Start: opposite—client by default, opt into server components.
+  * React Router v7 & Remix: partial/experimental support.
+  * RSCs intended to be used through frameworks, not by hand (unstable APIs).
+
+* **Developer Experience**
+
+  * Shifts paradigm: blends server/client logic, making it feel closer to PHP-style rendering.
+  * Allows creating secure, simplified client-server workflows without explicit API layers.
+  * Still confusing and evolving—frameworks abstract much of the complexity.
+
+* **Planned Example App**
+
+  * Building a **NotePasser** app (like passing paper notes in class).
+  * Simplified for teaching: no authentication (always user ID 1).
+  * Auth can be added later with providers like Clerk, Descope, Neon Auth.

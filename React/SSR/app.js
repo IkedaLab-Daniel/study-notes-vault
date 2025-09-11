@@ -7,7 +7,7 @@ function App(){
         null,
         h("h1", null, "Hello Frontend Masters"),
         h("p", null, "this is ssr"),
-        h("button", {onClick: () => setCount(count + 1) }, `Count: ${count}`)
+        h("button", {onClick: () => setCount(count + 1)}, `Count: ${count}`)
     )
 }
 
