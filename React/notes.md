@@ -347,3 +347,25 @@ SSR ≠ universally better. It’s a **tradeoff between complexity and user expe
   * Building a **NotePasser** app (like passing paper notes in class).
   * Simplified for teaching: no authentication (always user ID 1).
   * Auth can be added later with providers like Clerk, Descope, Neon Auth.
+
+## Building RSCs Without a Framework
+
+Brian Holt guided us through setting up React Server Components (RSCs) without using frameworks like Next.js. Instead, we became “the framework,” wiring everything ourselves.
+
+* Started by creating a **new project** with a prepared `package.json` and running `npm install`.
+* Used **CommonJS** instead of ES modules to simplify setup.
+* Chose **Webpack** (instead of Vite/Parcel) because of the required package `react-server-dom-webpack`, which enables RSC support in Node.
+* Added supporting tools: **Babel** (JSX transpiling), **Fastify** (server), **Pino** (logging), **SQLite3** (database), and loaders for **CSS**.
+* Configured **webpack.config.js** with:
+
+  * `HtmlWebpackPlugin` to generate the HTML shell.
+  * `ReactServerWebpackPlugin` to handle RSC stubs and server actions.
+  * Rules for Babel (`.js/.jsx`) and CSS.
+  * Output, optimization, and resolve settings.
+* Built **babel.config.js** to enable React JSX transform with `"automatic"` runtime.
+* Created a minimal **index.html** referencing `index.css` and a `#root` div.
+* Added a **notes.db** SQLite file and custom **index.css** inside `public/`.
+* Defined scripts in `package.json`:
+
+  * `dev:client` → runs Webpack in watch mode.
+  * `dev:server` → runs Node with `--conditions react-server` to ensure proper RSC behavior.
