@@ -369,3 +369,26 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 
   * `dev:client` → runs Webpack in watch mode.
   * `dev:server` → runs Node with `--conditions react-server` to ensure proper RSC behavior.
+
+## Creating App, Server, and Client Components
+
+* Created a **`src/App.jsx`** file as the main entry point.
+
+  * Imported `Suspense` from React.
+  * Imported `ServerComponent` and `ClientComponent`.
+  * Logged render behavior for debugging.
+  * Returned a `Suspense` boundary with fallback `"loading"`, plus a header, server component, and client component.
+  * By default, components are **server components** unless explicitly marked as client.
+
+* Defined rules:
+
+  * **Server components** → run on the server, cannot use React hooks.
+  * **Client components** → required for interactivity and hooks.
+  * Server components can contain client components, but not the reverse.
+
+* Built a **client component** (`ClientComponent.jsx`):
+
+  * Added `"use client"` directive at the top.
+  * Used `useState` to implement a counter.
+  * Returned UI with a counter value and increment button.
+  * Confirmed normal React interactivity works in client components.
