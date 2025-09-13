@@ -392,3 +392,29 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
   * Used `useState` to implement a counter.
   * Returned UI with a counter value and increment button.
   * Confirmed normal React interactivity works in client components.
+
+## Building the Server Component and Client Bootstrap
+
+* **ServerComponent.jsx**
+
+  * Default to server component (no `"use server"` needed).
+  * Can use Node APIs (`path`, `sqlite3`) directly.
+  * Supports `async/await` in function bodies.
+  * Example: `MyNotes` component queries a SQLite `notes.db` file for user notes.
+  * Query joins `users` table twice (from\_user, to\_user) to display names instead of IDs.
+  * Renders a `<table>` with `from`, `to`, and `note`.
+  * Shows how SQL can be written inline within a React server component.
+  * **Security note**: escape user-generated content before inserting into DB; React prevents XSS unless using `dangerouslySetInnerHTML`.
+
+* **Database/ORM compatibility**
+
+  * Works with SQLite, Prisma, Drizzle, Neon, etc.
+  * Treat server components like API routes—any database logic fits.
+
+* **Client bootstrap (`client.jsx`)**
+
+  * Imports `createRoot` (React DOM) and `createFromFetch` (`react-server-dom-webpack/client`).
+  * Loads CSS (`doodle.css`).
+  * Fetches markup from `/react-flight` endpoint.
+  * `root.render(p)` can directly render the promise returned by `createFromFetch(fetchPromise)`.
+  * Allows hydration of server-rendered components into client React tree.
