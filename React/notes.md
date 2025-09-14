@@ -418,3 +418,29 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
   * Fetches markup from `/react-flight` endpoint.
   * `root.render(p)` can directly render the promise returned by `createFromFetch(fetchPromise)`.
   * Allows hydration of server-rendered components into client React tree.
+
+  ## Setting Up the Server with Fastify and React Server Components
+
+* **Main.js (patching requires)**
+
+  * Uses `react-server-dom-webpack/node-register` to patch Node’s require for JSX + React server components.
+  * Uses `@babel/register` with plugin `@babel/transform-modules-commonjs` to handle ES modules.
+  * Ignores transpiling of `dist`, `server`, and `node_modules` via regex.
+  * Runs `require("./server")()` after patching so subsequent requires are processed.
+  * Separate file is necessary since patching must happen **before** other requires.
+
+* **Server.js (Fastify server setup)**
+
+  * Requires core modules: `path`, `fs`, `fastify`, `@fastify/static`, `react`, and `react-server-dom-webpack/server`.
+  * Loads `App.jsx` as `AppImport.default` (CommonJS interop).
+  * Reads **client manifest** (`dist/react-client-manifest.json`) → used as module map for Webpack.
+  * Configurable `PORT` via `process.env.PORT` (default 3000).
+  * Sets up **Fastify** with `pino-pretty` logger for readable logs.
+  * Registers `@fastify/static` twice:
+
+    * Serves `dist` under `/assets`.
+    * Serves `public` directly (for CSS, etc.).
+  * Route `/` → serves `index.html`.
+  * Route `/react-flight` → handler streams React server components using `renderToPipeableStream`.
+  * Exports `server` function that starts Fastify and logs errors.
+  * Exits with status code `1` on fatal error.
