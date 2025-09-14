@@ -1,7 +1,6 @@
 const path = require("node:path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactServerWebpackPlugin = require("react-server-dom-webpack/plugin");
-const plugin = require("react-server-dom-webpack/plugin");
 
 const mode = process.env.NODE_ENV || "development";
 const development = mode === "development";
@@ -14,7 +13,7 @@ const config = {
             {
                 test: /\.jsx?$/,
                 use: "babel-loader",
-                exclude: /node_modeules/,
+                exclude: /node_modules/,
             },
             {
                 test: /\.css$/i,
@@ -25,15 +24,17 @@ const config = {
     resolve: {
         extensions: [".js", ".jsx"],
     },
-    plugin: {
+    plugins: [
         new HtmlWebpackPlugin({
             inject: true,
             publicPath: "/assets/",
             template: "./index.html"
         }),
-        new ReactServerWebpackPlugin({ isServer: false }),
-    },
+        new ReactServerWebpackPlugin({ isServer: false })
+    ],
     output: {
+        path: path.resolve(__dirname, "dist"),
+        filename: development ? "bundle.js" : "bundle.[contenthash].js",
         chunkFilename: development ? "[id].chunk.js" : "[id].[contenthash].js"
     }
 }
