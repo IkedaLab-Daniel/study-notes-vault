@@ -38,7 +38,16 @@ fastify.get("/", async function rootHandler(request, reply) {
 })
 
 fastify.get("/react-flight", function reactFlightHandler(request, reply) {
-    // > TODO
+    try {
+        reply.header("Content-Type", "application/octet-stream");
+        return reply.send(`1:{"name":"App","env","Server","key":null,"owner":null,"props":{}}
+0:D"$1"
+0:["$", "div",null]
+`);
+    } catch (err) {
+        request.log.error("react-flight err", err)
+        throw err;
+    }
 })
 
 module.exports = async function start() {
