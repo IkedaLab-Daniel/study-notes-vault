@@ -1,0 +1,19 @@
+{
+  "name": "my-super-cool-note-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "doodle.css": "^0.0.2",
+    "next": "15.1.7",
+    "promised-sqlite3": "^2.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sqlite3": "^5.1.7"
+  }
+}
