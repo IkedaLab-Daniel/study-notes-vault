@@ -543,3 +543,36 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 * **Key Insight**
 
   * Next.js makes React Server Components practical and less error-prone, while still leveraging the same underlying RSC/Flight concepts.
+
+## Writing Notes with Next.js Form Actions
+
+* **Setup**
+
+  * Create `app/write/page.js`.
+  * Import `AsyncDatabase` and `postNote` (to be written).
+  * Define `getUsers` to query all users from `notes.db`.
+
+* **Why It’s Nice**
+
+  * Next.js lets you run DB queries directly inside React server components.
+  * No need for a separate API endpoint or `fetch`; forms can call server functions directly.
+
+* **Form Structure**
+
+  * `<form action={postNote}>` wires the form directly to the server function.
+  * Browser manages form state, no need for `useState`.
+  * Fields:
+
+    * **From**: `<select name="from_user">` with `users.map` for options.
+    * **To**: `<select name="to_user">` (same approach).
+    * **Note**: `<textarea name="note" />`.
+    * **Submit**: `<button type="submit">`.
+
+* **Key Concept**
+
+  * **Form Actions in Next.js**: form submissions invoke server functions directly with form data.
+  * Eliminates boilerplate of extracting values, building API routes, and handling `fetch`.
+
+* **Example Flow**
+
+  * User fills form → submits → Next.js runs `postNote` server function → note saved to database.
