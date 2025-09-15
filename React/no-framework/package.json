@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev:client": "webpack --watch",
-    "dev:server": "node --watch --conditions react-server server/main.js"
-  },
+  "dev:client": "webpack --watch",
+  "dev:server": "node --watch --conditions react-server server/main.js"
+},
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
