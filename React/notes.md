@@ -478,3 +478,37 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
     * Server component rendering data.
     * Client component handling interactivity.
     * Network tab displaying Flight protocol requests/responses.
+
+  ## RSCs Without vs With Frameworks, and Moving into Next.js
+
+* **Building RSCs Without Frameworks**
+
+  * Possible to build React Server Components (RSCs) entirely from scratch.
+  * Demonstrates the inner workings (SQLite backend + client interactivity).
+  * Educational, but not practical—frameworks like Next.js make this far easier.
+
+* **Frameworks in Practice**
+
+  * Developers use the same core tools (Webpack, Parcel, Vite, Turbopack).
+  * Webpack still widely used, even in large corporations.
+  * Turbopack is the “new hotness” and is built into Next.js.
+  * Other older tools exist (e.g., Browserify), but modern devs prefer Vite or Parcel.
+
+* **Next.js Context**
+
+  * Next.js is not just a teaching tool, but a production-ready React framework.
+  * Built and maintained mainly by Vercel, with many React core contributors.
+  * Strong collaboration between Vercel and Meta (Facebook) for React’s evolution.
+
+* **Why Next.js Matters**
+
+  * First widely adopted *full-stack React framework*.
+  * Moves more work to the server with **RSC-first architecture**.
+  * By default, components are server components—developers must opt into client components.
+  * Changes how React apps are written, offering power but also trade-offs.
+  * Not every React app needs Next.js; standalone React or other tools (like TanStack Start) remain useful.
+
+* **How Next.js Can Be Used**
+
+  1. **Monolith mode**: Next controls backend, middleware, and frontend (like Rails).
+  2. **Middle-end mode**: Next acts as a server that aggregates microservices (e.g., Netflix model), not calling databases directly but consolidating API/service responses.
