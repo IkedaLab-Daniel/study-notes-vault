@@ -576,3 +576,39 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 * **Example Flow**
 
   * User fills form → submits → Next.js runs `postNote` server function → note saved to database.
+
+## Writing Notes with Server Actions in Next.js
+
+* **PostNote Function**
+
+  * Create `postNote.js`.
+  * Must include `"use server"` at the top → ensures it only runs on the server.
+  * Function takes `formData`, extracts values with `formData.get("from_user")`, `"to_user"`, `"note"`.
+  * Validate inputs → throw error if missing.
+  * Save to SQLite DB with parameterized query (`db.run("INSERT INTO notes (from_user, to_user, note) VALUES (?, ?, ?)", [from, to, note])`).
+
+* **Placement**
+
+  * Can live inside `write/page.js` or as its own file.
+  * External file requires `"use server"`; inside a server component it’s implicit.
+
+* **Debugging**
+
+  * In **dev mode**, Next.js forwards server errors to the browser (easier debugging).
+  * In **production**, errors return as 500s; handle with error boundaries/logging.
+  * Standard breakpoints/debugger tools still work.
+
+* **Notes Visibility**
+
+  * “My Notes” page currently filters by `user_id = 1`.
+  * Other users’ notes may not appear unless query is adjusted.
+
+* **Under the Hood**
+
+  * Submitting a form with `action={postNote}` → Next.js transparently wires data to the server.
+  * Uses built-in protocol (Flight) to send form data; developers don’t need to manage fetch/API endpoints.
+
+* **Limitations**
+
+  * Offline-first apps don’t pair well with RSCs/server actions, since they depend on a server.
+  * Would require complex service worker logic for offline handling.
