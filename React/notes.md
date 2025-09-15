@@ -512,3 +512,34 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 
   1. **Monolith mode**: Next controls backend, middleware, and frontend (like Rails).
   2. **Middle-end mode**: Next acts as a server that aggregates microservices (e.g., Netflix model), not calling databases directly but consolidating API/service responses.
+
+## Server Components in Next.js with SQLite
+
+* **File Setup**
+
+  * Create `app/my/page.js`.
+  * Next.js conventions: lowercase filenames, use `.js` instead of `.jsx`.
+  * Case sensitivity issues vary across OS (Linux vs Windows).
+
+* **Database Fetching**
+
+  * Use `sqlite3` with async/await.
+  * Define `fetchNotes` function to open `notes.db`.
+  * Run two queries (`from` and `to`) in parallel using `Promise.all`.
+  * Return both sets of notes.
+
+* **Rendering Notes**
+
+  * Inside `MyNotes`, call `await fetchNotes`.
+  * Render notes from the user (“notes from you”) and notes addressed to the user (“notes to you”).
+  * Example output includes messages like “Webpack config broke again” and “Your function names are longer than my patience.”
+
+* **Why It’s Simpler in Next.js**
+
+  * Very similar logic to raw RSCs but easier because Next handles boilerplate.
+  * Still powered by the **Flight protocol**, just encoded/optimized in the background.
+  * Developers focus on queries + markup, not the low-level wiring.
+
+* **Key Insight**
+
+  * Next.js makes React Server Components practical and less error-prone, while still leveraging the same underlying RSC/Flight concepts.
