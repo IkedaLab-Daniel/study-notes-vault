@@ -743,3 +743,44 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 
   * React’s default rendering strategy favors **simplicity and correctness**.
   * Optimization is **contextual**: only necessary when expensive components re-render without actual change.
+
+## Introducing Performance Bottlenecks in React (JANK Example)
+
+* **Setup**
+
+  * A starter project with **Vite, React, Markdown parser (marked)**.
+  * Created a `MarkdownPreview.jsx` component to simulate expensive rendering.
+  * Added a **JANK-DELAY** loop to tie up the thread and simulate costly operations.
+
+* **Expensive Render Simulation**
+
+  * Used `performance.now()` inside a `while` loop to block the thread for \~100ms.
+  * Helps visualize how re-renders can cause lag (jank) in UI interactions.
+  * Added a counter (`last render`) to show how often re-renders happen.
+
+* **Dangerously Set Inner HTML**
+
+  * Used `dangerouslySetInnerHTML` to render parsed markdown.
+  * Normally unsafe (XSS risks), but acceptable for controlled markdown input.
+
+* **App Setup (`App.jsx`)**
+
+  * `useState` for **text**, **theme**, and **time**.
+  * `useEffect` with `setInterval` to update clock.
+  * UI includes:
+
+    * Current time (updates every second).
+    * Theme selector (changes markdown text color).
+    * Textarea editor for markdown input.
+    * `MarkdownPreview` to render parsed markdown.
+
+* **Observed Behavior**
+
+  * Every state change (time, theme, or text) re-renders the expensive markdown preview.
+  * Causes typing lag and sluggish UI.
+  * Even without JANK delay, re-rendering full markdown on every keystroke is inefficient.
+
+* **Key Takeaway**
+
+  * React handles re-renders efficiently, but **expensive operations inside child components** can still cause jank.
+  * This sets the stage for optimizations using **`memo`, `useMemo`, and `useCallback`** to prevent unnecessary re-renders.
