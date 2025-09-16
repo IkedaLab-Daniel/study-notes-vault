@@ -710,3 +710,36 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 
   * React + RSCs aren’t revolutionary but adapt **old server-driven paradigms** for React developers.
   * React’s **flexibility** allows it to work standalone or as the foundation of larger frameworks.
+
+## React Performance Optimizations – When and Why
+
+* **Default React Speed**
+
+  * React is **fast enough out of the box** for almost all apps, even on slower devices.
+  * Netflix measured this a decade ago and confirmed React generally performs fine without hacks.
+  * Most performance issues in React come from **artificially created scenarios**, not normal use.
+
+* **Golden Rule**
+
+  * ⚠️ **Do not preemptively optimize.**
+  * Only apply performance techniques when you **measure** and **confirm a real problem**.
+  * Adding tools like `memo` everywhere usually causes more complexity than benefit.
+
+* **How React Re-renders**
+
+  * If state updates inside a component (e.g., `setCount` in **Profile**):
+
+    * Only that **component tree** re-renders.
+    * Sibling components outside the dirty tree (**Content**) do **not** re-render.
+    * Child components (**ProfilePic**, **ProfileName**) will re-render by default.
+  * This re-rendering is usually **cheap and fine** for most apps.
+
+* **When Optimization is Needed**
+
+  * If a **child component is very expensive** to re-render (e.g., heavy image processing, big charts).
+  * In such cases, you can **prevent unnecessary re-renders** with tools like `React.memo`.
+
+* **Key Idea**
+
+  * React’s default rendering strategy favors **simplicity and correctness**.
+  * Optimization is **contextual**: only necessary when expensive components re-render without actual change.
