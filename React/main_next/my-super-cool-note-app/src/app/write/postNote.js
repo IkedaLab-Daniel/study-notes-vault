@@ -12,6 +12,4 @@ export default async function postNote (formData) {
     if (!from || !to || !note) {
         throw new Error("wtf i need payload")
     }
-
-    
 }
