@@ -612,3 +612,46 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 
   * Offline-first apps don’t pair well with RSCs/server actions, since they depend on a server.
   * Would require complex service worker logic for offline handling.
+
+## Mixing Server and Client Components in Next.js
+
+* **Server vs Client Components**
+
+  * Once you enter **client land**, all children are client components.
+  * You can’t nest a server component under a client component.
+  * Solution: keep server component as parent → pass data down as props.
+
+* **Example: Teacher Feed**
+
+  * **Server Component (`teacher/page.js`)**
+
+    * Imports `fetchNotes` (server function).
+    * Loads `initialNotes` via `await fetchNotes()`.
+    * Renders `TeacherClientPage` with `initialNotes` + `fetchNotes` passed as props.
+  * **Server Function (`fetchNotes.js`)**
+
+    * `"use server"` directive required.
+    * Connects to SQLite (`AsyncDatabase.open("./notes.db")`).
+    * Returns rows with JOINs to map `from_user` and `to_user`.
+    * Optional pagination via `LIMIT`/`OFFSET`.
+
+* **Client Component (`clientPage.js`)**
+
+  * `"use client"` directive required.
+  * Uses `useState` for `notes` (initialized with `initialNotes`).
+  * Uses `useEffect` with `setInterval` to poll `fetchNotes` every 5s.
+  * Appends new notes using spread or `.concat()`.
+  * **Cleanup:** `clearInterval` in effect teardown to prevent leaks.
+  * Renders teacher’s feed (`ul > li`) with sender, receiver, and note.
+
+* **Polling Behavior**
+
+  * Poll requests may show as `POST` (due to React Flight machinery).
+  * Even if a 500 error appears, notes may still update (debug query/columns if broken).
+
+* **Why `"use server"`?**
+
+  * Without it, Next bundles imported server-only libraries (e.g., `sqlite3`) into client bundle.
+  * `"use server"` tells Next to exclude it from client-side code.
+  * Required for non-component server utilities (actions, functions).
+  * Server components imply it automatically, but helper functions need explicit directive.
