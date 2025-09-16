@@ -655,3 +655,32 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
   * `"use server"` tells Next to exclude it from client-side code.
   * Required for non-component server utilities (actions, functions).
   * Server components imply it automatically, but helper functions need explicit directive.
+
+## Limitations of React Server Components and Workarounds
+
+* **Key Limitation**
+
+  * Server components **cannot** be children of client components.
+  * This becomes frustrating when you want to use client state inside a server component (e.g., SQL queries based on client input).
+  * In such cases, you must fall back to the **classic approach**:
+
+    * Create an API route.
+    * Call it from the client with the necessary parameters.
+    * Return results like before RSC existed.
+
+* **Half-Workaround (Children Pattern)**
+
+  * You can pass a **server component as a child** into a client component.
+  * Since server components render first (at build or request time), you can pre-render them and let the client component receive them as `children`.
+  * This allows server-rendered markup to coexist within client components.
+
+* **Example: WhoAmI Pattern**
+
+  * **Server Component (`WhoAmI.js`)**
+
+    * Fetches user info from database (`AsyncDatabase.open("./notes.db")`).
+    * Returns JSX with user details (name + ID).
+  * **Client Component (`clientPage.js`)**
+
+    * Accepts `children` (server component) and `id`.
+    * Renders the server child
