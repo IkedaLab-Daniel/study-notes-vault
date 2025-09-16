@@ -684,3 +684,29 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 
     * Accepts `children` (server component) and `id`.
     * Renders the server child
+
+## Key Takeaways on RSCs and Framework Use
+
+* **When to Use Next.js / RSCs**
+
+  * Great for apps where the **client frequently interacts with the server** (lots of API calls, form submissions, database writes).
+  * Not ideal for **heavily client-side apps** (e.g., drawing tools like Excalidraw) where state and rendering live almost entirely in the browser.
+  * In such cases, lighter setups like **Vite** or **TanStack Router** are better.
+
+* **Rule of Thumb**
+
+  * RSCs are **sometimes useful**.
+  * They simplify client-server interaction but can add overhead when the app doesn’t need much server interaction.
+
+* **Other Ecosystems with Similar Paradigms**
+
+  * **Meteor** (JS, older but had seamless client-server data flow).
+  * **Rails / Phoenix** (server-driven rendering concepts).
+  * **Phoenix LiveView** (Elixir).
+  * **Laravel Livewire** (PHP).
+  * Similar ideas exist across backends, React just branded it as RSC.
+
+* **Conclusion**
+
+  * React + RSCs aren’t revolutionary but adapt **old server-driven paradigms** for React developers.
+  * React’s **flexibility** allows it to work standalone or as the foundation of larger frameworks.
