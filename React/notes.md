@@ -832,3 +832,42 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
   * Use `memo` + `useMemo` + `useCallback` to control re-renders.
   * Prevents props from breaking equality checks due to new object/function references.
   * Helps contain expensive operations without affecting unrelated components.
+
+## `useMemo` vs `useCallback`, Memo Pitfalls, and React Compiler
+
+* **`useMemo` vs `useCallback`**
+
+  * `useCallback` is basically `useMemo(() => fn, deps)`.
+  * Core devs regret adding `useCallback`; it exists mainly for readability.
+  * Strings/numbers don’t need memoization (`x === x` by value).
+  * Only objects/functions need `useMemo`/`useCallback` since equality is by reference.
+
+* **Pitfalls of Overusing Memoization**
+
+  * Can cause bugs when expected re-renders don’t happen.
+  * Memoized parent blocks children from re-rendering, leading to confusing issues.
+  * Use sparingly—React is usually fast enough without it.
+
+* **Complex JSON Structures**
+
+  * Idea: `JSON.stringify` as a memo key → risky (not guaranteed deterministic).
+  * Better: selectively memoize the components that matter.
+  * Avoid memoizing entire large trees unless truly necessary.
+
+* **React Compiler**
+
+  * A Babel plugin that auto-memoizes components at build time.
+  * Detects components that never change and memoizes them automatically.
+  * Removes memoization if code later changes to allow updates.
+  * Still unstable; can cause issues, so use cautiously.
+
+* **Debugging Performance**
+
+  * React DevTools Profiler shows re-renders, flame graphs, and memoized components.
+  * Future tools (e.g., React Scan) aim to help identify unnecessary re-renders.
+
+* **Bottom Line**
+
+  * Don’t memoize everything.
+  * Use `memo`, `useMemo`, and `useCallback` only where re-renders are expensive.
+  * Trust React’s defaults first; optimize only when performance issues arise.
