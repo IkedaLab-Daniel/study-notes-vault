@@ -1,4 +1,4 @@
-const JANK_DELAY = 100;
+const JANK_DELAY = 1;
 
 export default function MarkdownPreview({ render, options }) {
     const expensiveRender = () => {

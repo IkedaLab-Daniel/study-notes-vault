@@ -784,3 +784,51 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 
   * React handles re-renders efficiently, but **expensive operations inside child components** can still cause jank.
   * This sets the stage for optimizations using **`memo`, `useMemo`, and `useCallback`** to prevent unnecessary re-renders.
+
+## Optimizing Janky Renders with `memo`, `useMemo`, and `useCallback`
+
+* **Problem with Re-Renders**
+
+  * Wrapping `MarkdownPreview` with `memo` prevents re-renders **only if props are equal**.
+  * Passing new object/function props each render breaks equality (`{}` !== `{}`).
+  * Example: Two empty objects or functions are not equal in memory, even if identical in value.
+
+* **Fixing Object Props with `useMemo`**
+
+  * `useMemo` ensures the **same object reference** is reused across renders.
+  * Usage:
+
+    ```js
+    const options = useMemo(() => ({ text, theme }), [text, theme]);
+    ```
+  * React reuses the cached object unless `text` or `theme` changes.
+
+* **Fixing Function Props with `useCallback`**
+
+  * Functions also create new references each render.
+  * `useCallback` memoizes a function so React treats it as the same between renders.
+  * Example:
+
+    ```js
+    const render = useCallback(() => { ... }, []);
+    ```
+  * Empty dependency array → function reference never changes.
+
+* **Combined Effect**
+
+  * `memo` prevents re-renders **if props don’t change**.
+  * `useMemo` ensures object props remain the same reference until dependencies change.
+  * `useCallback` ensures function props remain the same reference.
+  * Together, they stop unnecessary re-renders and contain the “blast zone” of expensive code.
+
+* **Result**
+
+  * Markdown preview still takes time due to the simulated 100ms delay,
+    but now **only updates when `text` or `theme` changes**, not on every clock tick.
+  * Other parts of the UI (like the live clock) stay smooth.
+
+* **Key Takeaway**
+
+  * Use `memo` + `useMemo` + `useCallback` to control re-renders.
+  * Prevents props from breaking equality checks due to new object/function references.
+  * Helps contain expensive operations without affecting unrelated components.
