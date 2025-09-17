@@ -900,3 +900,42 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
 * **Key Idea**
 
   * Transitions improve *perceived performance* by preventing UI lockups during slow state updates.
+
+## 🚫 The "Wrong Way" (Typical React Code Before Transitions)
+
+* **Process flow in the demo app (`App.jsx`)**:
+
+  1. User selects a game.
+  2. `getNewScore(game)` is called.
+  3. UI immediately sets `isPending = true` (loading).
+  4. API call runs (artificial 5s delay).
+  5. After response:
+
+     * `setScore(newScore)`
+     * `isPending = false`
+  6. While waiting → **UI locked** (dropdown disabled, loading spinner shown).
+
+* **Problem**:
+
+  * If user selects the wrong game by mistake, they’re stuck until the fetch finishes.
+  * Example: Click **Game 5** but really meant **Game 6** → must wait 5s for Game 5 before selecting Game 6.
+  * This creates a frustrating UX (like the “Netflix button on a remote” analogy).
+
+---
+
+### 🛑 Why this feels bad
+
+* The UI and the data are tightly coupled → you can’t interact until the fetch resolves.
+* Any slow backend or API delay = locked UI.
+* Classic race-condition risk: if Game 5 fetch returns after Game 6 fetch, the wrong data might overwrite. (Here it’s avoided by disabling input, but that’s not user-friendly either.)
+
+---
+
+### ✅ How Transitions Fix This (what comes next)
+
+* `useTransition` decouples **UI updates** (user interactions like selecting a game) from **expensive state updates** (API fetch).
+* With transitions:
+
+  * UI remains responsive (user can change selection multiple times quickly).
+  * React only applies the *latest* transition → stale requests don’t override newer ones.
+  * User doesn’t feel "stuck" while waiting.
