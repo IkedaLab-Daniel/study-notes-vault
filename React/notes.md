@@ -871,3 +871,32 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
   * Don’t memoize everything.
   * Use `memo`, `useMemo`, and `useCallback` only where re-renders are expensive.
   * Trust React’s defaults first; optimize only when performance issues arise.
+
+## Transitions and Perceived Performance
+
+* **Goal of Transitions**
+
+  * Not about making React faster, but about making the UI *feel* faster.
+  * Keeps UI responsive while heavy tasks (like page loads) happen in the background.
+  * Prevents user frustration when clicking the wrong button or triggering slow actions.
+
+* **Problem Example**
+
+  * Accidentally opening the wrong app on a smart TV remote (Netflix, Hulu, etc.) and waiting 15 seconds for it to load before exiting.
+  * Similar issue on websites (e.g., clicking the wrong banking option).
+
+* **Solution: `useTransition` Hook**
+
+  * Allows React to handle heavy updates in the background.
+  * Keeps UI interactive so users can cancel, change their mind, or do other actions while loading happens.
+
+* **Demo Setup**
+
+  * Example project: a scoreboard app with slow API responses (artificial 5s delay).
+  * Server simulates games with incrementing scores over time.
+  * Client built with Vite, connects via proxy to server API.
+  * API endpoint: `/score?game=1–7` → returns scores for teams like *Memory Leaks* vs *Garbage Collectors*.
+
+* **Key Idea**
+
+  * Transitions improve *perceived performance* by preventing UI lockups during slow state updates.
