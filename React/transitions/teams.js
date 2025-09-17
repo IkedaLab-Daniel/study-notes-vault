@@ -1,0 +1,60 @@
+const teams = [
+  {
+    homeName: "404: Not Founds",
+    homeImage: "/images/404.webp",
+    awayName: "500: Server Errors",
+    awayImage: "/images/500.webp",
+    home: 0,
+    away: 0,
+  },
+  {
+    homeName: "Merge Conflicts",
+    homeImage: "/images/merge.webp",
+    awayName: "Git Pushers",
+    awayImage: "/images/git.webp",
+    home: 0,
+    away: 0,
+  },
+  {
+    homeName: "Tabs",
+    homeImage: "/images/tabs.webp",
+    awayName: "Spaces",
+    awayImage: "/images/spaces.webp",
+    home: 0,
+    away: 0,
+  },
+  {
+    homeName: "Beachballs",
+    homeImage: "/images/beachball.webp",
+    awayName: "Blue Screens",
+    awayImage: "/images/bluescreens.webp",
+    home: 0,
+    away: 0,
+  },
+  {
+    homeName: "Memory Leaks",
+    homeImage: "/images/leak.webp",
+    awayName: "Garbage Collectors",
+    awayImage: "/images/garbage.webp",
+    home: 0,
+    away: 0,
+  },
+  {
+    homeName: "Infinite Loops",
+    homeImage: "/images/infinite.webp",
+    awayName: "Stack Overflows",
+    awayImage: "/images/stack.webp",
+    home: 0,
+    away: 0,
+  },
+  {
+    homeName: "Dark Mode Ninjas",
+    homeImage: "/images/dark.webp",
+    awayName: "Light Mode Legion",
+    awayImage: "/images/light.webp",
+    home: 0,
+    away: 0,
+  },
+];
+
+export default teams;

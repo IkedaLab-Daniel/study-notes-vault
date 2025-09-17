@@ -1,0 +1,88 @@
+/* Minimal CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+.spinner {
+  font-size: 50px;
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+.loading-container.loading {
+  visibility: visible;
+}
+
+.loading-container {
+  visibility: hidden;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  background-color: #222;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app {
+  color: #14d117;
+  align-items: center;
+  text-align: center;
+}
+
+.score {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 500px;
+}
+
+h1 {
+  margin-top: 50px;
+  min-height: 50px;
+}
+
+select {
+  padding: 10px 30px;
+  background-color: #222;
+  color: #14d117;
+  border: 2px #14d117 solid;
+  border-radius: 5px;
+}
