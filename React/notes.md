@@ -939,3 +939,74 @@ Brian Holt guided us through setting up React Server Components (RSCs) without u
   * UI remains responsive (user can change selection multiple times quickly).
   * React only applies the *latest* transition → stale requests don’t override newer ones.
   * User doesn’t feel "stuck" while waiting.
+
+  ## Using `useTransition` in React
+
+* **Why transitions matter**:
+  Normal state updates can lock the UI during slow operations (e.g., fetching data).
+  `useTransition` lets React mark these updates as *low priority* so the UI stays responsive.
+
+---
+
+### 🔑 How It Works
+
+1. Import `useTransition`:
+
+   ```js
+   const [isPending, startTransition] = useTransition();
+   ```
+2. Wrap expensive updates:
+
+   ```js
+   startTransition(async () => {
+     const newScore = await getScore(game);
+     setScore(newScore);
+   });
+   ```
+3. UI remains interactive while React processes the background update.
+
+   * No need for `setIsPending` manually.
+   * Remove `disabled` props so users can keep interacting.
+
+---
+
+### 🚀 Benefits
+
+* User can switch games rapidly → React ensures the *final* choice wins.
+* Old requests still run, but their results are ignored if outdated.
+* Code stays almost as simple as before, just wrapped in `startTransition`.
+
+---
+
+### ⚖️ Race Conditions
+
+* Rare in small apps, but React docs show *nested transitions* for extra safety:
+
+  ```js
+  startTransition(() => {
+    startTransition(async () => {
+      const newScore = await getScore(game);
+      setScore(newScore);
+    });
+  });
+  ```
+* This prevents issues during heavy re-renders.
+
+---
+
+### ❓ Aborting Requests
+
+* Requests still *complete*, but React ignores their results.
+* Could add:
+
+  * **AbortController** to cancel fetches.
+  * **Debouncing** to limit rapid-fire requests.
+* Often unnecessary unless requests are long-running or expensive.
+
+---
+
+### ✅ Takeaway
+
+* `useTransition` is a “chill” API that improves **perceived performance**.
+* Keeps the UI responsive while background work finishes.
+* Best practice: use it for slow state updates that don’t need to block interaction.
