@@ -1324,3 +1324,46 @@ Brian’s point:
 
   * Use `useDeferredValue` for expensive recalculations triggered by rapidly changing inputs.
   * Combine with `memo` to ensure components only re-render when values truly change.
+
+## Q\&A Highlights with Brian Holt
+
+* **Using RSCs vs Alternatives**
+
+  * If your app is very **client-heavy**, RSCs may not add much.
+  * Alternatives: **Remix/React Router 7** or **TanStack Start**.
+  * TanStack Start emphasizes a **client-first approach with light server usage**, while Next.js is more **server-first**.
+  * Both Remix and TanStack Start are valid; choice depends on preference.
+
+* **Self-hosting Next.js**
+
+  * Yes, it’s possible.
+  * Run it like a **Node service**.
+  * Works best on **Vercel**, but many self-host successfully.
+
+* **Testing `useDeferredValue` / `useTransition`**
+
+  * Don’t test React internals.
+  * Focus on **user experience**: does the UI show immediate feedback and reconcile later to the correct state?
+  * Test behavior, not framework implementation.
+
+* **Building a Career in React**
+
+  * Hiring managers care more about **depth and passion projects** than which framework (Next vs Remix).
+  * Ship projects fully—finishing is more impressive than multiple unfinished ones.
+  * A great Remix app > a poor Next app.
+  * Follow what excites you, go deep, and **deploy real apps**.
+
+* **Full-text Search on Static Sites**
+
+  * Options: Elasticsearch, Solr, Pinecone, etc.
+  * Brian’s preference: **Postgres** with extensions like **PGVector** or **PG RAG**.
+  * Postgres handles most needs well.
+
+* **Managing RSC vs Client Components in Large Projects**
+
+  * Rarely need to switch components between server and client.
+  * Pattern: push **client state down the tree** to minimize client components.
+  * Don’t over-optimize for switching—generally a clear divide exists:
+
+    * RSCs → fetching from DB.
+    * Client components → handling user input.
