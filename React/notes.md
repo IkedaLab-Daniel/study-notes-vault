@@ -1367,3 +1367,21 @@ Brian’s point:
 
     * RSCs → fetching from DB.
     * Client components → handling user input.
+
+## Intermediate React v6 Wrap-Up
+
+* You now have the skills to tackle nearly any **React problem**.
+* Most remaining React APIs (e.g., `useLayoutEffect`, CSS insertion hooks) are mainly for **library authors**, not app developers.
+* Next steps / project ideas:
+
+  * Add **authentication** to apps.
+  * Take your **Next.js app** and deploy it (Vercel, Netlify, AWS Amplify, GCP App Engine, Firebase, etc.).
+  * Move your **database to the cloud** (e.g., Neon, or any cloud DB).
+  * Extend your notes app:
+
+    * Add **Twitter-like feed** to see other users’ posts.
+    * Add a **wall** for posting.
+    * Create an **admin feature**.
+  * Experiment with **AI integration** (AWS Bedrock, Together AI, GitHub models) for fun apps like an **AI social network**.
+* Best advice: **build and ship projects**—practice will reinforce learning.
+* Brian encourages sharing projects with him via Twitter or Blue Sky.
