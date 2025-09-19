@@ -1201,3 +1201,41 @@ Brian’s point:
 * Snappy → users *see* their action right away.
 * Correct → React reconciles when server confirms.
 * Graceful failures → you can design around errors without confusing users.
+
+## Deferred Values with `useDeferredValue`
+
+* **Problem**: Some updates (like sliders or image editing) trigger *extremely frequent re-renders*.
+
+  * Example: dragging a slider may fire updates multiple times per millisecond.
+  * If expensive computations run on each update → **jank** (laggy UI).
+
+* **Solution**: `useDeferredValue`
+
+  * Lets React delay re-renders of expensive values until input activity settles.
+  * Keeps UI *responsive* while heavy computation catches up.
+
+* **How it works**:
+
+  * Wrap a frequently changing value with `useDeferredValue(value)`.
+  * React’s scheduler decides:
+
+    * On **fast devices** → still renders many frames (smooth).
+    * On **slow devices** → skips intermediate frames (avoids jank).
+
+* **Use cases**:
+
+  * Sliders in image/video editors (blur, brightness, etc.).
+  * Large list filtering or sorting while typing.
+  * Any CPU-heavy calculations during rapid user input.
+
+* **Benefit over debounce/throttle**:
+
+  * Debounce/throttle applies the *same delay to everyone*.
+  * `useDeferredValue` adapts automatically:
+
+    * Slow devices = throttled.
+    * Fast devices = responsive.
+
+* **Analogy**: Like low-power mode on phones throttling CPU → fewer renders.
+
+  * React leverages the scheduler to optimize automatically.
