@@ -1107,3 +1107,97 @@ This matches how messaging apps work (WhatsApp, iMessage, etc.).
   * Once real data arrives (or fails), it reconciles automatically.
 
 So the hook saves you from juggling temporary state + rollback manually.
+
+### Refactor into `useOptimistic` + `useTransition`**
+
+## 🔴 Before (non-optimistic flow)
+
+* User types → hits submit.
+* Nothing shows in UI until API resolves.
+* 5s feels like forever → poor UX.
+* If error → nothing is added.
+
+---
+
+## 🟢 After (optimistic flow with `useOptimistic`)
+
+1. Import hooks:
+
+```js
+import { useTransition, useOptimistic } from "react";
+```
+
+2. Set up transition + optimistic state:
+
+```js
+const [isPending, startTransition] = useTransition();
+
+const [optimisticThoughts, addOptimisticThought] = useOptimistic(
+  thoughts,
+  (oldThoughts, newThought) => [newThought, ...oldThoughts] // prepend
+);
+```
+
+* `optimisticThoughts` → the array you actually render.
+* `addOptimisticThought(newThought)` → immediately injects it.
+* Once server returns, React reconciles, so your “loading” placeholder disappears.
+
+---
+
+3. Inside submit handler:
+
+```js
+async function postDeepThought(thought) {
+  // immediately show in UI with "loading" marker
+  addOptimisticThought({ thought, loading: true });
+
+  startTransition(async () => {
+    try {
+      const res = await fetch("/api/thoughts", {
+        method: "POST",
+        body: JSON.stringify({ thought }),
+      });
+      const data = await res.json();
+
+      // actual server update → reconciles with real thoughts
+      setThoughts(data.thoughts);
+    } catch (err) {
+      // handle error (design choice: red ❗️, retry button, etc.)
+      console.error(err);
+    }
+  });
+}
+```
+
+---
+
+4. Render from `optimisticThoughts`:
+
+```jsx
+<ul>
+  {optimisticThoughts.map((t, i) => (
+    <li key={i}>
+      {t.thought} {t.loading && <span>⏳</span>}
+    </li>
+  ))}
+</ul>
+```
+
+---
+
+## 💡 Error handling
+
+Brian’s point:
+
+* `alert("fail")` = bad UX ❌.
+* Better: keep the bubble in place with a **red exclamation ❗️** or “Retry” button.
+* That way the user knows: *“It looked like it sent, but it failed. Want to resend?”*
+* This is **UI/UX design**, not a React limitation.
+
+---
+
+## ✅ Benefits
+
+* Snappy → users *see* their action right away.
+* Correct → React reconciles when server confirms.
+* Graceful failures → you can design around errors without confusing users.
