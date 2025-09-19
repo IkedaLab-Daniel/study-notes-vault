@@ -1277,3 +1277,50 @@ Brian’s point:
 
   * Without `useDeferredValue`, frequent slider changes cause noticeable jank.
   * Next step: integrate `useDeferredValue` to smooth performance.
+
+## Using `useDeferredValue` to Reduce Jank
+
+* **Problem**:
+
+  * Sliders feel laggy because `DisplayImage` simulates an expensive render.
+  * Without optimization, every slider move re-renders image immediately → jank.
+
+* **Traditional Fix**:
+
+  * Developers used to rely on **throttle** or **debounce** to delay updates.
+  * Harder to manage and required manual logic.
+
+* **React Fix (`useDeferredValue`)**:
+
+  * Marks certain renders as **low priority**.
+  * Example:
+
+    ```js
+    const deferredBlur = useDeferredValue(blur);
+    const deferredBrightness = useDeferredValue(brightness);
+    const deferredContrast = useDeferredValue(contrast);
+    const deferredSaturate = useDeferredValue(saturate);
+    const deferredSepia = useDeferredValue(sepia);
+    ```
+  * Sliders update instantly, but `DisplayImage` updates more slowly.
+  * React adapts automatically depending on device performance.
+
+* **Remaining Issue**:
+
+  * Even with `useDeferredValue`, parent re-renders still caused image updates.
+
+* **Solution**: `memo`
+
+  * Memoize `DisplayImage` so it only re-renders when deferred values actually change.
+  * Prevents wasteful re-renders on every slider movement.
+
+* **Result**:
+
+  * Smoother sliders with reduced jank.
+  * Image updates less frequently, but UI feels more responsive.
+  * React handles frequency automatically (fast devices update more often, slow ones less).
+
+* **Key Insight**:
+
+  * Use `useDeferredValue` for expensive recalculations triggered by rapidly changing inputs.
+  * Combine with `memo` to ensure components only re-render when values truly change.
