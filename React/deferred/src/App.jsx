@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useDeferredValue } from "react";
 import Slider from "./Slider";
 import DisplayImage from "./DisplayImage";
 
@@ -9,12 +9,18 @@ export default function App() {
   const [saturate, setSaturate] = useState(100);
   const [sepia, setSepia] = useState(0);
 
+  const deferredBlur = useDeferredValue(blur);
+  const deferredBrightness = useDeferredValue(brightness);
+  const deferredContrast = useDeferredValue(contrast);
+  const deferredSaturate = useDeferredValue(saturate);
+  const deferredSepia = useDeferredValue(sepia);
+
   const filterStyle = `
-    blur(${blur}px)
-    brightness(${brightness}%)
-    contrast(${contrast}%)
-    saturate(${saturate}%)
-    sepia(${sepia}%)
+    blur(${deferredBlur}px)
+    brightness(${deferredBrightness}%)
+    contrast(${deferredContrast}%)
+    saturate(${deferredSaturate}%)
+    sepia(${deferredSepia}%)
     `;
 
   return (
@@ -24,35 +30,35 @@ export default function App() {
       <ul>
         <Slider
           value={blur}
-          deferred={blur}
+          deferred={deferredBlur}
           onChange={(e) => setBlur(e.target.value)}
           name="Blur"
           max="20"
         />
         <Slider
           value={brightness}
-          deferred={brightness}
+          deferred={deferredBrightness}
           onChange={(e) => setBrightness(e.target.value)}
           name="Brightness"
           max="200"
         />
         <Slider
           value={contrast}
-          deferred={contrast}
+          deferred={deferredContrast}
           onChange={(e) => setContrast(e.target.value)}
           name="Contrast"
           max="200"
         />
         <Slider
           value={saturate}
-          deferred={saturate}
+          deferred={deferredSaturate}
           onChange={(e) => setSaturate(e.target.value)}
           name="Saturate"
           max="200"
         />
         <Slider
           value={sepia}
-          deferred={sepia}
+          deferred={deferredSepia}
           onChange={(e) => setSepia(e.target.value)}
           name="Sepia"
           max="100"
