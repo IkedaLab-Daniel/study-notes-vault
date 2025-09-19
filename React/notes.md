@@ -1239,3 +1239,41 @@ Brian’s point:
 * **Analogy**: Like low-power mode on phones throttling CPU → fewer renders.
 
   * React leverages the scheduler to optimize automatically.
+
+## Building an Image Editor with Sliders
+
+* **Setup**:
+
+  * Added `slider.jsx` → reusable slider component.
+  * Added `displayImage.jsx` → renders image with filters, simulates heavy rendering with delay.
+  * Uses dog image (`Luna.jpg`), but can be replaced with any image.
+
+* **Slider Component** (`Slider`):
+
+  * Props: `value`, `deferredValue`, `onChange`, `name`, `max`.
+  * Displays label, slider (`input type="range"`), and output values.
+  * Shows `"updating"` when `value !== deferredValue`.
+
+* **DisplayImage Component**:
+
+  * Accepts `filterStyle` (CSS filters as string).
+  * Simulates heavy rendering with artificial delay.
+  * Renders image with applied filters + shows last render time.
+
+* **App Component**:
+
+  * State hooks for image filters: `blur`, `brightness`, `contrast`, `saturate`, `sepia`.
+  * Each has initial values and slider ranges:
+
+    * Blur: `0–20px`
+    * Brightness: `0–200%` (default `100`)
+    * Contrast: `0–200%` (default `100`)
+    * Saturate: `0–200%` (default `100`)
+    * Sepia: `0–100%`
+  * Builds combined `filterStyle` string → passed to `DisplayImage`.
+  * Renders `<ul>` of sliders, each tied to its filter.
+
+* **Key Idea**:
+
+  * Without `useDeferredValue`, frequent slider changes cause noticeable jank.
+  * Next step: integrate `useDeferredValue` to smooth performance.
