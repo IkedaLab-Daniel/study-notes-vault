@@ -1385,3 +1385,54 @@ Brian’s point:
   * Experiment with **AI integration** (AWS Bedrock, Together AI, GitHub models) for fun apps like an **AI social network**.
 * Best advice: **build and ship projects**—practice will reinforce learning.
 * Brian encourages sharing projects with him via Twitter or Blue Sky.
+
+## Core Parts of Every API
+
+APIs, regardless of language or framework, share common building blocks:
+
+### 1. **Server**
+
+* A server is an application that runs continuously without a visual interface.
+* It listens for requests from clients (web apps, mobile apps, other services) and responds.
+* Typically sits in front of a database and acts as the gatekeeper (like a bouncer at a club).
+* Servers must run on a **port** (a unique number identifying a service on a machine).
+* Each server also has an **IP address** (like a home address), which ensures uniqueness across a network.
+
+Example:
+
+```
+http://127.0.0.1:3001
+```
+
+* `127.0.0.1` → IP address (localhost)
+* `3001` → port
+
+### 2. **Routes**
+
+* A route = **HTTP method + URL path**.
+* Defines what action to take when a request is received.
+* Example routes:
+
+  * `GET /api/user/1` → retrieve user info
+  * `POST /api/food` → create a new food record
+
+### 3. **HTTP Methods**
+
+* **GET** → retrieve data
+* **POST** → create new data
+* **PUT** → replace existing data
+* **PATCH** → update part of existing data
+* **DELETE** → remove data
+* **OPTIONS** → used internally for CORS checks
+
+### 4. **Route Handlers**
+
+* Functions that run when a request matches a route.
+* Comparable to event handlers in the frontend (e.g., `onclick`).
+* This is where the server interacts with databases, performs logic, and returns a response.
+
+### 5. **Design Patterns**
+
+* While developers can technically do anything with methods/routes, agreed patterns bring consistency.
+* The most common is **REST** (Representational State Transfer).
+* Alternatives include **GraphQL**, **gRPC**, and **Protobuf**.
