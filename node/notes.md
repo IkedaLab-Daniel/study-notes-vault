@@ -50,3 +50,19 @@
 
   * Start with **CommonJS (require)**, then switch to **ES6 modules (import/export)**.
   * **TypeScript** will be added later for typing and better structure.
+
+## Building a Vanilla Node.js API
+
+We begin by creating a basic API in Node.js without any framework. A new NPM project is initialized, and a simple server is built using Node’s built-in `http` module. This module allows handling requests and responses directly, forming the foundation of how frameworks like Express work.
+
+The server listens for incoming requests, checks the request method (`GET`, `POST`, etc.) and URL, and responds accordingly. A simple router logic is created to handle requests to the root path (`/`). The response is closed using `res.end()`.
+
+The server is started using `server.listen()` on port `3001`, and a message is logged to confirm it’s running. Unlike regular scripts, the server stays active, waiting for requests. Testing in the browser shows the request flow: the browser sends a `GET` request, the server handles it, logs a message in the terminal, and ends the response.
+
+This demonstrates the fundamentals of how an API server works:
+
+* A client sends a request.
+* The server processes it.
+* The server sends back a response.
+
+Every API you’ll build follows this same request–response cycle, with additional complexity for routing, data handling, and features.
