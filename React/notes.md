@@ -1436,3 +1436,68 @@ http://127.0.0.1:3001
 * While developers can technically do anything with methods/routes, agreed patterns bring consistency.
 * The most common is **REST** (Representational State Transfer).
 * Alternatives include **GraphQL**, **gRPC**, and **Protobuf**.
+
+## Express.js Basics
+
+* **What is Express?**
+
+  * The most popular Node.js framework for building APIs.
+  * Built on top of the now-defunct Connect library.
+  * Similar to Django (Python), Sinatra (Ruby), Spring (Java), Gin (Go).
+  * Lightweight, respected, widely adopted, and not going away.
+
+* **Installing & Setting Up Express**
+
+  ```bash
+  npm i express --save
+  ```
+
+  * Create `server.js`.
+  * Import and initialize Express:
+
+    ```js
+    const express = require("express");
+    const app = express();
+    ```
+  * Define a route:
+
+    ```js
+    app.get("/", (req, res) => {
+      res.status(200).json({ message: "hello" });
+    });
+    ```
+  * Export app:
+
+    ```js
+    module.exports = app;
+    ```
+  * In `index.js`:
+
+    ```js
+    const app = require("./server");
+    app.listen(3001, () => console.log("Server running on port 3001"));
+    ```
+
+* **Status Codes**
+
+  * `200–299` → success
+  * `400–499` → client errors (e.g., bad input)
+  * `500–599` → server errors (e.g., crash, DB issues)
+  * Respecting status codes helps browsers, tools, and clients interpret responses correctly.
+
+* **Responses with Express**
+
+  * Can send back JSON, text, HTML, images, or any file/data type.
+  * Example:
+
+    ```js
+    res.send("Hello World");     // plain text
+    res.json({ msg: "Hello" }); // JSON
+    res.sendFile("/path/to/file.html"); // file
+    ```
+
+* **Why Express Helps**
+
+  * Replaces messy `if` statements for routing with clean, declarative methods.
+  * Handles HTTP methods and paths without manually writing logic.
+  * Provides helpful utilities on `req` and `res` objects.
