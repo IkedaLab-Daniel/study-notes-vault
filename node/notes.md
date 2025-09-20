@@ -424,3 +424,40 @@ model UpdatePoint {
 * Prisma auto-updates relations when running `npx prisma format`.
 
 This schema models a real-world changelog app by reflecting design → database structure.
+
+## Prisma Migrations
+
+* **Purpose of Migrations**
+
+  * Teach the relational database about the schema so it can create tables.
+  * Handle schema changes (breaking changes) by moving existing data into the new structure (hence "migration").
+
+* **Challenges**
+
+  * Required for relational databases, not for NoSQL.
+  * Common source of downtime and issues in production.
+  * Prisma simplifies migrations significantly.
+
+* **Prisma Client**
+
+  * ORM / SDK used inside code to talk to the database.
+  * Generated automatically after each migration based on the schema.
+  * Different schemas → different clients.
+
+* **Setup Steps**
+
+  1. Ensure `.env` has `DATABASE_URL` pointing to your Postgres instance.
+  2. Install Prisma Client.
+  3. Run initial migration:
+
+     ```bash
+     npx prisma migrate dev --name init
+     ```
+  4. Migration creates:
+
+     * A `migrations/` folder with timestamped SQL files.
+     * Updated Prisma Client generated from your schema.
+
+* **Key Benefit**
+
+  * Prisma auto-generates the SQL migration scripts you’d otherwise have to write manually.
