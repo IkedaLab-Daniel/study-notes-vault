@@ -1501,3 +1501,46 @@ http://127.0.0.1:3001
   * Replaces messy `if` statements for routing with clean, declarative methods.
   * Handles HTTP methods and paths without manually writing logic.
   * Provides helpful utilities on `req` and `res` objects.
+
+## ORMs and Databases
+
+* **What is a Database?**
+
+  * Mechanism to persist data on disk (SSD/HDD).
+  * Unlike code (in RAM, temporary), databases store data permanently.
+  * Many types exist (SQL, NoSQL, etc.).
+
+* **What is an ORM?**
+
+  * **Object-Relational Mapper** = SDK for your database.
+  * Lets you interact with a database using functions instead of raw SQL queries.
+  * Example:
+
+    ```sql
+    INSERT INTO customers (name, email) VALUES ('Alice', 'alice@mail.com');
+    ```
+
+    With ORM:
+
+    ```js
+    Customer.create({ name: "Alice", email: "alice@mail.com" });
+    ```
+  * Provides schemas, models, and abstractions for database operations.
+  * Think of it as **OOP for databases**.
+
+* **Why Use ORMs?**
+
+  * Easier to use for devs not fluent in SQL.
+  * Cleaner, more maintainable code.
+  * Works across multiple database systems with the same API.
+
+* **Postgres vs MongoDB**
+
+  * **Postgres**: Relational, supports JSON storage, strong ACID compliance.
+  * **MongoDB**: Document-based, also supports ACID transactions now.
+  * Today, the performance and feature differences are negligible for most projects.
+  * Choice often comes down to:
+
+    * Developer comfort
+    * Ecosystem & tooling
+    * Cost and hosting options
