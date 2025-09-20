@@ -20,3 +20,33 @@
   * **Testing** to ensure functionality and reliability.
   * **Deployment** so APIs can be used and connected to apps.
 
+## Tools Used in API Design with Node.js V4
+
+* **Runtime**:
+
+  * **Node.js** – JavaScript runtime outside the browser.
+  * Chosen because: familiar for frontend devs, large ecosystem, widely used.
+
+* **Framework**:
+
+  * **Express.js** – most popular Node.js framework for APIs.
+  * Large community, foundational for many other frameworks, and instructor’s preferred choice.
+
+* **Database**:
+
+  * **Postgres** – replacing MongoDB used in earlier versions.
+  * Instructor has recent experience with it, widely adopted, strong SQL ecosystem, good career skill.
+
+* **Hosting**:
+
+  * **Render.com** – modern platform with simple Node.js deployment, similar to early Heroku experience.
+  * Will discuss alternatives but focus is on Render.
+
+* **Project**:
+
+  * Building a **changelog app** where users can post product updates/features.
+
+* **Language/Modules**:
+
+  * Start with **CommonJS (require)**, then switch to **ES6 modules (import/export)**.
+  * **TypeScript** will be added later for typing and better structure.
