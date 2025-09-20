@@ -66,3 +66,20 @@ This demonstrates the fundamentals of how an API server works:
 * The server sends back a response.
 
 Every API you’ll build follows this same request–response cycle, with additional complexity for routing, data handling, and features.
+
+## Why Not Build APIs Without a Framework?
+
+Writing APIs directly with Node’s `http` module is fine for small or trivial projects, or in constrained environments like serverless functions where size matters. But for real-world apps or team projects, this approach quickly breaks down:
+
+* **Lack of Structure** – Without a framework, every developer may implement routing and request handling differently, leading to chaos.
+* **Reinventing the Wheel** – Handling routing, parsing, validation, error handling, and more eventually means you’re building your own framework.
+* **Team Collaboration Issues** – On larger teams, inconsistent patterns slow development and maintenance.
+
+The `http` module gives powerful request (`req`) and response (`res`) objects.
+
+* `req` contains details about the client’s request (method, URL, headers, IP, body, etc.) and can be logged or inspected.
+* `res` is used to send responses back, scoped to the specific request that triggered it.
+
+This is event-driven: a request acts like an event, and the callback is the event handler, similar to `addEventListener` in the browser.
+
+Finally, requests don’t show under **XHR** in DevTools unless explicitly made via JavaScript (`fetch`/`XHR`). Typing a URL in the browser is just a normal `GET` request for a document. Since we didn’t return HTML or data, the browser just shows a blank page, though the request is visible under the **Network tab**.
