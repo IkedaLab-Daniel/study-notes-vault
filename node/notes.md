@@ -359,3 +359,68 @@ model User {
 * Prisma schema is **database-agnostic** → works the same for Postgres, MySQL, etc.
 * Relationships between tables can be defined easily (Prisma VSCode extension helps).
 * **UUIDs are preferred** over auto-incrementing integers for safer, globally unique IDs.
+
+## Product, Update, and UpdatePoint Models with Prisma
+
+### Models Breakdown
+
+* **Product** → main entity
+* **Update** → belongs to a product, has details like title, body, status, etc.
+* **UpdatePoint** → belongs to an update, smaller pieces of info (name + description)
+
+### Prisma Schema Examples
+
+#### Update Model
+
+```prisma
+model Update {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  title     String
+  body      String
+  status    UPDATE_STATUS @default(IN_PROGRESS)
+  version   String?   // optional
+  asset     String?   // optional (e.g., GIF/URL)
+
+  productId String
+  product   Product   @relation(fields: [productId], references: [id])
+
+  points    UpdatePoint[]
+}
+
+enum UPDATE_STATUS {
+  IN_PROGRESS
+  SHIPPED
+  DEPRECATED
+}
+```
+
+#### UpdatePoint Model
+
+```prisma
+model UpdatePoint {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+
+  name        String
+  description String
+
+  updateId    String
+  update      Update @relation(fields: [updateId], references: [id])
+}
+```
+
+### Key Notes
+
+* `@relation` → sets up relationships between models.
+* `?` → makes a field optional (e.g., version, asset).
+* `enum` → defines fixed constants like statuses.
+* Relationships:
+
+  * **Product → Update → UpdatePoint**
+* Prisma auto-updates relations when running `npx prisma format`.
+
+This schema models a real-world changelog app by reflecting design → database structure.
