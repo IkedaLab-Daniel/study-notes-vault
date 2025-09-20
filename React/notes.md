@@ -1544,3 +1544,84 @@ http://127.0.0.1:3001
     * Developer comfort
     * Ecosystem & tooling
     * Cost and hosting options
+
+Great summary you pulled from Scott’s lesson 👌 Let’s unpack the important parts:
+
+---
+
+## 📌 ORM We’ll Use → **Prisma**
+
+* **Prisma** = modern ORM for Node.js that is:
+
+  * **Database agnostic** → works with Postgres, MySQL, SQLite, Mongo, PlanetScale, etc.
+  * **Type-safe** → autocompletes queries based on your schema (thanks to TypeScript).
+  * Handles **queries, schema definitions, migrations, and seeding**.
+
+> You can think of Prisma as a **database SDK + schema toolchain** for Node.js.
+
+---
+
+## ⚡ Database Setup
+
+1. **Recommended** → use **Render.com** (free Postgres DB).
+
+   * Just sign up → create PostgreSQL → choose **Free plan** (can’t downgrade later).
+   * Copy **external database URL**, not the internal one.
+2. **Alternative** → install Postgres locally.
+
+   * Works, but slightly more setup and troubleshooting.
+
+---
+
+## 🛠 Installing Prisma + TypeScript
+
+Since Prisma’s big strength = **type safety**, we need TypeScript in the project.
+
+Run:
+
+```bash
+npm install -D typescript ts-node @types/node prisma
+```
+
+* `typescript` → compiler (TS → JS).
+* `ts-node` → run TypeScript directly without pre-building.
+* `@types/node` → type definitions for Node.
+* `prisma` → the ORM itself.
+
+---
+
+## ⚙️ Setup TypeScript Config
+
+Create a file at the root → **`tsconfig.json`**
+
+```json
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
+```
+
+👉 Scott’s advice: **remove `"strict": true`** if you’re new to TypeScript.
+Otherwise, you’ll have to write explicit types for everything, which slows you down at first.
+
+---
+
+✅ At this point, you’ve got:
+
+* Postgres (on Render or local).
+* Prisma installed.
+* TypeScript set up.
+
+Next step will be **Prisma init** (`npx prisma init`) → this creates:
+
+* `prisma/schema.prisma` (your data models).
+* `.env` (where you’ll paste the Postgres connection string).
