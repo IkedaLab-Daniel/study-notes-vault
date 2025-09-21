@@ -461,3 +461,55 @@ This schema models a real-world changelog app by reflecting design → database 
 * **Key Benefit**
 
   * Prisma auto-generates the SQL migration scripts you’d otherwise have to write manually.
+
+## Routes and CRUD in Express
+
+* **CRUD Basics**
+
+  * CRUD = Create, Read, Update, Delete.
+  * Almost every app/API centers around these operations on resources (e.g., users, products, updates).
+
+* **REST Approach**
+
+  * Each resource gets routes for CRUD operations.
+  * Example for **Product**:
+
+    * `GET /product` → get all products
+    * `GET /product/:id` → get one product
+    * `POST /product` → create product
+    * `PUT /product/:id` → update product
+    * `DELETE /product/:id` → delete product
+  * Same pattern applies for **Update** and **UpdatePoint** resources.
+
+* **Express Router**
+
+  * `app` = entire API (global).
+  * `Router` = sub-app, allows separating routes (e.g., authenticated vs. non-authenticated).
+  * Useful for organizing APIs with different middleware/configurations.
+
+* **Route Parameters**
+
+  * `:id` (or any name after `:`) defines a **dynamic parameter**.
+  * Example: `GET /product/:id` → access with `req.params.id`.
+
+* **PUT vs PATCH**
+
+  * **PUT**: replaces the entire resource (except `id`).
+  * **PATCH**: updates only specific fields provided.
+  * Many developers use PUT like PATCH (never fully replace).
+
+* **When to Use gRPC vs REST**
+
+  * **gRPC**: great for internal APIs (your frontend/mobile app consuming your backend).
+
+    * Can fetch all required data in one call.
+  * **REST**: better for public/external APIs.
+
+    * More generic, widely supported, predictable.
+
+* **tRPC**
+
+  * Type-safe version of RPC for TypeScript.
+  * Provides automatic type inference between backend and frontend.
+  * Similar benefit to GraphQL with generated types, but without an extra build step.
+  * Still has trade-offs in developer experience.
