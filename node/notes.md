@@ -323,3 +323,39 @@ Next step will be **Prisma init** (`npx prisma init`) → this creates:
 
 * `prisma/schema.prisma` (your data models).
 * `.env` (where you’ll paste the Postgres connection string).
+
+## Designing Models and Writing Prisma Schema
+
+To design database models, Scott looked at a **Figma UI for a changelog app**. The UI helps determine what data the app needs, which informs the schema design.
+
+### Potential Models
+
+* **User** → required for authentication and ownership
+* **Roadmap**
+* **Projects**
+* **Tasks**
+* **Features**
+
+### Prisma Syntax Example: `User` Model
+
+Prisma schema syntax is similar to GraphQL/JSON object style. Example:
+
+```prisma
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+```
+
+* `@id` → marks primary key
+* `@default(uuid())` → generates a UUID automatically
+* `@unique` → ensures unique usernames
+* `@default(now())` → sets timestamp when record is created
+
+### Key Notes
+
+* Prisma schema is **database-agnostic** → works the same for Postgres, MySQL, etc.
+* Relationships between tables can be defined easily (Prisma VSCode extension helps).
+* **UUIDs are preferred** over auto-incrementing integers for safer, globally unique IDs.
