@@ -542,3 +542,84 @@ This schema models a real-world changelog app by reflecting design → database 
   * ❌ Never respond twice (causes errors).
 * Tools like **nodemon** can auto-restart the server on file changes (not enabled by default with Node/TypeScript).
 * Next step: learn **middleware**, which sits between requests and responses, handling logic before/after route handlers.
+
+### Middleware in Express – Key Takeaways
+
+✅ **What is middleware?**
+
+* Functions that run **before your route handler** executes.
+* Each receives `(req, res, next)`
+
+  * `req`, `res` → same as in handlers
+  * `next()` → tells Express to move on to the next middleware/handler
+
+✅ **Use cases**
+
+* Logging requests (like Morgan)
+* Error handling
+* Authentication & authorization
+* Request transformations (adding fields, sanitizing, etc.)
+* Blocking/short-circuiting requests (e.g., deny certain IPs)
+
+✅ **Flow**
+
+* Middleware stack = array of functions registered in order.
+* When you call `next()`, Express moves to the next function in the stack.
+* A middleware can also **end the response** itself with `res.send()`, `res.json()`, etc.
+* Order **matters** → middleware should be declared *before* routes if it should affect them.
+
+✅ **Global vs Scoped Middleware**
+
+* **Global**:
+
+  ```ts
+  app.use(morgan("dev"));
+  ```
+
+  Runs for *all* requests.
+
+* **Scoped to a path**:
+
+  ```ts
+  app.use("/api", someMiddleware);
+  ```
+
+  Runs only for `/api/...` routes.
+
+* **Scoped to a single route**:
+
+  ```ts
+  router.get("/product", authMiddleware, (req, res) => {
+    res.json({ message: "hello" });
+  });
+  ```
+
+  Only `/product` calls go through `authMiddleware`.
+
+✅ **Morgan example**
+
+```ts
+import express from "express";
+import morgan from "morgan";
+
+const app = express();
+
+// global middleware
+app.use(morgan("dev"));
+
+// route
+app.get("/api/product", (req, res) => {
+  res.json({ message: "hello" });
+});
+```
+
+When you hit `/api/product` →
+
+* Morgan logs request details
+* Then handler sends JSON response
+
+---
+
+👉 Next, the course will likely dive into **writing custom middleware** (like your own logger or auth check) so you can see how `next()` and short-circuiting work.
+
+Do you want me to show you a **simple custom middleware** example before we move on to database stuff?
