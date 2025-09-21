@@ -25,3 +25,5 @@ router.get('/updatepoint/:id', () => {})
 router.put('/updatepoint/:id', () => {})
 router.post('/updatepoint', () => {})
 router.delete('/updatepoint/:id', () => {})
+
+export default router

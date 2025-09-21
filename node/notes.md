@@ -524,3 +524,21 @@ This schema models a real-world changelog app by reflecting design → database 
   * Example: `app.use("/api", router)`
   * This makes all router routes available under `/api/...` (e.g., `/api/product`).
 * Routers let you separate and modularize routes like reusable components, making APIs more organized.
+
+## Testing Routes & Handling Responses
+
+* After creating routes, attach them to handlers or else requests will **hang** (server picks up but never responds).
+* Use **Thunder Client** (VS Code plugin) to test API requests (GET, POST, PUT, DELETE) without writing frontend code.
+* Example: `GET /api/product` → initially hung, fixed by adding a handler:
+
+  ```ts
+  router.get("/product", (req, res) => {
+    res.json({ message: "hello" });
+  });
+  ```
+* A server must **always respond once**:
+
+  * ❌ Never hang (no response).
+  * ❌ Never respond twice (causes errors).
+* Tools like **nodemon** can auto-restart the server on file changes (not enabled by default with Node/TypeScript).
+* Next step: learn **middleware**, which sits between requests and responses, handling logic before/after route handlers.
