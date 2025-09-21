@@ -513,3 +513,14 @@ This schema models a real-world changelog app by reflecting design → database 
   * Provides automatic type inference between backend and frontend.
   * Similar benefit to GraphQL with generated types, but without an extra build step.
   * Still has trade-offs in developer experience.
+
+## Mounting the Router to the App
+
+* The router must be attached back to the main app, otherwise it won’t do anything.
+* Export the router (`export default router`) and import it into `server.ts`.
+* Routes order matters: if two routes share the same method + path, Express executes the first one registered.
+* Use `app.use()` to mount the router:
+
+  * Example: `app.use("/api", router)`
+  * This makes all router routes available under `/api/...` (e.g., `/api/product`).
+* Routers let you separate and modularize routes like reusable components, making APIs more organized.
