@@ -1055,3 +1055,41 @@ app.listen(3000, () => console.log("Server running on port 3000"));
   ```
 
 This ensures secure password storage and returns a JWT for the new user.
+
+## Sign In Handler with Prisma and bcrypt
+
+* Create `signIn` handler similar to `createNewUser`.
+
+* Steps:
+
+  1. **Find user by username** using Prisma:
+
+     ```ts
+     const user = await prisma.user.findUnique({
+       where: { username: req.body.username }
+     });
+     ```
+  2. **Compare passwords** using helper:
+
+     ```ts
+     const isValid = await comparePasswords(req.body.password, user.password);
+     ```
+  3. **Handle invalid login**:
+
+     ```ts
+     if (!isValid) {
+       return res.status(401).json({ message: "Not authorized" });
+     }
+     ```
+  4. **If valid, generate token**:
+
+     ```ts
+     const token = createJWT(user);
+     res.json({ token });
+     ```
+
+* bcrypt defaults to async (returns a Promise).
+
+* No input validation yet → should be handled in middleware, not in handler.
+
+* Handlers stay focused only on business logic (sign-in flow).
