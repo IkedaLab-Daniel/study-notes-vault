@@ -1093,3 +1093,31 @@ This ensures secure password storage and returns a JWT for the new user.
 * No input validation yet → should be handled in middleware, not in handler.
 
 * Handlers stay focused only on business logic (sign-in flow).
+
+## Creating Routes and Testing Authentication
+
+* Added routes in `server`:
+
+  ```ts
+  app.post("/user", createNewUser);   // Sign up
+  app.post("/signin", signin);        // Sign in
+  ```
+
+* **Middleware logic**:
+
+  * `/user` and `/signin` are public (no token required).
+  * Protected routes (e.g., `/api/...`) still require JWT via `protect` middleware.
+
+* **Testing with Thunder Client**:
+
+  * POST `/user` with `{ username, password }` → returns JWT.
+  * Verified data in database using `npx prisma studio`.
+  * Used returned JWT as Bearer Token in headers to access protected routes → success.
+  * POST `/signin` with same credentials → returns JWT.
+
+* **Edge cases**:
+
+  * Duplicate username → Prisma throws unique constraint error → need error handling.
+  * Invalid/missing token → returns `401 Unauthorized`.
+
+* **Next step**: Implement proper error handling and tiered user access if needed.
