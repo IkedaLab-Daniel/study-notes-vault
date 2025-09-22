@@ -621,5 +621,3 @@ When you hit `/api/product` →
 ---
 
 👉 Next, the course will likely dive into **writing custom middleware** (like your own logger or auth check) so you can see how `next()` and short-circuiting work.
-
-Do you want me to show you a **simple custom middleware** example before we move on to database stuff?

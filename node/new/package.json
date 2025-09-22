@@ -13,10 +13,12 @@
   "type": "commonjs",
   "dependencies": {
     "@prisma/client": "^6.16.2",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "morgan": "^1.10.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^24.5.2",
     "prisma": "^6.16.2",
     "ts-node": "^10.9.2",
