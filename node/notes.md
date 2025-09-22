@@ -618,6 +618,113 @@ When you hit `/api/product` →
 * Morgan logs request details
 * Then handler sends JSON response
 
+### Custom middlewares
+
+* Middleware runs **before** your route handler executes.
+* Can:
+
+  * Log requests (`morgan` is a common logger middleware).
+  * Parse request bodies (`express.json()` & `express.urlencoded()`).
+  * Handle authentication & authorization.
+  * Catch and handle errors globally.
+  * Augment (`req`) or (`res`) with extra data.
+  * Even **short-circuit** the request (send a response early without calling `next()`).
+
 ---
 
-👉 Next, the course will likely dive into **writing custom middleware** (like your own logger or auth check) so you can see how `next()` and short-circuiting work.
+### 🔗 Middleware Signature
+
+Every middleware looks like:
+
+```js
+(req, res, next) => {
+  // do something...
+  next(); // pass control to the next middleware/handler
+};
+```
+
+* If you call `next()`, Express continues to the next middleware or route handler.
+* If you **don’t** call `next()` (and instead send a response), the request stops there.
+
+---
+
+### 📚 Built-in Useful Middleware
+
+* **`express.json()`** → Parses JSON body into `req.body`.
+* **`express.urlencoded({ extended: true })`** → Parses URL-encoded data (like HTML form submissions).
+* **`cors()`** → Handles Cross-Origin Resource Sharing rules.
+
+---
+
+### 🛠 Example with Middleware in Action
+
+```js
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+
+const app = express();
+
+// Global middleware
+app.use(morgan("dev")); // logs each request
+app.use(express.json()); // parses JSON body
+app.use(express.urlencoded({ extended: true })); // parses query strings
+app.use(cors()); // allows cross-origin requests
+
+// Custom middleware
+app.use((req, res, next) => {
+  req.secret = "doggy"; // augment request
+  console.log("Custom middleware ran ✅");
+  next();
+});
+
+// Route handler
+app.get("/product", (req, res) => {
+  res.json({ message: req.secret }); // "doggy"
+});
+
+// Example middleware that blocks access
+app.use((req, res) => {
+  res.status(401).send("Nope!");
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+```
+
+---
+
+### 🧩 Middleware Options & Composition
+
+* Middleware can be:
+
+  * **Global**: `app.use(middleware)` → runs for every request.
+  * **Route-specific**: `app.get("/path", middleware, handler)`.
+* Can be passed as:
+
+  * **Multiple args**:
+
+    ```js
+    app.get("/secure", authMiddleware, logMiddleware, handler);
+    ```
+  * **An array**:
+
+    ```js
+    app.get("/secure", [authMiddleware, logMiddleware], handler);
+    ```
+
+---
+
+### 🕸 Answer to your classmate’s questions
+
+1. **What if you call `next()` inside a handler?**
+
+   * It doesn’t make sense — route handlers are “end of the line.”
+   * Express will try to look for *another matching handler*, but if there’s none → request hangs.
+
+2. **Can middleware be chained/nested?**
+
+   * Yes. Best practice = **compose them in arrays** or apply them in order per route.
+
+---
+
+✅ In short: Middleware = building blocks to preprocess requests and control flow in Express.
