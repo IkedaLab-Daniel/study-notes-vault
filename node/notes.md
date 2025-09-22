@@ -938,3 +938,31 @@ app.listen(3000, () => console.log("Server running on port 3000"));
 2. **Wrong format (not `Bearer ...`)** → `401 Not authorized, invalid format`.
 3. **Expired/invalid token** → `401 Not authorized, invalid token`.
 4. **Valid token** → request goes through, and `req.user` will hold the decoded payload.
+
+## Protect Middleware with JWT Verification
+
+* Middleware ensures only authenticated users can access protected routes.
+
+* Steps:
+
+  1. **Check for Authorization header** → must exist.
+  2. **Check format** → must start with `"Bearer "` and include a token.
+  3. **Verify token** → use `jwt.verify(token, process.env.JWT_SECRET)` inside a `try/catch`.
+  4. **On success** → attach decoded user payload to `req.user` and call `next()`.
+  5. **On failure** → return `401 Unauthorized` with a message.
+
+* Example flow:
+
+  * No header → `401 Not authorized, no token`.
+  * Wrong format → `401 Not authorized, invalid format`.
+  * Invalid/spoofed token → `401 Not authorized, invalid token`.
+  * Valid token → request continues, handlers can access `req.user` (with `id` and `username`).
+
+* `try/catch` prevents invalid tokens from crashing the server. Without it, `jwt.verify` errors could shut down the app.
+
+* **Rate limiting**:
+
+  * Can be implemented as middleware but is more efficient at the network layer (e.g., proxy, API gateway).
+  * Protects against abuse like bots flooding requests.
+
+* ✅ Result: Routes under `/api` are now guarded — only valid JWT holders can access database endpoints.
