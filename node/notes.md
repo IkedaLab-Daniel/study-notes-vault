@@ -1031,3 +1031,27 @@ app.listen(3000, () => console.log("Server running on port 3000"));
   1. Sign up → password gets hashed with `hashPassword` → saved in DB.
   2. Sign in → password checked with `comparePasswords` against DB hash.
   3. If valid → issue a JWT so they can access protected API routes.
+
+## User Handlers with Prisma and JWT
+
+* Create a `handlers/` folder inside `src/` and add `user.ts` for user-related route handlers.
+* Create a `db.ts` file in `src/` to initialize Prisma client once:
+
+  ```ts
+  import { PrismaClient } from "@prisma/client";
+  const prisma = new PrismaClient();
+  export default prisma;
+  ```
+* In `user.ts`, import `prisma` from `db.ts`.
+* Define `createNewUser` handler (async, since DB queries are async).
+* Use `req.body.username` and `req.body.password` from POST request.
+* Hash the password using `hashPassword` before saving.
+* Create the user with `prisma.user.create({ data: { username, password } })`.
+* Generate JWT with `createJWT(user)`.
+* Return token in response:
+
+  ```ts
+  res.json({ token });
+  ```
+
+This ensures secure password storage and returns a JWT for the new user.
