@@ -6,11 +6,11 @@ type User = {
     username: string;
 };
 
-const comparePasswords = (password, hash) => {
+export const comparePasswords = (password, hash) => {
     return bcrypt.compare(password, hash)
 }
 
-const hashPassword = (password) => {
+export const hashPassword = (password) => {
     const salt = 5
     return bcrypt.hash(password, 5)
 }
@@ -21,8 +21,7 @@ export const createJWT = (user: User) => {
     if (!secret) {
         throw new Error('JWT_SECRET environment variable is not defined');
     }
-    
-    // > convert object to a String
+
     const token = jwt.sign({
             id: user.id, 
             username: user.username
