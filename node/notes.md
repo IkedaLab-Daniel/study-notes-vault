@@ -728,3 +728,151 @@ app.listen(3000, () => console.log("Server running on port 3000"));
 ---
 
 ✅ In short: Middleware = building blocks to preprocess requests and control flow in Express.
+
+## Authentication: CORS vs Auth
+
+* **CORS**: browser-level protection → checks “can this client even *talk* to me?”
+  (like a bouncer checking *if you’re on the list to enter the building*).
+* **Authentication**: once you’re in, *who are you?*
+* **Authorization**: once we know who you are, *what are you allowed to do?*
+
+---
+
+## 🔐 JWT (JSON Web Token) Basics
+
+A JWT is just:
+
+1. **Payload (data about the user)** → usually minimal, e.g. `id`, `username`, maybe `role`.
+2. **Signed with a secret** → so the server can trust it wasn’t tampered with.
+3. Stored **client-side** (cookie or localStorage) and sent with every request (usually in the `Authorization` header as `Bearer <token>`).
+
+Example structure:
+
+```
+Header.Payload.Signature
+```
+
+Decoded payload might look like:
+
+```json
+{
+  "id": 123,
+  "username": "tetey"
+}
+```
+
+---
+
+## 📦 Installing Dependencies
+
+```bash
+npm install jsonwebtoken bcrypt dotenv
+```
+
+> ⚠️ `bcrypt` sometimes fails on Apple M1/Intel. If so, use [`bcryptjs`](https://www.npmjs.com/package/bcryptjs) — same API, pure JS.
+
+---
+
+## 🗂 Project Structure (your approach is solid 👍)
+
+```
+src/
+ ├── index.ts         # Entry (dotenv.config here)
+ ├── modules/
+ │    └── auth.ts     # JWT utils, auth middleware, hashing
+```
+
+---
+
+## ✨ Example `auth.ts`
+
+Here’s what that file could look like:
+
+```ts
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
+const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
+
+// Create a JWT for a user
+export function createJWT(user: { id: number; username: string }) {
+  return jwt.sign(
+    { id: user.id, username: user.username },
+    JWT_SECRET,
+    { expiresIn: "1h" } // optional expiration
+  );
+}
+
+// Verify a JWT (middleware will use this)
+export function verifyJWT(token: string) {
+  return jwt.verify(token, JWT_SECRET);
+}
+
+// Hash password
+export async function hashPassword(password: string) {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
+}
+
+// Compare password with stored hash
+export async function comparePasswords(password: string, hash: string) {
+  return bcrypt.compare(password, hash);
+}
+```
+
+---
+
+## ⚡ Middleware for Protecting Routes
+
+```ts
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
+
+export function protect(req: Request, res: Response, next: NextFunction) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Not authorized" });
+  }
+
+  const token = authHeader.split(" ")[1];
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    // Attach decoded user to req for later
+    (req as any).user = user;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+}
+```
+
+Usage in your routes:
+
+```ts
+import { protect } from "./modules/auth";
+
+app.get("/products", protect, (req, res) => {
+  const user = (req as any).user; // id + username from JWT
+  res.json({ message: `Hello ${user.username}` });
+});
+```
+
+---
+
+## 🍪 Where to Store the Token?
+
+* **Cookies (httpOnly, secure)** → best for browser apps (auto-sent with every request).
+* **LocalStorage** → easier to demo but riskier (susceptible to XSS).
+* Either way → server always checks `Authorization: Bearer <token>` header.
+
+---
+
+✅ So the flow will be:
+
+1. User signs up → password hashed → stored in DB.
+2. User logs in → password compared → JWT created + sent back.
+3. Client stores token (cookie or localStorage).
+4. Every request includes JWT in header → server verifies → request allowed or denied.
