@@ -876,3 +876,65 @@ app.get("/products", protect, (req, res) => {
 2. User logs in → password compared → JWT created + sent back.
 3. Client stores token (cookie or localStorage).
 4. Every request includes JWT in header → server verifies → request allowed or denied.
+
+### Protecting Routes
+
+```ts
+// src/modules/auth.ts
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
+
+// Middleware to protect routes
+export function protect(req: Request, res: Response, next: NextFunction) {
+  const bearer = req.headers.authorization;
+
+  // 1. No token at all
+  if (!bearer) {
+    return res.status(401).json({ message: "Not authorized, no token" });
+  }
+
+  // 2. Must start with "Bearer "
+  if (!bearer.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Not authorized, invalid format" });
+  }
+
+  const token = bearer.split(" ")[1].trim();
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    // attach user payload to request for later use
+    (req as any).user = decoded;
+    next(); // go to next handler
+  } catch (err) {
+    return res.status(401).json({ message: "Not authorized, invalid token" });
+  }
+}
+```
+
+Then in your server (e.g. `server.ts` or `index.ts`):
+
+```ts
+import express from "express";
+import { protect } from "./modules/auth";
+import productRouter from "./routes/product"; // example
+
+const app = express();
+
+app.use(express.json());
+
+// Protect everything under /api
+app.use("/api", protect, productRouter);
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+```
+
+---
+
+🔑 Flow when you test:
+
+1. **No `Authorization` header** → `401 Not authorized, no token`.
+2. **Wrong format (not `Bearer ...`)** → `401 Not authorized, invalid format`.
+3. **Expired/invalid token** → `401 Not authorized, invalid token`.
+4. **Valid token** → request goes through, and `req.user` will hold the decoded payload.
