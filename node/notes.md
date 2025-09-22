@@ -966,3 +966,33 @@ app.listen(3000, () => console.log("Server running on port 3000"));
   * Protects against abuse like bots flooding requests.
 
 * ✅ Result: Routes under `/api` are now guarded — only valid JWT holders can access database endpoints.
+
+## How to Get a JSON Web Token (JWT)
+
+* **Protect middleware recap**:
+
+  * Looks for an `Authorization` header.
+  * Must be formatted as `Bearer <token>`.
+  * Verifies token with the server’s secret key.
+  * If valid → request continues. If not → `401 Unauthorized`.
+
+* **What’s next**:
+
+  * Users need a way to **sign up** and **sign in**.
+  * When a user successfully signs in, the server creates and returns a **JWT**.
+  * The JWT acts as proof of authentication — it encodes user info (e.g., `id`, `username`) and is signed with the server’s secret key.
+
+* **How it works**:
+
+  1. **Sign up**: user registers → record stored in DB.
+  2. **Sign in**: user provides credentials (e.g., email + password).
+  3. **Server validates credentials** → if correct, generates a JWT using `jwt.sign(payload, secret)`.
+  4. **JWT sent back** → client stores it (commonly in localStorage or cookies).
+  5. **Subsequent requests** → client includes JWT in the `Authorization` header:
+
+     ```
+     Authorization: Bearer <your_token_here>
+     ```
+  6. **Protect middleware** → checks + verifies JWT before allowing access to protected routes.
+
+* ✅ JWT = the “membership card” that lets users prove their identity on each request after logging in.
