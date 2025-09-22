@@ -996,3 +996,38 @@ app.listen(3000, () => console.log("Server running on port 3000"));
   6. **Protect middleware** → checks + verifies JWT before allowing access to protected routes.
 
 * ✅ JWT = the “membership card” that lets users prove their identity on each request after logging in.
+
+## Creating Users and Hashing Passwords
+
+* **Goal**: Allow users to sign up and sign in while ensuring passwords are stored securely.
+
+* **Problem**: Storing plain text passwords in a database is insecure. If the database is compromised, all user credentials are exposed.
+
+* **Solution**: Use **bcrypt** to hash passwords before saving them.
+
+* **Helper functions**:
+
+  * `comparePasswords(plainPassword, hash)`
+
+    * Used at **sign in**.
+    * Compares the user’s input (plain text) with the stored hashed password.
+    * Returns `true` if they match, otherwise `false`.
+
+  * `hashPassword(plainPassword)`
+
+    * Used at **sign up**.
+    * Hashes the plain text password before saving it to the database.
+    * Includes a **salt** (extra random input to make hashes harder to crack).
+    * Example: `bcrypt.hash(password, 5)` → number indicates salt rounds.
+
+* **Why use salt?**
+
+  * Prevents attackers from using precomputed hash tables.
+  * Makes brute force attacks exponentially harder.
+  * Even if two users have the same password, their stored hashes will be different.
+
+* ✅ With these helpers, users can:
+
+  1. Sign up → password gets hashed with `hashPassword` → saved in DB.
+  2. Sign in → password checked with `comparePasswords` against DB hash.
+  3. If valid → issue a JWT so they can access protected API routes.
