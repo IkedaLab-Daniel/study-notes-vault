@@ -1199,3 +1199,64 @@ This ensures secure password storage and returns a JWT for the new user.
 * Abstract validators into their own module for reuse.
 * Combine multiple validators in arrays.
 * Keep route definitions clean while maintaining flexibility.
+
+## Building Handlers with Prisma
+
+* **Handlers per resource**: Each resource (e.g., product) needs handlers for:
+
+  * `GET /resource` → get all
+  * `GET /resource/:id` → get one
+  * `POST /resource` → create
+  * `PUT /resource/:id` → update
+  * `DELETE /resource/:id` → delete
+
+### Example: Product Handlers
+
+#### Get All Products (for signed-in user)
+
+```ts
+export const getProducts = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: { id: req.user.id },
+    include: { products: true },
+  });
+
+  res.json({ data: user.products });
+};
+```
+
+* Queries by signed-in user’s ID.
+* Uses `include` to pull related `products`.
+* Always return data wrapped in `{ data: ... }`.
+
+#### Get One Product (by ID, scoped to user)
+
+```ts
+export const getOneProduct = async (req, res) => {
+  const id = req.params.id;
+
+  const product = await prisma.product.findFirst({
+    where: {
+      id: id,
+      belongsToId: req.user.id,
+    },
+  });
+
+  res.json({ data: product });
+};
+```
+
+* Access route param via `req.params.id`.
+* Must check both `id` and `belongsToId` → ensures user only accesses their own product.
+* `findFirst` used since no unique index on `(id, belongsToId)`.
+* With proper indexing, `findUnique` could be used for optimization.
+
+### Key Notes
+
+* **Naive error handling for now** → assume queries succeed.
+* Later: add proper error responses if product not found.
+* Query design influences **indexes** → handlers help you discover what database optimizations are needed.
+* `findFirst` vs `findUnique`:
+
+  * `findFirst` → scans until match, used for non-unique fields.
+  * `findUnique` → direct lookup via unique index.

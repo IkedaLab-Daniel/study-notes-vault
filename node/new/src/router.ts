@@ -23,7 +23,7 @@ router.delete('/product/:id', () => {})
 router.get('/update', () => {})
 router.get('/update/:id', () => {})
 router.put('/update/:id', () => {})
-router.post('/update', () => {})
+router.post('/update', body('title', 'body').isString(), () => {})
 router.delete('/update/:id', () => {})
 
 // > updatepoint
@@ -31,7 +31,7 @@ router.delete('/update/:id', () => {})
 router.get('/updatepoint', () => {})
 router.get('/updatepoint/:id', () => {})
 router.put('/updatepoint/:id', () => {})
-router.post('/updatepoint', () => {})
+router.post('/updatepoint',body('title', 'body').isString(), () => {})
 router.delete('/updatepoint/:id', () => {})
 
 export default router
