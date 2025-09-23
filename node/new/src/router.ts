@@ -1,14 +1,13 @@
 import { Router } from 'express'
 import { body } from 'express-validator'
 import { handleInputErrors } from './modules/middleware'
+import { getProducts } from '../handlers/product'
 
 const router = Router()
 
 // > products
 
-router.get('/product', (req, res) => {
-    res.send('oki')
-})
+router.get('/product', getProducts)
 router.get('/product/:id', () => {})
 router.put('/product/:id', body('name').isString(), handleInputErrors, (req, res) => {
     res.send('ok')
