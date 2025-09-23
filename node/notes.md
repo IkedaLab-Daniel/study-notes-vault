@@ -1260,3 +1260,191 @@ export const getOneProduct = async (req, res) => {
 
   * `findFirst` → scans until match, used for non-unique fields.
   * `findUnique` → direct lookup via unique index.
+
+## Create, Update, and Delete Products with Prisma
+
+### Create Product
+
+```ts
+export const createProduct = async (req, res) => {
+  const product = await prisma.product.create({
+    data: {
+      name: req.body.name,
+      belongsToId: req.user.id,
+    },
+  });
+
+  res.json({ data: product });
+};
+```
+
+* Uses `data` instead of `where`.
+* Requires `name` from `req.body` and `belongsToId` from `req.user.id`.
+* Input validation middleware ensures `req.body.name` is always present.
+
+---
+
+### Update Product
+
+```ts
+export const updateProduct = async (req, res) => {
+  const updated = await prisma.product.update({
+    where: {
+      id_belongsToId: {
+        id: req.params.id,
+        belongsToId: req.user.id,
+      },
+    },
+    data: {
+      name: req.body.name,
+    },
+  });
+
+  res.json({ data: updated });
+};
+```
+
+* Must combine **`id` + `belongsToId`** to prevent updating other users’ products.
+* Requires a **compound unique index** in Prisma schema:
+
+  ```prisma
+  @@unique([id, belongsToId])
+  ```
+* `update` returns the updated record directly.
+
+---
+
+### Delete Product
+
+```ts
+export const deleteProduct = async (req, res) => {
+  const deleted = await prisma.product.delete({
+    where: {
+      id_belongsToId: {
+        id: req.params.id,
+        belongsToId: req.user.id,
+      },
+    },
+  });
+
+  res.json({ data: deleted });
+};
+```
+
+* Same security rule as update: must check both `id` and `belongsToId`.
+* Returns the deleted product.
+
+---
+
+### Key Notes
+
+* **Security flaw fixed**: Only allow operations on products owned by the signed-in user.
+* **Compound index migration**: Run
+
+  ```bash
+  npx prisma migrate dev
+  ```
+
+  after updating schema to enforce uniqueness.
+* Without compound index, Prisma can’t use `findUnique`/`delete` directly, forcing workarounds.
+
+## Update Resource CRUD with Prisma
+
+### Get One Update
+
+```ts
+export const getOneUpdate = async (req, res) => {
+  const update = await prisma.update.findUnique({
+    where: { id: req.params.id },
+  });
+
+  res.json({ data: update });
+};
+```
+
+* Retrieves a single update by its `id`.
+
+---
+
+### Get Updates (for signed-in user across their products)
+
+```ts
+export const getUpdates = async (req, res) => {
+  const products = await prisma.product.findMany({
+    where: { belongsToId: req.user.id },
+    include: { updates: true },
+  });
+
+  const updates = products.reduce((allUpdates, product) => {
+    return [...allUpdates, ...product.updates];
+  }, []);
+
+  res.json({ data: updates });
+};
+```
+
+* Fetches all products belonging to the signed-in user.
+* Collects all updates for those products.
+* Sends back only updates.
+
+---
+
+### Create Update
+
+```ts
+export const createUpdate = async (req, res) => {
+  const update = await prisma.update.create({
+    data: {
+      title: req.body.title,
+      body: req.body.body,
+      productId: req.body.productId,
+    },
+  });
+
+  res.json({ data: update });
+};
+```
+
+* Creates an update linked to a product by `productId`.
+
+---
+
+### Update Update
+
+```ts
+export const updateUpdate = async (req, res) => {
+  const updated = await prisma.update.update({
+    where: { id: req.params.id },
+    data: {
+      title: req.body.title,
+      body: req.body.body,
+    },
+  });
+
+  res.json({ data: updated });
+};
+```
+
+* Updates title and body of a specific update.
+* Should eventually also check that update belongs to a product owned by `req.user`.
+
+---
+
+### Delete Update
+
+```ts
+export const deleteUpdate = async (req, res) => {
+  const deleted = await prisma.update.delete({
+    where: { id: req.params.id },
+  });
+
+  res.json({ data: deleted });
+};
+```
+
+* Deletes an update by ID.
+* Same security note: should verify ownership through `product.belongsToId === req.user.id`.
+
+---
+
+⚠️ **Note**: Like with products, for update security you should enforce ownership (via a compound relation between `update → product → user`). Otherwise a malicious user could update or delete any update by ID.

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { body } from 'express-validator'
 import { handleInputErrors } from './modules/middleware'
-import { getProducts } from '../handlers/product'
+import { getProducts, updateProduct } from '../handlers/product'
 
 const router = Router()
 
@@ -9,9 +9,7 @@ const router = Router()
 
 router.get('/product', getProducts)
 router.get('/product/:id', () => {})
-router.put('/product/:id', body('name').isString(), handleInputErrors, (req, res) => {
-    res.send('ok')
-})
+router.put('/product/:id', body('name').isString(), handleInputErrors, updateProduct)
 router.post('/product', body('title', 'body').isString(), handleInputErrors, (req, res) => {
     res.send('ok')
 })
