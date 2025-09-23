@@ -1121,3 +1121,81 @@ This ensures secure password storage and returns a JWT for the new user.
   * Invalid/missing token → returns `401 Unauthorized`.
 
 * **Next step**: Implement proper error handling and tiered user access if needed.
+
+## Route Handlers & Input Validation
+
+* **Current state**: Routes exist (`product update`, `update point`, etc.) but no handlers yet.
+* **Goal**: Build route handlers and ensure safe handling of user input.
+
+### Key Points
+
+* CRUD apps require user input for create/update → always dangerous if unchecked.
+* **Never trust user input** → risk of SQL Injection and invalid data.
+* Validate inputs both **front-end** (form checks) and **back-end** (before DB interaction).
+* Examples of risks:
+
+  * Allowing anyone to change another user’s username if ownership not checked.
+  * Accepting malformed or missing fields.
+
+### Input Validation Strategy
+
+* Validate **POST** (create) and **PUT** (update) requests.
+* Avoid inline checks like `if (!req.body.name)` inside handlers (works but doesn’t scale).
+* Use libraries (e.g., **Express Validator**) to separate validation logic from controllers.
+* Benefits:
+
+  * Handlers focus only on main task (DB operations).
+  * Validation rules reusable, testable, maintainable.
+  * Teams can split responsibilities (validation vs. handlers).
+
+### Next Step
+
+* Implement validators for all POST/PUT routes.
+* Ensure controllers assume validated, safe input.
+
+## Using Express-Validator for Input Validation
+
+* **Install**: `express-validator`
+* **Middleware refresher**: Functions that run before route handlers; can modify `req`, log, respond, or pass control. Perfect for validations.
+
+### Example: Validating `PUT /api/product/:id`
+
+* Decide which fields can be updated: e.g., `name`.
+* Import from `express-validator`:
+
+  ```js
+  const { body, validationResult } = require('express-validator');
+  ```
+* Use middleware in route:
+
+  ```js
+  router.put(
+    '/product/:id',
+    body('name').isString(),
+    async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      // proceed with handler logic
+    }
+  );
+  ```
+* **Key behavior**:
+
+  * `body('name')` checks for `req.body.name`.
+  * Must be explicit (e.g., `.isString()`) for validation to trigger.
+  * `validationResult(req)` inspects request for validation results.
+  * If invalid → respond with `400` and error array.
+
+### Why this approach?
+
+* Separates validation from handler logic.
+* Handlers only focus on DB operations.
+* Errors returned as JSON → frontend can format however it wants.
+
+### Best Practices
+
+* Abstract validators into their own module for reuse.
+* Combine multiple validators in arrays.
+* Keep route definitions clean while maintaining flexibility.
