@@ -41,3 +41,28 @@
 - TypeScript helps encode conventions and constraints in code, making large and complex projects more maintainable.
 - You can still introduce flexibility in TypeScript using advanced type features (covered later in the course).
 
+## Environment Setup & Tooling
+
+- **Course website:** [typescript-training.com](https://typescript-training.com) (for code snippets and exercises)
+- **Official docs:** [typescriptlang.org](https://typescriptlang.org)
+- **Hands-on learning is encouraged**—best way to learn TypeScript is by coding along.
+- **Volta** is recommended for managing Node and Yarn versions:
+  - Install with: `curl https://get.volta.sh | bash`
+  - Close and reopen your terminal after install (updates shell config)
+  - Use Volta to globally install Node 18 LTS and Yarn v3: `volta install node@18 yarn@3`
+  - Ensures consistent environment for the course
+  - Alternatives: nvm, N, or Windows MSI installer (see Volta docs)
+- **Cloning the course repo:**
+  - Use HTTPS to clone (no need for SSH keys)
+  - Run `yarn` in the project folder to install dependencies
+  - Look for output starting with `Y` (indicates Yarn 3+)
+  - Yarn 1 is deprecated; use Yarn 3 or 4 (release candidate is fine)
+  - Node and Yarn versions are pinned in the root `package.json` (Node 18.18.2, Yarn 3.6.4)
+
+## TypeScript in Full Stack Development
+
+- TypeScript is especially valuable when you have static types in the backend and want to maintain type safety in the frontend.
+- Having types flow from backend to frontend (e.g., via GraphQL or Protobufs) reduces the need for manual alignment and helps prevent errors.
+- Some companies use tools like Protobufs to generate types for both backend and frontend, ensuring consistency.
+- There are full stack TypeScript courses (e.g., with GraphQL) that demonstrate this approach.
+
