@@ -82,3 +82,18 @@
   - Avoid using `any` unless necessary, as it removes type safety.
   - Use `const` for values that should not change, and let TypeScript infer literal types when appropriate.
 
+## TypeScript Function Typing and Linting
+
+* Adding explicit types (`a: number, b: number, : number`) makes TypeScript stricter and prevents hidden `any` values.
+* Without types, TypeScript may infer `any`, allowing bugs (e.g., passing `add(1,2)` directly to a `Promise` constructor).
+* Explicit return types act as a **contract**:
+
+  * Prevents sneaky bugs (e.g., function returning `number | undefined`).
+  * Errors show up at the function definition, not scattered across all call sites.
+* Type inference works, but explicit types make intent clear and errors closer to the source.
+* ESLint is still useful with TypeScript:
+
+  * TypeScript = type checking (low-level).
+  * ESLint = code style, best practices (high-level).
+  * `typescript-eslint` allows ESLint to leverage type info for powerful rules.
+* Explicit return types are recommended for production code, especially when functions are reused across modules.
