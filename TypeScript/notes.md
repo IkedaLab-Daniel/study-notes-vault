@@ -317,3 +317,136 @@ Example from Stripe API:
 * Writing `[key: string]: string | undefined` can help if you expect *missing* keys.
 * You can also do numeric index signatures (`[index: number]: Type`) for array-like structures.
 * If you need stricter types (like specific allowed keys + dictionary), use **union + index signature** or **mapped types**.
+
+## 🔹 Array Types in TypeScript
+
+Arrays in TS are typed versions of JS arrays. There are **two main syntaxes**:
+
+### 1. The Preferred Syntax
+
+```ts
+const fileExtensions: string[] = ["js", "ts"];
+```
+
+✅ Easier to read
+✅ No JSX conflicts in React projects (important!)
+
+### 2. Generic Syntax (less common in React)
+
+```ts
+const fileExtensions: Array<string> = ["js", "ts"];
+```
+
+⚠️ Can clash visually with `<div>` in JSX → avoid in React-heavy codebases.
+
+---
+
+## 🔹 Arrays of Objects
+
+Just add `[]` after your custom type:
+
+```ts
+type Car = {
+  make: string;
+  model: string;
+  year: number;
+};
+
+const cars: Car[] = [
+  { make: "Toyota", model: "Corolla", year: 2002 },
+  { make: "Honda", model: "Civic", year: 2005 }
+];
+```
+
+Here `cars` can grow/shrink freely → arbitrary length.
+
+---
+
+## 🔹 Tuples (Fixed-Length Arrays)
+
+A **tuple** is like an array, but each position has a **specific type**.
+
+```ts
+let myCar: [number, string, string];
+myCar = [2002, "Toyota", "Corolla"]; // ✅ Correct
+```
+
+If you mess up:
+
+```ts
+myCar = ["Toyota", 2002, "Corolla"]; // ❌ Error: wrong order
+myCar = [2002, "Toyota"];            // ❌ Missing elements
+myCar = [2002, "Toyota", "Corolla", "Extra"]; // ❌ Too many elements
+```
+
+### Why tuples?
+
+* Precise typing for *fixed-shape* data (like CSV rows, return values).
+* Great for small, structured data → e.g. returning `[success, result]` from a function.
+
+---
+
+## 🔹 Tuple Mutability Issue
+
+Tuples in TS are still backed by JS arrays → so `push` / `pop` technically still work, which can break the fixed length illusion:
+
+```ts
+let numPair: [number, number] = [4, 5];
+numPair.push(6);   // allowed at runtime, weird in typing
+```
+
+### Fix: Use `readonly`
+
+```ts
+const numPair: readonly [number, number] = [4, 5];
+numPair.push(6); // ❌ Error: Property 'push' does not exist
+```
+
+✅ Guarantees immutability
+✅ Safer for data you don’t want mutated
+
+---
+
+## 🔹 Updating Tuples (Immutable Style)
+
+Since `readonly` prevents modification, you create new tuples:
+
+```ts
+const numPair: readonly [number, number] = [4, 5];
+
+// change first element → new tuple
+const updated: [number, number] = [10, numPair[1]];
+```
+
+This is similar to **immutable data patterns** used in React/Redux.
+
+---
+
+## 🔹 Multi-dimensional Arrays
+
+Just nest array types:
+
+```ts
+const matrix: number[][] = [
+  [1, 2, 3],
+  [4, 5, 6],
+];
+```
+
+For 3D arrays:
+
+```ts
+const cube: number[][][] = [
+  [[1, 2], [3, 4]],
+  [[5, 6], [7, 8]]
+];
+```
+
+---
+
+**Summary**:
+
+* Use `string[]` (not `Array<string>`) for arrays.
+* Tuples give *fixed order & length* typing.
+* Add `readonly` for immutability & safety.
+* Great for function return types like `[success, data]`.

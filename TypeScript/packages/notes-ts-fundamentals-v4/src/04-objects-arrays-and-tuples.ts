@@ -59,24 +59,36 @@ printCar({...{
     color: "RED", //? EXTRA PROPERTY
 }, ...{ anotherOne: "wow"}})
 
-/*
+
 //* Index signatures
 
-//? Dictionary of phone #s
-// const phones = {
-//     home: { country: "+1", area: "211", number: "652-4515" },
-//     work: { country: "+1", area: "670", number: "752-5856" },
-//     fax: { country: "+1", area: "322", number: "525-4357" },
-// }
-/*
-//? Model as an index signature
-// const phones: {
-//     [k: string]: {
-//         country: string
-//         area: string
-//         number: string
-//     }
-// } = {}
+// ? Model as an index signature
+const x: { [k: string]: string } = { }
+x.ice = "iceice"
+
+// ? Dictionary of phone #s
+const phones: {
+    mobile: {
+      country: string
+      area: string
+      number: string
+    }
+    [k: string]: {
+        country: string
+        area: string
+        number: string
+    }
+} = {
+    home: { country: "+1", area: "211", number: "652-4515" },
+    work: { country: "+1", area: "670", number: "752-5856" },
+    mobile: { country: "+1", area: "322", number: "525-4357" },
+}
+
+phones.mobile
+const y = phones["work"]
+
+// ? Model as an index signature
+// const phones:  = {}
 
 //*  Array Types
 
