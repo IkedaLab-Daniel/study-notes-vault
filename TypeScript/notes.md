@@ -98,7 +98,7 @@
   * `typescript-eslint` allows ESLint to leverage type info for powerful rules.
 * Explicit return types are recommended for production code, especially when functions are reused across modules.
 
-## Objects: Eexcess property check
+## Objects: Excess property check
 * **TypeScript’s “excess property check” only runs for object *literals* assigned directly to a typed target.**
 * If you spread a value or pass a variable, the compiler won’t do that simple literal check (because the object is being composed and its exact keys aren’t known at compile time).
 * For real APIs you should *also* do runtime validation (TS is compile-time only).
@@ -203,3 +203,117 @@ printCar(parsed);
 * For internal object composition (in code): prefer destructuring or building explicit DTO objects rather than blindly spreading external objects.
 * If you absolutely need compile-time “exactness” for literals, use `assertNoExtra<T>(...)` or similar helper in the places where it matters (tests, library boundaries).
 * Use TS types for developer ergonomics, and schema validators for correctness at runtime.
+
+### 🔑 What’s an Index Signature?
+
+An **index signature** tells TypeScript:
+
+> “This object can have properties with arbitrary keys of a certain type, and their values must follow a certain type.”
+
+Syntax:
+
+```ts
+type PhoneNumbers = {
+  [key: string]: string; // any string key → must map to a string value
+};
+```
+
+That means:
+
+```ts
+const phones: PhoneNumbers = {
+  home: "123-456-7890",
+  work: "987-654-3210",
+  customLabel: "555-555-5555", // allowed, even if not predefined
+};
+```
+
+✅ Works with *any* string key
+❌ But values must be strings (numbers or other types won’t compile).
+
+---
+
+### 📓 Dictionary Use Case
+
+An index signature is like a **dictionary / hash map** in other languages.
+For example:
+
+```ts
+type CurrencyAmounts = {
+  [currencyCode: string]: number;
+};
+
+const balances: CurrencyAmounts = {
+  USD: 100,
+  JPY: 5000,
+  EUR: 80,
+};
+```
+
+This is great for:
+
+* Arbitrary keys from an external source (like API JSON).
+* Cases where ordering doesn’t matter (unlike arrays).
+
+---
+
+### 🛠️ Mixing Known Properties + Index Signature
+
+You can **combine fixed properties** (guaranteed fields) with flexible keys:
+
+```ts
+type Phones = {
+  mobile: string;             // always required
+  [key: string]: string;      // allow any other phone labels
+};
+
+const phones: Phones = {
+  mobile: "123-456-7890",
+  home: "111-111-1111",
+  fax: "222-222-2222",
+  custom1: "333-333-3333",
+};
+```
+
+Here:
+
+* `phones.mobile` is guaranteed.
+* `phones["home"]` or `phones["randomLabel"]` is allowed, but may not exist.
+
+---
+
+### 📍 Dot Notation vs Bracket Notation
+
+* **Dot notation** → use for *known properties* (`phones.mobile`).
+* **Bracket notation** → use for *dictionary-style keys* (`phones["home"]`).
+
+This makes code clearer, and TS compiler options (`noUncheckedIndexedAccess`) can enforce safety:
+
+```ts
+phones["random"] // type: string | undefined (safer)
+```
+
+---
+
+### ❓ Why not always use arrays?
+
+* Arrays imply **order** → doesn’t matter for “label → value” mappings.
+* Objects with index signatures better represent **key-value lookups**.
+
+Example from Stripe API:
+
+```ts
+// Instead of array of {currency, amount}
+{
+  USD: 1000,
+  JPY: 50000
+}
+```
+
+---
+
+### ⚡ Extra Notes
+
+* Writing `[key: string]: string | undefined` can help if you expect *missing* keys.
+* You can also do numeric index signatures (`[index: number]: Type`) for array-like structures.
+* If you need stricter types (like specific allowed keys + dictionary), use **union + index signature** or **mapped types**.

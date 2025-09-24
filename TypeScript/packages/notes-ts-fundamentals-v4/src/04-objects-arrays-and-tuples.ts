@@ -36,28 +36,28 @@ if (typeof car.chargeVoltage !== "undefined")
 printCar(car)
 
 
-// printCar({ //? original fn works
-//     make: "Honda",
-//     model: "Accord",
-//     year: 2017,
-// })
+printCar({ //? original fn works
+    make: "Honda",
+    model: "Accord",
+    year: 2017,
+})
 
-// printCar({ //? optional property works too!
-//     make: "Tesla",
-//     model: "Model 3",
-//     year: 2020,
-//     chargeVoltage: 220,
-// })
+printCar({ //? optional property works too!
+    make: "Tesla",
+    model: "Model 3",
+    year: 2020,
+    chargeVoltage: 220,
+})
 
-/*
+
 //* Excess property checking
 
-// printCar({
-//     make: "Tesla",
-//     model: "Model 3",
-//     year: 2020,
-//     color: "RED", //? EXTRA PROPERTY
-// })
+printCar({...{
+    make: "Tesla",
+    model: "Model 3",
+    year: 2020,
+    color: "RED", //? EXTRA PROPERTY
+}, ...{ anotherOne: "wow"}})
 
 /*
 //* Index signatures
