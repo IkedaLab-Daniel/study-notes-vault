@@ -97,3 +97,109 @@
   * ESLint = code style, best practices (high-level).
   * `typescript-eslint` allows ESLint to leverage type info for powerful rules.
 * Explicit return types are recommended for production code, especially when functions are reused across modules.
+
+## Objects: Eexcess property check
+* **TypeScript’s “excess property check” only runs for object *literals* assigned directly to a typed target.**
+* If you spread a value or pass a variable, the compiler won’t do that simple literal check (because the object is being composed and its exact keys aren’t known at compile time).
+* For real APIs you should *also* do runtime validation (TS is compile-time only).
+
+Below are concrete examples, why this happens, and practical patterns you can use.
+
+---
+
+### 1) The excess-property error (object literal)
+
+```ts
+interface Car {
+  make: string;
+  model: string;
+  year: number;
+  chargingVoltage?: number;
+}
+
+function printCar(c: Car) {
+  console.log(c.make);
+}
+
+printCar({
+  make: "Ford",
+  model: "F-150",
+  year: 2020,
+  color: "red", // <-- TS Error: 'color' does not exist on type 'Car'
+});
+```
+
+TypeScript complains because you passed an object literal with a key (`color`) that `Car` does not declare. This is a helpful guard against typos and accidental extra props.
+
+---
+
+### 2) Spread or variable bypasses that check
+
+```ts
+const extra = { color: "red" };
+printCar({ make: "Ford", model: "F-150", year: 2020, ...extra }); // no compile error
+```
+
+When you spread/compose or pass a variable, TS stops doing the simple literal excess check — it assumes you intentionally composed the object.
+
+---
+
+### 3) How to *enforce* “no extra props” at compile time (patterns)
+
+**A. Pick only known props (safe and explicit):**
+
+```ts
+const raw = { make: "Ford", model: "F-150", year: 2020, color: "red" };
+const { make, model, year, chargingVoltage } = raw;
+printCar({ make, model, year, chargingVoltage }); // safe — unknown keys excluded
+```
+
+**B. Small helper to fail on extras (compile-time trick):**
+
+```ts
+// If you really want a compile-time error for extras:
+function assertNoExtra<T>(obj: T & Record<Exclude<string, keyof T>, never>) {
+  return obj;
+}
+
+const car = assertNoExtra<Car>({
+  make: "Ford",
+  model: "F-150",
+  year: 2020,
+  color: "red", // <-- compile error: 'color' is excess
+});
+```
+
+That `assertNoExtra` pattern is a bit of a TypeScript trick. It’s useful in libraries/tests when you want strictness, but it’s not commonly used everywhere.
+
+---
+
+### 4) Runtime enforcement — **do this for APIs**
+
+TypeScript is compile-time only. For data coming from clients (req.body), always validate at runtime and **strip** unknown keys. I recommend schema validators like **Zod** or **Joi**:
+
+```ts
+import { z } from "zod";
+
+const CarSchema = z.object({
+  make: z.string(),
+  model: z.string(),
+  year: z.number(),
+  chargingVoltage: z.number().optional(),
+}).strict(); // `.strict()` rejects unknown keys
+
+// in your handler
+const parsed = CarSchema.parse(req.body); // throws if unknown/invalid
+printCar(parsed);
+```
+
+`z.object(...).strict()` will either throw or let you `.safeParse()` and return errors — this is how you *prevent* stray properties at runtime (and return good error messages to clients).
+
+---
+
+### 5) Practical recommendations
+
+* For params coming from clients: **always** validate and sanitize at runtime (Zod/Joi/Yup). Don’t rely on TS for this.
+* For internal object composition (in code): prefer destructuring or building explicit DTO objects rather than blindly spreading external objects.
+* If you absolutely need compile-time “exactness” for literals, use `assertNoExtra<T>(...)` or similar helper in the places where it matters (tests, library boundaries).
+* Use TS types for developer ergonomics, and schema validators for correctness at runtime.
