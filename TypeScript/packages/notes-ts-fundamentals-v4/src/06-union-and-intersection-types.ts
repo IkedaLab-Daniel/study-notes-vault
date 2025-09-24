@@ -1,5 +1,8 @@
 //* Union types in TypeScript
 
+let x: any = {}
+x instanceof Date // ? false
+
 const humidity = 79 //? Recall literal types
 
 //? Create types for two sets of numbers

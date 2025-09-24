@@ -450,3 +450,170 @@ const cube: number[][][] = [
 * Tuples give *fixed order & length* typing.
 * Add `readonly` for immutability & safety.
 * Great for function return types like `[success, data]`.
+
+## 🔹 What Type Checking Really Means
+
+Every time you:
+
+* assign a value to a variable
+* pass an argument into a function
+* return a value from a function
+
+TypeScript asks:
+
+> “Does the type of `y` fit within the type of `x`?”
+
+Think of **types as sets of possible values**:
+
+* `number` = the set of all numbers
+* `42` = the set containing just the literal value `42`
+* `string[]` = the set of all arrays containing only strings
+
+So:
+
+* If `y`’s set is a **subset** of `x`’s set → ✅ okay
+* Otherwise → ❌ type error
+
+Example:
+
+```ts
+function alwaysFortyThree(): number {
+  return 43; // ✅ 43 ∈ number
+}
+
+function wrong(): 43 {
+  return 10; // ❌ 10 ∉ {43}
+}
+```
+
+---
+
+## 🔹 Static vs Dynamic Typing
+
+* **Dynamic typing** → Types are figured out at runtime (e.g., JavaScript, Python, Ruby).
+  Often called **duck typing**: if it “quacks like a duck,” it’s treated like one.
+
+* **Static typing** → Types are declared/analyzed at build time (e.g., TypeScript, Java, C#).
+  They don’t change during execution.
+
+> **TypeScript adds static types on top of dynamic JavaScript.**
+
+---
+
+## 🔹 Nominal vs Structural Type Systems
+
+This is the big one.
+
+### 1. Nominal Typing (Java, C#)
+
+Types are based on **name / constructor**.
+If a function wants a `Car`, you must pass an instance of the `Car` class — even if another class has the exact same fields.
+
+```java
+class Car { String make; String model; int year; }
+class Truck { String make; String model; int year; }
+
+CarChecker.checkCar(new Car());   // ✅ works
+CarChecker.checkCar(new Truck()); // ❌ doesn't matter that fields match
+```
+
+---
+
+### 2. Structural Typing (TypeScript)
+
+Types are based on **structure (shape)**.
+If it “has the right properties,” it’s assignable — regardless of which class made it.
+
+```ts
+class Car { constructor(public make: string, public model: string, public year: number) {} }
+class Truck { constructor(public make: string, public model: string, public year: number) {} }
+
+function printCar(vehicle: { make: string; model: string; year: number }) {
+  console.log(`${vehicle.make} ${vehicle.model} (${vehicle.year})`);
+}
+
+printCar(new Car("Toyota", "Corolla", 2002)); // ✅ works
+printCar(new Truck("Ford", "F-150", 2020));   // ✅ also works
+printCar({ make: "Tesla", model: "3", year: 2023, electric: true }); // ✅ extra fields fine
+```
+
+**Why?** Because TypeScript only cares:
+➡️ “Does it have `make: string`, `model: string`, `year: number`?”
+It doesn’t care about *where* the object came from.
+
+---
+
+## 🔹 Extra Properties
+
+If you pass in more than required → still fine:
+
+```ts
+printCar({ make: "Tesla", model: "S", year: 2024, battery: "100kWh" }); // ✅
+```
+
+But if you’re creating an inline object literal, TS does **excess property checks** to help catch typos:
+
+```ts
+printCar({ make: "Tesla", model: "S", year: 2024, batteryy: "100kWh" });
+// ❌ 'batteryy' not expected — probably a typo
+```
+
+---
+
+## 🔹 Mixing Structural and Nominal-ish Behavior
+
+* `instanceof` in TS/JS → nominal-style check (constructor-based).
+* Structural typing gives flexibility; you can still restrict things to constructors if you want.
+
+Example:
+
+```ts
+if (x instanceof Date) {
+  // now TS knows x is a Date (nominal check)
+}
+```
+
+So TS lets you do **both**, but defaults to **structural** because it plays nicely with plain JS objects.
+
+✅ **Summary**:
+
+* Type checking = subset check of sets of possible values.
+* Static vs dynamic = when type checks happen (build time vs runtime).
+* Nominal typing cares about **who made it**; structural typing cares about **what it looks like**.
+* TypeScript is **structural**, which gives it flexibility with JS codebases.
+
+## Union and Intersection Types in TypeScript
+
+* **Types as sets** → Think of each type as a set of allowed values.
+
+### 🔹 Union Types (`|`) = OR
+
+* Syntax: `type AorB = A | B`
+* Allowed values: any member of **either set**.
+* Guarantees: we can’t assume membership in both — only that it’s one or the other.
+* Example with sets:
+
+  * Evens under 10 = `{2,4,6,8}`
+  * Numbers 1–5 = `{1,2,3,4,5}`
+  * Union = `{1,2,3,4,5,6,8}`
+* Mental model: like **two doors with bouncers** → if you get into *either*, you’re allowed.
+
+### 🔹 Intersection Types (`&`) = AND
+
+* Syntax: `type AandB = A & B`
+* Allowed values: only the values present in **both sets**.
+* Guarantees: must satisfy all constraints at the same time.
+* Example with sets:
+
+  * Evens under 10 = `{2,4,6,8}`
+  * Numbers 1–5 = `{1,2,3,4,5}`
+  * Intersection = `{2,4}`
+* Mental model: like **two bouncers in a row** → you must pass *both checks*.
+
+### 🔹 Key Theme
+
+* **Allowed values** = what can enter the set.
+* **Guarantees** = what’s true for every member once inside.
+
+👉 Union = more flexible but fewer guarantees.
+👉 Intersection = stricter but more guarantees.
