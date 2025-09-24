@@ -59,10 +59,26 @@
   - Yarn 1 is deprecated; use Yarn 3 or 4 (release candidate is fine)
   - Node and Yarn versions are pinned in the root `package.json` (Node 18.18.2, Yarn 3.6.4)
 
-## TypeScript in Full Stack Development
+## Variables, Values, and Type Inference
 
-- TypeScript is especially valuable when you have static types in the backend and want to maintain type safety in the frontend.
-- Having types flow from backend to frontend (e.g., via GraphQL or Protobufs) reduces the need for manual alignment and helps prevent errors.
-- Some companies use tools like Protobufs to generate types for both backend and frontend, ensuring consistency.
-- There are full stack TypeScript courses (e.g., with GraphQL) that demonstrate this approach.
+- The course uses the `notes-ts-fundamentals-v4` package for hands-on TypeScript examples, matching the website’s code snippets.
+- **Variable Declarations:**
+  - `let` allows reassignment; TypeScript infers the type from the initial value (e.g., `let temperature = 6` infers `number`).
+  - TypeScript enforces that a variable’s type cannot change after initialization.
+  - `const` creates an immutable binding; the value cannot be reassigned. For primitive values (like numbers), the value itself is immutable.
+- **Literal Types:**
+  - With `const humidity = 79`, TypeScript infers the type as the literal `79` (not just `number`).
+  - Literal types represent a set with only one allowed value (e.g., only `79`).
+  - Assigning a general type (like `number`) to a literal type (like `79`) is not allowed, but the reverse is fine.
+  - Casting (e.g., `let humidity = 10 as 79`) is possible but not recommended, as it overrides TypeScript’s safety.
+- **Type as Sets:**
+  - Think of types as sets of allowed values. `number` is the set of all numbers; a literal type like `79` is a set with one value.
+- **Type Annotations:**
+  - If a variable is declared without initialization (e.g., `let endTime;`), TypeScript infers `any` (implicit any), which is not ideal.
+  - Use type annotations (e.g., `let endTime: Date;`) to specify the intended type and avoid losing type information.
+  - Type annotations work for variables, function parameters, return types, and class fields.
+- **Best Practices:**
+  - Prefer explicit type annotations when TypeScript cannot infer the type.
+  - Avoid using `any` unless necessary, as it removes type safety.
+  - Use `const` for values that should not change, and let TypeScript infer literal types when appropriate.
 
