@@ -722,3 +722,44 @@ So TS lets you do **both**, but defaults to **structural** because it plays nice
   * `Object.assign()`
   * Object spread `{ ...obj1, ...obj2 }`
   * These merge two objects into one type = intersection of properties.
+
+## Interfaces and Type Aliases in TypeScript
+
+TypeScript provides **interfaces** and **type aliases** to give names to types, making code reusable and easier to manage across modules with imports and exports.
+
+* **Type Alias Basics**
+
+  * Allows assigning a name to a type.
+  * Example: instead of repeating a noisy inline object type everywhere, define it once as `type Amount = { currency: string; value: number }`.
+  * Type aliases are erased at compile time—they don’t appear in the final JavaScript.
+
+* **Advantages**
+
+  * Simplifies code by reducing repetition.
+  * Improves readability and provides semantic meaning (like variable names for types).
+  * Supports export/import for consistent type definitions across files.
+
+* **Flexibility**
+
+  * Type aliases can represent any type (primitives, unions, tuples, intersections, etc.).
+  * Example: `type MightBeNull = string | null`.
+  * This flexibility isn’t available with interfaces.
+
+* **Practical Example**
+
+  * Instead of writing complex tuple/union return types inline (e.g., from a function like `maybeGetUserInfo`), define them once and reuse with meaningful names.
+  * Tooltips and IDE hints become clearer, showing purpose rather than raw structure.
+
+* **Extending Type Aliases**
+
+  * You can compose new types from existing ones using **intersection types (`&`)**.
+  * Example: extend the `Date` type with an extra method:
+
+    ```ts
+    type SpecialDate = Date & { getDescription: () => string };
+    ```
+
+    This keeps all `Date` methods plus the custom `getDescription`.
+  * Works like inheritance: the new type is more specific but still valid wherever a `Date` is expected.
+
+👉 **Key takeaway**: Use type aliases to simplify, centralize, and give meaning to complex types. They are like “variables for types” and can be composed with intersections to model more specific structures.
