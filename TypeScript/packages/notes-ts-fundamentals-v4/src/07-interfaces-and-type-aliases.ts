@@ -23,35 +23,35 @@ printAmount(donation) //✔️ Valid
 
 
 //? Let's look at a familiar example from the last chapter
-/*
-// function flipCoin() {
-//     if (Math.random() > 0.5) return "heads"
-//     return "tails"
-// }
-// const success = ["success", { name: "Mike North", email: "mike@example.com" }] as const
-// const fail = ["error", new Error("Something went wrong!")] as const
 
-// export function maybeGetUserInfo():
-//     | readonly ["error", Error]
-//     | readonly ["success", { name: string; email: string }] {
-//     // implementation is the same in both examples
-//     if (flipCoin() === 'heads') {
-//         return success
-//     } else {
-//         return fail
-//     }
-// }
+function flipCoin() {
+    if (Math.random() > 0.5) return "heads"
+    return "tails"
+}
+const success = ["success", { name: "Mike North", email: "mike@example.com" }] as const
+const fail = ["error", new Error("Something went wrong!")] as const
+
+export function maybeGetUserInfo():
+    | readonly ["error", Error]
+    | readonly ["success", { name: string; email: string }] {
+    // implementation is the same in both examples
+    if (flipCoin() === 'heads') {
+        return success
+    } else {
+        return fail
+    }
+}
 
 //? Let's model the return type as an interface
-/*
-// type UserInfoOutcomeError = readonly ["error", Error]
-// type UserInfoOutcomeSuccess = readonly [
-//     "success",
-//     { readonly name: string; readonly email: string },
-// ]
-// type UserInfoOutcome =
-//     | UserInfoOutcomeError
-//     | UserInfoOutcomeSuccess
+
+type UserInfoOutcomeError = readonly ["error", Error]
+type UserInfoOutcomeSuccess = readonly [
+    "success",
+    { readonly name: string; readonly email: string },
+]
+type UserInfoOutcome =
+    | UserInfoOutcomeError
+    | UserInfoOutcomeSuccess
 
 
 //* Inheritance in type aliases
