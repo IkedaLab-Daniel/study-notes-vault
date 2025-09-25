@@ -1,7 +1,6 @@
 //* Union types in TypeScript
 
-let x: any = {}
-x instanceof Date // ? false
+// x instanceof Date // ? false
 
 const humidity = 79 //? Recall literal types
 
@@ -24,63 +23,61 @@ let evenOrLowNumber = 5 as Evens | OneThroughFive;
 evenOrLowNumber = 2
 
 //? Control flow sometimes results in union types
-function flipCoin() {
+function flipCoin(): "heads" | "tails" {
     if (Math.random() > 0.5) return "heads"
-    return "tails"
+    return "tails" as const
 }
 
 const outcome = flipCoin()
-// //     ^? "heads" | "tails"
+//     ^? "heads" | "tails"
 // //? A more complicated example
 
-// const success = ["success", { name: "Mike North", email: "mike@example.com" }] as const
-// const fail = ["error", new Error("Something went wrong!")] as const
+const success = ["success", { name: "Mike North", email: "mike@example.com" }] as const
+const fail = ["error", new Error("Something went wrong!")] as const
 
-/*
-// function maybeGetUserInfo() {
-//     if (flipCoin() === "heads") {
-//         return success
-//     } else {
-//         return fail
-//     }
-// }
+function maybeGetUserInfo() {
+    if (flipCoin() === "heads") {
+        return success
+    } else {
+        return fail
+    }
+}
 
-// const outcome2 = maybeGetUserInfo()
-
+const outcome2 = maybeGetUserInfo()
 //* Working with union types
-/*
+
 //? Think critically: "AND" vs "OR", as it pertains to the contents of the set,
 //? vs the assumptions we can make about the value
-// function printEven(even: Evens): void { }
-// function printLowNumber(lowNum: OneThroughFive): void { }
-// function printEvenNumberUnder5(num: 2 | 4): void { }
-// function printNumber(num: number): void { }
+function printEven(even: Evens): void { }
+function printLowNumber(lowNum: OneThroughFive): void { }
+function printEvenNumberUnder5(num: 2 | 4): void { }
+function printNumber(num: number): void { }
 
-// let x = 5 as Evens | OneThroughFive;
+let x = 5 as Evens | OneThroughFive;
 
-/*
+
 //? What does Evens | OneThroughFive accept as values?
-// let evenOrLowNumber: Evens | OneThroughFive;
-// evenOrLowNumber = 6 //✔️ An even
-// evenOrLowNumber = 3 //✔️ A low number
-// evenOrLowNumber = 4 //✔️ A even low number
+let evenOrLowNumber2: Evens | OneThroughFive;
+evenOrLowNumber2 = 6 //✔️ An even
+evenOrLowNumber2 = 3 //✔️ A low number
+evenOrLowNumber2 = 4 //✔️ A even low number
 
 //? What requirements can `Evens | OneThroughFive` meet?
-// printEven(x) //! Not guaranteed to be even
-// printLowNumber(x) //! Not guaranteed to be in {1, 2, 3, 4, 5}
-// printEvenNumberUnder5(x) //! Not guaranteed to be in {2, 4}
-// printNumber(x) //✔️ Guaranteed to be a number
+printEven(x) //! Not guaranteed to be even
+printLowNumber(x) //! Not guaranteed to be in {1, 2, 3, 4, 5}
+printEvenNumberUnder5(x) //! Not guaranteed to be in {2, 4}
+printNumber(x) //✔️ Guaranteed to be a number
 
-//* Narrowing with type guards
-/*
-// const [first, second] = outcome2
-// if (second instanceof Error) {
-//     // In this branch of your code, second is an Error
-//     second
-// } else {
-//     // In this branch of your code, second is the user info
-//     second
-// }
+// * Narrowing with type guards
+
+const [first, second] = outcome2
+if (second instanceof Error) {
+//     In this branch of your code, second is an Error
+    second
+} else {
+//     In this branch of your code, second is the user info
+    second
+}
 
 //* Discriminated unions
 /*
