@@ -152,19 +152,19 @@ class Dog2
 }
 
 //? Implements sometimes works with type aliases
-/*
-// type CanJump = {
-//     jumpToHeight(): number
-//         // | [number, number]
-// }
-// class Dog3 implements CanJump {
-//     jumpToHeight() {
-//         return 1.7
-//     }
-//     eat(food) {
-//         consumeFood(food)
-//     }
-// }
+
+type CanJump = {
+    jumpToHeight(): number
+        // | [number, number]
+}
+class Dog3 implements CanJump {
+    jumpToHeight() {
+        return 1.7
+    }
+    eat(food: string) {
+        consumeFood(food)
+    }
+}
 
 // type CanBark =
 //   | number
