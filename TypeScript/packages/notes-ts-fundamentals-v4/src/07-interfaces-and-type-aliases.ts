@@ -55,18 +55,18 @@ type UserInfoOutcome =
 
 
 //* Inheritance in type aliases
-/*
-// type SpecialDate = Date & { getDescription(): string }
 
-// const newYearsEve: SpecialDate
-//     //                    ^?
-//     = Object.assign(
-//         new Date(),
-//         { getDescription: () => "Last day of the year" }
-//     )
+type SpecialDate = Date & { getDescription(): string }
 
-// newYearsEve.getDescription
-// //             ^?
+const newYearsEve: SpecialDate
+    //                    ^?
+    = Object.assign(
+        new Date(),
+        { getDescription: () => "Last day of the year" }
+    )
+
+newYearsEve.getDescription
+//             ^?
 
 //* Interfaces
 /*
