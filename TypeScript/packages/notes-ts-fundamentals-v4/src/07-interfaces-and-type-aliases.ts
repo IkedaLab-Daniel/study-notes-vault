@@ -80,40 +80,40 @@ function printAmount2(amt: Amount2) {
 }
 
 //* Inheritance in interfaces
-/*
-// //? `extends` keyword
-// function consumeFood(arg) { }
 
-// class AnimalThatEats {
-//     eat(food) {
-//         consumeFood(food)
-//     }
-// }
-// class Cat extends AnimalThatEats {
-//     meow() {
-//         return "meow"
-//     }
-// }
+//? `extends` keyword
+function consumeFood(arg: string) { }
 
-// const c = new Cat()
-// c.eat
-// c.meow()
+class AnimalThatEats {
+    eat(food: string) {
+        consumeFood(food)
+    }
+}
+class Cat extends AnimalThatEats {
+    meow() {
+        return "meow"
+    }
+}
 
-/*
-// interface Animal {
-//     isAlive(): boolean
-// }
-// interface Mammal extends Animal {
-//     getFurOrHairColor(): string
-// }
-// interface Hamster extends Mammal {
-//     squeak(): string
-// }
-// function careForHamster(h: Hamster) {
-//     h.getFurOrHairColor()
-//     h.squeak()
-//     //   ^|
-// }
+const c = new Cat()
+c.eat("Eat cat food!")
+c.meow()
+
+// ? in interface:
+interface Animal {
+    isAlive(): boolean
+}
+interface Mammal extends Animal {
+    getFurOrHairColor(): string
+}
+interface Hamster extends Mammal {
+    squeak(): string
+}
+function careForHamster(h: Hamster) {
+    h.getFurOrHairColor()
+    h.squeak()
+    //   ^|
+}
 
 
 //? `implements` keyword
