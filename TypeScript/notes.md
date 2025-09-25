@@ -617,3 +617,71 @@ So TS lets you do **both**, but defaults to **structural** because it plays nice
 
 👉 Union = more flexible but fewer guarantees.
 👉 Intersection = stricter but more guarantees.
+
+## Union Types, Control Flow, and Narrowing
+
+### 🔹 Union Types in Practice
+
+* Union types (`|`) appear frequently, especially in **control flow**.
+* Example:
+
+  ```ts
+  function flipCoin(): "heads" | "tails" {
+    return Math.random() > 0.5 ? "heads" : "tails";
+  }
+  ```
+
+  * Only `"heads"` or `"tails"` are valid return values.
+  * Nothing else (e.g. `"e"`) is allowed.
+
+### 🔹 Tuples with Union Types
+
+* Example: a function that might succeed or fail:
+
+  ```ts
+  type Success = ["success", { name: string; email: string }];
+  type Failure = ["error", Error];
+  type Result = Success | Failure;
+  ```
+* Accessing tuple elements directly gives only the **shared properties**.
+
+  * E.g. both `Error` and `{ name; email }` have `name`, so TypeScript only exposes that until narrowed.
+
+### 🔹 Narrowing with Type Guards
+
+* Use `instanceof` or `typeof` to narrow unions:
+
+  ```ts
+  if (result[1] instanceof Error) {
+    // Here, TypeScript knows it's an Error
+    console.log(result[1].stack);
+  } else {
+    // Must be the object with name + email
+    console.log(result[1].email);
+  }
+  ```
+* Think of it like a **pie chart**: type guards slice off part of the union, leaving only what fits.
+
+### 🔹 Discriminated Unions
+
+* Use a **literal field** (discriminator) to connect values.
+* Example:
+
+  ```ts
+  type Result =
+    | { status: "success"; user: { name: string; email: string } }
+    | { status: "error"; error: Error };
+
+  function handleResult(res: Result) {
+    if (res.status === "error") {
+      console.error(res.error.message);
+    } else {
+      console.log(res.user.email);
+    }
+  }
+  ```
+* The discriminator (`status`) signals which full shape applies.
+* Makes unions more precise and prevents invalid mixing.
+
+- Union types are common because of **branching possibilities**.
+- Narrowing (with guards or discriminators) unlocks their full usefulness.
