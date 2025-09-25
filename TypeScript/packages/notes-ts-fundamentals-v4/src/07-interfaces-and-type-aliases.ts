@@ -69,15 +69,15 @@ newYearsEve.getDescription
 //             ^?
 
 //* Interfaces
-/*
-// interface Amount2 {
-//     currency: string
-//     value: number
-// }
 
-// function printAmount2(amt: Amount2) {
-//     amt
-// }
+interface Amount2 {
+    currency: string
+    value: number
+}
+
+function printAmount2(amt: Amount2) {
+    amt
+}
 
 //* Inheritance in interfaces
 /*
