@@ -762,4 +762,60 @@ TypeScript provides **interfaces** and **type aliases** to give names to types, 
     This keeps all `Date` methods plus the custom `getDescription`.
   * Works like inheritance: the new type is more specific but still valid wherever a `Date` is expected.
 
-👉 **Key takeaway**: Use type aliases to simplify, centralize, and give meaning to complex types. They are like “variables for types” and can be composed with intersections to model more specific structures.
+**Key takeaway**: Use type aliases to simplify, centralize, and give meaning to complex types. They are like “variables for types” and can be composed with intersections to model more specific structures.
+
+## Interfaces in TypeScript
+
+Interfaces are another way to give types a name in TypeScript. They look similar to classes but contain only type information (no implementations). Interfaces are especially useful for **inheritance** and defining **contracts** for classes.
+
+* **Basic Syntax**
+
+  * Declared with the `interface` keyword (no `=`).
+  * Only describe shapes of objects (fields and methods), not arbitrary types like unions.
+
+* **Extends (Inheritance)**
+
+  * Interfaces can extend other interfaces.
+  * Example:
+
+    ```ts
+    interface Animal { eat(food: string): void }
+    interface Mammal extends Animal { furColor: string }
+    interface Hamster extends Mammal { squeak(): void }
+    ```
+  * Similar to class inheritance, but only for describing structure.
+
+* **Implements (Contracts)**
+
+  * Classes use `implements` to commit to an interface’s shape.
+  * Example:
+
+    ```ts
+    interface AnimalLike { eat(food: string): void }
+    class Dog implements AnimalLike {
+      eat(food: string) { console.log(`Eating ${food}`) }
+      bark() { console.log("Woof!") }
+    }
+    ```
+  * If a class is missing required properties/methods, TypeScript raises an error.
+
+* **Extends vs Implements**
+
+  * `extends`: class → class, interface → interface (like-to-like).
+  * `implements`: class → interface (a class adheres to an interface contract).
+  * A class can extend **one** class but implement **multiple** interfaces.
+
+* **Structural Typing Power**
+
+  * Interfaces don’t require explicit inheritance.
+  * Any object matching the shape is compatible.
+  * Example: `PromiseLike` requires only `.then()`, so any "then-able" object works with async code.
+
+* **When to Prefer Interfaces**
+
+  * Use interfaces when defining contracts for classes.
+  * They ensure compatibility with `implements` and inheritance rules.
+  * Unlike type aliases, interfaces can’t represent unions, primitives, or arbitrary non-object types—only object-like structures.
+
+**Key takeaway**:
+Interfaces are best for describing **object shapes** and **class contracts**, supporting inheritance (`extends`) and contracts (`implements`). Use them where you want strict structural guarantees in OOP-like scenarios.
