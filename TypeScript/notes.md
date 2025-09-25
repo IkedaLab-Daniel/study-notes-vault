@@ -575,7 +575,7 @@ if (x instanceof Date) {
 
 So TS lets you do **both**, but defaults to **structural** because it plays nicely with plain JS objects.
 
-✅ **Summary**:
+##  Union andIntersection Types
 
 * Type checking = subset check of sets of possible values.
 * Static vs dynamic = when type checks happen (build time vs runtime).
