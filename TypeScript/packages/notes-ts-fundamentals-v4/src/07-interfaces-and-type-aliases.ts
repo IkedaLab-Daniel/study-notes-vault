@@ -3,21 +3,23 @@ type Amount = {
   currency: string
   value: number
 }
-/*
-// function printAmount(amt: Amount) {
-//     console.log(amt)
 
-//     const { currency, value } = amt
-//     console.log(`${currency} ${value}`)
-// }
+type MightBeNull = string | null
 
-// const donation = {
-//     currency: "USD",
-//     value: 30.0,
-//     description: "Donation to food bank",
-// }
+function printAmount(amt: Amount) {
+    console.log(amt)
 
-// printAmount(donation) //✔️ Valid
+    const { currency, value } = amt
+    console.log(`${currency} ${value}`)
+}
+
+const donation = {
+    currency: "USD",
+    value: 30.0,
+    description: "Donation to food bank",
+}
+
+printAmount(donation) //✔️ Valid
 
 
 //? Let's look at a familiar example from the last chapter
