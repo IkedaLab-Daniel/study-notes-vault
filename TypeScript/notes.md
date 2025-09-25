@@ -685,3 +685,40 @@ So TS lets you do **both**, but defaults to **structural** because it plays nice
 
 - Union types are common because of **branching possibilities**.
 - Narrowing (with guards or discriminators) unlocks their full usefulness.
+
+## Intersection Types in Practice
+
+* Intersection types (`&`) are the **“and”** of types.
+* They only accept values that exist in **both sets**.
+
+  * Example: `Even & LowNumber` → only `2` and `4`.
+  * `6` fails (not low), `3` fails (not even).
+
+### 🔹 Behavior vs Union Types
+
+* **Union (`|`)** → very accepting, but weak guarantees.
+
+  * Accepts many values, but you can’t assume much about them.
+* **Intersection (`&`)** → very picky, but strong guarantees.
+
+  * Accepts very few values, but you can assume everything true about both sets.
+
+### 🔹 Usage
+
+* With intersection types, you can safely pass values to **any function** expecting either of the intersected types.
+
+  * Example: `2 | 4` works as even, works as low number, works as number.
+
+### 🔹 Asymmetry
+
+* **Union:** broad set of possible values, minimal guarantees.
+* **Intersection:** narrow set of possible values, maximal guarantees.
+
+### 🔹 Real-World Use
+
+* Rarely written directly in application code.
+* Most often appears **behind the scenes**:
+
+  * `Object.assign()`
+  * Object spread `{ ...obj1, ...obj2 }`
+  * These merge two objects into one type = intersection of properties.
