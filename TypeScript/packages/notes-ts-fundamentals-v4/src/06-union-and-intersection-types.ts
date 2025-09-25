@@ -80,14 +80,14 @@ if (second instanceof Error) {
 }
 
 //* Discriminated unions
-/*
-// if (first === "error") {
-//     // In this branch of your code, second is an Error
-//     second
-// } else {
-//     // In this branch of your code, second is the user info
-//     second
-// }
+
+if (first === "error") {
+//     In this branch of your code, second is an Error
+    second
+} else {
+//     In this branch of your code, second is the user info
+    second
+}
 
 //* Intersection Types
 /*
