@@ -201,14 +201,16 @@ declare global {
 
 //* Recursive types
 
-// type NestedNumbers = number | NestedNumbers[]
+type NestedNumbers = number | NestedNumbers[]
  
-// const val: NestedNumbers = [3, 4, [5, 6, [7], 59], 221]
-/*
-// if (typeof val !== "number") {
-//   val.push(41)
-//   val.push("this will not work") //! No strings allowed
-// }
+const val: NestedNumbers = [3, 4, [5, 6, [7], 59], 221]
+
+
+if (typeof val !== "number") {
+  val.push(41)
+  val.push(41, [51, 1632, 12323], 123, [123, [12312, [2131245, [123123, 5123, [123421], 123]]]])
+  val.push("this will not work") //! No strings allowed
+}
 
 /**/
 export default {}
