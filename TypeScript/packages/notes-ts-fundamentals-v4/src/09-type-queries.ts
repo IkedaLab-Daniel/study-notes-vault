@@ -14,16 +14,18 @@ async function main() {
     ])
     type ApiResponseType = typeof apiResponse
 }
-/*
+
 //?^ note: type alias within a function scope!
-// const MyAjaxConstructor = CSSRule
-// CSSRule.STYLE_RULE
-// const myAjax = new CSSRule()
+const MyRule = CSSRule
+CSSRule.STYLE_RULE
+const foo = new MyRule()
+
+type MyRule = typeof MyRule
 
 
 //* Indexed Access Types
 
-/*
+
 // interface Car {
 //     make: string
 //     model: string
