@@ -10,18 +10,19 @@ or one of the following three literal names:
   · true
   · null
 */
+type JSONPrimitive = string | number | boolean | null
 /**
  * A JSON object type   {    }
  */
-type JSONObject = any
+type JSONObject = { [key: string]: JSONValue}
 /**
  * A JSON array type   [    ]
  */
-type JSONArray = any
+type JSONArray = JSONValue[]
 /**
  * A type representing any valid JSON value
  */
-type JSONValue = any
+type JSONValue = JSONPrimitive | JSONObject | JSONArray
 
 //! DO NOT EDIT ANY CODE BELOW THIS LINE
 function isJSON(arg: JSONValue) {}
