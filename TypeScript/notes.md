@@ -1010,3 +1010,15 @@ type CarRed = Car["color"]["red"];  // number
 * **`keyof T`** → property names of `T`.
 * **`typeof x`** → type of a value `x`.
 * **`T[K]`** → indexed access, gives type of property `K` in `T`.
+
+## Type Registry Pattern with Open Interfaces
+
+The type registry pattern allows you to build a flexible data layer where different teams can define their own models (like `Book`, `Magazine`, or `Video`) without modifying a central library file.
+
+* Similar to `declare global`, you can `declare module` to augment a specific module.
+* In `/lib/registry.ts`, an empty interface acts as a central registry.
+* Each model (e.g., `Book`, `Magazine`) uses a module declaration at the bottom of its file to “inject” its type into the registry.
+* `fetchRecord` takes a key (`"book" | "magazine" | "video"`) and an ID, returning the correct type.
+* This works because TypeScript merges open interfaces, so the registry is automatically populated as new modules declare their types.
+* This is useful for library authors since consumers can extend the registry without editing library code.
+* Key tools: `keyof`, index access types, open interfaces, and module augmentation.
