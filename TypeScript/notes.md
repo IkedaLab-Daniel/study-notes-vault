@@ -942,3 +942,71 @@ With this setup:
 * ❌ Invalid: `undefined`, `function() {}`, `class Foo {}`
 
 This recursive type ensures only valid JSON structures type-check in TypeScript.
+
+## Type Queries in TypeScript
+
+Type queries let you extract or manipulate types from values.
+
+### 1. `keyof`
+
+* Produces a union of property names of a type.
+* Keys can be `string`, `number`, or `symbol`.
+
+```ts
+type DateKeys = keyof Date; // all property names of Date
+type StringKeys = keyof Date & string; // only string keys
+```
+
+Think of it like **`Object.keys()` but for types**.
+
+---
+
+### 2. `typeof` (in type space)
+
+* Extracts the type of a value.
+
+```ts
+const apiResponse = ["ok", 200] as const;
+type ResponseType = typeof apiResponse; // readonly ["ok", 200]
+```
+
+* Useful for:
+
+  * Inferring variable/constant types.
+  * Getting the **static side of a class** (constructor + static fields).
+
+```ts
+class MyRule { static STYLE_RULE = "rule"; }
+type RuleClass = typeof MyRule; // static side (constructor, static props)
+type RuleInstance = MyRule;     // instance side
+```
+
+In runtime JS, `typeof` returns strings like `"string"`, `"object"`, etc.
+In type space, it produces **the actual type**.
+
+---
+
+### 3. Indexed Access Types
+
+* Extract the type of a specific property or tuple element.
+
+```ts
+interface Car {
+  make: string;
+  model: string;
+  color: { red: number; green: number; blue: number };
+}
+
+type CarColor = Car["color"];       // { red: number; green: number; blue: number }
+type CarRed = Car["color"]["red"];  // number
+```
+
+* Works with unions too: projecting through each member and unioning results.
+
+---
+
+### Recap
+
+* **`keyof T`** → property names of `T`.
+* **`typeof x`** → type of a value `x`.
+* **`T[K]`** → indexed access, gives type of property `K` in `T`.
