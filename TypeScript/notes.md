@@ -875,3 +875,31 @@ Interfaces are another way to give types a name in TypeScript. They look similar
 
 👉 **Key takeaway**:
 Interfaces are best for describing **object shapes** and **class contracts**, supporting inheritance (`extends`) and contracts (`implements`). Use them where you want strict structural guarantees in OOP-like scenarios.
+
+## Recursive Types in TypeScript
+
+Recursive types let you define structures that can contain themselves. For example, to type nested arrays of numbers:
+
+```ts
+type NestedNumbers = number | NestedNumbers[];
+```
+
+This means a value can be:
+
+* A number
+* An array of numbers
+* An array of arrays of numbers, infinitely nested
+
+TypeScript processes the right-hand side first, then assigns it to the alias. By referencing the type itself, recursion works naturally.
+
+Examples:
+
+* ✅ `41`
+* ✅ `[41]`
+* ✅ `[[41], 41]`
+* ✅ `[]` (inferred as number array)
+* ❌ `"string"`
+
+Older guides may mention combining interfaces and type aliases, but today type aliases alone are enough.
+
+Recursive types are key for describing structures like JSON.
