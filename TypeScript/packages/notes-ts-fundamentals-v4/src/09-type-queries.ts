@@ -26,21 +26,21 @@ type MyRule = typeof MyRule
 //* Indexed Access Types
 
 
-// interface Car {
-//     make: string
-//     model: string
-//     year: number
-//     color: {
-//         red: string
-//         green: string
-//         blue: string
-//     }
-// }
+interface Car {
+    make: string
+    model: string
+    year: number
+    color: {
+        red: string
+        green: string
+        blue: string
+    }
+}
 
-// let carColor: Car["color"] //✔️ Reaching for something that exists
-// let carSomething: Car["not-something-on-car"] //! Reaching for something invalid
-// let carColorRedComponent: Car["color"]["red"] //✔️ Reaching for something nested
-// let carProperty: Car["color" | "year"] // ✔️ Passing a union type through the index
+let carColor: Car["color"] //✔️ Reaching for something that exists
+let carSomething: Car["not-something-on-car"] //! Reaching for something invalid
+let carColorRedComponent: Car["color"]["red"] //✔️ Reaching for something nested
+let carProperty: Car["color" | "year"] // ✔️ Passing a union type through the index
 
 //* Use case: the type registry pattern
 /*
