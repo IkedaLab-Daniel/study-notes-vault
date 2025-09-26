@@ -1022,3 +1022,31 @@ The type registry pattern allows you to build a flexible data layer where differ
 * This works because TypeScript merges open interfaces, so the registry is automatically populated as new modules declare their types.
 * This is useful for library authors since consumers can extend the registry without editing library code.
 * Key tools: `keyof`, index access types, open interfaces, and module augmentation.
+
+## Function Types (Callables)
+
+* A **callable type** is a type that represents a function.
+* Defined with a **call signature**:
+
+  * In an **interface** → use `:`
+  * In a **type alias** → use `=>`
+* Example:
+
+  ```ts
+  interface TwoNumberCalc {
+    (x: number, y: number): number;
+  }
+
+  type TwoNumberCalcAlias = (x: number, y: number) => number;
+  ```
+* Both `interface` and `type` versions are equivalent; arrow functions using this type don’t need explicit parameter types.
+* Useful for typing **callbacks** passed into functions.
+* **Key differences**:
+
+  * Interfaces are **open**, meaning downstream code can extend them.
+  * Type aliases are **closed**; safer if you don’t want modification.
+* Rule of thumb:
+
+  * **Interfaces** → better for libraries (allow extension).
+  * **Type aliases** → fine for application code or when you want immutability.
+* Note: You can’t make a class directly implement a callable interface, since classes are constructable (used with `new`) and callables are a different concept in TypeScript.
