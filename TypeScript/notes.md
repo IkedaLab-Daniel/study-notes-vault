@@ -1050,3 +1050,34 @@ The type registry pattern allows you to build a flexible data layer where differ
   * **Interfaces** → better for libraries (allow extension).
   * **Type aliases** → fine for application code or when you want immutability.
 * Note: You can’t make a class directly implement a callable interface, since classes are constructable (used with `new`) and callables are a different concept in TypeScript.
+
+## Void in TypeScript
+
+* In **JavaScript**, `void` means *ignore the return value*.
+* In **TypeScript**, `void` is used as a **function return type** to signal:
+
+  * The function **does not return anything useful**.
+  * It may implicitly return `undefined`.
+* `void` ≠ `undefined`:
+
+  * `void` allows both `void` and `undefined`.
+  * `undefined` is a **unit type** (only one possible value).
+* Example:
+
+  ```ts
+  function logMessage(msg: string): void {
+    console.log(msg); // side effects only
+  }
+  ```
+* Why not just `undefined`?
+
+  * Functions may technically return something (e.g., `Array.push()` returns a number).
+  * `void` tells TypeScript to **ignore whatever comes back**.
+* Practical use cases:
+
+  * **Callbacks** → You don’t care about what they return.
+  * **Function declarations** → Communicate “this returns nothing useful.”
+* Important rule:
+
+  * Do **not** create variables of type `void`.
+  * It only makes sense in the **return type position** of functions.
