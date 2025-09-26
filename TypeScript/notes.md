@@ -903,3 +903,42 @@ Examples:
 Older guides may mention combining interfaces and type aliases, but today type aliases alone are enough.
 
 Recursive types are key for describing structures like JSON.
+
+## JSON Type in TypeScript
+
+A valid JSON value can only be:
+
+* An object (`{}` with string keys and JSON values)
+* An array of JSON values
+* A string, number, boolean (`true` or `false`), or `null`
+
+Functions, classes, and `undefined` are **not** valid JSON.
+
+We can model this in TypeScript using recursive types:
+
+```ts
+type JSONPrimitive = string | number | boolean | null;
+
+type JSONObject = {
+  [key: string]: JSONValue;
+};
+
+type JSONArray = JSONValue[];
+
+type JSONValue = JSONPrimitive | JSONObject | JSONArray;
+```
+
+### Explanation
+
+* **`JSONPrimitive`** covers the basic valid literals.
+* **`JSONObject`** uses an index signature: every key must map to a `JSONValue`.
+* **`JSONArray`** is simply an array of `JSONValue`.
+* **`JSONValue`** ties it all together, allowing recursion.
+
+With this setup:
+
+* ✅ Valid: `{ "a": [1, "b", null] }`
+* ✅ Valid: `42`
+* ❌ Invalid: `undefined`, `function() {}`, `class Foo {}`
+
+This recursive type ensures only valid JSON structures type-check in TypeScript.
