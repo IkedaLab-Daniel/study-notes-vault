@@ -1119,3 +1119,47 @@ The type registry pattern allows you to build a flexible data layer where differ
   * Provides **better inference**: the handler type depends on the element type.
 
 Overloads give strong typing without requiring advanced generics, keeping code safer and more readable.
+
+## `this` in Functions
+
+* **`this` types** are not implicit in top-level functions; you must annotate them.
+
+  ```ts
+  function myClickHandler(this: HTMLButtonElement, e: MouseEvent) {
+    this.disabled = true;
+  }
+  ```
+
+  * Looks like an argument, but disappears at runtime.
+  * Ensures correct `this` binding inside the function.
+
+* **Why needed?**
+
+  * In DOM event handlers, `this` refers to the element that fired the event.
+  * Without explicit typing, `this` defaults to `void` (unsafe).
+
+* **Binding context**:
+
+  ```ts
+  const boundHandler = myClickHandler.bind(myButton);
+  boundHandler(new MouseEvent("click")); // works, `this` = button
+  ```
+
+  * `bind` creates a copy of the function with `this` fixed.
+  * `call` / `apply` let you explicitly set `this` at invocation:
+
+    ```ts
+    myClickHandler.call(myButton, event);
+    myClickHandler.apply(myButton, [event]);
+    ```
+
+* **Compiler options**:
+
+  * `noImplicitThis` warns when `this` is untyped.
+  * `strictBindCallApply` ensures `.bind`, `.call`, and `.apply` preserve type safety.
+
+* **Best practices**:
+
+  * Use `this` types mainly for **DOM handlers** or special cases.
+  * In classes, `this` is automatically typed.
+  * For standalone functions, prefer explicit parameters over `this` unless the API (like DOM events) enforces it.
