@@ -2,23 +2,31 @@
 
 //? Field types
 class Car {
-  static nextSerialNumber: number
-  static generateSerialNumber() { return this.nextSerialNumber++ }
+  static #nextSerialNumber: number
+  static #generateSerialNumber() { return this.#nextSerialNumber++ }
+
   static {
     // `this` is the static scope
     fetch("https://api.example.com/vin_number_data")
         .then(response => response.json())
         .then(data => {
-            this.nextSerialNumber = data.mostRecentInvoiceId + 1;
+            this.#nextSerialNumber = data.mostRecentInvoiceId + 1;
         })
   }
-  serialNumber = Car.generateSerialNumber()
+  // serialNumber = Car.generateSerialNumber()
 
   static {}
 
   make: string
   model: string
   year: number
+
+  // private _serialNumber = Car.generateSerialNumber()
+  #serialNumber = Car.#generateSerialNumber()
+  protected get serialNumber() {
+    return this.#serialNumber
+  }
+
   constructor(make: string, model: string, year: number) {
     this.make = make
     this.model = model
@@ -54,32 +62,21 @@ console.log( new Car("Toyota", "Camry", 2022))
 //? static blocks
 
 //* Access modifier keywords
-/*
+  // const s = new Sedan("Nissan", "Altima", 2020)
+  // s.serialNumber
 //? on member fields
-// private _serialNumber = Car.generateSerialNumber()
-// protected get serialNumber() {
-//   return this._serialNumber
-// }
-// const s = new Sedan("Nissan", "Altima", 2020)
-// s.serialNumber
+Car.generateSerialNumber()
 
-/*
 //? on static fields
-// private static nextSerialNumber: number
-// private static generateSerialNumber() { return this.nextSerialNumber++ }
-// Car.generateSerialNumber()
 
 //* JS private #fields
-/*
-//? member fields
-// #serialNumber = Car.generateSerialNumber()
-// c.#serialNumber
 
-/*
+//? member fields
+c.#serialNumber
+
+
 //? static fields
-// static #nextSerialNumber: number
-// static #generateSerialNumber() { return this.#nextSerialNumber++ }
-// #serialNumber = Car.#generateSerialNumber()
+#serialNumber = Car.#generateSerialNumber()
 
 //* Private field presence checks
 /*
