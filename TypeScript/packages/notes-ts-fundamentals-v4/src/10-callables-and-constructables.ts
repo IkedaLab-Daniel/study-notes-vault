@@ -66,34 +66,33 @@ handleMainEvent(myFrame, (evt) => {
 })
 
 
-// //? Add above handleMainEvent function declaration
-// function handleMainEvent(
-//     elem: HTMLFormElement,
-//     handler: FormSubmitHandler
-// )
+//? Add above handleMainEvent function declaration
+function handleMainEvent(
+    elem: HTMLFormElement,
+    handler: FormSubmitHandler
+)
 
-// function handleMainEvent(
-//     elem: HTMLIFrameElement,
-//     handler: MessageHandler
-// )
+function handleMainEvent(
+    elem: HTMLIFrameElement,
+    handler: MessageHandler
+)
 
-// //? Form handler has a specific type now!
-// const myForm = document.getElementsByTagName("form")[0]
-// handleMainEvent(myForm, (val) => {
-// })
+//? Form handler has a specific type now!
+const myForm = document.getElementsByTagName("form")[0]
+handleMainEvent(myForm, (val) => {
+})
 
 //* `this` types
-/*
-// function myClickHandler(event: Event) {
-//     // this.disabled = true
-// }
-// myClickHandler(new Event("click")) // maybe ok?
+function myClickHandler(event: Event) {
+    this.disabled = true
+}
+myClickHandler(new Event("click")) // ? maybe ok?
 
-/*
-// const myButton = document.getElementsByTagName("button")[0]
-// const boundHandler = myClickHandler.bind(myButton)
-// boundHandler(new Event("click")) // bound version: ok
-// myClickHandler.call(myButton, new Event("click")) // also ok
+
+const myButton = document.getElementsByTagName("button")[0]
+const boundHandler = myClickHandler.bind(myButton)
+boundHandler(new Event("click")) // bound version: ok
+myClickHandler.call(myButton, new Event("click")) // also ok
 
 //* Function best practices
 /*
