@@ -1249,3 +1249,53 @@ General rule: **Always annotate return types for non-trivial or exported functio
   * Useful for IDs, serial numbers, or other immutable values.
 
 Takeaway: **Access modifiers + `#private` + `readonly` enforce proper encapsulation, protect internal state, and enable safe equality checks between instances.**
+
+## Parameter Properties, Static Blocks, and Overrides
+
+* **Parameter Properties**
+
+  * Shorthand to define and assign class fields directly in constructor parameters.
+  * Works only in constructors (not regular methods).
+  * Example:
+
+    ```ts
+    class Car {
+      constructor(public make: string, public model: string, public year: number) {}
+    }
+    ```
+  * Compiles to:
+
+    ```js
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    ```
+  * Reduces boilerplate by combining declaration and assignment.
+
+* **Static Blocks with Async Initialization**
+
+  * A class with a `static {}` block can run setup before usage.
+  * If initialization is async, add a readiness signal (e.g., `Car.ready = true` after load).
+  * Consumers must check or await readiness before creating instances.
+
+* **Overrides in TypeScript (TS 5+)**
+
+  * New `override` keyword enforces that a subclass method truly overrides a base method.
+  * Prevents silent errors from misspellings or missing methods.
+  * Example:
+
+    ```ts
+    class Vehicle {
+      honk() { return "beep"; }
+    }
+    class Truck extends Vehicle {
+      override honk() { return "BEEP"; }
+    }
+    ```
+  * Benefits:
+
+    * Detects typos (`honk` vs `hunk`).
+    * Flags changes in base method names during refactoring.
+    * Works best with `noImplicitOverride: true` in `tsconfig.json` to enforce consistent usage.
+
+Takeaway: **Parameter properties simplify constructors, static blocks need explicit readiness handling, and `override` ensures safe subclassing and smooth refactoring.**
