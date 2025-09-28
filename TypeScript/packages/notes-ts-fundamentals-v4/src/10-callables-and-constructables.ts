@@ -83,11 +83,10 @@ handleMainEvent(myForm, (val) => {
 })
 
 //* `this` types
-function myClickHandler(event: Event) {
+function myClickHandler(this: HTMLButtonElement, event: Event) {
     this.disabled = true
 }
 myClickHandler(new Event("click")) // ? maybe ok?
-
 
 const myButton = document.getElementsByTagName("button")[0]
 const boundHandler = myClickHandler.bind(myButton)

@@ -1163,3 +1163,31 @@ Overloads give strong typing without requiring advanced generics, keeping code s
   * Use `this` types mainly for **DOM handlers** or special cases.
   * In classes, `this` is automatically typed.
   * For standalone functions, prefer explicit parameters over `this` unless the API (like DOM events) enforces it.
+
+## Function Best Practices
+
+* **Explicit return types** help catch errors at the declaration site instead of scattered across call sites.
+
+  ```ts
+  async function getData(): Promise<{ properties: string[] }> {
+    const res = await fetch("/api/data");
+    if (!res.ok) throw new Error("Bad response");
+    return await res.json();
+  }
+  ```
+
+  * Without explicit return type → TypeScript infers, errors may show up in many call sites.
+  * With explicit return type → Errors surface at the function itself, making fixes easier.
+
+* **Error handling**:
+
+  * If you might return `undefined`, declare it explicitly in the return type (`Promise<MyType | undefined>`).
+  * Forces callers to handle the possibility at compile time.
+
+* **Benefit**:
+
+  * Reduces debugging effort.
+  * Prevents "wild goose chase" bugs where missing return values cause ripple effects.
+  * Encourages consistency across the codebase.
+
+General rule: **Always annotate return types for non-trivial or exported functions.**
