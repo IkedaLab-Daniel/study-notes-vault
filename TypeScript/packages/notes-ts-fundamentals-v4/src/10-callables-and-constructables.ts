@@ -94,28 +94,28 @@ boundHandler(new Event("click")) // bound version: ok
 myClickHandler.call(myButton, new Event("click")) // also ok
 
 //* Function best practices
-/*
+
 //? Explicit function return types
 // type JSONPrimitive = string | number | boolean | null
 // type JSONObject = { [k: string]: JSONValue }
 // type JSONArray = JSONValue[]
 // type JSONValue = JSONArray | JSONObject | JSONPrimitive
 
-// export async function getData(url: string) {
-//     const resp = await fetch(url)
-//     // if (resp.ok) {
-//         const data = (await resp.json()) as {
-//             properties: string[]
-//         }
-//         return data
-//     // }
-// }
+export async function getData(url: string): Promise<{ properties: string[] }> {
+    const resp = await fetch(url)
+    // if (resp.ok) {
+        const data = (await resp.json()) as {
+            properties: string[]
+        }
+        return data
+    // }
+}
 
-// function loadData() {
-//     getData("https://example.com").then((result) => {
-//         console.log(result.properties.join(", "))
-//         //           ^?
-//     })
-// }
+function loadData() {
+    getData("https://example.com").then((result) => {
+        console.log(result.properties.join(", "))
+        //           ^?
+    })
+}
 /**/
 export default {}
