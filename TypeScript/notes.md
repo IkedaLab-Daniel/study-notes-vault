@@ -1081,3 +1081,41 @@ The type registry pattern allows you to build a flexible data layer where differ
 
   * Do **not** create variables of type `void`.
   * It only makes sense in the **return type position** of functions.
+
+## Constructables and Function Overloads
+
+* **Construct signatures** describe *newable* types:
+
+  ```ts
+  interface MyDateConstructor {
+    new (value?: string): Date;
+  }
+  const d = new Date(); // ✅ constructable
+  ```
+
+  * Similar to call signatures, but with the `new` keyword.
+  * Used for classes or anything instantiated with `new`.
+
+* **Function overloads** allow multiple valid call patterns for one function.
+
+  * Define **function heads** (signatures without a body).
+  * Provide a single implementation that supports all heads.
+
+  ```ts
+  function handleMainEvent(el: HTMLFormElement, handler: (d: FormData) => void): void;
+  function handleMainEvent(el: HTMLIFrameElement, handler: (m: MessageEvent) => void): void;
+  function handleMainEvent(
+    el: HTMLFormElement | HTMLIFrameElement,
+    handler: ((d: FormData) => void) | ((m: MessageEvent) => void)
+  ) {
+    // implementation, possibly with narrowing/casting
+  }
+  ```
+
+* Benefits of overloads:
+
+  * Restricts calls to valid **argument–handler pairs** (e.g., form → submit handler, iframe → message handler).
+  * Prevents invalid mix-and-match combinations.
+  * Provides **better inference**: the handler type depends on the element type.
+
+Overloads give strong typing without requiring advanced generics, keeping code safer and more readable.
