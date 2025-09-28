@@ -1191,3 +1191,61 @@ Overloads give strong typing without requiring advanced generics, keeping code s
   * Encourages consistency across the codebase.
 
 General rule: **Always annotate return types for non-trivial or exported functions.**
+
+## Access Modifiers, Private Fields, and Equality in Classes
+
+* **Problem: Public Fields**
+
+  * Without restrictions, fields (e.g., `serialNumber`) can be reassigned from outside (`car.serialNumber = -123`).
+  * Solution: use **access modifiers** and **getters**.
+
+* **Access Modifiers**
+
+  * `private`: visible only inside the class.
+  * `protected`: visible inside the class and subclasses.
+  * `public`: default, visible everywhere.
+  * Applies to both **instance** and **static** members.
+
+* **Getters**
+
+  * Allow **controlled read access**.
+  * Make fields effectively **read-only** from outside.
+
+* **Private Fields in TypeScript vs. JavaScript**
+
+  * **TypeScript `private`/`protected`** → compile-time checks only, not enforced at runtime.
+  * **JavaScript `#privateField` syntax** → true runtime privacy.
+  * Example:
+
+    ```ts
+    class Car {
+      static #nextSerial = 1;
+      #serialNumber = Car.#nextSerial++;
+      
+      get serialNumber() {
+        return this.#serialNumber;
+      }
+    }
+    ```
+
+* **Private Field Presence Check**
+
+  * TypeScript can use `#field in object` to confirm if another instance is the same class.
+  * Example equality method:
+
+    ```ts
+    equals(other: unknown): other is Car {
+      return typeof other === "object" &&
+             other !== null &&
+             #serialNumber in other &&
+             this.#serialNumber === (other as Car).#serialNumber;
+    }
+    ```
+  * Ensures comparison only works between **instances of the same class**.
+
+* **Read-only Fields**
+
+  * `readonly` ensures a field is assigned once and not reassigned later.
+  * Useful for IDs, serial numbers, or other immutable values.
+
+Takeaway: **Access modifiers + `#private` + `readonly` enforce proper encapsulation, protect internal state, and enable safe equality checks between instances.**
