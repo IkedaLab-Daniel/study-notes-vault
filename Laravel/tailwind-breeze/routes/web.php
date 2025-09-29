@@ -11,6 +11,10 @@ Route::get('/tailwind-demo', function() {
     return view('tailwind-demo');
 });
 
+Route::get('/tasks', function() {
+    return view('task.index');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
