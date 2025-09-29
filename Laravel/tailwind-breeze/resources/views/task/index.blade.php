@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>Index for task</h1>
+    {{ $title }}
 </body>
 </html>

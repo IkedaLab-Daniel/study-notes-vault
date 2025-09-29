@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,9 +12,7 @@ Route::get('/tailwind-demo', function() {
     return view('tailwind-demo');
 });
 
-Route::get('/tasks', function() {
-    return view('task.index');
-});
+Route::get('/tasks', [TaskController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

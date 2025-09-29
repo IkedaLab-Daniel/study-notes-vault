@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->timestamp('due')->nullable();
             $table->boolean('status');
+            $table->timestamps();
         });
     }
 
