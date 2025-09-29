@@ -11,7 +11,7 @@ class TaskController extends Controller
     public function show(): View
     {
         return view('task.index', [
-            'title' => Task::all()
+            'tasks' => Task::all()
         ]);
     }
 }

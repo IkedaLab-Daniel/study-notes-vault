@@ -7,6 +7,18 @@
 </head>
 <body>
     <h1>Index for task</h1>
-    {{ $title }}
+    <div>
+        <h2>Tasks:</h2>
+         @foreach($tasks as $task)
+            <div class="bg-slate-600 w-[300px] h-[300px]">
+                <p>Title: {{ $task->title }}</p>
+                <p>Description: {{ $task->description }}</p>
+                <p>Due Date: {{ $task->due }}</p>
+                <p>Status: {{ $task->status }}</p>
+            </div>
+        
+        @endforeach
+    </div>
+   
 </body>
 </html>
