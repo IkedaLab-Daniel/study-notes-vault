@@ -17,22 +17,18 @@ class Car {
 
   static {}
 
-  make: string
-  model: string
-  year: number
-
   // private _serialNumber = Car.generateSerialNumber()
   #serialNumber = Car.#generateSerialNumber()
   protected get serialNumber() {
     return this.#serialNumber
   }
 
-  constructor(make: string, model: string, year: number) {
-    this.make = make
-    this.model = model
-    //     ^?
-    this.year = year
-  }
+  constructor(
+    make: string,
+    model: string,
+    year: number
+  ) {}
+
   honk(duration: number): string {
     return `h${'o'.repeat(duration)}nk`
   }
@@ -79,7 +75,7 @@ c.#serialNumber
 #serialNumber = Car.#generateSerialNumber()
 
 //* Private field presence checks
-/*
+
 // equals(other: unknown) {
 //     if (other &&
 //       typeof other === 'object' &&
@@ -93,42 +89,35 @@ c.#serialNumber
 // const c2 = c1
 // c2.equals(c1)
 
-//* readonly
-/*
+// readonly
+
 // readonly #serialNumber = Car.#generateSerialNumber()
 // changeSerialNumber(num: number) {
 //     this.#serialNumber = num
 // }
 
-//* Parameter properties
-/*
-// constructor(
-//     public make: string,
-//     public model: string,
-//     public year: number
-//   ) {}
+// * Parameter properties
 
-// class Base {}
+class Base {}
 
-// class Car2 extends Base {
-//   foo = console.log("class field initializer")
-//   constructor(public make: string) {
-//     super()
-//     console.log("custom constructor stuff")
-//   }
-// }
+class Car2 extends Base {
+  foo = console.log("class field initializer")
+  constructor(public make: string) {
+    super()
+    console.log("custom constructor stuff")
+  }
+}
 
 //* Overrides
 
-/*
-// class Truck extends Car {
-//     hoonk() { // OOPS!
-//         console.log("BEEP")
-//     }
-// }
+class Truck extends Car {
+    override honk(duration: number) { // OOPS!
+        return ("BEEP")
+    }
+}
 
-// const t = new Truck("Ford", "F-150", 2020);
-// t.honk(); // "beep"
+const t = new Truck("Ford", "F-150", 2020);
+t.honk(5); // "beep"
 
 //? override keyword
 // override hoonk() { // OOPS!
