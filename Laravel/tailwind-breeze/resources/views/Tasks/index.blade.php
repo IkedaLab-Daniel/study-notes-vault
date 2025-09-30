@@ -17,6 +17,14 @@
                         <span class="bg-red-500 px-2 py-1 rounded text-xs">Pending</span>
                     @endif
                 </p>
+                <form action="{{ route('tasks.destroy', $task) }}" method="POST">
+                    @csrf @method('DELETE')
+                    <button
+                        class="mt-4 p-1 w-[100%] bg-red-600 rounded hover:scale-105 transition-transform duration-500"
+
+                        type="submit"
+                    >Delete</button>
+                </form>
             </div>
         @endforeach
     </div>
