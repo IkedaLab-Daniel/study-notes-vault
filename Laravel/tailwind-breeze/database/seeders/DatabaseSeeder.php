@@ -25,8 +25,7 @@ class DatabaseSeeder extends Seeder
         Task::create([
             'title' => 'sample task 1',
             'description' => 'long long long descirption',
-            'due' => '2000-01-01 00:00:00',
-            'status' => true
+            'completed' => false
         ]);
     }
 }
