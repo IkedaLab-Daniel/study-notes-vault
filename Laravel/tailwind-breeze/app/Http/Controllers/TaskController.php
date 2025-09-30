@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\FuncCall;
 
 class TaskController extends Controller
 {
@@ -28,5 +29,22 @@ class TaskController extends Controller
         Task::create($request->only('title', 'description'));
 
         return redirect()->route('tasks.index')->with('success', 'Created successfully');
+    }
+
+    public function edit(Task $task)
+    {
+        return view('task.edit', compact('task'));
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'description'=>'nullable'
+        ]);
+
+        $task->update($request->only('title', 'description', 'completed'));
+
+        return redirect()->route('tasks.index')->with('success', 'Task has been updated successfully!');
     }
 }
