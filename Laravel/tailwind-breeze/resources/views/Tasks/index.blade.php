@@ -4,7 +4,7 @@
 <div class="max-w-6xl mx-auto p-8 bg-gray-800 min-h-[100vh] relative">
     <h1 class="text-3xl font-bold mb-6 text-gray-100">Tasks List</h1>
     <a href="" class="w-full ">
-        <p class="mb-4 bg-blue-600 text-center text-white py-2 px-4 rounded w-auto absolute right-7 top-7 hover:scale-105 transition-all duration-200">
+        <p class="mb-4 bg-blue-600 text-center text-white py-2 px-4 rounded md:w-auto md:absolute md:right-7 md:top-7 hover:scale-105 transition-all duration-200 fixed bottom-0 w-[85%] shadow-2xl">
             Add new task
         </p>
     </a>
@@ -15,7 +15,7 @@
                 <p class="text-gray-200 mb-3">{{ $task->description }}</p>
                 <p class="text-sm">
                     <span class="font-medium">Status:</span>
-                    @if($task->status)
+                    @if($task->completed == true)
                         <span class="bg-green-500 px-2 py-1 rounded text-xs">Completed</span>
                     @else
                         <span class="bg-red-500 px-2 py-1 rounded text-xs">Pending</span>
