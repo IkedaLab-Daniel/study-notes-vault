@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Index for task</h1>
-    <div>
-        <h2>Tasks:</h2>
-         @foreach($tasks as $task)
-            <div class="bg-slate-600 w-[300px] h-[300px]">
-                <p>Title: {{ $task->title }}</p>
-                <p>Description: {{ $task->description }}</p>
-                <p>Due Date: {{ $task->due }}</p>
-                <p>Status: {{ $task->status }}</p>
+@extends('layouts.app')
+
+@section('content')
+<div class="max-w-6xl mx-auto p-8 bg-gray-800 min-h-[100vh]">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Tasks List</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach($tasks as $task)
+            <div class="bg-slate-600 text-white rounded-lg p-6 shadow-lg">
+                <h3 class="text-xl font-semibold mb-2">{{ $task->title }}</h3>
+                <p class="text-gray-200 mb-3">{{ $task->description }}</p>
+                <p class="text-sm">
+                    <span class="font-medium">Status:</span>
+                    @if($task->status)
+                        <span class="bg-green-500 px-2 py-1 rounded text-xs">Completed</span>
+                    @else
+                        <span class="bg-red-500 px-2 py-1 rounded text-xs">Pending</span>
+                    @endif
+                </p>
             </div>
-        
         @endforeach
     </div>
-   
-</body>
-</html>
+</div>
+@endsection
