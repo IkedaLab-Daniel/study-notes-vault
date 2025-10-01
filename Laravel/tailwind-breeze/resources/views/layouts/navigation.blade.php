@@ -80,6 +80,15 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
+                {{ __('My Task') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('tasks.create')" :active="request()->routeIs('tasks.create')">
+                {{ __('Create Task') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('public-dashboard')" :active="request()->routeIs('public-dashboard')">
+                {{ __('All Task') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
