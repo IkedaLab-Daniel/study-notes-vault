@@ -18,6 +18,14 @@
             Add new task
         </p>
     </a>
+    @if(count($tasks) == 0)
+        <div class="flex justify-center items-center h-[300px] flex-col gap-1">
+            <svg class="w-20 h-20 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            <p class="text-gray-200 text-3xl">No task yet</p>
+        </div>
+    @endif
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($tasks as $task)
             <div class="bg-slate-600 text-white rounded-lg p-6 shadow-lg">
