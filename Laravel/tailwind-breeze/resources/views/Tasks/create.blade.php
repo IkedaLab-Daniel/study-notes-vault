@@ -38,21 +38,6 @@
                 ></textarea>
             </div>
 
-            <!-- Status Field -->
-            <div>
-                <label for="status" class="block text-sm font-medium text-gray-200 mb-2">
-                    Status
-                </label>
-                <select 
-                    id="status" 
-                    name="status" 
-                    class="w-full px-4 py-2 bg-gray-700 border border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white"
-                >
-                    <option value="0">Pending</option>
-                    <option value="1">Completed</option>
-                </select>
-            </div>
-
             <!-- Buttons -->
             <div class="flex justify-between items-center pt-4">
                 <a 

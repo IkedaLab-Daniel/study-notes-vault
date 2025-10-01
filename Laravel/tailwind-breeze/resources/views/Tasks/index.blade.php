@@ -2,7 +2,17 @@
 
 @section('content')
 <div class="max-w-6xl mx-auto p-8 bg-gray-800 min-h-[100vh] relative">
-    <h1 class="text-3xl font-bold mb-6 text-gray-100">Tasks List</h1>
+    @if(session('success'))
+        <!-- Success message -->
+        <div class="bg-green-600 py-2 px-5 rounded-md inline"> 
+            <svg class="w-5 h-5 text-green-50 inline mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <p class="text-green-50 inline">Task created successfully!</p>
+        </div>
+    @endif
+    
+    <h1 class="mt-4 text-3xl font-bold mb-6 text-gray-100">Tasks List</h1>
     <a href="{{ route('tasks.create') }}" class="w-full ">
         <p class="mb-4 bg-blue-600 text-center text-white py-2 px-4 rounded md:w-auto md:absolute md:right-7 md:top-7 hover:scale-105 transition-all duration-200 fixed bottom-0 w-[85%] shadow-2xl md:bottom-auto">
             Add new task

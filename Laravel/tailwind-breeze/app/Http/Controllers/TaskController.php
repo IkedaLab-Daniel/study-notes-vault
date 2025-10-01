@@ -45,7 +45,7 @@ class TaskController extends Controller
 
         $task->update($request->only('title', 'description', 'completed'));
 
-        return redirect()->route('tasks.index')->with('success', 'Task has been updated successfully!');
+        return redirect()->route('tasks.index')->with('success', 'Task has been updated successfully!'); // ? success message is stored in session
     }
 
     public function destroy(Task $task)
