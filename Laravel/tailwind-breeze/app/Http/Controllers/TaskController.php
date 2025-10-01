@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\FuncCall;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::latest()->get();
+        $tasks = $request->user()->tasks()->latest()->get();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -21,23 +20,32 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|max:255',
-            'description' => 'nullable'
+            'description' => 'nullable',
         ]);
 
-        Task::create($request->only('title', 'description'));
+        // > use the relationship to create the tasl
+        $request->user()->tasks()->create($validated);
 
         return redirect()->route('tasks.index')->with('success', 'Created successfully');
     }
 
     public function edit(Task $task)
     {
+        if ($task->user_id !== $request->user()->id){
+            abort(403);
+        }
+
         return view('tasks.edit', compact('task'));
     }
 
     public function update(Request $request, Task $task)
-    {
+    {   
+        if ($task->user_id !== $request->user()->id){
+            abort(403);
+        }
+
         $request->validate([
             'title' => 'required|max:255',
             'description'=>'nullable'
@@ -50,6 +58,10 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
+        if ($task->user_id !== $request->user()->id){
+            abort(403);
+        }
+
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
     }

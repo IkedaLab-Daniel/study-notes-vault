@@ -10,4 +10,9 @@ class Task extends Model
         'title',
         'description',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

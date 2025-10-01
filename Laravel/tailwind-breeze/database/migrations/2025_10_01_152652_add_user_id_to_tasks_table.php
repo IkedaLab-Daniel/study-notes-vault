@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-            
         });
     }
 
