@@ -31,7 +31,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Created successfully');
     }
 
-    public function edit(Task $task)
+    public function edit(Task $task, Request $request)
     {
         if ($task->user_id !== $request->user()->id){
             abort(403);
@@ -56,7 +56,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task has been updated successfully!'); // ? success message is stored in session
     }
 
-    public function destroy(Task $task)
+    public function destroy(Task $task, Request $request)
     {
         if ($task->user_id !== $request->user()->id){
             abort(403);
@@ -64,5 +64,11 @@ class TaskController extends Controller
 
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
+    }
+
+    public function publicDashboard()
+    {
+        $tasks = Task::with('user')->latest()->get();
+        return view('tasks.dashboard', compact('tasks'));
     }
 }
