@@ -1,17 +1,8 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+@section('content')
+    <div class="py-10 flex justify-center items-center flex-col gap-3">
+        <h1 class="text-white text-5xl font-semibold">Welcome to my Laravel CRUD practice site</h1>
+        <h2 class="text-white text-xl">This is the result of my practice. It is guided by GEMENI AI. I will try to practice CRUD again without AI help soon</h2>
     </div>
-</x-app-layout>
+@endsection
