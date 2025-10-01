@@ -8,7 +8,7 @@
             <svg class="w-5 h-5 text-green-50 inline mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
             </svg>
-            <p class="text-green-50 inline">Task created successfully!</p>
+            <p class="text-green-50 inline">{{session('success')}}</p>
         </div>
     @endif
     
@@ -38,7 +38,7 @@
                             Delete
                         </button>
                     </form>
-                    <a href="" class="w-[50%]">
+                    <a href="{{ route('tasks.edit', $task) }}" class="w-[50%]">
                         <button class="p-1 w-full bg-blue-500 rounded hover:scale-105 transition-transform duration-500">
                             Edit
                         </button>
