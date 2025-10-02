@@ -1,6 +1,6 @@
 <x-app-layout>
     <body>
-        <div class="p-6">
+        <div class="p-6 max-w-[1250px] mx-auto">
             @if (count($notes) == 0)
                 <div>
                     <!-- SVG DITO MAMAYA -->
@@ -10,9 +10,9 @@
                 <div class="flex justify-between items-center">
                     <span class="text-slate-200 text-4xl font-bold">My notes:</span>
                     <div>
-                        <a href="" class="text-slate-50 bg-blue-700 py-2 px-4 rounded">
+                        <button class="text-slate-50 bg-blue-700 py-2 px-4 rounded hover:scale-110 transition-all duration-[500ms]">
                             Add Note
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <div class="mt-4 md:p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
