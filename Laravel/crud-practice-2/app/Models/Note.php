@@ -9,7 +9,8 @@ class Note extends Model
     protected $fillable = [
         'title',
         'message',
-        'status'
+        'status',
+        'user_id'
     ];
 
     public function user(){
