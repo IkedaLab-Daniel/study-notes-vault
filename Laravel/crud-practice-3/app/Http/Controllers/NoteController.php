@@ -61,7 +61,14 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+       $validated = $request->validate([
+        'title' => 'required|max:255',
+        'message' => 'required'
+       ]);
+
+       $note->update($validated);
+
+       return redirect()->route('notes.index')->with('success', 'Note has been updated!');
     }
 
     /**
