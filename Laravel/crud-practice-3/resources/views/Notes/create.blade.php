@@ -8,11 +8,13 @@
         >
             @csrf
             <label class="text-xl" for="title">Title:</label>
-            <input class="bg-gray-600 w-[100%] rounded-md" type="text" name="title">
+            <input placeholder="Title" class="bg-gray-600 w-[100%] rounded-md" type="text" name="title">
             <label class="text-xl" for="message">Message:</label>
-            <textarea class="bg-gray-600 w-[100%] rounded-md" rows="6" name="message" id="message"></textarea>
+            <textarea placeholder="Message" class="bg-gray-600 w-[100%] rounded-md" rows="6" name="message" id="message"></textarea>
             <div class="mt-4 flex gap-4 ">
-                <button class="bg-gray-800 py-2 text-xl w-[50%] hover:scale-105 transition-all duration-500 shadow-lg">Back</button>
+                <a href="{{ route('notes.index') }}" class="bg-gray-800 py-2 text-xl text-center w-[50%] hover:scale-105 transition-all duration-500 shadow-lg">
+                    Back
+                </a>
                 <button class="bg-blue-700 py-2 text-xl w-[50%] hover:scale-105 transition-all duration-500 shadow-lg">Submit</button>
             </div>
         </form>
