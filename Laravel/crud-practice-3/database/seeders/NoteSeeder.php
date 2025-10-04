@@ -17,6 +17,27 @@ class NoteSeeder extends Seeder
             'user_id' => 1,
             'title'=> 'sample title',
             'message' => 'I love drinking tea while doing web dev drills'
-        ]);
+        ],
+        [
+            'user_id' => 1,
+            'title'=> 'sample title',
+            'message' => 'I love drinking tea while doing web dev drills'
+        ],
+        [
+            'user_id' => 1,
+            'title'=> 'sample title',
+            'message' => 'I love drinking tea while doing web dev drills'
+        ],
+        [
+            'user_id' => 1,
+            'title'=> 'sample title',
+            'message' => 'I love drinking tea while doing web dev drills'
+        ],
+        [
+            'user_id' => 1,
+            'title'=> 'sample title',
+            'message' => 'I love drinking tea while doing web dev drills'
+        ]    
+    );
     }
 }
