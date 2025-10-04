@@ -12,5 +12,9 @@ class Note extends Model
         'user_id'
     ];
 
+    public function user()
+    {
+        $this->belongsTo(\App\Models\User::class);
+    }
 
 }
