@@ -15,6 +15,14 @@
                     <p>{{ $note->message }}</p>
                     <div class="border-t border-gray-400 my-3"></div>
                     <p class="text-right text-sm italic">{{ $note->created_at->format('F j, Y') }}</p>
+                    <div class="mt-2 flex gap-2 text-center">
+                        <a href="" class="w-[50%] bg-red-700 py-1 rounded">
+                            Delete
+                        </a>
+                         <a href="" class="w-[50%] bg-blue-700 py-1 rounded">
+                            Edit
+                        </a>
+                    </div>
                 </div>
             @endforeach
         </div>
