@@ -10,9 +10,11 @@ class NoteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $notes = $request->user()->notes()->latest()->get();
+
+        return view('Notes.index', compact('notes'));
     }
 
     /**
