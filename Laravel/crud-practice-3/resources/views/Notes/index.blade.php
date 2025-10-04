@@ -1,5 +1,8 @@
 <x-app-layout>
     <div class="max-w-[1200px] mx-auto p-4 lg:p-0">
+        @if (session('success'))
+            <p class="text-gray-50">Sample Success</p>
+        @endif
         <h1 class="text-gray-100 text-4xl my-4 font-semibold">My Note:</h1>
         <div class="grid md:grid-cols-4 md:gap-4 gap-1">
             @foreach($notes as $note)

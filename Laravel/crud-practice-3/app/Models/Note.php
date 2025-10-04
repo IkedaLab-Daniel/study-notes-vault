@@ -8,7 +8,7 @@ class Note extends Model
 {
     protected $fillable = [
         'title',
-        'description',
+        'message',
         'user_id'
     ];
 
