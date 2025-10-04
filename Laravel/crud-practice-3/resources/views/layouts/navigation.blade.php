@@ -76,6 +76,12 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('notes.index')" :active="request()->routeIs('notes.index')">
+                {{ __('My Notes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('notes.create')" :active="request()->routeIs('notes.create')">
+                {{ __('Create Note') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
