@@ -16,9 +16,14 @@
                     <div class="border-t border-gray-400 my-3"></div>
                     <p class="text-right text-sm italic">{{ $note->created_at->format('F j, Y') }}</p>
                     <div class="mt-2 flex gap-2 text-center">
-                        <a href="" class="w-[50%] bg-red-700 py-1 rounded">
-                            Delete
-                        </a>
+                        <form action="{{ route('notes.destroy', $note) }}" method="POST" class="w-[50%] bg-red-700 py-1 rounded">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">
+                                Delete
+                            </button>
+                        </form>
+                        
                          <a href="{{ route('notes.edit', $note )}}" class="w-[50%] bg-blue-700 py-1 rounded">
                             Edit
                         </a>
