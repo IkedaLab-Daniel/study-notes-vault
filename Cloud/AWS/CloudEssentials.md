@@ -92,3 +92,20 @@
 5. **Eliminate data center maintenance** – AWS manages the servers and infrastructure, letting you focus on customers instead of upkeep.
 
 6. **Go global in minutes** – Easily expand to new regions worldwide by deploying to AWS-managed data centers, reducing setup from months/years to minutes.
+
+## AWS Global Infrastructure and High Availability
+
+* **High availability** ensures applications remain accessible with minimal downtime. If one component fails, another takes over.
+* **Fault tolerance** goes further by allowing systems to keep running even if multiple components fail.
+
+### AWS Setup
+
+* **Regions**: Geographically separated areas (e.g., Paris, Tokyo, São Paulo, Dublin, Ohio) designed to be close to customers.
+* **Availability Zones (AZs)**: Each Region contains 3+ AZs for redundancy. AZs are located apart from each other to avoid single points of failure (e.g., natural disasters).
+* **Data centers in AZs**: Each has redundant power, networking, and connectivity for resilience.
+
+### Why It Matters
+
+* Running in one giant data center is risky—if it fails, everything goes down.
+* By spreading infrastructure across multiple AZs and Regions, AWS provides high availability and fault tolerance.
+* Businesses often use multiple Regions to ensure disaster recovery and uninterrupted operations.
