@@ -134,3 +134,22 @@
 
   * **AWS secures the infrastructure.**
   * **Customers secure what they build and run on it.**
+
+## Scenario: E-commerce company expanding globally with AWS
+
+**1. AWS Global Infrastructure Benefits**
+
+* **Latency reduction:** Hosting applications closer to customers (e.g., Ireland Region for Europe, Singapore Region for Asia).
+* **Global reach without upfront cost:** Startups and small businesses can scale globally without building physical data centers.
+* **High availability & fault tolerance:** By deploying across multiple Availability Zones (AZs), if one AZ fails, workloads failover to another.
+
+**2. Shared Responsibility Model in Action**
+
+* **AWS responsibility (security *of* the cloud):** Securing the data centers, networking, and underlying infrastructure.
+* **Customer responsibility (security *in* the cloud):** Configuring applications securely, protecting sensitive data like credit card info, managing access, and ensuring compliance.
+
+**3. Key Takeaway**
+
+* AWS provides the **building blocks** (Regions, AZs, services, infrastructure).
+* Businesses—whether startups or enterprises—can **combine those blocks** while staying accountable for their own security and compliance.
+* Together, **Global Infrastructure + Shared Responsibility Model** enable businesses to scale quickly, stay resilient, and operate securely worldwide.
