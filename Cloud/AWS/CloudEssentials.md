@@ -153,3 +153,20 @@
 * AWS provides the **building blocks** (Regions, AZs, services, infrastructure).
 * Businesses—whether startups or enterprises—can **combine those blocks** while staying accountable for their own security and compliance.
 * Together, **Global Infrastructure + Shared Responsibility Model** enable businesses to scale quickly, stay resilient, and operate securely worldwide.
+
+## Amazon EC2 Overview
+
+* **Amazon EC2 (Elastic Compute Cloud):** Provides raw compute capacity in the cloud to host applications.
+* **Client/Server model:** Just like the coffee shop analogy, EC2 servers process client requests and return responses.
+
+**Key Features:**
+
+* **Virtual Machines (VMs):** EC2 instances are VMs running on shared physical hosts (multi-tenancy).
+* **Hypervisor:** Manages resource sharing and isolation between instances; AWS handles this layer.
+* **On-demand & scalable:** Launch thousands of instances within minutes, stop/terminate when not needed, and pay only for running instances.
+* **Flexible OS & software:** Choose Linux or Windows, and install any apps—web apps, databases, internal tools, or enterprise software.
+* **Vertical scaling:** Resize instances by increasing CPU/memory as demand grows.
+* **Networking control:** Configure access to servers, deciding whether instances are public or private.
+
+**Main Benefit:**
+VMs aren’t new, but AWS makes acquiring, managing, and scaling compute power **faster, easier, and more cost-effective** than running your own data center.
