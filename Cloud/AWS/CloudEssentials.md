@@ -109,3 +109,28 @@
 * Running in one giant data center is risky—if it fails, everything goes down.
 * By spreading infrastructure across multiple AZs and Regions, AWS provides high availability and fault tolerance.
 * Businesses often use multiple Regions to ensure disaster recovery and uninterrupted operations.
+
+## AWS Shared Responsibility Model
+
+* **Both AWS and the customer share responsibility for security.**
+
+* **AWS** is responsible for **security of the cloud**:
+
+  * Physical infrastructure (data centers, hardware, access controls).
+  * Network layer security.
+  * Hypervisor/virtualization layer.
+
+* **Customer** is responsible for **security in the cloud**:
+
+  * Operating system (patching, user accounts, access).
+  * Applications (configuration, updates, vulnerabilities).
+  * Data (access controls, encryption, visibility settings).
+
+### Key Idea
+
+* AWS provides the foundation and tools (like secure locks).
+* Customers must properly configure and use them (like locking the door).
+* Responsibilities may shift depending on the AWS service used, but the principle remains:
+
+  * **AWS secures the infrastructure.**
+  * **Customers secure what they build and run on it.**
