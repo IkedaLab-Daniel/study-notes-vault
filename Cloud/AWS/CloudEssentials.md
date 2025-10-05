@@ -46,3 +46,35 @@
   * First AWS concept learned: **pay-as-you-go model**.
   * AWS enables flexible, cost-efficient, and scalable IT operations.
   * This foundation will support deeper exploration of cloud concepts throughout the course.
+
+## AWS Cloud Essentials – History and Definition of Cloud Computing
+
+* **Origins of AWS**
+
+  * Early 2000s: Amazon.com needed more servers, storage, and compute to support ecommerce growth.
+  * Amazon developed standardized tools for efficiency and scalability.
+  * 2003: Idea emerged to share this model with other companies.
+  * 2004: First service launched – **Amazon Simple Queue Service (SQS)**.
+  * 2006: Added **Amazon Simple Storage Service (S3)** for storage and **Amazon Elastic Compute Cloud (EC2)** for compute.
+  * Initially popular with startups and developers; soon attracted enterprises due to scalability and cost-effectiveness.
+  * Expanded services rapidly into databases, networking, analytics, and more.
+  * Today: AWS powers a large portion of the internet, serving startups, enterprises, and governments globally.
+
+* **Definition of Cloud Computing**
+
+  * *On-demand delivery of IT resources over the internet with pay-as-you-go pricing*.
+  * **On-demand**: Use resources only when needed (e.g., store data in S3, delete when no longer required).
+  * **Delivery over the internet**: Access resources remotely from anywhere with an internet connection.
+  * **Pay-as-you-go pricing**: Stop paying immediately when resources are deprovisioned. No contracts or upfront costs.
+
+* **Data Centers and AWS Advantage**
+
+  * Data centers house servers with redundant power, cooling, and security for reliability.
+  * Historically, businesses had to run their own data centers or co-locate with others.
+  * AWS enabled businesses to run apps in AWS-managed data centers instead of owning infrastructure.
+  * Freed teams from repetitive infrastructure tasks, allowing them to focus on innovation.
+
+* **Key Takeaway**
+
+  * Cloud computing simplifies IT by eliminating infrastructure management, providing flexibility, scalability, and cost savings.
+  * AWS transformed from solving Amazon’s IT needs to becoming the global leader in cloud computing.
