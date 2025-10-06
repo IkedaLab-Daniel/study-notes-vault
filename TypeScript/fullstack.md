@@ -137,3 +137,82 @@
 
 * **Summary Insight:**
   Zod extends TypeScript’s static type system into runtime, enabling full data validation, transformation, and composition. It provides a single source of truth for data integrity across backend, frontend, and APIs.
+
+## Hands-On with Zod: Building and Testing Schemas
+
+* **Project Structure Overview:**
+  The app has a `client` (React), a `server` (Express), a `shared` folder for reusable logic, and an `exercises` folder for Zod practice.
+
+  * You’ll focus on the `exercises/zod` folder to practice writing and testing schemas.
+  * Tests are set up with `.todo` markers—remove them to start running failing tests and apply **test-driven development (TDD)**.
+
+* **Getting Started:**
+
+  * Run `npm test` to execute tests.
+  * Remove `.todo` from test cases one by one to reveal failing tests.
+  * The goal: write schemas that make the tests pass (turn red → green).
+
+* **First Schema Example:**
+  Create a basic object schema for a **user**:
+
+  ```js
+  const userSchema = z.object({
+    name: z.string(),
+    age: z.number().int().positive()
+  });
+  ```
+
+  * Ensures `name` is a string and `age` is a **positive integer**.
+  * Zod gives more granular checks than TypeScript (e.g., integer-only or positive numbers).
+  * You can infer a TypeScript type using `z.infer<typeof userSchema>`.
+
+* **Optional Fields and Defaults:**
+  Add optional properties with default values:
+
+  ```js
+  age: z.number().min(0).optional().default(0)
+  ```
+
+  * Order of chaining matters in Zod (`.optional().default(0)` must be applied correctly).
+  * When a default is set, the property is no longer optional in the inferred TypeScript type.
+
+* **Referencing Other Schemas:**
+  Schemas can **reference and compose** others:
+
+  ```js
+  const addressSchema = z.object({
+    street: z.string(),
+    city: z.string(),
+    zip: z.string().length(5).regex(/^\d+$/),
+    apartment: z.string().optional()
+  });
+
+  const userProfileSchema = z.object({
+    name: z.string(),
+    addresses: z.array(addressSchema)
+  });
+  ```
+
+  * Enables reusability and composition for complex data models.
+
+* **Unions and Literals:**
+  Use **unions** to represent multiple valid shapes:
+
+  ```js
+  const anonymousSchema = z.literal("anonymous");
+  const userSchema = z.object({
+    id: z.number(),
+    name: z.string()
+  });
+
+  const userIdentitySchema = z.union([anonymousSchema, userSchema]);
+  ```
+
+  * Accepts either the literal `"anonymous"` or an object with `id` and `name`.
+
+* **Key Takeaways:**
+
+  * Zod complements TypeScript by validating data **at runtime**.
+  * Order of chaining matters for modifiers like `.optional()` and `.default()`.
+  * Schemas can reference, compose, and reuse one another for scalability.
+  * Zod enables **TDD-style validation**—you can build schemas progressively by running tests and fixing validation logic.
