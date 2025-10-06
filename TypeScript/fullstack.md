@@ -59,3 +59,51 @@
 
 * Steve provides a **course notes website** and **GitHub repo** with all examples.
 * Includes extended notes beyond what’s covered in the session.
+
+## Type Guards and Runtime Validation with Zod
+
+* **Type Guards:**
+  Type guards help verify that data matches expected types at runtime. Unlike compile-time checks, they confirm actual data integrity. However, writing manual type guards becomes messy, especially for nested or complex objects.
+
+* **Problem with `any` and `unknown`:**
+  `any` bypasses all type checks, spreading unsafe assumptions. Using `unknown` is safer but forces manual checks for every property, leading to verbose and error-prone code.
+
+* **Example – Task Object Validation:**
+  Even for a simple “task” object, you must ensure it’s not `null`, is an object, and has properties like `id`, `title`, and `completed` of the correct types. This manual validation quickly becomes unmanageable for large or nested objects.
+
+* **Solution – Zod Library:**
+  Zod simplifies runtime validation by defining schemas that describe what data should look like.
+  Example schema:
+
+  ```ts
+  const TaskSchema = z.object({
+    id: z.number(),
+    title: z.string(),
+    completed: z.boolean(),
+  });
+  ```
+
+  * Can coerce types (e.g., `"1"` → `1`).
+  * Supports unions, optionals, partials, custom error messages.
+  * You can infer TypeScript types directly from Zod schemas using `z.infer<typeof TaskSchema>`.
+
+* **Parsing and Validation:**
+
+  * `parse()` throws an error if data doesn’t match the schema.
+  * `safeParse()` returns an object like `{ success: boolean, data?, error? }` without throwing.
+  * Once data passes validation, it is guaranteed to match the inferred type.
+
+* **Benefits of Zod:**
+
+  * Fewer lines of code and higher reliability than manual guards.
+  * Ensures type safety across API boundaries and user input.
+  * Reduces runtime bugs caused by invalid or unexpected data.
+
+* **Alternatives:**
+
+  * **Yup:** Similar schema definition and validation but uses `.validate()` instead of `.parse()`.
+  * **io-ts:** Uses `.decode()` for similar purposes.
+  * All share the same goal — validate runtime data to ensure consistency between types and reality.
+
+* **Key Insight:**
+  Using schema validation tools like Zod bridges the gap between compile-time type safety and real-world runtime data, ensuring your app behaves predictably even when APIs or users don’t.
