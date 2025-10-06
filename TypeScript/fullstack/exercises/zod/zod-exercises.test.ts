@@ -2,14 +2,17 @@
 import { describe, it, expect } from 'vitest';
 import { z } from 'zod';
 
-describe.todo('Basic Zod (Exercises)', () => {
+describe('Basic Zod (Exercises)', () => {
   /**
    *
    * CHALLENGE 1: Basic Validation
    *
    * - Object with { name: string, age: number >= 0 }
    */
-  const basicUserSchema = '🥸 IMPLEMENT ME!' as any;
+  const basicUserSchema = z.object({
+    name: z.string(),
+    age: z.number().int().positive(),
+  });
 
   describe('Challenge 1: Basic Validation', () => {
     it('should pass valid data', () => {
@@ -38,7 +41,10 @@ describe.todo('Basic Zod (Exercises)', () => {
    *   - If age missing, default to 0 (or you might just allow undefined).
    *
    */
-  const optionalAgeSchema = '🥸 IMPLEMENT ME!' as any;
+  const optionalAgeSchema = z.object({
+    name: z.string(),
+    age: z.number().int().positive().optional().default(0),
+  })
 
   describe('Challenge 2: Optional Age', () => {
     it('should pass with explicit age', () => {
