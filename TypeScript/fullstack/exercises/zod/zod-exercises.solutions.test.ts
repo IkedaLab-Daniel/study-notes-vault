@@ -2,14 +2,17 @@
 import { describe, it, expect } from 'vitest';
 import { z } from 'zod';
 
-describe.todo('Basic Zod (Exercises)', () => {
+describe('Zod Exercises (Solution)', () => {
   /**
    *
    * CHALLENGE 1: Basic Validation
    *
    * - Object with { name: string, age: number >= 0 }
    */
-  const basicUserSchema = '🥸 IMPLEMENT ME!' as any;
+  const basicUserSchema = z.object({
+    name: z.string(),
+    age: z.number().min(0, { message: "Age can't be negative" }),
+  });
 
   describe('Challenge 1: Basic Validation', () => {
     it('should pass valid data', () => {
@@ -38,7 +41,15 @@ describe.todo('Basic Zod (Exercises)', () => {
    *   - If age missing, default to 0 (or you might just allow undefined).
    *
    */
-  const optionalAgeSchema = '🥸 IMPLEMENT ME!' as any;
+  const optionalAgeSchema = z.object({
+    name: z.string(),
+    // We'll transform missing age to 0
+    age: z
+      .number()
+      .min(0)
+      .optional()
+      .transform((val) => val ?? 0),
+  });
 
   describe('Challenge 2: Optional Age', () => {
     it('should pass with explicit age', () => {
@@ -68,9 +79,19 @@ describe.todo('Basic Zod (Exercises)', () => {
    * - Must have at least one address in the array
    *
    */
-  const addressSchema = '🥸 IMPLEMENT ME!' as any;
+  const addressSchema = z.object({
+    street: z.string(),
+    city: z.string(),
+    zip: z.string(),
+    apartmentNumber: z.string().optional(),
+  });
 
-  const userProfileSchema = '🥸 IMPLEMENT ME!' as any;
+  const userProfileSchema = z.object({
+    name: z.string(),
+    addresses: z
+      .array(addressSchema)
+      .min(1, { message: 'At least one address required' }),
+  });
 
   describe('Challenge 3: Nested Objects and Arrays', () => {
     it('should pass with one valid address', () => {
@@ -113,7 +134,13 @@ describe.todo('Basic Zod (Exercises)', () => {
    * - Or an object { id: number, name: string }
    *
    */
-  const userIdentitySchema = '🥸 IMPLEMENT ME!' as any;
+  const userIdentitySchema = z.union([
+    z.literal('anonymous'),
+    z.object({
+      id: z.number(),
+      name: z.string(),
+    }),
+  ]);
 
   describe('Challenge 4: Union Types', () => {
     it("should accept the string 'anonymous'", () => {
@@ -148,7 +175,9 @@ describe.todo('Basic Zod (Exercises)', () => {
     return true;
   }
 
-  const primeNumberSchema = '🥸 IMPLEMENT ME!' as any;
+  const primeNumberSchema = z.number().refine(isPrime, {
+    message: 'Quantity must be prime!',
+  });
 
   describe('Challenge 5: Refinements (Prime Number)', () => {
     it('should pass for a prime number (5)', () => {
@@ -169,7 +198,12 @@ describe.todo('Basic Zod (Exercises)', () => {
    * - string in YYYY-MM-DD format -> transform into Date
    *
    */
-  const dateStringSchema = '🥸 IMPLEMENT ME!' as any;
+  const dateStringSchema = z
+    .string()
+    .refine((val) => !isNaN(new Date(val).valueOf()), {
+      message: 'Invalid date string',
+    })
+    .transform((val) => new Date(val));
 
   describe('Challenge 6: Transform to Date', () => {
     it('should transform a valid string to a Date', () => {
@@ -192,7 +226,7 @@ describe.todo('Basic Zod (Exercises)', () => {
    * - userIdSchema = z.string().uuid().brand<"UserId">()
    *
    */
-  const userIdSchema = '🥸 IMPLEMENT ME!' as any;
+  const userIdSchema = z.string().uuid().brand<'UserId'>();
   type UserId = z.infer<typeof userIdSchema>; // string & { __brand: "UserId" }
 
   describe('Challenge 7: Branded UUID', () => {
@@ -213,11 +247,23 @@ describe.todo('Basic Zod (Exercises)', () => {
    *
    * We'll reuse a "fullUserSchema" and create partial/picked/omitted versions
    */
-  const fullUserSchema = '🥸 IMPLEMENT ME!' as any;
+  const fullUserSchema = z.object({
+    name: z.string(),
+    email: z.string().email(),
+    phoneNumber: z.string().optional(),
+    addresses: z
+      .array(
+        z.object({ street: z.string(), city: z.string(), zip: z.string() }),
+      )
+      .optional(),
+  });
 
-  const partialUserUpdateSchema = '🥸 IMPLEMENT ME!' as any;
-  const publicProfileSchema = '🥸 IMPLEMENT ME!' as any;
-  const userWithoutEmailSchema = '🥸 IMPLEMENT ME!' as any;
+  const partialUserUpdateSchema = fullUserSchema.partial();
+  const publicProfileSchema = fullUserSchema.pick({
+    name: true,
+    addresses: true,
+  });
+  const userWithoutEmailSchema = fullUserSchema.omit({ email: true });
 
   describe('Challenge 8: partial, pick, omit', () => {
     const sampleData = {
@@ -258,7 +304,15 @@ describe.todo('Basic Zod (Exercises)', () => {
    *
    * - Validate hex color string (#FFF or #FFFFFF, etc.)
    */
-  const hexColorSchema = '🥸 IMPLEMENT ME!' as any;
+  const hexColorSchema = z.custom<string>(
+    (val) => {
+      if (typeof val !== 'string') return false;
+      return /^#[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?$/.test(val);
+    },
+    {
+      message: 'Invalid hex color',
+    },
+  );
 
   describe('Challenge 9: Custom (Hex Color)', () => {
     it('should pass #FFF', () => {
@@ -291,15 +345,33 @@ describe.todo('Basic Zod (Exercises)', () => {
    * - email (valid email)
    * - birthDate (optional, if present must be valid date and transformed to Date)
    */
-  const usernameSchema = '🥸 IMPLEMENT ME!' as any;
+  const usernameSchema = z.string().min(4).max(16);
 
-  const passwordSchema = '🥸 IMPLEMENT ME!' as any;
+  const passwordSchema = z
+    .string()
+    .min(8)
+    .refine((val) => /\d/.test(val), { message: 'Must contain a digit' });
 
-  const emailSchema = '🥸 IMPLEMENT ME!' as any;
+  const emailSchema = z.string().email();
 
-  const birthDateSchema = '🥸 IMPLEMENT ME!' as any;
+  const birthDateSchema = z
+    .string()
+    .optional()
+    .refine(
+      (val) => {
+        if (!val) return true;
+        return !isNaN(new Date(val).valueOf());
+      },
+      { message: 'Invalid birth date format' },
+    )
+    .transform((val) => (val ? new Date(val) : undefined));
 
-  const registrationFormSchema = '🥸 IMPLEMENT ME!' as any;
+  const registrationFormSchema = z.object({
+    username: usernameSchema,
+    password: passwordSchema,
+    email: emailSchema,
+    birthDate: birthDateSchema,
+  });
 
   describe('Challenge 10: Full Form Validator', () => {
     it('should pass valid form data', () => {
