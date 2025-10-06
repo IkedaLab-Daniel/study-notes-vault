@@ -1,0 +1,10 @@
+{
+  "name": "full-stack-typescript",
+  "author": "",
+  "workspaces": [
+    "server",
+    "client",
+    "exercises",
+    "shared"
+  ]
+}
