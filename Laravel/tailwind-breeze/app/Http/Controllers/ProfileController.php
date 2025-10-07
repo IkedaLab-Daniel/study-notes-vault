@@ -64,14 +64,17 @@ class ProfileController extends Controller
     public function update_avatar(Request $request)
     {
         $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5000'
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Reduced to 2MB for capstone
         ]);
 
         $user = $request->user();
 
         if ($request->hasFile('avatar')){
-            // > store the avatar
-            $path = $request->file('avatar')->store('avatars', 'public');
+            // Generate unique filename to avoid conflicts
+            $filename = time() . '_' . $request->file('avatar')->getClientOriginalName();
+            
+            // Store the avatar with custom name
+            $path = $request->file('avatar')->storeAs('avatars', $filename, 'public');
         }
 
         // > delete old avatar, if any
