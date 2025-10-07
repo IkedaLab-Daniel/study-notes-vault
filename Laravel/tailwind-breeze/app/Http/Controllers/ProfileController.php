@@ -81,6 +81,7 @@ class ProfileController extends Controller
         }
 
         $user->avatar = $path;
+        $user->save();
 
         return redirect()->route('profile.edit')->with('status', 'avatar-updated');
     }
