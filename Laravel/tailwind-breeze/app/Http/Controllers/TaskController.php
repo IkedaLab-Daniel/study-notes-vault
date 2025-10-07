@@ -10,12 +10,12 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $tasks = $request->user()->tasks()->latest()->get();
-        return view('tasks.index', compact('tasks'));
+        return view('Tasks.index', compact('tasks'));
     }
 
     public function create()
     {
-        return view('tasks.create'); // ! TBI
+        return view('Tasks.create'); // ! TBI
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class TaskController extends Controller
             abort(403);
         }
 
-        return view('tasks.edit', compact('task'));
+        return view('Tasks.edit', compact('task'));
     }
 
     public function update(Request $request, Task $task)
@@ -69,6 +69,6 @@ class TaskController extends Controller
     public function publicDashboard()
     {
         $tasks = Task::with('user')->latest()->get();
-        return view('tasks.dashboard', compact('tasks'));
+        return view('Tasks.dashboard', compact('tasks'));
     }
 }
