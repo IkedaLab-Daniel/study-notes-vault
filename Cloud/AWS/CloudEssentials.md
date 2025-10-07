@@ -194,3 +194,34 @@ VMs aren’t new, but AWS makes acquiring, managing, and scaling compute power *
 
 * Instance type/size isn’t permanent—easily switch as workload demands change.
 * Cloud advantage: adjust quickly without long-term commitment.
+
+## Interacting with AWS Services through APIs
+
+* **Everything in AWS is an API call.**
+  APIs (Application Programming Interfaces) define how you interact with AWS services to provision, configure, and manage resources.
+
+* **Three main ways to call AWS APIs:**
+
+  1. **AWS Management Console** – a browser-based interface for visual management.
+
+     * Ideal for beginners and test environments.
+     * Useful for viewing bills, monitoring, and non-technical management tasks.
+     * However, manual provisioning can lead to errors and is inefficient for production.
+  2. **AWS Command Line Interface (CLI)** – enables text-based interaction via commands.
+
+     * Supports automation and scripting.
+     * Example commands:
+
+       * `aws ec2 run-instances` → creates an EC2 instance
+       * `aws ec2 describe-availability-zones` → lists availability zones
+     * Can be used through **AWS CloudShell**, a managed cloud-based terminal with CLI preinstalled.
+  3. **AWS Software Development Kit (SDK)** – allows programmatic interaction through code.
+
+     * Supports multiple languages (e.g., Python, JavaScript, Java).
+     * Example: a Python script using the SDK (Boto3) to list EC2 instances in a region.
+
+* **Key Insight:**
+  Whether you use the **Console**, **CLI**, or **SDK**, all interactions with AWS are API calls happening behind the scenes.
+
+* **Automation Benefit:**
+  Using CLI or SDK enables automation, consistency, and reduces human error—critical for scalable and predictable cloud deployments.
