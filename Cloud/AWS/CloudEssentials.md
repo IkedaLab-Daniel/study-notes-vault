@@ -225,3 +225,50 @@ VMs aren’t new, but AWS makes acquiring, managing, and scaling compute power *
 
 * **Automation Benefit:**
   Using CLI or SDK enables automation, consistency, and reduces human error—critical for scalable and predictable cloud deployments.
+
+## Launching an EC2 Instance Using the AWS Management Console
+
+* **Access the EC2 Console:**
+  Navigate to the EC2 service in the AWS Management Console and select **“Launch instance.”**
+
+* **1. Name the Instance:**
+  Assign a name to identify your instance later.
+
+* **2. Choose an Amazon Machine Image (AMI):**
+
+  * AMI = a template that includes the OS and preinstalled software.
+  * Select **Amazon Linux AMI** for a general-purpose web server.
+
+* **3. Select an Instance Type:**
+
+  * Defines CPU and memory resources.
+  * Choose **t2.micro** (1 vCPU, 1 GB RAM) — eligible for the Free Tier.
+
+* **4. Configure the Key Pair:**
+
+  * Used for secure SSH login.
+  * The **public key** is injected into the instance; you keep the **private key.**
+
+* **5. Set Network Settings:**
+
+  * Allow **HTTP traffic from the internet** to make it accessible as a web server.
+
+* **6. Configure Storage:**
+
+  * Allocate **8 GB** of storage using **gp3 EBS volume** (Elastic Block Store).
+
+* **7. Add User Data (Optional Startup Script):**
+
+  * Under **Advanced Details → User Data**, paste a script that installs and activates **Nginx**, turning the instance into a functioning web server.
+
+* **8. Launch the Instance:**
+
+  * Click **Launch instance** to start it.
+  * Once running, view its details and copy the **public IP address**.
+
+* **9. Verify the Web Server:**
+
+  * Paste the public IP into a browser — you’ll see your **Nginx welcome page**, confirming the server is live.
+
+* **Result:**
+  You’ve successfully deployed an **EC2 instance running a basic web server**, ready for future configuration and scaling.
