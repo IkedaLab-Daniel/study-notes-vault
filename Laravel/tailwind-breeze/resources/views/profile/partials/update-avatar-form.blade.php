@@ -25,11 +25,24 @@
                 src="{{ asset('storage/' . auth()->user()->avatar) }}" 
                 alt="Current Avatar" 
                 class="w-24 h-24 rounded-full object-cover"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
             >
+            <div class="w-24 h-24 rounded-full bg-red-200 flex items-center justify-center text-xs p-2" style="display:none;">
+                <span class="text-red-600 text-center">Image not found<br>{{ auth()->user()->avatar }}</span>
+            </div>
         @else
             <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
                 <span class="text-gray-500">No Avatar</span>
             </div>
+        @endif
+        
+        {{-- Debug Info (Remove in production) --}}
+        @if(auth()->user()->avatar)
+        <div class="mt-2 text-xs text-gray-500">
+            <p><strong>Avatar Path:</strong> {{ auth()->user()->avatar }}</p>
+            <p><strong>Full URL:</strong> {{ asset('storage/' . auth()->user()->avatar) }}</p>
+            <p><strong>File Exists:</strong> {{ file_exists(public_path('storage/' . auth()->user()->avatar)) ? 'Yes' : 'No' }}</p>
+        </div>
         @endif
     </div>
 
