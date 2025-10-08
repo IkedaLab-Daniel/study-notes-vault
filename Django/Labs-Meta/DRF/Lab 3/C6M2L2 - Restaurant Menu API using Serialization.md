@@ -78,7 +78,7 @@ Create a class called `MenuItemSerializer` and pass the class object `serializer
 
 Inside the `MenuItemSerializer` class, create another class called `Meta` and add the following code inside the class:
 
-- Assign the `Book` model to a variable called model
+- Assign the `MenuItem` model to a variable called model
 - Create a variable called `fields` and assign the list of strings with four elements to it namely: `'id'` , `'title'` , `'price'` and `'inventory'`
 - Create a variable `extra_kwargs` and assign a nested dictionary to it consisting of two items that are defined as below:
 
