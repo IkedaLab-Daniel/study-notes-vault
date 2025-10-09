@@ -337,3 +337,22 @@ This is managed by **Amazon EC2 Auto Scaling**, which automatically adds or remo
 
 * **Amazon CloudWatch** collects these metrics (like CPU usage or latency).
 * Scaling decisions happen **automatically and in real time**, ensuring optimal performance and cost efficiency.
+
+## Elastic Load Balancing (ELB) in AWS
+
+* **Problem:** Uneven traffic distribution across EC2 instances can cause overload on some while others stay idle.
+* **Solution:** Use a **load balancer** to evenly route incoming requests among available instances.
+
+**Elastic Load Balancing (ELB)** automatically distributes network traffic across multiple EC2 instances to improve **scalability, availability, and performance**.
+
+* AWS manages patching, failover, and maintenance.
+* ELB automatically **scales up or down** with demand at no extra hourly cost.
+* It can handle both **internal and external** traffic.
+
+**Example (Coffee Shop Analogy):**
+
+* The **host** directs customers to the shortest cashier line—just like ELB directs traffic to the least busy instance.
+* In a multi-tier web app, ELB provides a **single endpoint** for front-end instances to reach back-end instances.
+* When new back-end instances launch, they register with the ELB and immediately start receiving requests—no need for manual configuration.
+
+This setup **decouples tiers** and allows each layer to scale independently and efficiently.
