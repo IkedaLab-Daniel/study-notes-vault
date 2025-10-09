@@ -356,3 +356,25 @@ This is managed by **Amazon EC2 Auto Scaling**, which automatically adds or remo
 * When new back-end instances launch, they register with the ELB and immediately start receiving requests—no need for manual configuration.
 
 This setup **decouples tiers** and allows each layer to scale independently and efficiently.
+
+## Messaging and Queuing with Amazon SQS and SNS
+
+* In a tightly coupled system, components depend on each other—if one fails, the other is affected.
+* Introducing a **buffer (queue)** between components creates a **loosely coupled architecture**, improving reliability and scalability.
+
+**Amazon Simple Queue Service (SQS):**
+
+* Provides reliable message queuing between software components.
+* Messages (payloads) are stored in a queue until the receiver is ready to process them.
+* Ensures no data loss even if one component is temporarily unavailable.
+* Scales automatically and is easy to configure.
+* Analogy: The *coffee order board* where cashiers post orders for baristas to pick up later.
+
+**Amazon Simple Notification Service (SNS):**
+
+* Used for **real-time, push-based messaging**.
+* Sends messages instantly to subscribers (services or end users).
+* Supports multiple delivery methods like **SMS, email, and mobile push notifications**.
+* Analogy: The *barista calling out* an order when it’s ready.
+
+Together, **SQS** and **SNS** enable **loose coupling, scalability, and fault tolerance** in AWS architectures.
