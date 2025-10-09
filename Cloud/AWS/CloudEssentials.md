@@ -272,3 +272,42 @@ VMs aren’t new, but AWS makes acquiring, managing, and scaling compute power *
 
 * **Result:**
   You’ve successfully deployed an **EC2 instance running a basic web server**, ready for future configuration and scaling.
+
+## Amazon EC2 Pricing Options
+
+* **1. On-Demand Instances:**
+
+  * Pay only for the time your instance runs (per second or per hour).
+  * No upfront payment or long-term commitment.
+  * Ideal for new users, testing, and unpredictable workloads.
+
+* **2. Savings Plans:**
+
+  * Commit to consistent usage (in $/hour) for **1 or 3 years**.
+  * Save up to **72%** on costs.
+  * Applies across **instance families, sizes, OS, Regions**, and even to **AWS Fargate** and **Lambda**.
+
+* **3. Reserved Instances (RIs):**
+
+  * Best for **steady or predictable workloads**.
+  * Up to **75% discount** compared to On-Demand.
+  * Commit for **1 or 3 years** with payment options:
+
+    * **All Upfront** – full payment at commitment
+    * **Partial Upfront** – pay part now, rest over time
+    * **No Upfront** – pay as you go
+
+* **4. Spot Instances:**
+
+  * Use **spare EC2 capacity** for up to **90% off** On-Demand price.
+  * Can be **terminated anytime** by AWS (with a 2-minute warning).
+  * Great for **flexible or fault-tolerant** workloads.
+
+* **5. Dedicated Hosts:**
+
+  * Reserve **entire physical servers** for exclusive use.
+  * Provides full control over placement and resources.
+  * Ideal for **compliance**, **security**, or **license-restricted** workloads (e.g., Windows, SQL Server).
+
+**Summary:**
+EC2 offers flexible pricing models to suit different needs — from temporary testing to long-term, high-security operations — helping balance **cost, flexibility, and workload requirements**.
