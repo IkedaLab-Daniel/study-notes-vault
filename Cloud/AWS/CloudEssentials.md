@@ -378,3 +378,22 @@ This setup **decouples tiers** and allows each layer to scale independently and 
 * Analogy: The *barista calling out* an order when it’s ready.
 
 Together, **SQS** and **SNS** enable **loose coupling, scalability, and fault tolerance** in AWS architectures.
+
+## Managed vs Unmanaged Services and the Shift to Serverless
+
+* **Amazon EC2** provides virtual machines for diverse workloads, offering high control but requiring management tasks like patching, scaling, and OS maintenance.
+* EC2 is an **unmanaged service**, meaning AWS manages the infrastructure, but you manage what runs on it — aligning with the **Shared Responsibility Model**.
+
+**Unmanaged vs Managed Services:**
+
+* **Unmanaged services:** Full control and customization (like a manual espresso machine). Great flexibility, but more work for setup and maintenance.
+* **Managed services:** AWS handles most operations (like a coffee pod machine). You configure it once, and AWS ensures reliability and scaling. Examples include **Elastic Load Balancing (ELB)**, **Simple Notification Service (SNS)**, and **Simple Queue Service (SQS)**.
+
+**Serverless Computing:**
+
+* You don’t manage or even see the underlying infrastructure.
+* AWS automatically handles provisioning, scaling, high availability, and maintenance.
+* You focus purely on application logic and functionality.
+
+**Key takeaway:**
+AWS offers a **spectrum of compute services**—from fully managed to fully customizable. The goal is to choose the balance of control and convenience that best fits your application needs. Sometimes you’ll want to craft everything by hand (like a barista), and other times you’ll prefer quick, effortless automation (like using a pod machine).
