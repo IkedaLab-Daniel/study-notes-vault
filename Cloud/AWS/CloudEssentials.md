@@ -311,3 +311,14 @@ VMs aren’t new, but AWS makes acquiring, managing, and scaling compute power *
 
 **Summary:**
 EC2 offers flexible pricing models to suit different needs — from temporary testing to long-term, high-security operations — helping balance **cost, flexibility, and workload requirements**.
+
+## Scalability and Elasticity in AWS
+
+* **AWS EC2 instances** can handle various workloads, such as hosting web apps, processing data, or serving customer requests.
+* **Scalability and elasticity** allow systems to automatically grow or shrink capacity based on demand.
+* Businesses often face **cyclical or unpredictable traffic**, making it costly to always plan for peak usage.
+* With AWS, you can **provision resources dynamically** to meet real-time demand—keeping customers satisfied and costs efficient.
+* **High availability** is achieved by creating redundant EC2 instances across **multiple Availability Zones (AZs)** to eliminate single points of failure.
+* When demand increases, **additional instances** can be automatically launched to handle the load; when demand decreases, unnecessary instances are terminated.
+
+This approach ensures **continuous service**, **cost efficiency**, and **automatic scaling** aligned with business needs.
