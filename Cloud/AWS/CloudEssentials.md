@@ -322,3 +322,18 @@ EC2 offers flexible pricing models to suit different needs — from temporary te
 * When demand increases, **additional instances** can be automatically launched to handle the load; when demand decreases, unnecessary instances are terminated.
 
 This approach ensures **continuous service**, **cost efficiency**, and **automatic scaling** aligned with business needs.
+
+## Scaling in AWS: Scale Out vs Scale Up
+
+* **Scaling out (horizontal scaling):** Adds more instances to handle more tasks in parallel.
+* **Scaling up (vertical scaling):** Upgrades existing instances with more CPU, RAM, or power.
+
+In the **coffee shop analogy**, scaling out means adding more workers to serve customers faster, while scaling up means giving one worker more power—but it doesn’t always help.
+
+* Different parts of the system can be scaled **independently** based on workload (e.g., more order-takers vs. drink-makers).
+* When demand decreases, **idle instances are terminated** to save costs.
+
+This is managed by **Amazon EC2 Auto Scaling**, which automatically adds or removes instances based on demand and performance metrics.
+
+* **Amazon CloudWatch** collects these metrics (like CPU usage or latency).
+* Scaling decisions happen **automatically and in real time**, ensuring optimal performance and cost efficiency.
