@@ -423,3 +423,42 @@ AWS offers a **spectrum of compute services**—from fully managed to fully cust
 * **Execution:** Lambda retrieves, logs, and processes messages automatically from SQS.
 * **Monitoring:** Use **Amazon CloudWatch Logs** to view function metrics and logs, confirming successful message processing.
 * **Result:** Messages disappear from the SQS queue immediately after being processed by the Lambda function.
+
+## AWS Containers Overview
+
+* **Problem:** Applications often fail outside the developer’s machine due to inconsistent environments.
+* **Solution:** **Containers** package code, runtime, dependencies, and configuration into one portable unit, ensuring consistency, isolation, faster startup, and efficient resource use.
+* **Challenge:** Managing containers manually is complex—requiring monitoring, scaling, updates, and networking.
+* **Fix:** **Container orchestration services** automate lifecycle management, scaling, recovery, and updates.
+
+### AWS Container Services
+
+* **Amazon ECS (Elastic Container Service):**
+
+  * AWS-managed container orchestration.
+  * Simplified, tightly integrated with AWS.
+  * Manages infrastructure and scaling based on your parameters.
+
+* **Amazon EKS (Elastic Kubernetes Service):**
+
+  * Runs **Kubernetes** clusters on AWS.
+  * Offers flexibility and control for large-scale or hybrid setups.
+
+### Supporting Service
+
+* **Amazon ECR (Elastic Container Registry):**
+
+  * Secure, managed registry to store and retrieve container images.
+
+### Compute Options for Containers
+
+* **Amazon EC2:** You manage the underlying virtual machines—offers full control.
+* **AWS Fargate:** Serverless option where AWS manages the servers—offers convenience and no infrastructure management.
+
+### Example Workflow
+
+1. Upload container images to **ECR**.
+2. Choose orchestration service: **ECS** or **EKS**.
+3. Choose compute option: **EC2** (managed) or **Fargate** (serverless).
+
+**Result:** AWS provides a convenient, scalable, and efficient container environment—so you can focus on building and improving your application.
