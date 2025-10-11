@@ -462,3 +462,33 @@ AWS offers a **spectrum of compute services**—from fully managed to fully cust
 3. Choose compute option: **EC2** (managed) or **Fargate** (serverless).
 
 **Result:** AWS provides a convenient, scalable, and efficient container environment—so you can focus on building and improving your application.
+
+## AWS Purpose-Built Compute Services
+
+* **AWS Elastic Beanstalk:**
+
+  * Simplifies deployment and management of applications on EC2.
+  * Automatically provisions and configures infrastructure (network, instances, load balancers, scaling).
+  * Allows saving and redeploying environment configurations.
+  * You retain visibility and control over the underlying resources.
+
+* **AWS Batch:**
+
+  * Ideal for compute-intensive workloads like data processing, simulations, and large-scale calculations.
+  * Automatically manages and scales infrastructure across EC2 instances.
+  * Lets you focus on development and analysis instead of server management.
+
+* **Amazon Lightsail:**
+
+  * Simplified and cost-effective hosting for web apps and websites.
+  * Handles much of the complexity of traditional hosting.
+  * Great for users who want a quick, easy-to-manage solution.
+
+* **AWS Outposts:**
+
+  * Provides a **hybrid cloud** solution by extending AWS infrastructure to on-premises environments.
+  * Offers a consistent AWS experience both locally and in the cloud.
+  * Ideal for use cases requiring low latency, data residency, or hybrid integration.
+
+**Summary:**
+AWS provides purpose-built compute services for different needs—from simple app hosting and batch processing to hybrid deployments—helping you focus on your goals while AWS manages the heavy lifting.
