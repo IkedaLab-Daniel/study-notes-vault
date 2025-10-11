@@ -408,3 +408,18 @@ AWS offers a **spectrum of compute services**—from fully managed to fully cust
 * Ideal for **event-driven, short-duration tasks** like website requests, data processing, or report generation.
 * Supports multiple programming languages including **Java, Python, and Node.js**, with the option to build **custom runtimes**.
 * Integrates seamlessly with other **AWS services**, enabling complex applications without managing infrastructure.
+
+## SQS and Lambda Integration
+
+* **Architecture:** An **SQS queue** triggers a **Lambda function** automatically whenever a new message is added.
+* **Permissions:** The Lambda function needs proper **IAM permissions** to access and read messages from the SQS queue.
+* **Setup Process:**
+
+  * Create an **SQS queue** and add messages.
+  * In the **Lambda console**, use an **SQS blueprint** to create a function.
+  * Choose a **runtime** (e.g., Node.js, Java, Python, or a custom runtime).
+  * Create an **execution role** (e.g., `Demo_Lambert_Role`) using the **Amazon SQS poller policy** to allow Lambda to poll messages.
+  * Configure an **SQS trigger** linked to the queue.
+* **Execution:** Lambda retrieves, logs, and processes messages automatically from SQS.
+* **Monitoring:** Use **Amazon CloudWatch Logs** to view function metrics and logs, confirming successful message processing.
+* **Result:** Messages disappear from the SQS queue immediately after being processed by the Lambda function.
