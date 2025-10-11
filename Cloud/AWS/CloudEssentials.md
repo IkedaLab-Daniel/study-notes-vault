@@ -397,3 +397,14 @@ Together, **SQS** and **SNS** enable **loose coupling, scalability, and fault to
 
 **Key takeaway:**
 AWS offers a **spectrum of compute services**—from fully managed to fully customizable. The goal is to choose the balance of control and convenience that best fits your application needs. Sometimes you’ll want to craft everything by hand (like a barista), and other times you’ll prefer quick, effortless automation (like using a pod machine).
+
+## AWS Lambda – Serverless Compute Service
+
+* **AWS Lambda** is a **serverless compute service** (Function as a Service) that runs your code without provisioning or managing servers.
+* You create a **Lambda function**, add your code, set up a **trigger**, and AWS runs your function automatically when triggered.
+* **Triggers** can include events such as file uploads, data streams, or image processing.
+* AWS handles **scaling, availability, patching, and security**, allowing you to focus solely on your code.
+* Lambda functions can run for a **maximum of 15 minutes** per invocation.
+* Ideal for **event-driven, short-duration tasks** like website requests, data processing, or report generation.
+* Supports multiple programming languages including **Java, Python, and Node.js**, with the option to build **custom runtimes**.
+* Integrates seamlessly with other **AWS services**, enabling complex applications without managing infrastructure.
