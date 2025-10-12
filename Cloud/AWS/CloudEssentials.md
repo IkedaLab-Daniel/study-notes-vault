@@ -1952,3 +1952,25 @@ AWS supports both **custom ML development** and **ready-made AI services**.
 * **Pre-built AI services** handle tasks like image recognition and language translation.
 
 For accurate results, AI requires **clean, well-structured data** from various sources such as sales logs, sensors, or social media. The quality of this data determines the reliability of your AI’s insights and predictions.
+
+## AWS AI/ML Stack Overview
+
+AI and ML have long powered innovation—Amazon itself uses ML for product recommendations and logistics optimization. Beyond ecommerce, ML models are applied in finance (fraud detection, stock prediction), customer service (smart call routing), and many other industries.
+
+AWS organizes its AI/ML ecosystem into **three tiers**:
+
+1. **AWS AI Services** – Fully managed and pre-trained models for common tasks. Examples include:
+
+   * **Amazon Polly** – Converts text to lifelike speech.
+   * **Amazon Comprehend** – Performs sentiment and text analysis.
+
+2. **AWS ML Services** – For building and customizing your own ML models.
+
+   * **Amazon SageMaker AI** provides an end-to-end environment for data visualization, training, experimentation, debugging, deployment, and monitoring—all using managed infrastructure.
+
+3. **Frameworks and Infrastructure** – For highly specialized ML needs.
+
+   * Supports popular ML frameworks and ML-optimized EC2 instances.
+   * Allows use of purpose-built chips for high-performance model training.
+
+Together, these layers offer flexibility—from using ready-to-go AI tools to crafting custom ML solutions. Upcoming lessons explore deeper ML applications and the rapidly advancing world of **generative AI** on AWS.
