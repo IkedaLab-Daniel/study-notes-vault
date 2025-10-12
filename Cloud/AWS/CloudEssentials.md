@@ -597,3 +597,11 @@ For greater resilience, **multi-Region deployments** can handle even full-Region
 To enhance content delivery, **Amazon CloudFront**, a **Content Delivery Network (CDN)**, serves data closer to users through **Edge locations** in the **Global Edge Network**. These edge locations also support **AWS Global Accelerator** and **Amazon Route 53**, which converts domain names into IP addresses to route users efficiently.
 
 When ultra-low latency is needed, **AWS Outposts** enables running AWS services **on-premises**, combining local performance with AWS infrastructure benefits. Together, these services ensure fast, reliable, and globally optimized application delivery.
+
+## Infrastructure as Code (IaC) and AWS CloudFormation
+
+Managing multiple AWS resources across Regions or accounts manually is slow and error-prone. **Infrastructure as Code (IaC)** solves this by allowing you to define your infrastructure in files—like blueprints—that ensure consistency, repeatability, and easier version control.
+
+**AWS CloudFormation** is an IaC service that uses **declarative templates** to define resources without specifying the exact build steps. It automatically provisions everything by calling AWS APIs in the background.
+
+By deploying the same CloudFormation template in multiple Regions or accounts, you create **identical environments** with minimal human error. This automation saves time, ensures accuracy, and strengthens overall **architecture resilience**—making infrastructure management faster, consistent, and reliable.
