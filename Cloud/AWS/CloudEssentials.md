@@ -913,3 +913,9 @@ Both use **CIDR blocks** to define traffic sources and destinations, ensuring fu
 | **Public Subnets**   | Internet-facing            | `10.0.3.0/24`, `10.0.4.0/24` |
 | **Internet Gateway** | Public access point        | `my-ig`                      |
 | **Route Table**      | Routes traffic to IGW      | `0.0.0.0/0 → my-ig`          |
+
+## Amazon Route 53 and CloudFront Overview
+
+Amazon **Route 53** is a Domain Name System (DNS) service that translates website names into IP addresses so browsers can locate and connect to websites. It supports different routing policies such as **latency-based**, **geolocation**, **geoproximity**, and **weighted round robin** to direct user traffic efficiently. Route 53 can also be used to register and manage domain names.
+
+**Amazon CloudFront** is a **Content Delivery Network (CDN)** that uses **edge locations** to deliver website content closer to users for faster performance. By caching static assets like images and videos in nearby locations, CloudFront reduces latency and enhances the user experience. Together, Route 53 and CloudFront ensure that users can access web applications quickly and reliably from anywhere in the world.
