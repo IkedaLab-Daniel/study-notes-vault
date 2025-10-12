@@ -605,3 +605,14 @@ Managing multiple AWS resources across Regions or accounts manually is slow and 
 **AWS CloudFormation** is an IaC service that uses **declarative templates** to define resources without specifying the exact build steps. It automatically provisions everything by calling AWS APIs in the background.
 
 By deploying the same CloudFormation template in multiple Regions or accounts, you create **identical environments** with minimal human error. This automation saves time, ensures accuracy, and strengthens overall **architecture resilience**—making infrastructure management faster, consistent, and reliable.
+
+## Amazon Virtual Private Cloud (VPC)
+
+Just like a coffee shop separates customers from baristas, **Amazon Virtual Private Cloud (VPC)** lets you create a logically isolated section of the AWS Cloud to control access between resources.
+
+In a **VPC**, you can launch both **public** and **private** resources:
+
+* **Public resources** (like cashiers) have internet access to interact with users.
+* **Private resources** (like baristas) remain isolated without internet access to focus on internal tasks.
+
+This setup enhances **security, organization, and control** within your AWS environment—ensuring that only the right components can communicate with the outside world.
