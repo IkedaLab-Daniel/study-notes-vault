@@ -798,3 +798,118 @@ Together, these tools form a **defense-in-depth strategy** for your AWS network 
 
 💡 **Remember:**
 Design your VPC security like a real-world fortress — multiple layers, clear boundaries, and well-defined rules for who can enter, leave, and communicate inside.
+
+## ☁️ AWS VPC Setup Demo — Building Your Network from Scratch
+
+In this demo, you’ll see how to create a complete AWS network environment step-by-step — including a **VPC**, **public and private subnets**, an **internet gateway**, and a **route table**.
+
+---
+
+### 🏗️ Step 1: Create a VPC
+
+1. Go to the **VPC Dashboard** → click **Create VPC**.
+2. Choose **VPC Only**.
+3. Name it **My VPC**.
+4. Set **IPv4 CIDR block** → `10.0.0.0/16`.
+
+   * This defines the private IP range available to your resources.
+5. Click **Create VPC**.
+
+Every resource in this VPC will now have a private IP starting with `10.0`.
+
+---
+
+### 🌐 Step 2: Create Private Subnets (for internal resources)
+
+1. In the left panel, choose **Subnets** → click **Create subnet**.
+2. Select **My VPC**.
+3. Name: **Private-subnet-1**.
+4. Choose **us-east-1a**.
+5. Set **CIDR block** → `10.0.1.0/24`.
+6. Click **Create subnet**.
+7. Edit settings → ensure **Auto-assign public IP** is **disabled** (private = no internet).
+
+Repeat for the second private subnet:
+
+* Name: **Private-subnet-2**
+* Availability Zone: **us-east-1b**
+* CIDR block: `10.0.2.0/24`
+
+✅ Now you have **two private subnets** across **two AZs** for high availability.
+
+---
+
+### ☀️ Step 3: Create Public Subnets (for internet-facing resources)
+
+1. Click **Create subnet** again.
+2. Choose **My VPC**.
+3. Name: **Public-subnet-1**.
+4. Availability Zone: **us-east-1a**.
+5. CIDR block: `10.0.3.0/24`.
+6. Click **Create subnet**.
+7. Edit settings → **Enable auto-assign public IPv4 address** → **Save**.
+
+Repeat for the second public subnet:
+
+* Name: **Public-subnet-2**
+* Availability Zone: **us-east-1b**
+* CIDR block: `10.0.4.0/24`
+
+✅ Now you have **two public subnets** and **two private subnets**, distributed across **two AZs**.
+
+---
+
+### 🌍 Step 4: Create and Attach an Internet Gateway
+
+1. Go to **Internet Gateways** → click **Create internet gateway**.
+2. Name it **my-ig** → click **Create**.
+3. Click **Actions → Attach to VPC**.
+4. Select **My VPC** → **Attach internet gateway**.
+
+The **Internet Gateway (IGW)** is now connected to your VPC — but your public subnets still need routing instructions.
+
+---
+
+### 🧭 Step 5: Create a Route Table for Public Subnets
+
+1. Go to **Route Tables** → click **Create route table**.
+2. Name: **public-route-table**.
+3. Select **My VPC** → click **Create**.
+4. Under the **Routes** tab → click **Edit routes** → **Add route**.
+
+   * **Destination:** `0.0.0.0/0`
+   * **Target:** Your **Internet Gateway (my-ig)**
+   * Click **Save changes**.
+
+---
+
+### 🔗 Step 6: Associate the Route Table with Public Subnets
+
+1. Go to the **Subnet associations** tab → **Edit subnet associations**.
+2. Select **Public-subnet-1** and **Public-subnet-2** → **Save associations**.
+
+Now, both subnets are officially **public** — connected to the internet via the internet gateway.
+Private subnets remain isolated with no external access.
+
+---
+
+### 🛡️ Step 7: Secure Your Network
+
+To control network traffic, use:
+
+* **Security Groups** → instance-level firewalls.
+* **Network ACLs (Access Control Lists)** → subnet-level firewalls.
+
+Both use **CIDR blocks** to define traffic sources and destinations, ensuring full control over who can access which resources.
+
+---
+
+✅ **Final Setup Overview**
+
+| Component            | Description                | Example                      |
+| -------------------- | -------------------------- | ---------------------------- |
+| **VPC**              | Isolated private network   | `10.0.0.0/16`                |
+| **Private Subnets**  | Internal-only, no internet | `10.0.1.0/24`, `10.0.2.0/24` |
+| **Public Subnets**   | Internet-facing            | `10.0.3.0/24`, `10.0.4.0/24` |
+| **Internet Gateway** | Public access point        | `my-ig`                      |
+| **Route Table**      | Routes traffic to IGW      | `0.0.0.0/0 → my-ig`          |
