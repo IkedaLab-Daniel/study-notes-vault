@@ -958,3 +958,21 @@ Just like organizing supplies in a coffee shop, AWS provides different **storage
   * Ideal for **collaborative applications**, like content management systems.
 
 Additionally, **databases** store structured, queryable information that needs constant updates and analysis — AWS offers multiple database services for that purpose.
+
+## Amazon EC2 Storage Overview
+
+When using Amazon EC2, applications require access to CPU, memory, network, and storage. EC2 instances provide all these, but focusing on **storage**, applications often use **block-level storage**, where data is stored in blocks. Only the changed blocks are updated, making it efficient for databases and enterprise software.
+
+EC2 instances offer two main types of block storage:
+
+* **Instance Store Volumes**:
+  These are physically attached local storage on the host machine. Data is **lost** if the instance is stopped or terminated because the instance may restart on a different host.
+  Best for **temporary data**, such as scratch space or data processing.
+
+* **Amazon Elastic Block Store (EBS)**:
+  Provides **persistent virtual hard drives** called **EBS volumes** that can be attached to EC2 instances.
+  Data **persists between stops and starts** since EBS volumes are independent of the physical host.
+  Users can define the size, type, and configuration before attaching them to EC2 instances.
+  Performance is measured in **IOPS (input/output operations per second)**, and various volume types are available based on performance and pricing needs.
+
+EBS ensures reliable, long-term storage for critical data, unlike ephemeral instance store volumes.
