@@ -1226,7 +1226,7 @@ You learned how to:
 
 This demo establishes the foundation for effectively using **Amazon S3** for scalable, secure, and organized cloud storage.
 
-## Amazon FXs
+## Amazon FSx
 
 **Amazon FSx** = Fully managed, **feature-rich file systems** for **specific enterprise workloads**.
 It’s like AWS providing **ready-made, optimized file systems** (Windows, Lustre, NetApp ONTAP, OpenZFS) — so you don’t have to set up or manage them manually.
@@ -1272,3 +1272,33 @@ FSx automatically:
 
 * Moves infrequently accessed data to **lower-cost tiers**.
 * Charges only for **used capacity**, not provisioned capacity.
+
+## AWS Storage Gateway
+
+AWS Storage Gateway is a **hybrid cloud storage service** that connects on-premises environments to AWS, enabling organizations to extend their storage infrastructure to the cloud with minimal changes. It acts as a **bridge** between on-prem systems and AWS storage services, allowing seamless backups, archiving, and data migration.
+
+### 💡 Key Concept
+
+For businesses still running on-premises systems, Storage Gateway offers a simple way to leverage the cloud for **backup, disaster recovery, or archiving**—without replacing existing workflows.
+
+---
+
+### 🧱 Types of Storage Gateway
+
+| **Type**            | **Description**                                                                                      | **Use Case**                                                |
+| ------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| **S3 File Gateway** | Stores files directly in **Amazon S3**, accessible by AWS services and applications.                 | File storage, analytics input, or centralized data sharing. |
+| **Volume Gateway**  | Creates **block storage volumes** locally; data automatically backed up to AWS as **EBS snapshots**. | Disaster recovery, backup for local applications.           |
+| **Tape Gateway**    | Virtual replacement for physical tape libraries, enabling cloud-based **tape backups**.              | Migration from physical tapes, long-term archiving.         |
+
+---
+
+### 🛠️ Use Cases & Benefits
+
+* **Disaster Recovery:** Keeps backups in AWS without changing existing backup processes.
+* **Data Archiving:** Moves infrequently accessed data to AWS for long-term, low-cost storage.
+* **Hybrid Cloud Flexibility:** Allows gradual cloud adoption while keeping on-prem systems operational.
+
+---
+
+AWS Storage Gateway provides a smooth path for organizations to **start their cloud journey** — whether for **backups, archiving, or hybrid operations** — all while maintaining existing systems and workflows.
