@@ -1302,3 +1302,50 @@ For businesses still running on-premises systems, Storage Gateway offers a simpl
 ---
 
 AWS Storage Gateway provides a smooth path for organizations to **start their cloud journey** — whether for **backups, archiving, or hybrid operations** — all while maintaining existing systems and workflows.
+
+## ☁️ **Amazon Elastic Disaster Recovery (DRS)**
+
+### 🧠 **Core Idea**
+
+Elastic Disaster Recovery (formerly *CloudEndure Disaster Recovery*) continuously replicates **your on-premises or cloud workloads** (physical, virtual, or cloud-based) to AWS at the **block level**.
+When disaster strikes, it allows you to **spin up fully functional recovery instances within minutes**, ensuring minimal downtime and data loss.
+
+---
+
+### ⚙️ **How It Works**
+
+1. **Install agent** on your source servers (on-premises or cloud).
+2. **Continuous block-level replication** sends data to a **staging area** in AWS (low-cost storage).
+3. **Failover event**: AWS quickly converts replicated data into EC2 instances.
+4. **Failback** is supported once your primary systems are restored.
+
+---
+
+### 🛡️ **Key Benefits**
+
+| **Benefit**                    | **Description**                                                                                                                                 |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Business Resilience**        | Continuous replication keeps your data ready for recovery. Downtime reduced from hours/days to **minutes**.                                     |
+| **Streamlined Recovery**       | Simplified, automated recovery orchestration via AWS Console — no complex scripts or manual intervention.                                       |
+| **Cost Optimization**          | You pay only for replication storage and use compute resources **only during recovery or tests**, removing the need for costly standby servers. |
+| **Testing Without Disruption** | You can run **non-disruptive DR drills** to validate your recovery plan anytime, without affecting production.                                  |
+| **Multi-platform Support**     | Works with **physical servers**, **VMware**, **Hyper-V**, and **cloud-based VMs**.                                                              |
+
+---
+
+### 🏢 **Use Cases**
+
+* **Healthcare and Finance:** Systems requiring high uptime and compliance.
+* **E-commerce and SaaS:** Applications that can’t afford outages.
+* **Enterprise IT:** Replacing expensive on-premise DR data centers with AWS-based DR.
+
+---
+
+### 🆚 **Elastic Disaster Recovery vs Backup**
+
+| **Feature**                       | **Elastic Disaster Recovery (DRS)**        | **AWS Backup**                          |
+| --------------------------------- | ------------------------------------------ | --------------------------------------- |
+| **Purpose**                       | Fast recovery of entire workloads          | Long-term data retention and compliance |
+| **Replication Type**              | Continuous block-level replication         | Periodic snapshots                      |
+| **Recovery Time Objective (RTO)** | Minutes                                    | Hours or more                           |
+| **Ideal For**                     | Business continuity, critical applications | Archiving and regulatory backup         |
