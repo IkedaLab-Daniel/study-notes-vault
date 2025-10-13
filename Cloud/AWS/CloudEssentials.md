@@ -998,3 +998,30 @@ To automate this process, **Amazon Data Lifecycle Manager (DLM)** can be used. D
 * Apply consistent backup rules across the organization
 
 With DLM, there’s no need for manual snapshot creation—automation handles it all.
+
+## Amazon Simple Storage Service (Amazon S3)
+
+**Amazon S3** is a scalable, managed **object storage service** used to store and retrieve virtually unlimited data of any type—like images, videos, documents, and backups.
+
+Files are stored as **objects** inside **buckets**, similar to how files are stored in folders. Each object can be up to **5 terabytes**, and buckets have no total storage limit.
+
+You can enable **versioning** to recover previous file versions and protect against accidental deletions. S3 automatically stores multiple redundant copies of data, providing **11 nines (99.999999999%) of durability**—ensuring long-term data integrity.
+
+### Common Uses
+
+* Hosting static websites
+* Storing backups and archives
+* Managing media files (images, videos, etc.)
+* Serving product assets for web applications
+
+S3 automatically scales with demand, requiring no manual setup for increased traffic. Since it’s **fully managed**, AWS handles all the infrastructure and scaling.
+
+### Security Features
+
+* **Private by default** — only the owner has access
+* **Bucket policies** — define who can access specific data
+* **Presigned URLs** — grant temporary access without modifying policies
+* **S3 Access Points** — simplify access management for shared datasets
+* **S3 Audit Logs** — track who accessed what and when
+
+Amazon S3 combines **scalability, durability, and security**, making it an ideal choice for reliable cloud storage across all types of workloads.
