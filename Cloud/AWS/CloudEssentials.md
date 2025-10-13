@@ -1225,3 +1225,50 @@ You learned how to:
 * Explore **object-level settings** and **versioning**
 
 This demo establishes the foundation for effectively using **Amazon S3** for scalable, secure, and organized cloud storage.
+
+## Amazon FXs
+
+**Amazon FSx** = Fully managed, **feature-rich file systems** for **specific enterprise workloads**.
+It’s like AWS providing **ready-made, optimized file systems** (Windows, Lustre, NetApp ONTAP, OpenZFS) — so you don’t have to set up or manage them manually.
+
+---
+
+### ⚙️ **FSx vs EFS vs EBS**
+
+| Feature           | **EBS**                 | **EFS**                     | **FSx**                                      |
+| ----------------- | ----------------------- | --------------------------- | -------------------------------------------- |
+| **Type**          | Block storage           | Shared file storage (Linux) | Managed file systems for specific workloads  |
+| **Access**        | 1 EC2 at a time         | Multiple EC2s at once       | Multiple EC2s, supports Windows & others     |
+| **Scaling**       | Manual                  | Automatic                   | Automatic                                    |
+| **Protocols**     | N/A                     | NFS                         | SMB, NFS, Lustre, OpenZFS, ONTAP             |
+| **AZ Scope**      | Single AZ               | Regional                    | Regional (depends on type)                   |
+| **Main Use Case** | Databases, boot volumes | Shared app storage          | Enterprise file systems (Windows, HPC, etc.) |
+
+---
+
+### 🏆 **Why Companies Use FSx**
+
+* ✅ Need **Windows-native file systems** (with Active Directory integration).
+* ✅ Want to **migrate on-premises file servers** to AWS easily.
+* ✅ Require **high-performance workloads** (HPC, ML, data analytics).
+* ✅ Prefer **low operational overhead** (no manual patching, backups, etc.).
+
+---
+
+### 📁 **Amazon FSx Types & Use Cases**
+
+| **FSx Type**                    | **Built On**   | **Best For**                                | **Access Protocol** |
+| ------------------------------- | -------------- | ------------------------------------------- | ------------------- |
+| **FSx for Windows File Server** | Windows Server | Windows-based apps, SQL Server, user shares | SMB                 |
+| **FSx for NetApp ONTAP**        | NetApp ONTAP   | Hybrid cloud, modern apps, data management  | NFS, SMB            |
+| **FSx for OpenZFS**             | OpenZFS        | Linux workloads, analytics, dev/test        | NFS                 |
+| **FSx for Lustre**              | Lustre         | Machine learning, HPC, big data             | Lustre (POSIX)      |
+
+---
+
+### 💰 **Cost Optimization**
+
+FSx automatically:
+
+* Moves infrequently accessed data to **lower-cost tiers**.
+* Charges only for **used capacity**, not provisioned capacity.
