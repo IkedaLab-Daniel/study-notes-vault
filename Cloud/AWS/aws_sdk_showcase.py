@@ -20,6 +20,10 @@ import json
 import os
 from datetime import datetime
 from botocore.exceptions import ClientError, NoCredentialsError
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize AWS clients
 def get_aws_clients():
@@ -308,6 +312,27 @@ def main():
     """Main function to demonstrate AWS SDK operations"""
     print("🚀 AWS SDK (boto3) SHOWCASE")
     print("=" * 50)
+    
+    # Check if credentials are set
+    access_key = os.getenv('AWS_ACCESS_KEY_ID')
+    secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
+    region = os.getenv('AWS_DEFAULT_REGION', 'us-east-1')
+    
+    if not access_key or not secret_key:
+        print("\n❌ AWS credentials not found in environment variables!")
+        print("\n📝 Please configure your credentials:")
+        print("1. Edit the .env file with your actual AWS credentials")
+        print("2. Or run: export AWS_ACCESS_KEY_ID='your-key'")
+        print("3. Or run: aws configure")
+        print("\nCurrent environment check:")
+        print(f"  AWS_ACCESS_KEY_ID: {'✅ Set' if access_key else '❌ Not set'}")
+        print(f"  AWS_SECRET_ACCESS_KEY: {'✅ Set' if secret_key else '❌ Not set'}")
+        print(f"  AWS_DEFAULT_REGION: {region}")
+        return
+    
+    print(f"✅ Credentials loaded from environment")
+    print(f"   Access Key: {access_key[:4]}...{access_key[-4:] if len(access_key) > 8 else '****'}")
+    print(f"   Region: {region}")
     
     # Get AWS account info
     get_aws_account_info()

@@ -1,0 +1,30 @@
+# Git Ignore for AWS Credentials
+# Add this to your .gitignore file to prevent committing credentials
+
+# AWS Credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# AWS Config
+.aws/
+aws_credentials.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
