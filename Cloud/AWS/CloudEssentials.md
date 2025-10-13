@@ -1120,3 +1120,108 @@ To manage your storage efficiently:
 ---
 
 By combining **S3 storage classes**, **Lifecycle policies**, and **Intelligent-Tiering**, you can **optimize costs** while keeping your data **secure, durable, and accessible**—no matter how your access needs evolve.
+
+## Amazon S3 Demo Overview
+
+This demo walks through the **basic features and functionalities** of **Amazon Simple Storage Service (S3)** using the **AWS Management Console**.
+
+---
+
+### 🪣 **Creating an S3 Bucket**
+
+1. In the AWS Console, search for **S3** and open the service.
+2. Choose **Create bucket**.
+3. Enter a **globally unique name** (e.g., `morgan-bucket-2025`).
+4. Select a **region** (e.g., North Virginia).
+5. Keep **“Block all public access”** enabled for security.
+6. Click **Create bucket**.
+
+---
+
+### 📁 **Creating Folders and Uploading Files**
+
+1. Open the newly created bucket (it will be empty initially).
+2. Choose **Create folder**, enter a name, and leave **default encryption** settings.
+3. Open the folder and choose **Upload → Add files** to upload a file from local storage.
+4. Review **object metadata**:
+
+   * **System-defined metadata:** includes object size, date, and storage class.
+   * **User-defined metadata:** allows custom tags or descriptions.
+5. Click **Upload** — your file appears inside the folder.
+
+You can also **drag and drop** entire folders into S3 to maintain the **original file hierarchy** during upload.
+
+---
+
+### ⚙️ **Bucket Configurations**
+
+Under the **Properties tab**, you can configure:
+
+* **Bucket versioning**
+* **Tags**
+* **Default encryption**
+* **Intelligent-Tiering and archive settings**
+* **Static website hosting**
+
+Under the **Permissions tab**, you can manage:
+
+* **Block public access**
+* **Bucket policy**
+* **Object ownership**
+* **Cross-Origin Resource Sharing (CORS)**
+
+---
+
+### 🔐 **Bucket Policy**
+
+A **bucket policy** is a **JSON document** defining access control for S3 objects.
+Example structure includes:
+
+* **Effect:** Allow or Deny actions.
+* **Principal:** AWS account or user allowed access.
+* **Action:** S3 API call (e.g., `s3:PutObject`).
+* **Resource:** The S3 bucket or objects affected.
+* **Condition:** Specific criteria (e.g., object ownership metadata).
+
+Once configured, select **Save changes**.
+
+---
+
+### 🧭 **Management Tab**
+
+From here, you can configure:
+
+* **Lifecycle policies**
+* **Replication**
+* **Inventory reports**
+
+---
+
+### 🧾 **Object-Level Configurations**
+
+By selecting an uploaded object, you can view and manage:
+
+* **Object URL** (public if access is allowed)
+* **Storage class**
+* **Server-side encryption**
+* **Checksums and tags**
+* **Metadata**
+* **Object Lock**
+
+Under the **Versions tab**, you can:
+
+* View all **previous versions**
+* **Restore** or **delete** specific versions
+
+---
+
+### 🧠 **Summary**
+
+You learned how to:
+
+* Create and configure **S3 buckets**
+* Upload files and folders
+* Manage **metadata**, **policies**, and **permissions**
+* Explore **object-level settings** and **versioning**
+
+This demo establishes the foundation for effectively using **Amazon S3** for scalable, secure, and organized cloud storage.
