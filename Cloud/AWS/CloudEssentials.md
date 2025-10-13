@@ -933,3 +933,28 @@ For higher performance and compliance needs, companies may use **AWS Direct Conn
 * **Both:** VPN can serve as a **failover** or **redundancy** for Direct Connect to ensure uptime.
 
 For **global content delivery**, organizations use **Amazon CloudFront** and **Route 53**. Route 53 uses **latency-based routing** to direct users to the nearest AWS Region, while CloudFront serves cached content from **edge locations** worldwide. This multi-region, multi-VPC architecture provides **low-latency, fault-tolerant**, and scalable performance for users across the globe.
+
+## AWS Storage Types Overview
+
+Just like organizing supplies in a coffee shop, AWS provides different **storage types** for different kinds of data:
+
+* **Block Storage:**
+
+  * Breaks data into small blocks for quick access and updates.
+  * Ideal for **applications or databases** needing fast, frequent changes.
+  * Only modified blocks are updated, not entire files.
+
+* **Object Storage:**
+
+  * Stores data as **self-contained objects** (data + unique ID + metadata).
+  * Organized in **flat “buckets”** rather than folders.
+  * Entire objects are rewritten when updated.
+  * Best for **static files** like images, videos, backups, and logs.
+
+* **File Storage:**
+
+  * Uses a **hierarchical system** (like folders) that supports shared access.
+  * Works with many existing systems without much modification.
+  * Ideal for **collaborative applications**, like content management systems.
+
+Additionally, **databases** store structured, queryable information that needs constant updates and analysis — AWS offers multiple database services for that purpose.
