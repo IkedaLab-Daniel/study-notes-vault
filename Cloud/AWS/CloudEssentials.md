@@ -1418,3 +1418,15 @@ Morgan wraps it up perfectly:
 > “Understanding these key differences will help you architect more efficient, cost-effective storage solutions in AWS.”
 
 Each AWS storage service has its **strengths** — S3 for scalability, EBS for performance, and EFS for shared access.
+
+## ☕ Building a Loyalty Program with AWS Databases
+
+The coffee shop is growing, and now it’s time to reward loyal customers with a **digital loyalty program**. To make this work effectively, the shop needs a system that can:
+
+* **Track customers** and their purchases
+* **Record order history** and spending
+* **Calculate and manage rewards** automatically
+
+Instead of using traditional punch cards, a **database solution** is required to store and organize all this customer data.
+
+AWS offers a range of **database services** that help businesses design scalable, secure, and efficient data solutions—perfect for building digital loyalty programs and gaining valuable insights into customer behavior.
