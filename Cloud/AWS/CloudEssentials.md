@@ -1025,3 +1025,98 @@ S3 automatically scales with demand, requiring no manual setup for increased tra
 * **S3 Audit Logs** — track who accessed what and when
 
 Amazon S3 combines **scalability, durability, and security**, making it an ideal choice for reliable cloud storage across all types of workloads.
+
+## Amazon S3 Storage Classes
+
+When using **Amazon S3**, AWS offers multiple **storage classes** (or tiers) designed for different **data access patterns and cost requirements**. You can mix and match these within a single bucket to balance **performance and cost efficiency**.
+
+---
+
+### 🔹 **S3 Standard**
+
+* **Use case:** Frequently accessed data (e.g., dynamic websites, active files).
+* **Features:**
+
+  * High durability and availability
+  * Low latency and high throughput
+* **Ideal for:** General-purpose storage and applications with frequent access.
+
+---
+
+### 🔹 **S3 Standard–IA (Infrequent Access)**
+
+* **Use case:** Data accessed less often but still requires fast retrieval.
+* **Features:**
+
+  * Lower storage cost than Standard
+  * Retrieval fees apply
+* **Ideal for:** Backups, disaster recovery, or infrequently used files.
+
+---
+
+### 🔹 **S3 Glacier Storage Classes**
+
+Used for **long-term archival storage**, offering lower cost with varying retrieval times.
+
+1. **S3 Glacier Instant Retrieval**
+
+   * **Access speed:** Milliseconds (same as S3 Standard)
+   * **Ideal for:** Occasionally accessed data that must be quickly available (e.g., medical images, media archives).
+
+2. **S3 Glacier Flexible Retrieval**
+
+   * **Access speed:** Minutes to hours
+   * **Ideal for:** Long-term backups that don’t need immediate access.
+
+3. **S3 Glacier Deep Archive**
+
+   * **Access speed:** Up to 12 hours
+   * **Ideal for:** Rarely accessed data like compliance archives and digital preservation.
+   * **Lowest-cost** S3 storage option.
+
+---
+
+### 🔹 **S3 One Zone Storage Classes**
+
+Store data in **a single Availability Zone**, reducing cost but lowering redundancy.
+
+* **S3 One Zone–IA:** Low-cost infrequent access storage in one AZ.
+* **S3 Express One Zone:** Optimized for ultra-fast access in one AZ (trade-off: lower resilience).
+
+---
+
+### 🔹 **S3 Intelligent-Tiering**
+
+* **Use case:** Data with **unpredictable or changing access patterns.**
+* **Features:**
+
+  * Automatically moves objects between 4 access tiers based on usage.
+  * No retrieval fees and minimal management effort.
+* **Ideal for:** Large datasets or data lakes.
+
+---
+
+### ⚙️ **Lifecycle Management and Analysis**
+
+To manage your storage efficiently:
+
+* **S3 Lifecycle Policies** — Automatically transition data between storage classes or delete old data based on rules (e.g., move to Glacier after 1 year).
+* **S3 Storage Class Analysis** — Monitors access patterns and suggests cost-optimized transitions.
+
+---
+
+### 🧠 Summary
+
+| **Storage Class**             | **Access Frequency** | **Retrieval Time** | **Ideal Use Case**           |
+| ----------------------------- | -------------------- | ------------------ | ---------------------------- |
+| S3 Standard                   | Frequent             | Immediate          | Active data, dynamic sites   |
+| S3 Standard–IA                | Infrequent           | Immediate          | Backups, DR                  |
+| S3 Glacier Instant Retrieval  | Rare                 | Immediate          | Medical/media archives       |
+| S3 Glacier Flexible Retrieval | Rare                 | Minutes–Hours      | Long-term backups            |
+| S3 Glacier Deep Archive       | Very Rare            | Up to 12 hrs       | Compliance data              |
+| S3 One Zone–IA                | Infrequent           | Immediate          | Non-critical infrequent data |
+| S3 Intelligent-Tiering        | Variable             | Automatic          | Data with changing access    |
+
+---
+
+By combining **S3 storage classes**, **Lifecycle policies**, and **Intelligent-Tiering**, you can **optimize costs** while keeping your data **secure, durable, and accessible**—no matter how your access needs evolve.
