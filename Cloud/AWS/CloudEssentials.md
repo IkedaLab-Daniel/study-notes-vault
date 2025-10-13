@@ -976,3 +976,25 @@ EC2 instances offer two main types of block storage:
   Performance is measured in **IOPS (input/output operations per second)**, and various volume types are available based on performance and pricing needs.
 
 EBS ensures reliable, long-term storage for critical data, unlike ephemeral instance store volumes.
+
+## Amazon EBS Data Lifecycle and Snapshots
+
+In the shared responsibility model, users manage their own data, including the lifecycle of **EBS volumes**—provisioning, moving, deprovisioning, and backups.
+
+**Amazon EBS Snapshots** simplify this process by creating **point-in-time backups** of EBS volumes. These backups can be scheduled daily, weekly, or monthly as needed.
+
+Snapshots use **incremental backups**, meaning:
+
+* The **first snapshot** copies all data.
+* Subsequent snapshots only copy **changed data** since the last backup.
+
+This makes backups **faster, more efficient, and cost-effective** compared to full backups every time.
+
+To automate this process, **Amazon Data Lifecycle Manager (DLM)** can be used. DLM allows you to:
+
+* Define snapshot schedules
+* Set **retention policies**
+* Manage and automate lifecycle tasks
+* Apply consistent backup rules across the organization
+
+With DLM, there’s no need for manual snapshot creation—automation handles it all.
