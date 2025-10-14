@@ -2251,3 +2251,126 @@ A **data pipeline** automates the **ingestion**, **cataloging**, **transformatio
 ### **🔁 Summary Flow**
 
 **Sources → Ingest (Kinesis/Firehose) → Store (S3/Redshift) → Catalog (Glue) → Process (Glue/EMR) → Query (Athena/Redshift) → Visualize (QuickSight/OpenSearch)**
+
+---
+
+## 🧩 **E-commerce Data Pipeline Example (for ML model updates)**
+
+### **🎯 Goal**
+
+Keep a **machine learning recommendation model** continuously updated with **new customer data** from an e-commerce app, while also enabling **data scientists to query and analyze** that same data.
+
+---
+
+### **1️⃣ Data Source**
+
+* 🗄 **Amazon DynamoDB**
+
+  * Stores customer interaction data (like purchases, views, clicks).
+  * Ideal for **low-latency reads and writes**.
+  * However, not practical for **large-scale scans** to train ML models.
+
+---
+
+### **2️⃣ Data Ingestion**
+
+Because DynamoDB doesn’t directly integrate with Firehose:
+
+* **Step 1:**
+  ⚡ **DynamoDB → Amazon Kinesis Data Streams**
+
+  * Streams real-time data updates (changes) from DynamoDB.
+
+* **Step 2:**
+  🔥 **Kinesis Data Streams → Amazon Kinesis Data Firehose**
+
+  * Firehose **aggregates** and **delivers** the data to destinations like S3.
+  * It also **auto-scales** and supports **near real-time** delivery.
+
+---
+
+### **3️⃣ Data Transformation**
+
+* 🧠 **AWS Lambda (invoked by Firehose)**
+
+  * Transforms incoming **JSON** data into **CSV format** before delivery.
+  * The result is clean, ready-to-use data for ML and analytics.
+
+---
+
+### **4️⃣ Data Storage**
+
+* 🪣 **Amazon S3 (Data Lake)**
+
+  * Centralized storage for all customer data in CSV format.
+  * Acts as a **single source of truth** for both:
+
+    * Machine learning model training (via SageMaker)
+    * Data analytics and querying (via Athena)
+
+---
+
+### **5️⃣ Data Cataloging**
+
+* 📘 **AWS Glue Data Catalog**
+
+  * Stores metadata about the data in S3 (e.g., schema, location).
+  * Makes it **discoverable** and **queryable** for other services like Athena.
+
+---
+
+### **6️⃣ Data Querying & Analytics**
+
+* 💡 **Amazon Athena**
+
+  * Queries the S3 data directly using **SQL**.
+  * Integrates with the Glue Data Catalog for automatic schema recognition.
+  * Enables data scientists to run **ad-hoc queries** without moving data.
+
+---
+
+### **7️⃣ Model Training**
+
+* 🤖 **Amazon SageMaker AI**
+
+  * Reads the latest data from S3 to **train or retrain** the recommendation model.
+  * Ensures the model always reflects the **most recent customer behavior**.
+
+---
+
+### **8️⃣ Automation**
+
+* 🔁 Once set up, this pipeline runs **automatically** on a defined schedule.
+
+  * **Firehose** continuously delivers data.
+  * **Lambda** transforms it on-the-fly.
+  * **Glue** updates the catalog.
+  * **SageMaker** retrains the model periodically.
+
+---
+
+### **📊 Simplified Flow Diagram (Text Form)**
+
+```
+DynamoDB
+   ↓
+Kinesis Data Streams
+   ↓
+Kinesis Data Firehose
+   ↳ (AWS Lambda transforms JSON → CSV)
+   ↓
+Amazon S3 (Data Lake)
+   ↓
+AWS Glue Data Catalog ───► Amazon Athena (Query)
+   ↓
+Amazon SageMaker AI (Model Training)
+```
+
+---
+
+### **💬 Key Benefits**
+
+✅ Automated and repeatable process
+✅ Near real-time ingestion and transformation
+✅ Shared data lake for analytics *and* ML training
+✅ Minimal manual effort once deployed
