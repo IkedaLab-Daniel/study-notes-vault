@@ -1461,3 +1461,51 @@ For even higher performance and scalability, **Amazon Aurora** delivers a **full
 * **Continuous backup** via AWS Backup (point-in-time restore up to 35 days)
 
 Aurora integrates seamlessly with other AWS services, combining **speed, resilience, and automation** — perfect for powering a modern, data-driven loyalty program.
+
+## ⚡ Amazon DynamoDB
+
+**Amazon DynamoDB** is a **fully managed, serverless NoSQL database** designed for speed, flexibility, and scalability — all without the operational hassle.
+
+### 🧩 NoSQL Structure
+
+Unlike traditional relational databases (like MySQL or PostgreSQL), DynamoDB stores data in a **non-relational format**.
+
+* **Relational databases** require predefined **schemas** with structured tables and relationships.
+* **DynamoDB**, on the other hand, uses a **flexible schema** — meaning you can store items with varying attributes in the same table.
+
+Each record (called an **item**) is a collection of **attributes**, where each attribute has a **name** and a **value**.
+
+* Values can be simple (like numbers or strings)
+* Or complex (like lists, sets, or JSON documents)
+* You can freely **add or remove** attributes without affecting other items.
+
+This makes DynamoDB ideal for **evolving datasets** that don’t always share the same structure.
+
+### 🚀 Performance and Reliability
+
+DynamoDB is built for **speed** — delivering **single-digit millisecond latency** at any scale.
+You don’t need to worry about:
+
+* **Cold starts**
+* **Patching or maintenance windows**
+* **Version upgrades**
+* **Downtime for scaling**
+
+AWS handles all infrastructure management behind the scenes, allowing you to focus purely on your application logic.
+
+### 🌍 Global Scalability
+
+For worldwide applications, **DynamoDB Global Tables** enable **multi-region, fully replicated data** — ensuring low-latency access for users around the globe.
+
+A great real-world example is **Amazon Prime Day 2024**, where **tens of trillions** of DynamoDB API calls were made. It reached a peak of **146 million requests per second**, and still ran seamlessly — no manual scaling, no downtime.
+
+### 💡 When to Use DynamoDB
+
+Use DynamoDB when your application needs:
+
+* **High-speed performance** at scale
+* **Flexible data models** with evolving attributes
+* **Serverless architecture** (no manual database management)
+* **Global data replication** for distributed users
+
+Whether it’s a shopping cart, game leaderboard, or IoT event tracker, DynamoDB delivers a **highly available**, **zero-maintenance**, and **blazing-fast** solution.
