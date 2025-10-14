@@ -1430,3 +1430,34 @@ The coffee shop is growing, and now it’s time to reward loyal customers with a
 Instead of using traditional punch cards, a **database solution** is required to store and organize all this customer data.
 
 AWS offers a range of **database services** that help businesses design scalable, secure, and efficient data solutions—perfect for building digital loyalty programs and gaining valuable insights into customer behavior.
+
+## ☕ Relational Databases for the Loyalty Program
+
+To effectively manage the loyalty program, we need to store **transactional data** and capture **relationships** between customers and their orders — like rewarding frequent purchases.
+
+This is where **relational databases** come in. They store data in **tables** (e.g., `customers`, `orders`) linked by shared attributes, allowing powerful cross-table queries using **SQL** (Structured Query Language).
+
+### 💡 On-Premises to Cloud
+
+Many companies already use databases such as **MySQL**, **PostgreSQL**, or **Microsoft SQL Server** in their data centers. These can be moved to AWS through a **lift-and-shift** approach by running them on **Amazon EC2**, maintaining full control over configuration (OS, CPU, storage, etc.).
+To simplify this migration, AWS offers **Database Migration Service (DMS)** for smooth data transfer.
+
+### ☁️ Amazon RDS
+
+For less management overhead, **Amazon Relational Database Service (RDS)** provides a **fully managed** relational database solution supporting multiple engines.
+RDS automates:
+
+* Backups and patching
+* Failover and recovery
+* Redundancy and scaling
+
+This allows businesses to focus on data and customers rather than maintenance. Under the **shared responsibility model**, AWS manages the infrastructure, while you handle data security and configuration.
+
+### ⚡ Amazon Aurora
+
+For even higher performance and scalability, **Amazon Aurora** delivers a **fully managed**, cloud-optimized relational database compatible with **MySQL** and **PostgreSQL**.
+
+* Up to **15 replicas** across Availability Zones
+* **Continuous backup** via AWS Backup (point-in-time restore up to 35 days)
+
+Aurora integrates seamlessly with other AWS services, combining **speed, resilience, and automation** — perfect for powering a modern, data-driven loyalty program.
