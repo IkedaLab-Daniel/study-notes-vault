@@ -1509,3 +1509,187 @@ Use DynamoDB when your application needs:
 * **Global data replication** for distributed users
 
 Whether it’s a shopping cart, game leaderboard, or IoT event tracker, DynamoDB delivers a **highly available**, **zero-maintenance**, and **blazing-fast** solution.
+
+## ☁️ AWS Database Demo: Amazon RDS vs DynamoDB
+
+In this hands-on demo, you explored how to set up and interact with two major AWS database services: **Amazon RDS (Relational Database Service)** and **Amazon DynamoDB (NoSQL Database Service)**.
+
+---
+
+### 🧱 Part 1: Amazon RDS (Relational Database Service)
+
+**Goal:** Create a **MySQL** database instance and interact with it using SQL commands.
+
+#### 🪄 Steps:
+
+1. **Open RDS in AWS Console**
+
+   * Go to the AWS Management Console → search for **RDS** → select the service.
+
+2. **Create a New Database**
+
+   * Click **Create database**.
+   * Under **Engine options**, choose **MySQL**.
+   * Select the **Free tier** template (for testing).
+   * Enter a **database instance identifier** (default: `database-1`).
+   * Under **Credentials**, set:
+
+     * Username: `admin`
+     * Password: *(your chosen password)*
+
+3. **Configure Connectivity**
+
+   * Under **Connectivity**, leave the default VPC.
+   * Set **Public access** → **Yes** (for easy testing).
+     *(In production, you would restrict access to authorized apps only.)*
+
+4. **Create the Database**
+
+   * Scroll down → accept defaults → click **Create database**.
+   * Wait until the status changes from **Creating → Available**.
+
+---
+
+#### 🧠 Connecting to the Database
+
+To connect using a SQL client:
+
+* Use the **endpoint** and **port** found on the **Connectivity & Security** tab.
+* Use the **username** and **password** you configured.
+
+---
+
+#### 🗄️ Create and Populate Tables
+
+Run these commands in your SQL client:
+
+```sql
+CREATE DATABASE coffee_shop;
+USE coffee_shop;
+
+CREATE TABLE users (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50),
+  email VARCHAR(100)
+);
+
+CREATE TABLE products (
+  product_id INT AUTO_INCREMENT PRIMARY KEY,
+  product_name VARCHAR(50),
+  price DECIMAL(10,2)
+);
+
+CREATE TABLE orders (
+  order_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  product_id INT,
+  order_date DATETIME,
+  FOREIGN KEY (user_id) REFERENCES users(user_id),
+  FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+```
+
+Insert sample data:
+
+```sql
+INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com');
+INSERT INTO products (product_name, price) VALUES ('Cappuccino', 4.50);
+INSERT INTO orders (user_id, product_id, order_date) VALUES (1, 1, NOW());
+```
+
+Retrieve joined data:
+
+```sql
+SELECT users.name, products.product_name, orders.order_date
+FROM orders
+JOIN users ON orders.user_id = users.user_id
+JOIN products ON orders.product_id = products.product_id;
+```
+
+✅ **Result:** Data is returned by joining the three tables — demonstrating RDS’s **rigid relational schema**.
+
+---
+
+### ⚡ Part 2: Amazon DynamoDB (NoSQL Database)
+
+**Goal:** Create and interact with a flexible, serverless database table.
+
+#### 🪄 Steps:
+
+1. **Open DynamoDB in AWS Console**
+
+   * Search for **DynamoDB** → select the service.
+
+2. **Create a Table**
+
+   * Click **Create table**.
+   * Table name: `orders`
+   * Partition key: `order_number` (type: **Number**)
+   * Leave all other settings as defaults → click **Create table**.
+   * Wait until the status changes from **Creating → Active**.
+
+---
+
+#### 🧩 Add Data to the Table
+
+A Python script using the **AWS SDK (Boto3)** can load data into DynamoDB:
+
+```python
+import boto3
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('orders')
+
+for i in range(1, 11):
+    item = {
+        'order_number': i,
+        'customer_name': f'Customer {i}',
+        'product': 'Coffee',
+        'quantity': i,
+    }
+    if i % 2 == 0:
+        item['notes'] = 'Special request'
+    table.put_item(Item=item)
+
+print("✅ Loaded 10 items into DynamoDB table.")
+```
+
+Run it → the script adds 10 items to your table.
+
+---
+
+#### 🔍 View and Query Data
+
+1. Back in the **AWS Console**, open your **orders** table.
+
+2. Choose **Explore table items** → select **Scan** → click **Run**.
+
+   * A *scan* retrieves **all items** in the table.
+   * You’ll see some items with missing attributes like `notes` — this shows DynamoDB’s **flexible schema**.
+
+3. Choose **Query** → provide a specific partition key value (e.g., `order_number = 5`) → click **Run**.
+
+   * Only that specific item is returned.
+
+✅ **Result:** You retrieved one item efficiently using the **partition key**.
+
+---
+
+### 🧾 Summary Comparison
+
+| Feature            | Amazon RDS                              | Amazon DynamoDB                      |
+| ------------------ | --------------------------------------- | ------------------------------------ |
+| **Type**           | Relational (SQL)                        | NoSQL (Key-Value, Document)          |
+| **Schema**         | Fixed, predefined                       | Flexible, schema-less                |
+| **Scaling**        | Vertical & horizontal (manual)          | Automatic scaling                    |
+| **Management**     | Requires DB instance                    | Fully serverless                     |
+| **Query Language** | SQL                                     | DynamoDB API / SDK                   |
+| **Use Cases**      | Traditional apps, complex relationships | High-performance, scalable apps      |
+| **Example**        | Orders linked to users & products       | Fast lookups, flexible customer data |
+
+---
+
+🎯 **Key Takeaway:**
+
+* Use **RDS** when your data needs **relationships** and **structured queries**.
+* Use **DynamoDB** when you need **speed**, **scalability**, and **flexible data models** for modern, serverless applications.
