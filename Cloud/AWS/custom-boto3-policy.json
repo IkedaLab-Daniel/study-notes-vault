@@ -1,0 +1,27 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "ec2:DescribeImages",
+        "ec2:DescribeRegions",
+        "ec2:DescribeAvailabilityZones",
+        "s3:ListAllMyBuckets",
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:GetBucketLocation",
+        "rds:DescribeDBInstances",
+        "lambda:ListFunctions",
+        "lambda:GetFunction",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:PutMetricData",
+        "iam:GetUser",
+        "iam:ListRoles",
+        "sts:GetCallerIdentity"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
