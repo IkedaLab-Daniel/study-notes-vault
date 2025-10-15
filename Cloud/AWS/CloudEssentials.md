@@ -3281,3 +3281,14 @@ AWS offers two main billing options:
 * **AWS Billing Dashboard** – Provides an overview of forecasted monthly spend and a breakdown of top cost-driving services.
 * **AWS Budgets** – Lets you set custom budgets for costs or usage. You can filter by service, cost category, or tags, and receive alerts when limits are approached or exceeded.
 * **AWS Cost Explorer** – Allows you to analyze spending over time, break down costs by service or tag, and use tag-based cost allocation to understand which projects or departments drive costs.
+
+That’s an excellent and well-structured explanation of **AWS Support Plans** — it clearly shows how AWS scales its customer support based on user needs. Here’s a quick **summary table** you could use if you ever want to include it in notes, slides, or a study review:
+
+| **Support Plan**                            | **Cost**            | **Includes**                                                                                                           | **Response Times**                                      | **Best For**                                     |
+| ------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------ |
+| **Basic Support**                           | Free                | 24/7 Customer Service, Documentation, Whitepapers, Forums, Trusted Advisor (limited checks), Personal Health Dashboard | N/A                                                     | Individuals or small projects just starting out  |
+| **Developer Support**                       | Paid (low tier)     | Everything in Basic + Email access to Cloud Support Engineers                                                          | < 24 hrs (general) <br> < 12 hrs (system impaired)      | Developers experimenting or testing workloads    |
+| **Business Support**                        | Paid (mid tier)     | Everything in Developer + Full Trusted Advisor checks, 24/7 Phone/Chat, Infrastructure Event Management (extra fee)    | < 4 hrs (system impaired) <br> < 1 hr (production down) | Businesses running production workloads          |
+| **Enterprise On-Ramp / Enterprise Support** | Paid (highest tier) | Everything in Business + Technical Account Manager (TAM), Concierge Support, faster response times                     | < 30 min (business critical)                            | Mission-critical workloads and large enterprises |
+
+If you’d like, I can also make this into a **study-friendly infographic** or a **concise reviewer summary (3–5 sentences)** depending on your use case — do you want that?
