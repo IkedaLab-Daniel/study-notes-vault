@@ -3244,3 +3244,11 @@ AWS Trusted Advisor is an automated service that analyzes your AWS account and p
 Trusted Advisor runs checks to identify issues like underutilized EC2 instances, missing EBS backups, public security groups, or unbalanced workloads across Availability Zones. Results are color-coded — red for action recommended, orange for investigation, and green for no issues.
 
 Some checks are available to all users, while others depend on your AWS support plan. Trusted Advisor can send **email alerts** to relevant teams and helps reduce costs, strengthen security, improve reliability, and ensure your AWS account runs efficiently.
+
+## AWS Pricing and Support Overview
+
+AWS pricing works similarly to managing expenses in a business — you pay for the resources you use and must track costs to stay efficient. In this section, you’ll learn the key pricing concepts behind AWS services and how to manage spending using tools like the **AWS Billing Dashboard**, **AWS Budgets**, and **AWS Cost Explorer** to monitor, set budgets, and forecast costs.
+
+When issues arise or you need help, AWS provides various **support plans** to match your business needs, offering technical assistance and troubleshooting resources.
+
+Finally, AWS also provides **cost optimization tools and strategies** to help you reduce waste, improve efficiency, and get the most value from your cloud investments.
