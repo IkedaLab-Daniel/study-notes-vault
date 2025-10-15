@@ -3218,3 +3218,11 @@ For compliance documentation and reports, AWS provides:
 * **AWS Risk and Security Whitepaper:** Learn about AWS’s security and compliance framework.
 
 Overall, the **underlying infrastructure of the cloud is secure**, and AWS enables you to focus on maintaining compliance for your applications and data on top of it.
+
+## AWS Config and Audit Manager for Compliance
+
+AWS Config helps organizations assess, audit, and evaluate AWS resources to ensure compliance with internal standards and regulations. It continuously monitors and records resource configurations, compares them against defined compliance rules, and provides alerts for noncompliance. Automated remediation can also be set up to correct issues.
+
+Compliance is ongoing, not a one-time task, and Config allows generating compliance reports over time.
+
+For industries requiring strict compliance, AWS Audit Manager automates evidence collection to prove adherence to regulations. It evaluates whether organizational controls are functioning effectively and simplifies audit preparation through pre-built frameworks aligned with various compliance standards.
