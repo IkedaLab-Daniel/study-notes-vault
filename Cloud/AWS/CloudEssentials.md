@@ -3498,3 +3498,21 @@ When migrating to AWS, each application can follow one of **seven migration stra
    Identify and decommission outdated or unused applications—often more than 10% of workloads—to reduce costs and simplify IT operations.
 
 These strategies help organizations plan efficient, cost-effective, and goal-aligned migrations to AWS.
+
+## AWS Migration Services
+
+AWS offers several services to help businesses migrate their applications and data efficiently and securely to the cloud.
+
+1. **AWS Application Discovery Service**
+   Acts as a *migration detective*, automatically discovering on-premises applications and their dependencies. It provides detailed reports on your IT environment to help plan migrations, reduce risk, and make informed decisions.
+
+2. **AWS Application Migration Service**
+   Functions like a *team of expert movers*, automating the migration of applications to AWS with minimal downtime. It ensures smooth transitions and allows businesses to move quickly without disrupting operations.
+
+3. **Migration Evaluator**
+   Serves as a *moving consultant*, analyzing your current infrastructure and estimating the costs and savings of migrating to AWS. It supports data-driven decision-making and helps justify cloud investments to stakeholders.
+
+4. **AWS Migration Hub**
+   Acts as a *command center* for migration management. It provides a unified dashboard for tracking progress, coordinating tasks, and ensuring nothing is overlooked during the migration process.
+
+Together, these AWS migration tools streamline cloud adoption, minimize errors and downtime, optimize costs, and accelerate the overall journey to the cloud.
