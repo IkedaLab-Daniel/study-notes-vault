@@ -3551,3 +3551,48 @@ However, a crucial question remains: **How do you know if your architecture is e
 To answer that, AWS provides the **Well-Architected Framework**, a tool designed to **evaluate and improve the quality of your cloud architectures**. It ensures that your solutions follow AWS best practices across key operational and technical areas, helping you build systems that are reliable, secure, efficient, and cost-effective.
 
 With that foundation, the next step is exploring additional AWS services and learning how to architect efficiently in the cloud.
+
+## AWS Services for Development, Business Applications, and End-User Computing
+
+AWS offers purpose-built services designed to meet specific needs across development, business operations, and end-user computing.
+
+### **Development Services**
+
+1. **AWS CodePipeline**
+   Automates **continuous integration and continuous delivery (CI/CD)** pipelines. It monitors source code repositories, triggers build, test, and deployment steps, and ensures smooth transitions from development to production.
+
+2. **AWS X-Ray**
+   Helps developers **monitor and debug applications** by tracing requests throughout a system. It provides visual insights into performance bottlenecks and errors, enabling faster issue resolution.
+
+3. **AWS AppSync**
+   Simplifies building **GraphQL APIs** for web and mobile applications. It efficiently connects front-end apps to backend data sources, streamlining data management and access.
+
+4. **AWS Amplify**
+   Eases the process of **developing, deploying, and managing applications** on AWS. It handles features like authentication, storage, and hosting, letting developers focus on user experience.
+
+---
+
+### **Business Application Services**
+
+1. **Amazon Connect**
+   An **AI-powered, cloud-based contact center** service that enables efficient management of customer interactions across calls and chats. It simplifies setup and ensures smooth communication experiences.
+
+2. **Amazon Simple Email Service (SES)**
+   A **scalable email service** for sending bulk messages such as newsletters, promotions, or transactional emails. Ideal for businesses needing reliable, large-scale email delivery.
+
+---
+
+### **End-User Computing Services**
+
+1. **Amazon AppStream 2.0**
+   Streams **desktop applications** to users on any device via a web browser, eliminating the need for local installations.
+
+2. **Amazon WorkSpaces**
+   A **fully managed virtual desktop infrastructure (VDI)** that provides users with secure, cloud-based desktops accessible from anywhere.
+
+3. **Amazon WorkSpaces Web**
+   A **lightweight option** for users who only need access to web-based applications through a secure browser environment.
+
+---
+
+These services demonstrate how AWS builds specialized tools tailored to diverse use cases—from developer workflows and business communications to secure, scalable end-user computing solutions.
