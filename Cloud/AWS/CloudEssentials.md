@@ -3539,3 +3539,15 @@ Companies migrate databases to AWS for reasons such as cost optimization and mod
 * Secure, following AWS best practices
 
 Together, these tools make database migrations to AWS quicker, safer, and easier—whether staying on the same engine or transitioning to a new one.
+
+## Introduction to AWS Architecture and Additional Services
+
+As we near the end of our AWS overview, it’s important to note that while AWS offers **hundreds of services**, we’ll focus on a few key ones for **development, business applications, and end-user computing**.
+
+By now, you understand that AWS services act as **building blocks** for creating flexible and scalable cloud solutions. With this flexibility, you can design architectures ranging from simple to highly complex systems.
+
+However, a crucial question remains: **How do you know if your architecture is effective and optimized?**
+
+To answer that, AWS provides the **Well-Architected Framework**, a tool designed to **evaluate and improve the quality of your cloud architectures**. It ensures that your solutions follow AWS best practices across key operational and technical areas, helping you build systems that are reliable, secure, efficient, and cost-effective.
+
+With that foundation, the next step is exploring additional AWS services and learning how to architect efficiently in the cloud.
