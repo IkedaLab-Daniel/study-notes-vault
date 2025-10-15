@@ -3329,3 +3329,60 @@ If you’d like, I can also make this into a **study-friendly infographic** or a
 AWS not only provides scalable cloud services and support plans — it also builds an **ecosystem** through the **AWS Marketplace** and **Partner Network**, helping customers save time, reduce costs, and innovate faster.
 
 ---
+
+## ☁️ AWS Cost Optimization Recap
+
+### 🖥️ **Amazon EC2 (Compute)**
+
+**Goal:** Avoid paying for unused or overprovisioned compute.
+
+| Technique                    | Description                                                                  | Benefit                                    |
+| ---------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------ |
+| **Rightsizing**              | Analyze and adjust instance types/sizes to match workload needs.             | Prevents overprovisioning and saves money. |
+| **AWS Compute Optimizer**    | Service that recommends right instance types based on usage.                 | Automates cost optimization.               |
+| **Spot Instances**           | Use unused AWS capacity for up to **90% discount** (non-critical workloads). | Major cost reduction for flexible jobs.    |
+| **Auto Scaling**             | Automatically adjusts instance count based on demand.                        | Avoids paying for idle resources.          |
+| **Cleanup Unused Resources** | Remove unused **EBS volumes**, **snapshots**, etc.                           | Stops unnecessary spending.                |
+
+---
+
+### 🗄️ **Amazon RDS (Database)**
+
+**Goal:** Scale efficiently without overpaying for capacity.
+
+| Technique                 | Description                                                          | Benefit                           |
+| ------------------------- | -------------------------------------------------------------------- | --------------------------------- |
+| **Rightsizing**           | Choose appropriate instance types for DB workloads.                  | Optimized compute cost.           |
+| **Read Replicas**         | Scale read-heavy traffic horizontally instead of upgrading instance. | Improves performance, saves cost. |
+| **Caching (ElastiCache)** | Store frequently accessed data in memory.                            | Reduces DB load and read costs.   |
+
+---
+
+### 🪣 **Amazon S3 (Storage)**
+
+**Goal:** Store data efficiently and reduce unnecessary storage costs.
+
+| Technique                     | Description                                                                   | Benefit                          |
+| ----------------------------- | ----------------------------------------------------------------------------- | -------------------------------- |
+| **Storage Classes**           | Use classes like **Intelligent-Tiering** for dynamic or unpredictable access. | Pay only for access pattern.     |
+| **Data Compression (Lambda)** | Compress files automatically upon upload.                                     | Saves storage space and cost.    |
+| **Lifecycle Policies**        | Automatically delete or archive old data.                                     | Reduces long-term storage costs. |
+
+---
+
+### 🌐 **Networking & Architecture**
+
+**Goal:** Minimize unnecessary data transfer and operational cost.
+
+| Technique                   | Description                                                  | Benefit                                               |
+| --------------------------- | ------------------------------------------------------------ | ----------------------------------------------------- |
+| **Reduce Inter-AZ Traffic** | Keep components within same Availability Zone when possible. | Lowers data transfer costs.                           |
+| **Use VPC Endpoints**       | Connect privately to AWS services without public internet.   | Reduces data transfer charges and increases security. |
+
+---
+
+### 💡 **Final Takeaway**
+
+> “Small optimizations across multiple services can add up to **significant savings**—while also improving performance and reliability.”
+
+Cost optimization in AWS isn’t about cutting corners — it’s about **balancing cost, performance, and efficiency.**
