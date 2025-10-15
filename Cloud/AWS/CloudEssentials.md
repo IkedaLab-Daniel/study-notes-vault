@@ -3471,3 +3471,30 @@ CAF organizes guidance into **six key areas**, grouped into two categories:
 Each perspective represents specific responsibilities and identifies skill or process gaps within an organization. These findings become inputs for creating an **AWS CAF Action Plan**, which guides organizational change and supports a structured journey to the cloud.
 
 Migrating to the cloud can be complex, but AWS CAF and other available resources help simplify and accelerate the process.
+
+## The Seven Rs of AWS Cloud Migration
+
+When migrating to AWS, each application can follow one of **seven migration strategies**, known as the **Seven Rs**:
+
+1. **Rehost (Lift and Shift)**
+   Move applications to AWS without modification—simply transfer them as-is, often as virtual machines (VMs). While not optimized, rehosting can still yield up to 30% cost savings.
+
+2. **Relocate**
+   Move existing virtualized or containerized applications from on-premises environments directly to the cloud without altering them, simply changing the hosting location.
+
+3. **Replatform (Lift, Tinker, and Shift)**
+   Make minor cloud optimizations during migration without changing core code. For example, moving a MySQL database to Amazon RDS or upgrading to Amazon Aurora for better performance.
+
+4. **Refactor (Rearchitect)**
+   Redesign and rewrite parts of the application to leverage cloud-native features or improve performance. This approach offers major benefits but requires significant time, planning, and effort.
+
+5. **Repurchase (Drop and Shop)**
+   Replace existing software with new cloud-based solutions—such as switching from a licensed database vendor to a managed AWS service. It involves upfront costs but can yield long-term advantages.
+
+6. **Retain (Stay Where It Is)**
+   Keep certain applications on-premises if they’re not ready for migration or nearing deprecation. Migrate only those that make business sense, leaving others to run until they can be phased out.
+
+7. **Retire**
+   Identify and decommission outdated or unused applications—often more than 10% of workloads—to reduce costs and simplify IT operations.
+
+These strategies help organizations plan efficient, cost-effective, and goal-aligned migrations to AWS.
