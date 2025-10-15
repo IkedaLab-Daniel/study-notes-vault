@@ -3237,3 +3237,10 @@ Administrators can use Service Control Policies (SCPs) to define maximum permiss
 
 Using AWS Organizations early helps prevent unmanaged or “ghost” accounts and ensures structured, secure account management.
 
+## AWS Trusted Advisor
+
+AWS Trusted Advisor is an automated service that analyzes your AWS account and provides real-time recommendations based on **AWS best practices**. It helps you improve your environment across five key categories: **cost optimization, performance, security, fault tolerance, and service limits**.
+
+Trusted Advisor runs checks to identify issues like underutilized EC2 instances, missing EBS backups, public security groups, or unbalanced workloads across Availability Zones. Results are color-coded — red for action recommended, orange for investigation, and green for no issues.
+
+Some checks are available to all users, while others depend on your AWS support plan. Trusted Advisor can send **email alerts** to relevant teams and helps reduce costs, strengthen security, improve reliability, and ensure your AWS account runs efficiently.
