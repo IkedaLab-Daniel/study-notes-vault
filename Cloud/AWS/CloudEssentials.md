@@ -3456,3 +3456,18 @@ While not mentioned directly in the script, AWS offers several migration aids:
 ### ✨ **Key Takeaway**
 
 > “Migration is not a single event — it’s an ongoing journey of assessment, planning, and modernization. AWS is there to help at every step.”
+
+## AWS Cloud Adoption Framework (CAF) Summary
+
+Migrating to AWS is easier thanks to shared knowledge and best practices. Different roles—such as developers, cloud architects, business analysts, and financial analysts—approach cloud migration from unique perspectives. It’s important to align these perspectives and assemble the right team for a successful migration.
+
+To support this process, the AWS Professional Services team developed the **AWS Cloud Adoption Framework (CAF)**, which provides structured guidance for smooth cloud transitions.
+
+CAF organizes guidance into **six key areas**, grouped into two categories:
+
+* **Business-focused perspectives:** Business, People, Governance
+* **Technical-focused perspectives:** Platform, Security, Operations
+
+Each perspective represents specific responsibilities and identifies skill or process gaps within an organization. These findings become inputs for creating an **AWS CAF Action Plan**, which guides organizational change and supports a structured journey to the cloud.
+
+Migrating to the cloud can be complex, but AWS CAF and other available resources help simplify and accelerate the process.
