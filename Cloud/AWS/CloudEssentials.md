@@ -3200,3 +3200,21 @@ Just like Rudy’s coffee shop upgraded its security system after the attempted 
 > [*ACTIVATES SECURITY SYSTEM WITH KEY FOB*]
 >
 > “System armed. Threats neutralized. Coffee… secure.” ☕🔒
+
+## AWS Compliance and Assurance
+
+Every industry must uphold specific standards and may undergo audits or inspections to verify compliance. In AWS, businesses must ensure that their hosted solutions meet the required regulations, such as GDPR for EU consumer data or HIPAA for U.S. healthcare applications.
+
+AWS helps customers achieve compliance by providing:
+
+* **Inherited infrastructure best practices:** AWS data centers, policies, and operations already meet numerous global assurance programs.
+* **Region selection flexibility:** Choose AWS Regions to meet data residency and legal requirements; AWS does not automatically replicate data across Regions.
+* **Data ownership and control:** You fully own your data and can apply encryption and protection mechanisms across AWS services.
+
+For compliance documentation and reports, AWS provides:
+
+* **AWS Artifact:** Access third-party audit reports and compliance documentation.
+* **AWS Compliance Center:** Explore compliance-enabling services and best practices.
+* **AWS Risk and Security Whitepaper:** Learn about AWS’s security and compliance framework.
+
+Overall, the **underlying infrastructure of the cloud is secure**, and AWS enables you to focus on maintaining compliance for your applications and data on top of it.
