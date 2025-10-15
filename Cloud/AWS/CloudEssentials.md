@@ -3292,3 +3292,40 @@ That’s an excellent and well-structured explanation of **AWS Support Plans** �
 | **Enterprise On-Ramp / Enterprise Support** | Paid (highest tier) | Everything in Business + Technical Account Manager (TAM), Concierge Support, faster response times                     | < 30 min (business critical)                            | Mission-critical workloads and large enterprises |
 
 If you’d like, I can also make this into a **study-friendly infographic** or a **concise reviewer summary (3–5 sentences)** depending on your use case — do you want that?
+
+---
+
+### 🌐 **AWS Marketplace**
+
+* A **digital catalog** of third-party software that you can **find, test, buy, and deploy** directly on AWS.
+* Includes products from **Independent Software Vendors (ISVs)** across categories like:
+
+  * **Security**, **Networking**, **Storage**, **Machine Learning**, and more.
+* Offers **free and paid options** with flexible pricing models:
+
+  * **Pay-as-you-go** or **Annual subscriptions**.
+* **Benefits:**
+
+  * Reduces total cost of ownership (TCO)
+  * Accelerates innovation (no need to reinvent tools)
+  * Simplifies software procurement and deployment
+  * Consolidates billing in your AWS account
+
+---
+
+### 🤝 **AWS Partner Network (APN)**
+
+* A **global program** that connects AWS with **technology and consulting partners**.
+* Partners use AWS to **build and deliver solutions** for customers.
+* Helps organizations get **expert guidance**, **customized solutions**, and **additional support**.
+* Two major types of partners:
+
+  * **Technology Partners** – build software solutions on AWS.
+  * **Consulting Partners** – provide hands-on implementation, migration, and advisory services.
+
+---
+
+✅ **In essence:**
+AWS not only provides scalable cloud services and support plans — it also builds an **ecosystem** through the **AWS Marketplace** and **Partner Network**, helping customers save time, reduce costs, and innovate faster.
+
+---
