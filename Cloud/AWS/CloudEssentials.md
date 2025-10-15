@@ -3252,3 +3252,19 @@ AWS pricing works similarly to managing expenses in a business — you pay for t
 When issues arise or you need help, AWS provides various **support plans** to match your business needs, offering technical assistance and troubleshooting resources.
 
 Finally, AWS also provides **cost optimization tools and strategies** to help you reduce waste, improve efficiency, and get the most value from your cloud investments.
+
+## AWS Pricing Fundamentals and Cost Drivers
+
+AWS pricing is based on three main principles:
+
+1. **Pay as you go** – You only pay for what you use, with no upfront costs or long-term commitments.
+2. **Save when you commit** – By committing to a specific usage level for 1 or 3 years, you can get significant discounts (ideal for steady workloads).
+3. **Pay less by using more** – Volume-based discounts reduce per-unit costs as usage increases.
+
+The three **primary cost drivers** in AWS are:
+
+* **Compute** – Costs for processing power and runtime (e.g., EC2, Lambda, ECS).
+* **Storage** – Costs for how much data you store and how long (e.g., S3, EBS).
+* **Outbound data transfer** – Costs for data leaving AWS (e.g., users accessing data from S3).
+
+Each service has unique pricing details, so always review documentation to fully understand billing.
