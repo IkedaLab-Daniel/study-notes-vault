@@ -3516,3 +3516,26 @@ AWS offers several services to help businesses migrate their applications and da
    Acts as a *command center* for migration management. It provides a unified dashboard for tracking progress, coordinating tasks, and ensuring nothing is overlooked during the migration process.
 
 Together, these AWS migration tools streamline cloud adoption, minimize errors and downtime, optimize costs, and accelerate the overall journey to the cloud.
+
+## AWS Database Migration Services Summary
+
+Companies migrate databases to AWS for reasons such as cost optimization and modernization. Two key AWS services simplify this process: **AWS Database Migration Service (DMS)** and **AWS Schema Conversion Tool (SCT)**.
+
+1. **AWS Database Migration Service (DMS)**
+   DMS helps migrate relational, NoSQL, and data warehouse databases to AWS. It operates as a virtual machine running replication software that extracts data from a source database and loads it into a target database.
+
+   * Enables live migrations with minimal downtime
+   * Supports replication across AWS Regions and Availability Zones
+   * Allows fallback to the original database if needed
+
+2. **AWS Schema Conversion Tool (SCT)**
+   SCT supports **heterogeneous migrations**—moving between different database engines (e.g., from a legacy commercial database to Amazon Aurora). It automatically converts schemas and code into a format compatible with the target system, flagging any parts that need manual review.
+
+**Benefits of DMS and SCT:**
+
+* Faster migrations compared to manual methods
+* Cost-effective and efficient
+* Flexible for both homogeneous and heterogeneous migrations
+* Secure, following AWS best practices
+
+Together, these tools make database migrations to AWS quicker, safer, and easier—whether staying on the same engine or transitioning to a new one.
