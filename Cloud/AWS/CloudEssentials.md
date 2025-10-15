@@ -3268,3 +3268,16 @@ The three **primary cost drivers** in AWS are:
 * **Outbound data transfer** – Costs for data leaving AWS (e.g., users accessing data from S3).
 
 Each service has unique pricing details, so always review documentation to fully understand billing.
+
+## AWS Billing Options and Cost Management Tools
+
+AWS offers two main billing options:
+
+* **Single Account Billing** – All AWS usage and charges are contained within one account.
+* **Consolidated Billing (via AWS Organizations)** – Multiple accounts (subaccounts) roll up into a single primary account for centralized billing, management, discounts, and improved security.
+
+### Key Billing and Cost Management Tools
+
+* **AWS Billing Dashboard** – Provides an overview of forecasted monthly spend and a breakdown of top cost-driving services.
+* **AWS Budgets** – Lets you set custom budgets for costs or usage. You can filter by service, cost category, or tags, and receive alerts when limits are approached or exceeded.
+* **AWS Cost Explorer** – Allows you to analyze spending over time, break down costs by service or tag, and use tag-based cost allocation to understand which projects or departments drive costs.
