@@ -19,4 +19,7 @@ class Booking(models.Model):
 
 # > Lab 8
 class Employees(models.Model):
-    pass
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    role = models.CharField(max_length=100)
+    shift = models.IntegerField()
