@@ -3596,3 +3596,37 @@ AWS offers purpose-built services designed to meet specific needs across develop
 ---
 
 These services demonstrate how AWS builds specialized tools tailored to diverse use cases—from developer workflows and business communications to secure, scalable end-user computing solutions.
+
+## AWS Well-Architected Framework
+
+The **AWS Well-Architected Framework** helps organizations design **secure, high-performing, resilient, efficient, and sustainable** cloud architectures. It provides a **consistent approach** for evaluating and improving workloads using **six key pillars**:
+
+1. **Operational Excellence**
+   Focuses on running and monitoring systems to deliver business value and continuously improve processes. It includes automating deployments and responding effectively to operational events.
+
+2. **Security**
+   Ensures systems are protected by implementing best practices for access control, data protection, and threat mitigation. It follows the **principle of least privilege** to maintain data integrity and safeguard resources.
+
+3. **Reliability**
+   Emphasizes system resilience and recovery planning. It ensures workloads can recover from disruptions and adapt to changing business and customer demands.
+
+4. **Performance Efficiency**
+   Promotes efficient use of computing resources through techniques like **rightsizing instances** and making data-driven decisions to maintain performance as requirements evolve.
+
+5. **Cost Optimization**
+   Aims to control and reduce costs by **optimizing resource allocation**. This includes switching to more suitable instance types, deprovisioning unused resources, and eliminating wasteful spending.
+
+6. **Sustainability**
+   Focuses on **minimizing environmental impact** through energy-efficient design choices. Examples include using **AWS Lambda** instead of always-on EC2 instances or scaling down database sizes to reduce power and resource use.
+
+---
+
+### **Using the Well-Architected Tool**
+
+The **AWS Well-Architected Tool** is a **self-service application** that evaluates workloads against the framework’s best practices:
+
+* Create a workload and run the assessment in your AWS account.
+* Review the **report** identifying improvement areas and recommended remediations.
+* Customize responses—mark questions as applicable or not, and follow linked resources for guidance.
+
+By using this tool, architects can **analyze, optimize, and strengthen** their AWS architectures to meet best practices and business goals effectively.
