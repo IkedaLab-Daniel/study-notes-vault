@@ -10,4 +10,8 @@ class Drinks(models.Model):
     category_id = models.ForeignKey(DrinkCategory, on_delete=models.PROTECT, default=None)
 
 class Booking(models.Model):
-    pass
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    guest_count = models.IntegerField()
+    reservation_time = models.DateField(auto_now=True)
+    comments = models.CharField(max_length=1000)
