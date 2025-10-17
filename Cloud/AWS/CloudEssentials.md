@@ -1,6 +1,4 @@
-# AWS Cloud Essentials Course:
-
-> Module 1: Introduction to Cloud
+# AWS Cloud Essentials Course
 
 ## AWS Cloud Essentials – Lesson 1 Summary
 
@@ -3677,3 +3675,5 @@ In this discussion, Alan, Morgan, and Rudy explore **real-world examples of serv
 ### **Takeaway**
 
 Through just a few **managed AWS services**, organizations can build **powerful, serverless solutions**—from dynamic websites to intelligent customer support systems—demonstrating the versatility and innovation possible with AWS.
+
+> bye
