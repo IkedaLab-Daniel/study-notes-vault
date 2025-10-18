@@ -56,3 +56,10 @@ Create an app called myapp.
 ```bash
  python3 manage.py startapp myapp
 ```
+
+## Step 6
+Run a command to start the server.
+
+```bash
+python3 manage.py runserver
+```
