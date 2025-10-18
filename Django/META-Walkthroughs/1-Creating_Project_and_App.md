@@ -43,3 +43,10 @@ django-admin startproject myproject
 ```
 
 The project should ideally be set up at this point.
+
+## Step 4
+Step inside the project directory that you have created.
+
+```bash
+cd myproject
+```
