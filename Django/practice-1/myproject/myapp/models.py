@@ -23,3 +23,6 @@ class Employees(models.Model):
     last_name = models.CharField(max_length=200)
     role = models.CharField(max_length=100)
     shift = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.first_name # > Employee first name will be display instead of "employee object"
