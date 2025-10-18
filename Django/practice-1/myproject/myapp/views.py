@@ -11,3 +11,5 @@ def drinks(request, drink_name):
         "tea": "type of beverage",
         "lemonade": "type of refreshment"
     }
+
+    choice_of_drink = drink_name
