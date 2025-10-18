@@ -63,3 +63,10 @@ Run a command to start the server.
 ```bash
 python3 manage.py runserver
 ```
+
+## Step 7
+Open a browser.
+Copy the URL http://127.0.0.1:8000/ or http://localhost:8000  generated on the terminal and paste it inside the Browser Window.
+
+## Additional step
+You can try changing the URL in the browser and add suffix 'admin' to see the Admin console of Django that you will encounter later. 
