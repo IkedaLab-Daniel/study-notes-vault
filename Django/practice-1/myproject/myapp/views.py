@@ -4,7 +4,10 @@ from myapp.forms import BookingForm
 from .models import Menu # > Lab 11
 # Create your views here.
 def home(request):
-    return HttpResponse("<h1>Welcome to Little Lemon</h1>")
+    home_content = {
+        "content": ""
+    }
+    return render(request, "home.html", home_content)
 
 def drinks(request, drink_name):
     drinks = {
@@ -40,3 +43,10 @@ def about(request):
         } 
 
     return render(request, 'about.html', {'content': about_content})
+
+def book(request):
+    book_content = {
+        "content": ""
+    }
+
+    return render(request, "book.html", book_content)
