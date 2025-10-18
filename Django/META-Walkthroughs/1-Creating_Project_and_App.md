@@ -50,3 +50,9 @@ Step inside the project directory that you have created.
 ```bash
 cd myproject
 ```
+## Step 5
+Create an app called myapp.
+
+```bash
+ python3 manage.py startapp myapp
+```
