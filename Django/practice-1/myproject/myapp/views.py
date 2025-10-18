@@ -6,4 +6,8 @@ def home(request):
     return HttpResponse("<h1>Welcome to Little Lemon</h1>")
 
 def drinks(request, drink_name):
-    pass
+    drinks = {
+        "mocha": "type of coffee",
+        "tea": "type of beverage",
+        "lemonade": "type of refreshment"
+    }
