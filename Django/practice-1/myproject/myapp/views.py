@@ -13,3 +13,5 @@ def drinks(request, drink_name):
     }
 
     choice_of_drink = drink_name
+
+    return HttpResponse(f"<h2>{drink_name} </h2>" + drinks[drink_name])
