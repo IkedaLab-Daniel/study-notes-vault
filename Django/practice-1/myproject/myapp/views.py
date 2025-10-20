@@ -27,7 +27,10 @@ def form_view(request):
     return render(request, "myapp/booking.html", context)
 
 def menu(request):
-    return HttpResponse("This is menu view")
+    menu_content = {
+        "ice": "ice"
+    }
+    return render(request, 'menu.html', {'content': menu_content})
 
 def about(request):
     about_content = {
