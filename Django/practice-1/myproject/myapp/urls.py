@@ -7,5 +7,7 @@ urlpatterns = [
     
     # > Lab 10
     path('about', views.about, name='about'),
-    path('menu', views.menu, name='menu')
+    path('menu', views.menu, name='menu'),
+    # > Lab 11
+    path('book', views.book, name='book')
 ]
