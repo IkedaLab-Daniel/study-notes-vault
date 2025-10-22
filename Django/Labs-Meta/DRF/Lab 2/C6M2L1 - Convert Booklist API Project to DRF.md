@@ -56,6 +56,7 @@ Open the **urls.py** file at the project level and import the `include()` functi
 _ **Tip:** _ _Do not add round brackets while importing a function in an import statement._
 
 The final code inside the project-level **urls.py** file will appear as below:
+> use BookListDRF for this Lab as it is the name of the App, not BookListAPI
 ![](assets/urls.png)
 
 **Step 3:**
