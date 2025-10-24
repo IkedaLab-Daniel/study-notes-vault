@@ -7,4 +7,8 @@ class CategoriesView(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
 
 class MenuItemView(generics.ListCreateAPIView):
-    pass
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
+    ordering_fields = ['price', 'inventory']
+    fieldset_fields = ['price', 'inventory']
+    search_fields = ['category']
