@@ -4,4 +4,6 @@ from .serializers import MenuItemSerializer
 from rest_framework import generics
 
 # Create your views here.
-
+class MenuItemView(generics.ListCreateAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
