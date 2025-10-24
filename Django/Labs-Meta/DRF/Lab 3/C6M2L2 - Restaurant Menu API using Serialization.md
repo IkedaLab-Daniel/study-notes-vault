@@ -105,7 +105,7 @@ Create a string called `'DEFAULT_RENDERER_CLASSES'` and assign a list to it cont
 
 - `'rest_framework.renderers.JSONRenderer'`
 - `'rest_framework.renderers.BrowsableAPIRenderer'`
-- `'rest_framework\_xml.renderers.XMLRenderer'`
+- `'rest_framework_xml.renderers.XMLRenderer'`
 
 **Note:** _Make sure you add a comma ( _`,`_ ) after each of the elements added inside the list_
 
