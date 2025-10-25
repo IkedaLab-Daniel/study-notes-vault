@@ -27,3 +27,30 @@ DeepSeek models include the following limitations:
 - Performance can vary across different languages or highly specialized domains not well-represented in the training data.
 
 ---
+
+## Connect to the deployed DeepSeek endpoint
+Instead of deploying a model in this practice lab, you connect to an existing SageMaker endpoint that hosts the DeepSeek model. You need to provide the name of your specific endpoint.
+
+```py
+import sagemaker
+from sagemaker.predictor import retrieve_default
+import json 
+import boto3
+
+# --- IMPORTANT --- 
+# Replace this with the actual name of the deployed DeepSeek endpoint
+endpoint_name = "<ENDPOINT_NAME>" 
+# ----------------- 
+
+predictor = None # Initialize predictor
+try:
+    print(f"Connecting to endpoint: {endpoint_name}...")
+    # Use retrieve_default which automatically handles serializers/deserializers for known JumpStart containers
+    predictor = retrieve_default(endpoint_name)
+    print(f"Successfully connected to endpoint: {endpoint_name}")
+except Exception as e:
+    print(f"[Error] connecting to endpoint {endpoint_name}: {e}")
+    print("Please ensure the endpoint name is correct and the endpoint is in 'InService' status.")
+    # Optionally raise the error or handle it as needed
+    # raise e 
+```
