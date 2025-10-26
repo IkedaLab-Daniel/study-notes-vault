@@ -85,3 +85,69 @@ A **database** is a structured system for storing and managing data, powered by 
 The main distinction lies between **SQL (relational)** and **NoSQL (non-relational)** systems, each offering unique advantages depending on the data and application type.
 
 ---
+
+# 🧩 Schemas and Data Modeling
+
+## 🏗️ Schema
+
+A **schema** is a set of **rules** that define how data is **stored, organized, and validated** in a database.
+
+* In **SQL databases**, schemas strictly define table fields, data types, and constraints.
+
+  * Example: The “quantity” field must be numeric, and “description” can have limited characters.
+* In **NoSQL databases**, schemas are **flexible**, allowing easy changes to data structure.
+
+---
+
+## 🗺️ Data Modeling
+
+**Data modeling** is the **organization and relationship** of data within a database — like a **blueprint** for how data connects.
+
+* A **schema** enforces the rules of data storage.
+* A **data model** shows **how data relates** across entities (often visualized in diagrams).
+
+### 🔄 SQL vs NoSQL
+
+| Feature       | SQL Databases                                 | NoSQL Databases                       |
+| ------------- | --------------------------------------------- | ------------------------------------- |
+| Structure     | Fixed (tables, rows, columns)                 | Flexible (documents, key-value, etc.) |
+| Schema Update | Difficult and time-consuming                  | Easy and dynamic                      |
+| Example       | Adding a new field requires updating all rows | Add field only where needed           |
+
+NoSQL databases can enforce schemas if desired — from **minimal** (for prototypes) to **strict** (for scalable governance).
+
+---
+
+# 🧠 Structured, Semi-Structured, and Unstructured Data
+
+### 📊 Structured Data
+
+* **Highly organized and predictable** (e.g., tables).
+* Easy for computers to process and query.
+* Example: SQL database records.
+
+---
+
+### 🧾 Semi-Structured Data
+
+* **Partially organized** but not in a strict format.
+* Has a recognizable pattern but flexible structure.
+* Examples: **JSON**, **XML** files.
+
+---
+
+### 🎥 Unstructured Data
+
+* **No predefined structure or organization.**
+* Includes **videos, images, audio, text documents**, etc.
+* Makes up the **majority of real-world data**.
+* Commonly used for **AI training and contextual data**.
+
+---
+
+**Summary:**
+
+* **Schema** = Rules of data structure.
+* **Data Model** = Conceptual organization and relationships.
+* **NoSQL** provides **flexibility** for evolving data.
+* Data can be **structured**, **semi-structured**, or **unstructured**, depending on how predictable and formatted it is.
