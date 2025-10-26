@@ -73,3 +73,119 @@ After running both pipelines:
 * **`productType`** identifies each document’s structure.
 * **Aggregation Framework** can transform existing data to fit this model.
 * Promotes **efficient querying** and **simplifies application logic**.
+
+# 💻 Code Summary: Inheritance Pattern (MongoDB)
+
+## 🧩 Step 1: Apply Inheritance Pattern to All Documents
+
+**Goal:** Add `product_type`, `product_id`, and make shared fields consistent.
+
+```js
+var apply_inheritance_pattern_to_books_pipeline = [
+  {
+    $project: {
+      _id: "$_id",
+      product_id: "$product_id",
+      product_type: { $ifNull: ["$product_type", "Unspecified"] },
+      description: {
+        $ifNull: ["$desc", "$description", "$details", "Unspecified"],
+      },
+      authors: { $ifNull: ["$authors", ["$author"], "Unspecified"] },
+      publisher: "$publisher",
+      language: "$language",
+      pages: "$pages",
+      catalogues: "$catalogues",
+      eformats: "$eformats",
+      isbn10: "$isbn10",
+      isbn13: "$isbn13",
+      narrator: "$narrator",
+      length_minutes: "$length_minutes",
+    },
+  },
+  {
+    $merge: {
+      into: "books",
+      on: "_id",
+      whenMatched: "replace",
+      whenNotMatched: "discard",
+    },
+  },
+];
+
+db.books.aggregate(apply_inheritance_pattern_to_books_pipeline);
+```
+
+### 🔹 What It Does
+
+* Adds a default `product_type: "Unspecified"`
+* Merges `desc`, `description`, and `details` → **`description`**
+* Converts `author` → **`authors[]`** (array format)
+* Replaces all existing documents in `books` collection with updated structure
+
+---
+
+## 🧩 Step 2: Update Audiobook Entries
+
+**Goal:** Set `product_type` to `"audiobook"` for documents with `length_minutes ≥ 0`.
+
+```js
+var cleanup_audiobook_entries_in_book_pipeline = [
+  {
+    $match: {
+      $and: [{ product_type: "Unspecified" }, { length_minutes: { $gte: 0 } }],
+    },
+  },
+  { $set: { product_type: "audiobook" } },
+  {
+    $merge: {
+      into: "books",
+      on: "_id",
+      whenMatched: "replace",
+      whenNotMatched: "discard",
+    },
+  },
+];
+
+db.books.aggregate(cleanup_audiobook_entries_in_book_pipeline);
+```
+
+### 🔹 What It Does
+
+* Finds documents where:
+
+  * `product_type` = `"Unspecified"`
+  * `length_minutes ≥ 0`
+* Updates their `product_type` to `"audiobook"`
+
+---
+
+## 🧩 Step 3: Verify Updated Document
+
+```js
+db.books.find({ _id: 3 })
+```
+
+### ✅ Example Output
+
+```js
+{
+  _id: 3,
+  product_id: 54538756,
+  product_type: 'audiobook',
+  description: 'The complete book of MongoDB by its employees',
+  authors: ['Eoin Brazil'],
+  publisher: "O'Reilly",
+  language: 'English',
+  narrator: 'Eoin Brazil',
+  length_minutes: 1200
+}
+```
+
+---
+
+## 🧠 Summary
+
+* **Aggregation Framework** used to transform documents.
+* **Standardized structure:** unified `description`, array `authors`.
+* **Dynamic typing:** identifies document shape via `product_type`.
+* Enables **polymorphic storage** — eBooks, audiobooks, and printed books coexist in one collection.
