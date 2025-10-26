@@ -151,3 +151,89 @@ NoSQL databases can enforce schemas if desired — from **minimal** (for prototy
 * **Data Model** = Conceptual organization and relationships.
 * **NoSQL** provides **flexibility** for evolving data.
 * Data can be **structured**, **semi-structured**, or **unstructured**, depending on how predictable and formatted it is.
+
+# 📄 The Document Model
+
+## ⚙️ Storage vs Compute
+
+* **Traditional SQL Databases (1970s):**
+
+  * Focused on **saving storage space**, which was expensive.
+  * Used **normalization** — splitting data into multiple tables and linking with **keys**.
+  * Required **joins** to combine data during queries → **computationally expensive**.
+
+* **Modern NoSQL Databases:**
+
+  * **Storage is cheap**, but **compute power is limited**.
+  * Prioritize **reducing joins** and **increasing processing speed**.
+  * Allow **flexible schemas**, enabling faster handling of large and varied datasets.
+  * Willingly store **duplicate data** to improve performance.
+
+---
+
+## 🧬 Polymorphic Data
+
+* **MongoDB** can handle **unstructured and semi-structured** data easily.
+* You can **combine different data types** in a single database.
+* Adding **new fields or features** doesn’t require modifying existing tables or schemas.
+
+---
+
+## 🏗️ MongoDB’s Hierarchy
+
+**Hierarchy:**
+`Documents → Collections → Database → Node → Cluster`
+
+### 🔑 Golden Rule
+
+> “Data that is accessed together should be stored together.”
+
+This reduces the need for joins and improves performance.
+
+**Metaphor:**
+
+* SQL: Disassemble a car and store each part separately (normalized, space-saving).
+* MongoDB: Store the car as a whole — easier to access and extend.
+
+---
+
+## 🧾 Document Model Syntax (MongoDB Example)
+
+```json
+{
+  "_id": ObjectId("5f4f7fef2d4b45b7f11b6d7a"),
+  "user_id": "Sean",
+  "age": 29,
+  "Status": "A"
+}
+```
+
+### 📘 Notes
+
+* Each **document** uses **JSON-like syntax** (key-value pairs inside `{}` braces).
+* **_id** field = unique identifier (primary key).
+
+  * Must be **unique**, **immutable**, and **non-array type**.
+  * Can be **auto-generated** or **manually assigned**.
+* A **collection** is a group of related documents.
+
+  * Common fields are typical but not mandatory (unless schema validation is enforced).
+
+---
+
+## ⚡ Misconception Clarified
+
+> “Non-relational” ≠ “No relationships.”
+
+* MongoDB can still represent **relationships** between data, just not through traditional SQL joins.
+
+---
+
+## 🧠 Key Points to Remember
+
+* **Flexibility:** Works well with **unstructured** and **semi-structured** data.
+* **Hierarchy:** `Documents → Collections → Database → Node → Cluster`
+* **Golden Rule:** Store **related data together**.
+* **Syntax Familiarity:** JSON-like format with key-value pairs.
+
+MongoDB’s document model emphasizes **speed, scalability, and flexibility** for modern data workloads.
