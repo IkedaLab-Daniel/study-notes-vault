@@ -40,7 +40,9 @@ class NoteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $note = Note::findOrFail($id);
+
+        return response()->json($note);
     }
 
     /**
