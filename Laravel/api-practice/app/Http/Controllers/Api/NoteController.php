@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Note;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\returnSelf;
+
 class NoteController extends Controller
 {
     /**
@@ -50,7 +52,12 @@ class NoteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // > update a note
+        $note = Note::findOrFail($id);
+
+        $note->update($request->all());
+
+        return response()->json($note);
     }
 
     /**
