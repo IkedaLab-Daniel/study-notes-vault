@@ -349,3 +349,85 @@ MongoDB lets administrators **configure tradeoffs** based on workload and applic
 * **MongoDB’s Distributed Design:**
 
   * Ensures high performance, flexibility, and fault tolerance for modern applications.
+
+# ☁️ MongoDB Atlas Basics
+
+## 🧠 Overview
+
+MongoDB Atlas is a **Database-as-a-Service (DBaaS)** platform that lets you **create, host, and manage MongoDB databases** in the cloud (AWS, Azure, or Google Cloud). It removes the complexity of hardware setup, security, and backups — allowing developers to focus on building applications.
+
+---
+
+## ⚙️ Self-Managed vs Fully-Managed
+
+### 🧩 Self-Managed
+
+* Administrator handles **setup, configuration, backups, and security** manually.
+* Provides **full control**, but requires **more time and effort**.
+* Example: Installing and managing MongoDB on your own server.
+
+### ☁️ Fully-Managed
+
+* Vendor manages **maintenance, upgrades, and backups** automatically.
+* Users configure settings but don’t handle infrastructure.
+* Example: **MongoDB Atlas** (a fully-managed MongoDB service).
+
+---
+
+## 💻 SaaS and DBaaS
+
+### 📦 SaaS (Software as a Service)
+
+* Software hosted by a provider; users access it online.
+* No installation or maintenance needed.
+* Example: **Google Docs** — you just log in and use it.
+
+### 🗄️ DBaaS (Database as a Service)
+
+* Cloud-based management and hosting of databases.
+* Handles **security, provisioning, and updates** automatically.
+* **MongoDB Atlas** is a DBaaS platform that simplifies deploying MongoDB clusters in the cloud.
+
+---
+
+## 🚀 MongoDB Atlas Setup Guide
+
+### 1️⃣ Create an Atlas Account
+
+* Register on the [MongoDB Atlas website](https://www.mongodb.com/atlas).
+* If you already have a **MongoDB University** account, you can use it to sign in.
+
+### 2️⃣ Verify Your Email
+
+* Open the verification email from MongoDB.
+* Click the verification link, then select **Continue**.
+
+### 3️⃣ Finish Account Creation
+
+* Fill out the onboarding form and click **Finish**.
+* ✅ Your Atlas account is now ready.
+
+### 4️⃣ Deploy Your Free Cluster
+
+* Choose **M0 (Free Tier)**.
+* Configure the following:
+
+  * **Name:** Enter your preferred cluster name.
+  * **Automate security setup:** Add your current IP to the access list.
+  * **Preload sample dataset:** For testing and practice.
+  * **Provider:** Default is **AWS** (change if preferred).
+  * **Region:** Select the recommended or preferred region.
+* Click **Create Deployment** and wait for the setup to complete.
+
+### 5️⃣ Create a Database User
+
+* After deployment, create a database user with your own credentials.
+* Click **Create Database User** → **Close**.
+
+🎉 You’ve now successfully created an Atlas account and deployed your first MongoDB cluster!
+
+---
+
+## 🎓 Student Benefit
+
+As a **student**, you’re eligible for **$50 in MongoDB Atlas credits** through the **MongoDB Student Pack** — a great way to explore and experiment with cloud databases for free.
