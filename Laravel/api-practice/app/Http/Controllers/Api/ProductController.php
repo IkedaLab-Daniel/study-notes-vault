@@ -22,7 +22,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // > Create new product
+        $validated = $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'description' => 'nullable|string'
+        ]);
+
+        $product = Product::create($validated);
+
+        return response()->json($product, 201);
     }
 
     /**
