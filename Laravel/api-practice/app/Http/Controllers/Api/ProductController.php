@@ -24,7 +24,7 @@ class ProductController extends Controller
     {
         // > Create new product
         $validated = $request->validate([
-            'name' => 'required',
+            'title' => 'required',
             'price' => 'required|numeric',
             'description' => 'nullable|string'
         ]);
