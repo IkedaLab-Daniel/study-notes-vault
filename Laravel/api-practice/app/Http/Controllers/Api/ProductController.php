@@ -39,7 +39,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // > Read One Item
+        $product = Product::findOrFail($id);
+        return response()->json($product);
     }
 
     /**
