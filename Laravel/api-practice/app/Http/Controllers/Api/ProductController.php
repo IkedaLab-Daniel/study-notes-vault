@@ -60,6 +60,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // > Delete a Product
+        Product::findOrFail($id)->delete();
+        return response()->json(['message' => 'Product deleted']);
     }
 }
