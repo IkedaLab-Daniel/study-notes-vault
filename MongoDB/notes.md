@@ -244,3 +244,122 @@ db.books.aggregate(roll_up_product_type_and_number_of_authors_pipeline);
 * **Computed Pattern** aggregates and summarizes data dynamically.
 * Useful for analytics like totals, averages, and summaries.
 * Reduces query complexity by precomputing common metrics.
+
+✅ **Code Summary: Extended Reference Pattern**
+
+This aggregation pipeline demonstrates how to **extend reference data** by embedding related product details (from the `books` collection) into documents in the `reviews` collection.
+
+---
+
+### **Step-by-Step Breakdown**
+
+1. **$lookup – Join Data Across Collections**
+
+   ```js
+   {
+     $lookup: {
+       from: "books",
+       localField: "product_id",
+       foreignField: "product_id",
+       as: "product_info",
+     },
+   }
+   ```
+
+   * Joins each `reviews` document with the matching `books` document based on `product_id`.
+   * The matching book details are stored in a new array field called `product_info`.
+
+---
+
+2. **$unwind – Flatten the Joined Array**
+
+   ```js
+   {
+     $unwind: {
+       path: "$product_info",
+       includeArrayIndex: "string",
+       preserveNullAndEmptyArrays: false,
+     },
+   }
+   ```
+
+   * Converts the `product_info` array into individual documents.
+   * Ensures each review has one corresponding book document (since `product_info` contains one element per match).
+
+---
+
+3. **$project – Reshape Document Structure**
+
+   ```js
+   {
+     $project: {
+       _id: "$_id",
+       "product.product_id": "$product_id",
+       "product.product_type": "$product_info.product_type",
+       "product.title": "$product_info.title",
+       "review.user_id": "$user_id",
+       "review.reviewTitle": "$reviewTitle",
+       "review.reviewBody": "$reviewBody",
+       "review.date": "$date",
+       "review.stars": "$stars",
+     },
+   }
+   ```
+
+   * Creates a **nested structure** separating product info and review details.
+   * Produces a clean and logical layout:
+
+     ```js
+     {
+       _id: ...,
+       product: {
+         product_id: ...,
+         product_type: ...,
+         title: ...
+       },
+       review: {
+         user_id: ...,
+         reviewTitle: ...,
+         reviewBody: ...,
+         date: ...,
+         stars: ...
+       }
+     }
+     ```
+
+---
+
+4. **$merge – Update the Original Collection**
+
+   ```js
+   {
+     $merge: {
+       into: "reviews",
+       on: "_id",
+       whenMatched: "replace",
+       whenNotMatched: "discard",
+     },
+   }
+   ```
+
+   * Replaces the existing documents in the `reviews` collection with the newly reshaped versions.
+   * Keeps document `_id` intact.
+   * Prevents insertion of new documents that didn’t match any original (`whenNotMatched: "discard"`).
+
+---
+
+5. **Execution**
+
+   ```js
+   db.reviews.aggregate(reshape_review_docs_pipeline)
+   ```
+
+   * Runs the aggregation pipeline on the `reviews` collection.
+   * Produces an updated `reviews` collection with **embedded product details**—creating an *extended reference* between collections.
+
+---
+
+### **Summary**
+
+This pipeline performs a **denormalization** step — enriching review documents with book information, improving read performance at the cost of data redundancy.
+It’s commonly used in analytics or when you want a single collection containing both product and review data.
