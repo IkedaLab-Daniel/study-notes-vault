@@ -189,3 +189,58 @@ db.books.find({ _id: 3 })
 * **Standardized structure:** unified `description`, array `authors`.
 * **Dynamic typing:** identifies document shape via `product_type`.
 * Enables **polymorphic storage** — eBooks, audiobooks, and printed books coexist in one collection.
+
+# 📊 Code Summary: Computed Pattern (MongoDB)
+
+## 🧩 Purpose
+
+Implements a **roll-up aggregation** to create summary documents per `product_type`.
+Each summary shows:
+
+* Total number of books (`count`)
+* Average number of authors per book (`averageNumberOfAuthors`)
+
+---
+
+## 🧠 Aggregation Pipeline
+
+```js
+var roll_up_product_type_and_number_of_authors_pipeline = [
+  {
+    $group: {
+      _id: "$product_type",
+      count: { $sum: 1 },
+      averageNumberOfAuthors: { $avg: { $size: "$authors" } },
+    },
+  },
+];
+
+db.books.aggregate(roll_up_product_type_and_number_of_authors_pipeline);
+```
+
+### 🔹 Explanation
+
+* **`$group`** — Groups documents by `product_type`.
+* **`$sum: 1`** — Counts total books in each group.
+* **`$size: "$authors"`** — Counts number of authors per document.
+* **`$avg`** — Calculates average number of authors per book type.
+
+---
+
+## 📈 Example Output
+
+```js
+[
+  { _id: 'audiobook', count: 1, averageNumberOfAuthors: 1 },
+  { _id: 'ebook', count: 1, averageNumberOfAuthors: 3 },
+  { _id: 'book', count: 1, averageNumberOfAuthors: 3 }
+]
+```
+
+---
+
+## 🧩 Summary
+
+* **Computed Pattern** aggregates and summarizes data dynamically.
+* Useful for analytics like totals, averages, and summaries.
+* Reduces query complexity by precomputing common metrics.
