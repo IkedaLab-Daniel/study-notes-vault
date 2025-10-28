@@ -363,3 +363,36 @@ This aggregation pipeline demonstrates how to **extend reference data** by embed
 
 This pipeline performs a **denormalization** step — enriching review documents with book information, improving read performance at the cost of data redundancy.
 It’s commonly used in analytics or when you want a single collection containing both product and review data.
+
+
+## Bloated Document Anti-Pattern**
+
+The **Bloated Document** anti-pattern occurs when a single MongoDB document grows too large due to the continuous addition of embedded data — such as long arrays of comments, reviews, or transaction histories.
+
+Over time, these oversized documents can lead to **performance issues**, such as:
+
+* Slower read and write operations
+* Increased memory and disk usage
+* Higher risk of hitting MongoDB’s **16MB document size limit**
+
+This anti-pattern often happens when developers overuse **embedding** instead of **referencing** related data.
+
+A better approach is to **normalize** data when subdocuments grow unbounded — for instance, moving comments or logs to a separate collection and referencing the main document by its `_id`.
+
+---
+
+### 🧩 **Code Summary: Bloated Documents**
+
+To analyze whether documents are becoming bloated, you can check the total count and average size of documents in a collection using the `stats()` method in **mongosh**:
+
+```js
+// Get the total number of documents
+db.collection.stats().count
+```
+
+```js
+// Get the average size of documents (in bytes)
+db.collection.stats().avgObjSize
+```
+
+These metrics help you detect unusually large documents and decide when to refactor your schema to prevent the **Bloated Document** anti-pattern.
