@@ -24,14 +24,14 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string'
+            'content' => 'required|string',
         ]);
 
         $post = Post::create($validated);
 
         return response()->json([
             'message' => 'Post created successfully',
-            'date' => $post
+            'data' => $post
         ], 201);
     }
 
