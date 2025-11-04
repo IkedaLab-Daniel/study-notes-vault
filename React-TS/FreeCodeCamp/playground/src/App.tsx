@@ -1,10 +1,10 @@
 import './App.css'
 
 let name: string;
-let age: number;
+let age: number | string;
 let isStudent: boolean;
-let hobbies: string[];
-let role:[number, string];
+let hobbies: string[] | boolean;
+let role:[number|string, string];
 
 type Person = {
   name: string;
