@@ -7,6 +7,15 @@
 }
 
 .heading{
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 400;
+  z-index: 1;
+  margin: 30px 0;
+}
+
+@media (max-width: 800px) {
+  .heading{
+    margin: 15px 0;
+    font-size: 35px;
+  }
 }
