@@ -30,29 +30,26 @@ let lotsIfPeople: Person[];
 
 let personName: unknown;
 
-// type X = {
-//   a: string;
-//   b: number;
-// };
-
-// type Y = X & {
-//   c: string;
-//   d: number;
-// };
-
-// let y : Y = {
-//   c: "Ice",
-//   d: 308,
-// }
 
 interface Person {
   name: string;
   age?: number;
 };
 
-interface Guy extends Person {
-  profession: string;
+type X = {
+  a: string;
+  b: number;
 };
+
+// type X = Person & {
+//   a: string;
+//   b: number;
+// };
+
+// interface Person extends X {
+//   name: string;
+//   age?: number;
+// };
 
 function App() {
   
