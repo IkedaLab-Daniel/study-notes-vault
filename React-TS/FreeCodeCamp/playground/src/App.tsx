@@ -1,14 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
+let name: string;
+let age: number;
+let isStudent: boolean;
+let hobbies: string[];
+let role:[number, string];
+
+type Person = {
+  name: string;
+  day?: number;
+};
+
+let person: Person = {
+  name: "Ice",
+  // day: 308,
+};
+
+let lotsIfPeople: Person[];
+
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
     <>
-      <p>Hello World</p>
+      <p>Day 308 - LETSS GOOOOOOOOO!</p>
     </>
   )
 }
