@@ -6,6 +6,14 @@ let isStudent: boolean;
 let hobbies: string[] | boolean;
 let role:[number|string, string];
 
+let printName: (name:string) => void;
+let sum: (x:number, y:number) => number | string;
+
+// function printName(name: string) {
+//   console.log(name)
+// };
+// printName('Ice');
+
 type Person = {
   name: string;
   day?: number;
