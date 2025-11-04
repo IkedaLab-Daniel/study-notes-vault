@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types';
 
-const ControlPanel = ({ name, onChange }) => {
+type ControlPannelProps = {
+    name: string;
+    onChange: any;
+}
+
+const ControlPanel = ({ name, onChange } : ControlPannelProps) => {
   return (
     <form
       className="flex flex-row gap-4 text-white bg-primary-10"
