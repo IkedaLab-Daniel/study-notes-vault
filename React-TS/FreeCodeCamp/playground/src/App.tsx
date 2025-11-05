@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css'
 import InputField from './components/InputField'
 import type { Todo } from './model';
+import ToDoList from './components/ToDoList';
 
 const App: React.FC = () => {
   const [todo, setToDo] = useState<string>("");
@@ -32,11 +33,10 @@ const App: React.FC = () => {
         setToDo={setToDo} 
         handleAdd={handleAdd}
       />
-      
-      {todos.map((t) => (
-        <li>{t.todo}</li>
-      ))}
-
+      <ToDoList 
+        todos={todos}  
+        setToDos={setToDos}
+      />
     </div>
   )
 }
