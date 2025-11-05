@@ -32,6 +32,11 @@ const App: React.FC = () => {
         setToDo={setToDo} 
         handleAdd={handleAdd}
       />
+      
+      {todos.map((t) => (
+        <li>{t.todo}</li>
+      ))}
+
     </div>
   )
 }
