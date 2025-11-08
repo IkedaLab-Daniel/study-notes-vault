@@ -1,6 +1,10 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 
-MONGODB_URI = "mongodb+srv://iceice:iceice@myatlasclusteredu.og4ezo2.mongodb.net/?appName=myAtlasClusterEDU"
+load_dotenv()
+
+MONGODB_URI = os.getenv("MONGODB_URI")
 
 client = MongoClient(MONGODB_URI)
 
