@@ -22,7 +22,7 @@ const connectToDatabase = async () => {
 }
 
 const sampleAccount = {
-    account_holder: "Ice",
+    account_holder: "iceice",
     account_id: "iceice",
     account_type: "checking",
     aura: 999999,
@@ -33,8 +33,13 @@ const main = async () => {
     try {
         await connectToDatabase()
         
-        let result = await accountCollection.insertOne(sampleAccount)
-        console.log(`Inserted document: ${result.insertedId}`)
+        // let result = await accountCollection.insertOne(sampleAccount)
+        // console.log(`Inserted document: ${result.insertedId}`)
+
+        let result = await accountCollection.findOne({ account_holder: "iceice"})
+        let all = await accountCollection.find().toArray()
+        console.log(result)
+        console.log(all)
 
     } catch (err) {
         console.error("Error on main: ", err)
