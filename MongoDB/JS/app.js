@@ -36,10 +36,21 @@ const main = async () => {
         // let result = await accountCollection.insertOne(sampleAccount)
         // console.log(`Inserted document: ${result.insertedId}`)
 
-        let result = await accountCollection.findOne({ account_holder: "iceice"})
-        let all = await accountCollection.find().toArray()
+        // let result = await accountCollection.findOne({ account_holder: "iceice"})
+        // let all = await accountCollection.find().toArray()
+        // console.log(result)
+        // console.log(all)
+
+        const toUpdate = { account_holder: "iceice"}
+        const update = { $set: { aura: 199999999 } }
+        // > $set, $inc, $push, $unset
+        // > for array: $push, $pull, $pop
+
+        result = await accountCollection.updateOne(toUpdate, update)
         console.log(result)
-        console.log(all)
+
+        many = await accountCollection.updateMany({}, { $set: { updated: true }})
+        console.log(many)
 
     } catch (err) {
         console.error("Error on main: ", err)
