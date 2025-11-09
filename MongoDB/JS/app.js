@@ -32,7 +32,10 @@ const sampleAccount = {
 const main = async () => {
     try {
         await connectToDatabase()
-        console.log("Working")
+        
+        let result = await accountCollection.insertOne(sampleAccount)
+        console.log(`Inserted document: ${result.insertedId}`)
+
     } catch (err) {
         console.error("Error on main: ", err)
     } finally {
