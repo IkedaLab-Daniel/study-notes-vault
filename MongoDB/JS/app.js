@@ -41,16 +41,19 @@ const main = async () => {
         // console.log(result)
         // console.log(all)
 
-        const toUpdate = { account_holder: "iceice"}
-        const update = { $set: { aura: 199999999 } }
+        // const toUpdate = { account_holder: "iceice"}
+        // const update = { $set: { aura: 199999999 } }
         // > $set, $inc, $push, $unset
         // > for array: $push, $pull, $pop
 
-        result = await accountCollection.updateOne(toUpdate, update)
-        console.log(result)
+        // result = await accountCollection.updateOne(toUpdate, update)
+        // console.log(result)
 
-        many = await accountCollection.updateMany({}, { $set: { updated: true }})
-        console.log(many)
+        // many = await accountCollection.updateMany({}, { $set: { updated: true }})
+        // console.log(many)
+
+        let result = await accountCollection.findOneAndDelete({account_holder: "iceice"})
+        console.log(result)
 
     } catch (err) {
         console.error("Error on main: ", err)
