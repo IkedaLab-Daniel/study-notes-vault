@@ -52,8 +52,27 @@ const main = async () => {
         // many = await accountCollection.updateMany({}, { $set: { updated: true }})
         // console.log(many)
 
-        let result = await accountCollection.findOneAndDelete({account_holder: "iceice"})
-        console.log(result)
+        // let result = await accountCollection.findOneAndDelete({account_holder: "iceice"})
+        // console.log(result)
+
+        // > aggregations
+        const pipeline = [
+            {
+                $match: { aura: { $gt: 1 }}
+            },
+            {
+                $group: {
+                    _id: "$account_type",
+                    totol_aura: { $sum: "$aura" },
+                    avg_balance: { $avg: "$aura" },
+                },
+            },
+        ]
+
+        let result = await accountCollection.aggregate(pipeline)
+        for await (const doc of result) {
+            console.log(doc)
+        }
 
     } catch (err) {
         console.error("Error on main: ", err)
