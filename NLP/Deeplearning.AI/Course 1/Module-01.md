@@ -114,3 +114,43 @@ In code, this becomes a dictionary:
 This allows quick lookup of how often any word appeared in each sentiment class.
 
 You’ve now built the frequency dictionary—next, you'll learn how to use it to represent a tweet for classification.
+
+## Encoding a Tweet as a 3-Dimensional Feature Vector
+
+Previously, tweets were encoded as high-dimensional vectors (dimension = vocabulary size **V**). Now you learn a more efficient representation using **only 3 features**, allowing logistic regression to train and predict much faster.
+
+### Using the Frequency Dictionary
+
+You created a dictionary mapping:
+
+```
+(word, class) → frequency
+```
+
+This tells how many times each word appears in **positive** and **negative** tweets.
+
+### The 3 Features
+
+For any tweet *m*, you compute:
+
+1. **Bias term** — always **1**
+2. **Sum of positive frequencies** — add the positive-class frequency for every unique word in the tweet
+3. **Sum of negative frequencies** — add the negative-class frequency for every unique word in the tweet
+
+### Example
+
+Given a sample tweet:
+
+* Identify all words appearing in it.
+* Add up their **positive frequencies** → result = **8**
+* Add up their **negative frequencies** → result = **11**
+
+So the tweet’s final vector is:
+
+```
+[1, 8, 11]
+```
+
+This 3-value representation is far more efficient than a full vocabulary-sized vector and retains useful sentiment information.
+
+Next, you’ll learn how to **pre-process tweets** so that the vocabulary is built from clean, normalized text.
