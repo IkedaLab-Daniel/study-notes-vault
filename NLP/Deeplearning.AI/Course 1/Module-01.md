@@ -154,3 +154,50 @@ So the tweet’s final vector is:
 This 3-value representation is far more efficient than a full vocabulary-sized vector and retains useful sentiment information.
 
 Next, you’ll learn how to **pre-process tweets** so that the vocabulary is built from clean, normalized text.
+
+## Preprocessing Text: Stop Words, Punctuation, Stemming, and More
+
+This lesson introduces two key preprocessing concepts used before feeding text into a logistic regression classifier: **stop words** and **stemming**. The goal is to clean and normalize tweets so features become more meaningful and the vocabulary becomes smaller.
+
+### 1. Removing Stop Words and Punctuation
+
+* **Stop words** are common words that add little meaning (e.g., *and, are, a, at*).
+* Compare each tweet against:
+
+  * A stop-words list
+  * A punctuation list
+* Remove any word or character found in these lists.
+* Removing them preserves the sentiment and simplifies the text.
+
+Example result: after removing stop words and punctuation, the tweet keeps only the meaningful words.
+
+### 2. Removing Handles and URLs
+
+Tweets often contain:
+
+* Mentions (@user)
+* URLs
+
+These do not contribute to sentiment analysis, so they are removed to avoid noise.
+
+### 3. Stemming
+
+**Stemming** reduces words to a shared base form (stem), making variants count as the same feature.
+
+Example:
+
+* *tune, tuned, tuning* → **tun**
+
+This reduces vocabulary size and helps the model generalize.
+
+### 4. Lowercasing
+
+Convert all words to lowercase:
+
+* *GREAT*, *Great*, and *great* → **great**
+
+This further reduces duplicate entries in the vocabulary.
+
+### Final Output
+
+After stop-word removal, punctuation removal, handle/URL cleanup, stemming, and lowercasing, you obtain a clean list of words containing only meaningful, normalized tokens.
