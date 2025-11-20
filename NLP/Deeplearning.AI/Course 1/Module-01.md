@@ -20,3 +20,28 @@ Within **Course 1**, the weekly breakdown is:
 * **Week 4:** Simple machine translation + locality-sensitive hashing for faster nearest-neighbor search.
 
 The course prepares you to build foundational NLP systems and understand the core concepts behind modern applications.
+
+## Week 1 Overview: Logistic Regression for Sentiment Analysis
+
+This week introduces **logistic regression**, a foundational supervised learning method widely used in NLP due to its simplicity, fast training, and strong baseline performance.
+
+The main task you'll work on is **sentiment analysis of tweets**:
+
+* Positive tweets are labeled **1**
+* Negative tweets are labeled **0**
+
+### Key Steps in Supervised Learning
+
+1. **Inputs (X)** and **labels (Y)** form your training data.
+2. A **prediction function** uses parameters to map features to predicted labels **Ŷ**.
+3. A **cost function** measures the difference between predictions and true labels.
+4. Parameters are updated repeatedly to minimize this cost.
+
+### Workflow for Logistic Regression in Sentiment Analysis
+
+1. **Process raw tweets** to extract meaningful features.
+2. **Train the logistic regression classifier**, minimizing the cost function.
+3. **Use the trained model** to classify new tweets as positive or negative.
+
+You now understand the overall process: extract features → train model → make predictions.
+The next video will dive into how to extract features from text.
