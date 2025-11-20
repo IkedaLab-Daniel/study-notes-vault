@@ -75,3 +75,42 @@ This creates a vector with:
 * As V grows large, training becomes slow and prediction becomes inefficient.
 
 The next video addresses the problems caused by this approach and how to handle them.
+
+## Generating Word Counts for Logistic Regression Features
+
+To improve feature extraction for logistic regression, you can track how often each word appears in **positive** and **negative** tweets. These word–class counts will later help build stronger features for sentiment classification.
+
+### Setup
+
+* You have a corpus of tweets.
+* A vocabulary of **unique words** is created from the entire corpus.
+* Tweets are divided into two classes:
+
+  * **Positive**
+  * **Negative**
+
+### Counting Word Frequencies by Class
+
+For each word in the vocabulary:
+
+* **Positive frequency** = number of times the word appears across all positive tweets.
+* **Negative frequency** = number of times the word appears across all negative tweets.
+
+Example:
+
+* Word **"happy"** appears once in each of two positive tweets → positive frequency = **2**
+* Word **"am"** appears three times across negative tweets → negative frequency = **3**
+
+These counts form a table (or matrix) mapping every **word–class pair** to its frequency.
+
+### Frequency Dictionary
+
+In code, this becomes a dictionary:
+
+```
+(word, class) → frequency
+```
+
+This allows quick lookup of how often any word appeared in each sentiment class.
+
+You’ve now built the frequency dictionary—next, you'll learn how to use it to represent a tweet for classification.
