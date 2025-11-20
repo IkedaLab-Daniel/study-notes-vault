@@ -45,3 +45,33 @@ The main task you'll work on is **sentiment analysis of tweets**:
 
 You now understand the overall process: extract features → train model → make predictions.
 The next video will dive into how to extract features from text.
+
+## Representing Text as Vectors Using a Vocabulary
+
+To convert text into numerical form for machine learning, you first create a **vocabulary (V)**—a list of all unique words appearing across your dataset of tweets.
+
+### Building the Vocabulary
+
+* Collect all tweets.
+* Scan every tweet and add each new word to the vocabulary.
+* Each word appears **only once**, even if it occurs multiple times in the dataset.
+
+### Encoding a Tweet as a Vector
+
+For each word in the vocabulary:
+
+* If the word appears in the tweet → assign **1**
+* If it does not appear → assign **0**
+
+This creates a vector with:
+
+* Length = size of the vocabulary
+* Mostly 0s and few 1s → a **sparse representation**
+
+### Issues With Sparse Representations
+
+* Each tweet’s vector must include every word in the vocabulary.
+* Logistic regression must learn **V + 1 parameters**, where **V = vocabulary size**.
+* As V grows large, training becomes slow and prediction becomes inefficient.
+
+The next video addresses the problems caused by this approach and how to handle them.
