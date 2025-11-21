@@ -201,3 +201,50 @@ This further reduces duplicate entries in the vocabulary.
 ### Final Output
 
 After stop-word removal, punctuation removal, handle/URL cleanup, stemming, and lowercasing, you obtain a clean list of words containing only meaningful, normalized tokens.
+
+## Building the Feature Matrix X
+
+This lesson explains how to convert an entire dataset of tweets into a feature matrix **X**, using all the preprocessing and feature extraction techniques learned so far.
+
+### 1. From Raw Tweets to Processed Word Lists
+
+For each of the **m** raw tweets:
+
+* Apply preprocessing:
+
+  * remove stop words
+  * remove punctuation
+  * remove URLs and user handles
+  * lowercase
+  * apply stemming
+* The result is a clean list of meaningful tokens for each tweet.
+
+### 2. Using the Frequency Dictionary
+
+* With the processed tokens, use the **frequency dictionary** (mapping `(word, class)` → count) to compute:
+
+  * Bias term = 1
+  * Sum of positive class frequencies for all words in the tweet
+  * Sum of negative class frequencies for all words in the tweet
+* This creates a **3-dimensional feature vector** per tweet.
+
+### 3. Building Matrix X
+
+* Initialize an **m × 3** matrix.
+* For each tweet:
+
+  1. Preprocess the tweet using `process_tweet`
+  2. Extract the three features using the frequency dictionary
+  3. Store them as a row in X
+
+### 4. Implementation Notes
+
+* You are given helper functions:
+
+  * `build_freqs` – creates the frequency dictionary
+  * `process_tweet` – performs preprocessing
+* You must implement the function that extracts the three features from a single processed tweet.
+
+### Result
+
+Once all tweets are processed, you have the matrix **X**, ready to be fed into the logistic regression classifier in the next step.
