@@ -37,6 +37,13 @@ The main task you'll work on is **sentiment analysis of tweets**:
 3. A **cost function** measures the difference between predictions and true labels.
 4. Parameters are updated repeatedly to minimize this cost.
 
+### Key Steps in Supervised Learning (with Math Notation)
+
+1. **Inputs** $X$ and **labels** $Y$ form your training data.
+2. A **prediction function** uses parameters to map features to predicted labels $\hat{Y}$.
+3. A **cost function** measures the difference between predictions and true labels.
+4. Parameters are updated repeatedly to minimize this cost.
+
 ### Workflow for Logistic Regression in Sentiment Analysis
 
 1. **Process raw tweets** to extract meaningful features.
@@ -73,6 +80,10 @@ This creates a vector with:
 * Each tweet’s vector must include every word in the vocabulary.
 * Logistic regression must learn **V + 1 parameters**, where **V = vocabulary size**.
 * As V grows large, training becomes slow and prediction becomes inefficient.
+
+* Each tweet’s vector must include every word in the vocabulary.
+* Logistic regression must learn $V + 1$ parameters, where $V$ is the vocabulary size.
+* As $V$ grows large, training becomes slow and prediction becomes inefficient.
 
 The next video addresses the problems caused by this approach and how to handle them.
 
@@ -137,6 +148,11 @@ For any tweet *m*, you compute:
 2. **Sum of positive frequencies** — add the positive-class frequency for every unique word in the tweet
 3. **Sum of negative frequencies** — add the negative-class frequency for every unique word in the tweet
 
+For any tweet $m$, you compute:
+1. **Bias term** — always $1$
+2. **Sum of positive frequencies** — add the positive-class frequency for every unique word in the tweet
+3. **Sum of negative frequencies** — add the negative-class frequency for every unique word in the tweet
+
 ### Example
 
 Given a sample tweet:
@@ -150,6 +166,12 @@ So the tweet’s final vector is:
 ```
 [1, 8, 11]
 ```
+
+So the tweet’s final vector is:
+
+$$
+[1,\ 8,\ 11]
+$$
 
 This 3-value representation is far more efficient than a full vocabulary-sized vector and retains useful sentiment information.
 
@@ -237,6 +259,12 @@ For each of the **m** raw tweets:
   2. Extract the three features using the frequency dictionary
   3. Store them as a row in X
 
+* Initialize an $m \times 3$ matrix.
+* For each tweet:
+  1. Preprocess the tweet using `process_tweet`
+  2. Extract the three features using the frequency dictionary
+  3. Store them as a row in $X$
+
 ### 4. Implementation Notes
 
 * You are given helper functions:
@@ -260,71 +288,80 @@ Logistic regression uses extracted features from tweets to predict whether a sen
 * **Training goal:** Minimize a cost function that measures how close predictions are to true labels.
 * **Update process:** Adjust parameters repeatedly until the cost is minimized.
 
+### Key Concepts (with Math Notation)
+
+* **Supervised learning:** Uses input features $X$ and labels $Y$.
+* **Prediction function:** Uses parameters $\theta$ to map features to predicted labels $\hat{Y}$.
+* **Training goal:** Minimize a cost function that measures how close predictions are to true labels.
+* **Update process:** Adjust parameters repeatedly until the cost is minimized.
+
 ### Logistic Regression Specifics
 
-* The model function ( h_\theta(x) ) is the **sigmoid function**.
+* The model function $h_\theta(x)$ is the **sigmoid function**.
 * It takes the form:
-  ( h_\theta(x) = \sigma(\theta^T x) )
-* The sigmoid approaches:
 
-  * **0** when ( \theta^T x \to -\infty )
-  * **1** when ( \theta^T x \to +\infty )
+  $$
+  h_\theta(x) = \sigma(\theta^T x)
+  $$
+
+* The sigmoid approaches:
+  * **0** when $\theta^T x \to -\infty$
+  * **1** when $\theta^T x \to +\infty$
 
 ### Classification Threshold
 
 * A threshold of **0.5** is typically used.
-
-  * If ( \theta^T x \ge 0 ) → **positive sentiment**
-  * If ( \theta^T x < 0 ) → **negative sentiment**
+  * If $\theta^T x \ge 0$ → **positive sentiment**
+  * If $\theta^T x < 0$ → **negative sentiment**
 
 ### Example With a Tweet
 
 * After cleaning (removing handles, lowercasing, stemming), you get a list of processed words.
 * Using a frequency dictionary, you extract three features:
-
   * Bias unit
   * Sum of positive frequencies
   * Sum of negative frequencies
-* With learned parameters ( \theta ), plugging the feature vector into the sigmoid gives a probability.
-* Example output: sigmoid value ≈ **4.92**, leading to a **positive** prediction.
+* With learned parameters $\theta$, plugging the feature vector into the sigmoid gives a probability.
+* Example output: sigmoid value $\approx 4.92$, leading to a **positive** prediction.
 
 ## Training Logistic Regression Using Gradient Descent
 
-To classify tweet sentiment, you need to **learn your own parameter vector ( \theta )** rather than using a predefined one. This is done by repeatedly adjusting ( \theta ) to minimize the logistic regression cost function.
+To classify tweet sentiment, you need to **learn your own parameter vector $\theta$** rather than using a predefined one. This is done by repeatedly adjusting $\theta$ to minimize the logistic regression cost function.
 
 ### Gradient Descent Overview
 
-* The cost function depends on parameters (e.g., ( \theta_1 ), ( \theta_2 )).
+* The cost function depends on parameters (e.g., $\theta_1$, $\theta_2$).
 * Its shape can be visualized using contour plots.
-* Training begins with **initializing ( \theta )**, then iteratively updating it.
+* Training begins with **initializing $\theta$**, then iteratively updating it.
 
 ### Training Steps
 
 1. **Initialize parameters**
-   Start with ( \theta ) set to zeros or small random values.
+  Start with $\theta$ set to zeros or small random values.
 
 2. **Compute predictions**
-   Use the logistic (sigmoid) function on ( \theta^T x^{(i)} ) for every training example.
+  Use the logistic (sigmoid) function on $\theta^T x^{(i)}$ for every training example.
 
 3. **Calculate gradients**
-   Find the partial derivatives of the cost function with respect to each parameter.
+  Find the partial derivatives of the cost function with respect to each parameter.
 
 4. **Update parameters**
-   Move ( \theta ) in the direction opposite the gradient to reduce cost.
+  Move $\theta$ in the direction opposite the gradient to reduce cost.
 
-5. **Compute cost ( J )**
-   Monitor the cost function to see if it decreases as training progresses.
+5. **Compute cost $J$**
+  Monitor the cost function to see if it decreases as training progresses.
 
 6. **Check stopping criteria**
-   Stop after a set number of iterations or when improvements become negligible.
+  Stop after a set number of iterations or when improvements become negligible.
 
 ### Iterative Improvement
 
-* After each iteration (e.g., 100, 200, 300 steps), ( \theta ) moves closer to the optimal point.
+* After each iteration (e.g., 100, 200, 300 steps), $\theta$ moves closer to the optimal point.
 * The process continues until reaching a point near the minimum cost.
 
 ### After Training
 
-Once ( \theta ) is learned, you evaluate whether it produces **good predictions** by plugging it into the sigmoid function and checking model performance.
+Once $\theta$ is learned, you evaluate whether it produces **good predictions** by plugging it into the sigmoid function and checking model performance.
 
+The next video shows how to evaluate your logistic regression classifier.
 The next video shows how to evaluate your logistic regression classifier.
