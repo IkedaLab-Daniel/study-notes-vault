@@ -365,3 +365,54 @@ Once $\theta$ is learned, you evaluate whether it produces **good predictions** 
 
 The next video shows how to evaluate your logistic regression classifier.
 The next video shows how to evaluate your logistic regression classifier.
+
+## Evaluating Logistic Regression and Computing Accuracy
+
+Once you have learned your optimal parameter vector ( \theta ), you can use it to predict the sentiment of new tweets and check how well your model generalizes to unseen data. This is done using a **validation set**.
+
+### Using the Validation Set
+
+You will need:
+
+- $X_{\text{val}}$ — feature matrix for validation tweets
+- $Y_{\text{val}}$ — true labels
+- $\theta$ — parameters learned during training
+
+### Making Predictions
+
+1. Compute sigmoid outputs — for each example $x$ in $X_{\text{val}}$ compute
+
+  $$
+  \hat{y} = h_{\theta}(x) = \sigma(\theta^T x)
+  $$
+
+2. Apply the threshold:
+
+  - If $\hat{y} \ge 0.5$ → predict $1$ (positive)
+  - If $\hat{y} < 0.5$ → predict $0$ (negative)
+
+This produces a prediction vector of $0$s and $1$s.
+
+### Computing Accuracy
+
+Let $m$ be the number of validation examples. Compute accuracy as:
+
+$$
+	ext{accuracy} = \frac{\#\ \text{correct predictions}}{m}
+$$
+
+Steps:
+1. Compare each prediction to the true label in $Y_{\text{val}}$ (match → 1, mismatch → 0).
+2. Sum the 1s to get the number correct.
+3. Divide by $m$.
+
+Example: 4 out of 5 predictions correct → accuracy = 0.8 (80%).
+
+### What You Learned This Week
+
+* Preprocessing text
+* Extracting features
+* Training logistic regression
+* Evaluating model accuracy
+
+You're now ready for the programming exercise, and optionally, the intuition video on the logistic regression cost function. Next week introduces **Naive Bayes**, another classification algorithm.
