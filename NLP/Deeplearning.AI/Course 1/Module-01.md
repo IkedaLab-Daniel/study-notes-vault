@@ -491,3 +491,85 @@ $$
 * Each term of the cost function activates depending on whether the label is 0 or 1.
 * The function heavily penalizes confident wrong predictions.
 * It rewards predictions that match the label by pushing cost toward zero.
+ 
+## Logistic Regression: Gradient
+
+### 1. Gradient Descent Update Rule
+
+Gradient descent is used to minimize the cost function $J(\theta)$ and find the best parameters $\theta$.
+
+The general update rule is:
+
+$$
+	heta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta)
+$$
+
+- ($\alpha$) — learning rate (step size)
+- ($\frac{\partial}{\partial \theta_j} J(\theta)$) — partial derivative of the cost with respect to $\theta_j$
+
+For logistic regression the update becomes:
+
+$$
+	heta_j := \theta_j - \frac{\alpha}{m} \sum_{i=1}^m \bigl(h_{\theta}(x^{(i)}) - y^{(i)}\bigr)\, x_j^{(i)}
+$$
+
+- $h_{\theta}(x^{(i)})$ — prediction for example $i$
+- $y^{(i)}$ — true label for example $i$
+- $x_j^{(i)}$ — feature $j$ of example $i$
+- $m$ — number of training examples
+
+### 2. Vectorized Form
+
+Using matrix operations is faster than explicit loops:
+
+$$
+	heta := \theta - \frac{\alpha}{m} X^{\top}\bigl(H(X,\theta) - Y\bigr)
+$$
+
+Where:
+
+- $X$ is the feature matrix
+- $H(X,\theta)$ is the vector of predictions for all examples
+- $Y$ is the vector of true labels
+
+Vectorization leverages optimized linear algebra routines and is much faster for large datasets.
+
+### 3. Sigmoid and Its Derivative
+
+The sigmoid function is:
+
+$$
+h(x) = \frac{1}{1 + e^{-x}}
+$$
+
+Its derivative is:
+
+$$
+h'(x) = h(x)\bigl(1 - h(x)\bigr)
+$$
+
+This derivative is used when computing the gradient; intuitively the sigmoid is steepest near 0.5 and flatter near 0 or 1.
+
+### 4. Partial Derivative of the Cost Function
+
+The logistic regression cost function is:
+
+$$
+J(\theta) = -\frac{1}{m} \sum_{i=1}^{m} \Bigl[y^{(i)} \log h_{\theta}(x^{(i)}) + \bigl(1-y^{(i)}\bigr) \log\bigl(1-h_{\theta}(x^{(i)})\bigr)\Bigr]
+$$
+
+Its partial derivative with respect to $\theta_j$ simplifies to:
+
+$$
+\frac{\partial}{\partial \theta_j} J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \bigl(h_{\theta}(x^{(i)}) - y^{(i)}\bigr)\, x_j^{(i)}
+$$
+
+This compact form explains why logistic regression is straightforward to optimize with gradient descent.
+
+### Key Takeaways
+
+- Gradient descent iteratively updates $\theta$ to reduce the cost.
+- Vectorization (matrix form) speeds up training.
+- The sigmoid derivative $h(x)(1-h(x))$ is central to gradient computation.
+- The gradient simplifies to the prediction error times features, averaged over examples.
+- These results lead directly to the standard gradient-descent update rules used in practice.
