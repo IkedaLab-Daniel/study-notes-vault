@@ -287,3 +287,44 @@ Logistic regression uses extracted features from tweets to predict whether a sen
   * Sum of negative frequencies
 * With learned parameters ( \theta ), plugging the feature vector into the sigmoid gives a probability.
 * Example output: sigmoid value ≈ **4.92**, leading to a **positive** prediction.
+
+## Training Logistic Regression Using Gradient Descent
+
+To classify tweet sentiment, you need to **learn your own parameter vector ( \theta )** rather than using a predefined one. This is done by repeatedly adjusting ( \theta ) to minimize the logistic regression cost function.
+
+### Gradient Descent Overview
+
+* The cost function depends on parameters (e.g., ( \theta_1 ), ( \theta_2 )).
+* Its shape can be visualized using contour plots.
+* Training begins with **initializing ( \theta )**, then iteratively updating it.
+
+### Training Steps
+
+1. **Initialize parameters**
+   Start with ( \theta ) set to zeros or small random values.
+
+2. **Compute predictions**
+   Use the logistic (sigmoid) function on ( \theta^T x^{(i)} ) for every training example.
+
+3. **Calculate gradients**
+   Find the partial derivatives of the cost function with respect to each parameter.
+
+4. **Update parameters**
+   Move ( \theta ) in the direction opposite the gradient to reduce cost.
+
+5. **Compute cost ( J )**
+   Monitor the cost function to see if it decreases as training progresses.
+
+6. **Check stopping criteria**
+   Stop after a set number of iterations or when improvements become negligible.
+
+### Iterative Improvement
+
+* After each iteration (e.g., 100, 200, 300 steps), ( \theta ) moves closer to the optimal point.
+* The process continues until reaching a point near the minimum cost.
+
+### After Training
+
+Once ( \theta ) is learned, you evaluate whether it produces **good predictions** by plugging it into the sigmoid function and checking model performance.
+
+The next video shows how to evaluate your logistic regression classifier.
