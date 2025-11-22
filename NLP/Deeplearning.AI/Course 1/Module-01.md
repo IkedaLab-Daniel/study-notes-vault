@@ -248,3 +248,42 @@ For each of the **m** raw tweets:
 ### Result
 
 Once all tweets are processed, you have the matrix **X**, ready to be fed into the logistic regression classifier in the next step.
+
+## Overview of Logistic Regression for Sentiment Analysis
+
+Logistic regression uses extracted features from tweets to predict whether a sentiment is positive or negative. It relies on the **sigmoid function**, which outputs a probability between 0 and 1.
+
+### Key Concepts
+
+* **Supervised learning:** Uses input features ( X ) and labels ( Y ).
+* **Prediction function:** Uses parameters ( \theta ) to map features to predicted labels ( \hat{Y} ).
+* **Training goal:** Minimize a cost function that measures how close predictions are to true labels.
+* **Update process:** Adjust parameters repeatedly until the cost is minimized.
+
+### Logistic Regression Specifics
+
+* The model function ( h_\theta(x) ) is the **sigmoid function**.
+* It takes the form:
+  ( h_\theta(x) = \sigma(\theta^T x) )
+* The sigmoid approaches:
+
+  * **0** when ( \theta^T x \to -\infty )
+  * **1** when ( \theta^T x \to +\infty )
+
+### Classification Threshold
+
+* A threshold of **0.5** is typically used.
+
+  * If ( \theta^T x \ge 0 ) → **positive sentiment**
+  * If ( \theta^T x < 0 ) → **negative sentiment**
+
+### Example With a Tweet
+
+* After cleaning (removing handles, lowercasing, stemming), you get a list of processed words.
+* Using a frequency dictionary, you extract three features:
+
+  * Bias unit
+  * Sum of positive frequencies
+  * Sum of negative frequencies
+* With learned parameters ( \theta ), plugging the feature vector into the sigmoid gives a probability.
+* Example output: sigmoid value ≈ **4.92**, leading to a **positive** prediction.
