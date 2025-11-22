@@ -167,7 +167,7 @@ So the tweet’s final vector is:
 [1, 8, 11]
 ```
 
-So the tweet’s final vector is:
+So the tweet’s final vector is (as a math vector):
 
 $$
 [1,\ 8,\ 11]
@@ -283,8 +283,8 @@ Logistic regression uses extracted features from tweets to predict whether a sen
 
 ### Key Concepts
 
-* **Supervised learning:** Uses input features ( X ) and labels ( Y ).
-* **Prediction function:** Uses parameters ( \theta ) to map features to predicted labels ( \hat{Y} ).
+* **Supervised learning:** Uses input features $X$ and labels $Y$.
+* **Prediction function:** Uses parameters $\theta$ to map features to predicted labels $\hat{Y}$.
 * **Training goal:** Minimize a cost function that measures how close predictions are to true labels.
 * **Update process:** Adjust parameters repeatedly until the cost is minimized.
 
@@ -368,7 +368,7 @@ The next video shows how to evaluate your logistic regression classifier.
 
 ## Evaluating Logistic Regression and Computing Accuracy
 
-Once you have learned your optimal parameter vector ( \theta ), you can use it to predict the sentiment of new tweets and check how well your model generalizes to unseen data. This is done using a **validation set**.
+Once you have learned your optimal parameter vector $\theta$, you can use it to predict the sentiment of new tweets and check how well your model generalizes to unseen data. This is done using a **validation set**.
 
 ### Using the Validation Set
 
@@ -398,7 +398,7 @@ This produces a prediction vector of $0$s and $1$s.
 Let $m$ be the number of validation examples. Compute accuracy as:
 
 $$
-	ext{accuracy} = \frac{\#\ \text{correct predictions}}{m}
+ 	ext{accuracy} = \frac{\#\ \text{correct predictions}}{m}
 $$
 
 Steps:
@@ -415,4 +415,79 @@ Example: 4 out of 5 predictions correct → accuracy = 0.8 (80%).
 * Training logistic regression
 * Evaluating model accuracy
 
-You're now ready for the programming exercise, and optionally, the intuition video on the logistic regression cost function. Next week introduces **Naive Bayes**, another classification algorithm.
+## Intuition Behind the Logistic Regression Cost Function
+
+This video explains **why** the logistic regression cost function is designed the way it is and how it behaves when predictions are right or wrong.
+
+### Structure of the Cost Function
+
+The cost function:
+
+* Sums the loss over all **m** training examples
+* Multiplies by **-1/m** to produce a positive average cost
+* Contains two main terms inside brackets, each responsible for handling one of the two possible labels (0 or 1)
+
+### Understanding Each Term
+
+#### 1. When the label ( y^{(i)} = 1 )
+
+Relevant term:
+$$
+y^{(i)}\log\bigl(h_{\theta}(x^{(i)})\bigr)
+$$
+
+* If prediction ($h_{\theta}$) is close to **1**:
+
+  * ($\log(1) = 0$) → loss is near **0**
+* If prediction is close to **0**:
+
+  * ($\log(0) \to -\infty$) → loss becomes **very large**
+
+This term penalizes wrong predictions when the true label is 1.
+
+#### 2. When the label ( y^{(i)} = 0 )
+
+Relevant term:
+$$
+(1 - y^{(i)})\log\bigl(1 - h_{\theta}(x^{(i)})\bigr)
+$$
+
+* If prediction ($h_{\theta}$) is close to **0**:
+
+  * ($\log(1) = 0$) → loss is near **0**
+* If prediction is close to **1**:
+
+  * ($\log(0) \to -\infty$) → loss becomes **very large**
+
+This term penalizes wrong predictions when the true label is 0.
+
+### Why the Negative Sign?
+
+* Log of any number between 0 and 1 is **negative**
+* The "-” sign ensures the total cost is always **positive**
+
+### Visualizing the Loss
+
+#### When label = 1
+
+$$
+J(\theta) = -\log\bigl(h_{\theta}(x)\bigr)
+$$
+
+* Prediction near **1** → cost ≈ 0
+* Prediction near **0** → cost → ∞
+
+#### When label = 0
+
+$$
+J(\theta) = -\log\bigl(1 - h_{\theta}(x)\bigr)
+$$
+
+* Prediction near **0** → cost ≈ 0
+* Prediction near **1** → cost → ∞
+
+### Summary
+
+* Each term of the cost function activates depending on whether the label is 0 or 1.
+* The function heavily penalizes confident wrong predictions.
+* It rewards predictions that match the label by pushing cost toward zero.
