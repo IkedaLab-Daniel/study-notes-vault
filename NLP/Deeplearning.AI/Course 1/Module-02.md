@@ -189,3 +189,62 @@ For word **"I"**:
 
 * Laplacian smoothing prevents zero probabilities and keeps Naive Bayes functional.
 * It ensures fair comparison between classes even when a word is missing in one class.
+
+## Log Likelihoods in Naive Bayes
+
+Log likelihoods are logarithms of the probabilities used in Naive Bayes, making calculations easier and avoiding numerical issues. Starting with the conditional probability table for each word (positive vs. negative), words can be categorized as **neutral**, **positive**, or **negative** by comparing their conditional probability ratios.
+
+* **Ratio = P(word|positive) / P(word|negative)**
+
+  * Ratio ≈ 1 → neutral
+  * Ratio > 1 → positive
+  * Ratio < 1 → negative
+
+Examples:
+
+* “happy”: 1.4 → positive
+* “sad”, “not”: 0.6 → negative
+* Words like “I”, “because”, “learning”: 1 → neutral
+
+In Naive Bayes binary classification, you multiply all ratios of words appearing in a tweet:
+
+* Product > 1 → positive
+* Product < 1 → negative
+
+This multiplication is called the **likelihood**. Combined with the **prior ratio** (positive tweets / negative tweets), you get the full Naive Bayes formula. In balanced datasets, this prior is 1, but in real projects with unbalanced data, it becomes important.
+
+### Why Use Log Likelihoods
+
+Multiplying many small probabilities (values < 1) can lead to **numerical underflow**—numbers too small for computers to store.
+The solution: take the **logarithm** of the score.
+
+Using logarithm properties:
+
+* log(a × b × c) = log(a) + log(b) + log(c)
+
+Thus, the Naive Bayes score becomes:
+
+* **log score = log prior + sum of log ratios**
+
+The log of a ratio is called **Lambda**:
+
+* Λ(word) = log( P(word|positive) / P(word|negative) )
+
+Examples:
+
+* “I”: log(1) = 0 → neutral
+* “am”: log(1) = 0 → neutral
+* “happy”: log(2.2) → positive
+
+To classify a tweet, sum all Lambdas:
+
+* Sum > 0 → positive
+* Sum < 0 → negative
+
+### Key Points
+
+* Ratios measure positivity/negativity of words.
+* Lambda (log ratio) avoids numerical underflow.
+* Log likelihoods convert products into sums, simplifying computation.
+* Higher ratio (or Lambda) → more positive meaning.
+* Lower ratio (or Lambda) → more negative meaning.
