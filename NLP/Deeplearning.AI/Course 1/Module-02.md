@@ -248,3 +248,48 @@ To classify a tweet, sum all Lambdas:
 * Log likelihoods convert products into sums, simplifying computation.
 * Higher ratio (or Lambda) → more positive meaning.
 * Lower ratio (or Lambda) → more negative meaning.
+
+## Computing Log Likelihood and Performing Inference
+
+To perform inference using Naive Bayes with log likelihoods, you simply **sum the Lambda values (log ratios)** for each word in the tweet.
+
+Given a Lambda dictionary:
+
+* Words like **I**, **am**, **because** → Lambda = 0 (neutral)
+* **happy** → 2.2 (positive)
+* **learning** → 1.1 (positive)
+
+### Example Tweet
+
+“I am happy because I am learning”
+
+Compute log likelihood by summing Lambdas:
+
+* I → 0
+* am → 0
+* happy → 2.2
+* because → 0
+* I → 0
+* am → 0
+* learning → 1.1
+
+**Total log likelihood = 3.3**
+
+Since:
+
+* log(1) = 0,
+* log likelihood **> 0 → positive**,
+* log likelihood **< 0 → negative**,
+
+the tweet is classified as **positive**.
+
+Notice that the positive score comes entirely from **happy** and **learning**, while neutral words contribute nothing. This shows how strongly sentiment-bearing words influence classification.
+
+### Recap
+
+* Log likelihood = sum of Lambdas for all words in the tweet.
+* Threshold for decision is **0**:
+
+  * > 0 → positive
+  * < 0 → negative
+* Neutral words do not affect the score; sentiment-heavy words dominate.
