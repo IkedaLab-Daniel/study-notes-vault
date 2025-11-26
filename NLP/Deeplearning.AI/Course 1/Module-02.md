@@ -81,3 +81,61 @@ This lesson reviews basic probability and conditional probability and shows how 
 
 * **Why this matters for NLP:**
   You’ll use Bayes rule in **Naive Bayes**, a probabilistic classifier for tasks like sentiment analysis and later autocorrect.
+
+  ## Naive Bayes for Sentiment Classification
+
+* Naive Bayes is a **supervised machine learning method** similar to logistic regression but assumes all features (words) are **independent** — an unrealistic but useful assumption.
+
+### Building the Model
+
+* Start with two corpora: **positive tweets** and **negative tweets**.
+* Build a **vocabulary** and count how many times each word appears in each corpus.
+* Compute total word counts per class
+
+  * Example: 13 words in positive corpus, 12 in negative corpus.
+
+### Conditional Probabilities
+
+* For each word, compute the class-conditional probabilities:
+
+$$
+P(\text{word}\mid\text{positive}) = \frac{\text{count in positive}}{\text{total positive words}}
+$$
+
+and
+
+$$
+P(\text{word}\mid\text{negative}) = \frac{\text{count in negative}}{\text{total negative words}}
+$$
+* Store these in a new table where each class’s probabilities sum to **1**.
+
+### Understanding the Probabilities
+
+* Words with **similar conditional probabilities** (e.g., “I”, “I'm”, “learning”) are *neutral* and do not affect sentiment.
+* Words with **large differences** (e.g., “happy”, “sad”, “not”) are *powerful sentiment indicators*.
+* If a word appears in one class only (e.g., “because”), the probability for the other class becomes **0**, causing problems.
+  → This is solved later using **smoothing**.
+
+### Classifying a New Tweet
+
+Tweet: *“I’m happy today, I’m learning”*
+
+Use the Naive Bayes inference rule (product of likelihood ratios):
+
+$$
+\prod_{\text{word in tweet}} \frac{P(\text{word}\mid\text{positive})}{P(\text{word}\mid\text{negative})}
+$$
+
+* Neutral words (I, am, I'm, learning) → ratios = 1
+* Sentiment word (happy) → 0.14 / 0.10 = 1.4
+* Word not in vocabulary (“today”) → ignored
+
+Resulting product = **1.4**
+
+* Because the score > 1, the tweet is more likely **positive**.
+
+### What You’ve Accomplished
+
+* Built conditional probability tables for each class.
+* Used the Naive Bayes inference rule to compute sentiment.
+* Saw how neutral and sentiment-heavy words contribute differently.
