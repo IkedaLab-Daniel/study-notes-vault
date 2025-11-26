@@ -139,3 +139,53 @@ Resulting product = **1.4**
 * Built conditional probability tables for each class.
 * Used the Naive Bayes inference rule to compute sentiment.
 * Saw how neutral and sentiment-heavy words contribute differently.
+
+## Laplacian Smoothing in Naive Bayes
+
+* When calculating conditional probabilities of words, some word–class combinations may never appear in the training corpus.
+* This leads to **zero probabilities**, which can cause the entire sequence or classification probability to become zero.
+* Laplacian smoothing solves this.
+
+### Why Smoothing Is Needed
+
+* Conditional probability formula (before smoothing):
+
+$$
+P(\text{word}\mid\text{class}) = \frac{\text{freq(word, class)}}{N_{\text{class}}}
+$$
+
+* If `freq = 0`, then the whole product for the sentence may become **0**, breaking Naive Bayes.
+
+### Laplacian (Add-1) Smoothing
+
+Modify the formula to avoid zeros:
+
+$$
+P(\text{word}\mid\text{class}) = \frac{\text{freq(word, class)} + 1}{N_{\text{class}} + V}
+$$
+
+Where:
+
+- $+1$ ensures no probability becomes zero.
+- $V$ is the number of **unique words in the vocabulary** (added to normalize correctly).
+
+### Example
+
+* Suppose there are **8 unique words** in the vocabulary.
+* Positive class total words: 13
+* Negative class total words: 12
+
+For word **"I"**:
+
+- Positive: $\dfrac{3 + 1}{13 + 8} = 0.19$
+
+- Negative: $\dfrac{3 + 1}{12 + 8} = 0.20$
+
+- All probabilities now sum to 1 per class.
+
+- Previously unseen words (e.g., “because”) no longer have probability 0.
+
+### Key Takeaways
+
+* Laplacian smoothing prevents zero probabilities and keeps Naive Bayes functional.
+* It ensures fair comparison between classes even when a word is missing in one class.
