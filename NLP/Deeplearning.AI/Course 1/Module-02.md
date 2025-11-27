@@ -293,3 +293,81 @@ Notice that the positive score comes entirely from **happy** and **learning**, w
   * > 0 → positive
   * < 0 → negative
 * Neutral words do not affect the score; sentiment-heavy words dominate.
+
+## Training a Naive Bayes Classifier
+
+Training a Naive Bayes classifier for sentiment analysis is different from logistic regression or deep learning—there is **no gradient descent**. Instead, the model is trained by *counting word frequencies* in labeled text.
+
+### 1. Collect and Label Data
+
+Gather a dataset of tweets and divide them into:
+
+* **Positive tweets**
+* **Negative tweets**
+
+### 2. Preprocess the Tweets
+
+Preprocessing is crucial and includes five steps:
+
+1. Lowercase the text
+2. Remove punctuation, URLs, and Twitter handles
+3. Remove stop words
+4. Apply stemming
+5. Tokenize into individual words
+
+Real-world text cleaning often takes substantial time.
+
+### 3. Build Vocabulary and Count Frequencies
+
+From the cleaned corpus:
+
+* Count how many times each word appears in positive tweets and negative tweets.
+* Also compute the total word count for each class.
+  This forms a frequency table.
+
+### 4. Compute Conditional Probabilities (With Laplacian Smoothing)
+
+Use the formula:
+
+$$
+P(\text{word}\mid\text{class}) = \frac{\text{freq(word, class)} + 1}{N_{\text{class}} + V_{\text{class}}}
+$$
+
+Where:
+
+- $N_{\text{class}}$ is total word count for that class
+- $V_{\text{class}}$ is number of unique words in that class
+
+This ensures **no probability is zero**.
+
+### 5. Compute Lambda for Each Word
+
+Lambda is the **log of the ratio** between positive and negative conditional probabilities:
+
+$$
+\lambda = \log \frac{P(\text{word}\mid\text{pos})}{P(\text{word}\mid\text{neg})}
+$$
+
+These values will be used later for inference.
+
+### 6. Estimate the Log Prior
+
+Count the number of positive vs. negative tweets:
+
+$$
+	ext{log prior} = \log \frac{\#\text{pos tweets}}{\#\text{neg tweets}}
+$$
+
+- In the assignment dataset (balanced), log prior = **0**.
+- In real-world datasets, this term becomes important.
+
+---
+
+### Summary of the Full Training Pipeline
+
+1. Collect and label tweets
+2. Preprocess to clean and tokenize text
+3. Count word frequencies for each class
+4. Compute smoothed conditional probabilities
+5. Calculate lambda (log probability ratios)
+6. Compute log prior
