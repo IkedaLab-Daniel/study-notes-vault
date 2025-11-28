@@ -355,7 +355,7 @@ These values will be used later for inference.
 Count the number of positive vs. negative tweets:
 
 $$
-	ext{log prior} = \log \frac{\#\text{pos tweets}}{\#\text{neg tweets}}
+    ext{log prior} = \log \frac{\#\text{pos tweets}}{\#\text{neg tweets}}
 $$
 
 - In the assignment dataset (balanced), log prior = **0**.
@@ -371,3 +371,53 @@ $$
 4. Compute smoothed conditional probabilities
 5. Calculate lambda (log probability ratios)
 6. Compute log prior
+
+## Applying and Evaluating the Naive Bayes Classifier
+
+Once your Naive Bayes model is trained, the next step is to test it on **unseen tweets** and evaluate its performance.
+
+### Predicting Sentiment on New Tweets
+
+1. Take the new tweet (e.g., *“I passed the NLP interview”*).
+2. **Preprocess** it: lowercase, remove punctuation, stem, and tokenize.
+3. For each token:
+
+   * If it exists in the **lambda table**, add its lambda value to the score.
+   * If it's unseen (e.g., *interview*), treat it as **neutral** (lambda = 0).
+4. Add the **log prior**.
+5. Final decision:
+
+   * Score **> 0** → positive
+   * Score **< 0** → negative
+
+In the example, the score is **0.48**, so the tweet is **positive**.
+
+### Evaluating Performance Using the Validation Set
+
+You will evaluate the model using:
+
+* **X_val**: raw validation tweets
+* **Y_val**: their true sentiment labels
+
+#### Steps:
+
+1. Compute the **score** for each tweet in X_val using the lambda table + log prior.
+2. Convert each score into a prediction:
+
+   * score > 0 → 1 (positive)
+   * score ≤ 0 → 0 (negative)
+3. Compare predictions with **Y_val**:
+
+   * Match → 1
+   * Mismatch → 0
+4. Compute accuracy:
+
+$$
+    ext{accuracy} = \frac{\text{number of correct predictions}}{\text{total validation examples}}
+$$
+
+### Key Points
+
+* Words not seen during training contribute **0** to the score.
+* Accuracy is calculated exactly like in last week’s logistic regression exercises.
+* Validation helps determine how well your Naive Bayes model generalizes.
