@@ -421,3 +421,54 @@ $$
 * Words not seen during training contribute **0** to the score.
 * Accuracy is calculated exactly like in last week’s logistic regression exercises.
 * Validation helps determine how well your Naive Bayes model generalizes.
+
+## Other Applications of Naive Bayes
+
+Naive Bayes is not limited to sentiment analysis — the same probability-based framework can be used for many classification tasks by comparing likelihood ratios between classes.
+
+### How It Works
+
+Naive Bayes estimates:
+
+* The **prior** probability of each class
+* The **likelihood** of seeing specific words given each class
+  Then it uses the **ratio of these probabilities** to choose the most likely class.
+  This approach generalizes to many scenarios.
+
+### Applications
+
+#### **1. Author Identification**
+
+* Train on writings from two or more authors.
+* Compute lambda values for each word.
+* For a new text, calculate which author’s word distribution it aligns with.
+* Example: distinguishing Shakespeare vs. Hemingway.
+
+#### **2. Spam Filtering**
+
+* Use sender information, subject line, and email content.
+* Train on spam vs. non-spam examples.
+* Classify new email based on likelihood ratios.
+
+#### **3. Information Retrieval**
+
+* Given a user query, compute the likelihood of each document given the query words.
+* Rank documents by likelihood.
+* Keep the top *m* results or only those above a threshold.
+
+#### **4. Word Sense Disambiguation**
+
+* When a word has multiple possible meanings (e.g., *bank* = riverbank vs. financial institution):
+
+  * Compute likelihood of each meaning given the surrounding text.
+  * Choose the meaning with the higher score.
+
+### Key Insight
+
+Bayes rule and its naïve approximation provide a simple yet powerful method for:
+
+* Classification
+* Ranking
+* Disambiguation
+
+Because Naive Bayes is easy to train, fast to compute, and interpretable, it remains widely used across NLP tasks.
