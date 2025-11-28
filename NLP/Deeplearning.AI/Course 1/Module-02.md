@@ -472,3 +472,42 @@ Bayes rule and its naïve approximation provide a simple yet powerful method for
 * Disambiguation
 
 Because Naive Bayes is easy to train, fast to compute, and interpretable, it remains widely used across NLP tasks.
+
+## Assumptions Behind Naive Bayes
+
+Naive Bayes is powerful but relies on strong assumptions that are often unrealistic in real-world language tasks. Understanding these helps explain why the model sometimes fails.
+
+### 1. **Independence of Words**
+
+* Naive Bayes assumes each word in a sentence is **independent** of the others.
+* In reality, words often appear together and influence each other.
+
+  * Example: “sunny” and “hot” frequently co-occur and relate to “beach” or “desert.”
+* Because this independence assumption is false, the model may:
+
+  * Underestimate or overestimate word probabilities
+  * Produce incorrect predictions in context-heavy phrases
+* Example:
+
+  * Completing “It’s always cold and snowy in ____”
+  * Naive Bayes may give equal probability to “spring, summer, fall, winter,” even though “winter” is clearly the best choice based on context.
+
+### 2. **Balanced Validation and Training Sets**
+
+* Naive Bayes relies heavily on the probability distribution of the training data.
+* Most annotated datasets (including the course datasets) are **artificially balanced** (equal positive and negative tweets).
+* Real-world tweet streams are **not** balanced:
+
+  * Positive tweets are more common.
+  * Negative tweets may be filtered, muted, or banned.
+* If the model assumes a balanced distribution when reality is not balanced, it may become:
+
+  * Overly optimistic
+  * Overly pessimistic
+  * Misaligned with real-world data patterns
+
+### Key Takeaways
+
+* Independence assumption is almost always violated, but Naive Bayes still performs reasonably well for many tasks.
+* For accurate results in this module’s assignments, the training data must be roughly balanced.
+* Later videos will explain how to analyze and handle sentences where Naive Bayes fails.
