@@ -549,3 +549,18 @@ Naive Bayes is powerful but relies on strong assumptions that are often unrealis
 * Naïve Bayes assumes independence and ignores word order, both major limitations.
 * Preprocessing choices significantly impact model accuracy—always verify processed inputs.
 * Despite its limitations, Naïve Bayes is still a strong baseline.
+
+## End-of-Week Recap
+
+* Reviewed **Bayes’ rule** and **conditional probability**.
+* Calculated the likelihood of a word being tied to a sentiment by comparing:
+
+  * Probability of the word in **positive** tweets
+  * Probability of the word in **negative** tweets
+  * Then taking their ratio.
+* Learned to perform **error analysis** to debug misclassifications and understand model issues.
+* These techniques will transfer to more advanced models later in the specialization.
+* Next steps:
+
+  * Complete the programming assignment.
+  * Upcoming topics: **cosine similarity** and **principal component analysis (PCA)**.
