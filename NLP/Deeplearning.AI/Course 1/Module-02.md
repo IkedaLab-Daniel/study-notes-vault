@@ -511,3 +511,41 @@ Naive Bayes is powerful but relies on strong assumptions that are often unrealis
 * Independence assumption is almost always violated, but Naive Bayes still performs reasonably well for many tasks.
 * For accurate results in this module’s assignments, the training data must be roughly balanced.
 * Later videos will explain how to analyze and handle sentences where Naive Bayes fails.
+
+## Error Analysis in Naïve Bayes NLP Models
+
+* Errors are unavoidable in NLP, and analyzing them helps reveal weaknesses in preprocessing and modeling.
+* Three common sources of errors:
+
+  * **Semantic meaning lost in preprocessing**
+  * **Word order affecting meaning**
+  * **Language quirks like sarcasm or irony**
+
+### 1. Meaning Lost During Preprocessing
+
+* Preprocessing may remove punctuation or key words that influence sentiment.
+* Example: “my beloved grandmother :(” → removing punctuation leaves “beloved grandmother,” which looks positive.
+* Another example: removing neutral words like *not* changes “This is not good…” into positive-looking words (good, attitude, nice), misleading the classifier.
+* Always inspect the processed text to ensure essential meaning isn’t removed.
+
+### 2. Word Order Matters
+
+* Naïve Bayes ignores word order, which can lead to misinterpretation.
+* Example:
+
+  * “I’m happy because I did not go.” → positive
+  * “I’m **not** happy because I did not go.” → negative
+* Naïve Bayes treats the words as a bag of independent tokens, missing the effect of “not” and position.
+
+### 3. Adversarial Language: Sarcasm, Irony, Euphemism
+
+* Humans detect sarcasm naturally; machines struggle.
+* Example: “This is a ridiculously powerful movie… gripping… cried…”
+  Preprocessing yields negative words, but the sentiment is positive.
+* Naïve Bayes focuses on word frequencies, so it misclassifies due to lack of context and nuance.
+
+### Key Takeaways
+
+* Naïve Bayes assumes independence and ignores word order, both major limitations.
+* Preprocessing choices significantly impact model accuracy—always verify processed inputs.
+* Despite its limitations, Naïve Bayes is still a strong baseline.
