@@ -89,6 +89,13 @@ function main() {
     }
 }
 
+const start = process.hrtime.bigint()
+
 buildAndTrain()
-    .then(() => main())
+    .then(() => {
+        main()
+        const end = process.hrtime.bigint()
+        const ms = Number(end - start) / 1e6
+        console.log(chalk.cyan.bold(`Elapsed time: ${ms.toFixed(1)} ms`))
+    })
     .catch(err => console.error('Error:', err))
