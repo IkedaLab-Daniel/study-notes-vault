@@ -58,32 +58,61 @@ async function buildAndTrain() {
 
 // > Main
 function main() {
-    const sample = "My heart... I loved her :(";
+    const sample = "ttnibrix";
     const p = preprocess(sample)
 
     const classifications = classifier.getClassifications(p) || []
-    const top = classifications[0] || { label: classifier.classify(p), value: 0}
+    // show raw (very small) scores in exponential form
+    if (classifications.length) {
+        console.log('Raw scores:', classifications.map(c => `${c.label}: ${c.value.toExponential(3)}`).join(', '))
+    } else {
+        console.log('Raw scores: -- none --')
+    }
 
-    const pct = Math.round((top.value || 0) * 1000) / 10 // > One Deciman
-     // format prediction with chalk (fixed typo 'positive' and avoid non-function values)
-    const formattedPrediction = top.label === 'positive'
-        ? chalk.green(`${top.label} (${pct}%)`)
-        : top.label === 'negative'
-            ? chalk.red(`${top.label} (${pct}%)`)
-            : chalk.yellow(`${top.label} (${pct}%)`)
+    // normalize for clearer percentages
+    const sum = classifications.reduce((s, c) => s + c.value, 0)
+    let top = classifications[0] || { label: classifier.classify(p), value: 0 }
+
+    if (sum > 0) {
+        const normalized = classifications
+            .map(c => ({ label: c.label, pct: (c.value / sum) * 100 }))
+            .map(n => {
+                const col = n.label === 'positive' ? chalk.green : n.label === 'negative' ? chalk.red : chalk.yellow
+                return col(`${n.label}: ${n.pct.toFixed(1)}%`)
+            })
+            .join(', ')
+        console.log('Normalized scores:', normalized)
+
+        // choose top by raw value then compute normalized pct for display
+        top = classifications.reduce((a, b) => a.value >= b.value ? a : b)
+        const topPct = (top.value / sum) * 100
+        const formattedPrediction = top.label === 'positive'
+            ? chalk.green.bold(`${top.label} (${topPct.toFixed(1)}%)`)
+            : top.label === 'negative'
+                ? chalk.red.bold(`${top.label} (${topPct.toFixed(1)}%)`)
+                : chalk.yellow.bold(`${top.label} (${topPct.toFixed(1)}%)`)
+        console.log('Prediction:', formattedPrediction)
+    } else {
+        // fallback when scores underflow to zero
+        const pct = Math.round((top.value || 0) * 1000) / 10
+        const formattedPrediction = top.label === 'positive'
+            ? chalk.green.bold(`${top.label} (${pct}%)`)
+            : top.label === 'negative'
+                ? chalk.red.bold(`${top.label} (${pct}%)`)
+                : chalk.yellow.bold(`${top.label} (${pct}%)`)
+        console.log('Prediction:', formattedPrediction)
+    }
 
     console.log('Input:', sample)
-    console.log('Prediction:', formattedPrediction)
-
-
     if (classifications.length) {
         const score = classifications
             .map(c => {
                 const col = c.label === 'positive' ? chalk.green : c.label === 'negative' ? chalk.red : chalk.yellow
-                return col(`${c.label}: ${(c.value * 100).toFixed(1)}%`)
+                // show raw-percent for debug (may be tiny)
+                return col(`${c.label}: ${(c.value * 100).toFixed(6)}%`)
             })
             .join(', ')
-        console.log('Scores:', score)
+        console.log('Scores (raw percents):', score)
     } else {
         console.log("Scores: -- not available --")
     }
