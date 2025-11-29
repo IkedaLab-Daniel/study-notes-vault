@@ -12,6 +12,8 @@
   "type": "commonjs",
   "dependencies": {
     "chalk": "^5.6.2",
+    "ml-logistic-regression": "^2.0.0",
+    "ml-matrix": "^6.12.1",
     "natural": "^8.1.0"
   }
 }
