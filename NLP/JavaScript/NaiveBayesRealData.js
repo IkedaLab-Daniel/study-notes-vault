@@ -58,7 +58,7 @@ async function buildAndTrain() {
 
 // > Main
 function main() {
-    const sample = "ttnibrix";
+    const sample = "ttnimd";
     const p = preprocess(sample)
 
     const classifications = classifier.getClassifications(p) || []
