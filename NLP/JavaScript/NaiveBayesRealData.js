@@ -1,6 +1,7 @@
 const natural = require('natural')
 const classifier = new natural.BayesClassifier()
 const fs = require('node:fs').promises
+const chalk = require('chalk')
 
 const preprocess = s => (s || '')
     .toLowerCase()
@@ -59,9 +60,27 @@ async function buildAndTrain() {
 function main() {
     const sample = "My heart... I loved her :(";
     const p = preprocess(sample)
+
+    const classifications = classifier.getClassifications(p) || []
+    const top = classifications[0] || { label: classifier.classify(p), value: 0}
+
+    const pct = Math.round((top.value || 0) * 1000) / 10 // > One Deciman
+    const color = top.label === 'positve' ? chalk.backgroundColorNames : top.label === 'negative'
+
     console.log('Input:', sample)
-    console.log('Prediction:', classifier.classify(p))
-    console.log('Scores:', classifier.getClassifications(p))
+    console.log('Prediction:', color.bold(`${top.label}`))
+
+    if (classifications.length) {
+        const score = classifications
+            .map(c => {
+                const col = c.label === 'positive' ? chalk.green : c.label === 'negative' ? chalk.red : chalk.yellow
+                return col(`${c.label}: ${(c.value * 100).toFixed(1)}%`)
+            })
+            .join(', ')
+        console.log('Scores:', score)
+    } else {
+        console.log("Scores: -- not available --")
+    }
 }
 
 buildAndTrain()
