@@ -33,12 +33,25 @@ async function loadTweetsFromFile(path) {
     }
 }
 
-fs.readFile('./twitter_samples/negative_tweets.json', 'utf-8', (err, data) => {
-    if (err) {
-        console.log("Error reading negative_tweets.json");
-        return;
-    }
-    console.log(data);
-})
+async function buildAndTrain() {
+    const negativePath = './twitter_samples/negative_tweets.json'
+    const positivePath = './twitter_samples/positive_tweets.json'
 
-console.log(classifier)
+    const negTweets = await loadTweetsFromFile(negativePath)
+    for (const t of negTweets) {
+        const text = t.text || t.full_text || ''
+        if (!text.trim()) continue
+        classifier.addDocument(process(text), 'negative')
+    }
+
+    const posTweets = await loadTweetsFromFile([positivePath])
+    for (const t of posTweets) {
+        const text = t.text || t.full_text || ''
+        if (!text.trim()) continue
+        classifier.addDocument(process(text), 'positive')
+    }
+
+    classifier.train()
+    console.log('Training finished. Documents:', classifier.docs.length)
+
+}
