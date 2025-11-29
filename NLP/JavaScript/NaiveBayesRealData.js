@@ -1,6 +1,6 @@
 const natural = require('natural')
 const classifier = new natural.BayesClassifier()
-const fs = require('node:fs')
+const fs = require('node:fs').promises
 
 const preprocess = s => (s || '')
     .toLowerCase()
@@ -41,17 +41,29 @@ async function buildAndTrain() {
     for (const t of negTweets) {
         const text = t.text || t.full_text || ''
         if (!text.trim()) continue
-        classifier.addDocument(process(text), 'negative')
+        classifier.addDocument(preprocess(text), 'negative')
     }
 
-    const posTweets = await loadTweetsFromFile([positivePath])
+    const posTweets = await loadTweetsFromFile(positivePath)
     for (const t of posTweets) {
         const text = t.text || t.full_text || ''
         if (!text.trim()) continue
-        classifier.addDocument(process(text), 'positive')
+        classifier.addDocument(preprocess(text), 'positive')
     }
 
     classifier.train()
     console.log('Training finished. Documents:', classifier.docs.length)
-
 }
+
+// > Main
+function main() {
+    const sample = "My heart... I loved her :(";
+    const p = preprocess(sample)
+    console.log('Input:', sample)
+    console.log('Prediction:', classifier.classify(p))
+    console.log('Scores:', classifier.getClassifications(p))
+}
+
+buildAndTrain()
+    .then(() => main())
+    .catch(err => console.error('Error:', err))
