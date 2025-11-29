@@ -1,7 +1,7 @@
 const natural = require('natural')
 const classifier = new natural.BayesClassifier()
 const fs = require('node:fs').promises
-const chalk = require('chalk')
+const chalk = require('chalk').default || require('chalk')
 
 const preprocess = s => (s || '')
     .toLowerCase()
@@ -65,10 +65,16 @@ function main() {
     const top = classifications[0] || { label: classifier.classify(p), value: 0}
 
     const pct = Math.round((top.value || 0) * 1000) / 10 // > One Deciman
-    const color = top.label === 'positve' ? chalk.backgroundColorNames : top.label === 'negative'
+     // format prediction with chalk (fixed typo 'positive' and avoid non-function values)
+    const formattedPrediction = top.label === 'positive'
+        ? chalk.green(`${top.label} (${pct}%)`)
+        : top.label === 'negative'
+            ? chalk.red(`${top.label} (${pct}%)`)
+            : chalk.yellow(`${top.label} (${pct}%)`)
 
     console.log('Input:', sample)
-    console.log('Prediction:', color.bold(`${top.label}`))
+    console.log('Prediction:', formattedPrediction)
+
 
     if (classifications.length) {
         const score = classifications
