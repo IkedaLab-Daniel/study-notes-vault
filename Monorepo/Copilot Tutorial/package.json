@@ -1,0 +1,24 @@
+{
+  "name": "monorepo-tutorial",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A practical monorepo tutorial using npm workspaces",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build -ws --if-present",
+    "dev:web": "npm run dev -w @monorepo/web",
+    "dev:api": "npm run dev -w @monorepo/api",
+    "dev": "concurrently \"npm:dev:*\"",
+    "test": "npm run test -ws --if-present",
+    "clean": "rm -rf node_modules packages/*/node_modules apps/*/node_modules packages/*/dist apps/*/dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
