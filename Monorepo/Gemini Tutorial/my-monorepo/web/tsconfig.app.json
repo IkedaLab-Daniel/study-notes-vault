@@ -7,6 +7,10 @@
     "module": "ESNext",
     "types": ["vite/client"],
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@repo/utils": ["../packages/utils/src"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
