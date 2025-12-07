@@ -14,7 +14,7 @@ negative = twitter_samples.strings('negative_tweets.json')
 
 # > Prepare labeled data
 def features(text):
-    return {word: True for word in tokenizer.tokenize(text)}
+    return {word: True for word in2 tokenizer.tokenize(text)}
 
 train_data = [(features(t), "positive") for t in positive] + \
              [(features(t), "negative") for t in negative]
