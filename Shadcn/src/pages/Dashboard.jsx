@@ -1,4 +1,4 @@
-import { CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Dashboard() {
   return (
@@ -28,7 +28,7 @@ export default function Dashboard() {
             <p className="text-2xl font-bold">18</p>
           </CardContent>
         </Card>
-        
+
       </div>
     </div>
   )

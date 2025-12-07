@@ -20,13 +20,13 @@ export default function Inventory() {
         </TableHeader>
 
         <TableBody>
-          {data.map((item, i) => {
+          {data.map((item, i) => (
             <TableRow key={i}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.qty}</TableCell>
                 <TableCell>{item.supplier}</TableCell>
             </TableRow>
-          })}
+          ))}
         </TableBody>
       </Table>
     </div>
