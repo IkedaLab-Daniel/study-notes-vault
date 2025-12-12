@@ -55,3 +55,24 @@
 * IBM is working on improving the **efficiency**, **trustworthiness**, and **reliability** of foundation models for enterprise use.
 * Foundation models extend beyond language to **vision** (e.g., DALL·E 2), **code** (e.g., Copilot), **chemistry** (e.g., IBM’s Moleformer), and **climate science** (e.g., Earth science foundation models).
 * IBM integrates foundation model innovations into products such as **Watson Assistant**, **Watson Discovery**, **Maximo Visual Inspection**, and Red Hat’s **Project Wisdom**.
+
+## What is Natural Language Processing (NLP)?
+
+* **Natural Language Processing (NLP)** is the field of enabling computers to understand and generate human language.
+* Humans naturally comprehend unstructured speech; NLP converts this **unstructured text** into **structured data** that computers can process.
+* Converting unstructured → structured is **NLU (Natural Language Understanding)**, and structured → unstructured is **NLG (Natural Language Generation)**.
+* Key NLP use cases:
+
+  * **Machine translation** (requires understanding context, not just individual words)
+  * **Virtual assistants** (e.g., Siri, Alexa) and **chatbots**
+  * **Sentiment analysis** (positive/negative, serious/sarcastic)
+  * **Spam detection** (identifying suspicious patterns like urgency or bad grammar)
+* NLP works through a *collection of tools*, not one single algorithm.
+* Core NLP pipeline steps:
+
+  * **Tokenization** – breaking text into smaller units (words/tokens)
+  * **Stemming** – reducing words to their base form (running → run)
+  * **Lemmatization** – finding the dictionary-based root form (better → good)
+  * **Part-of-speech tagging** – identifying the grammatical role of each token (e.g., “make” as noun vs verb)
+  * **Named Entity Recognition (NER)** – identifying entities (Arizona → U.S. state, Ralph → person)
+* These tools help convert human language into structured data for use in AI applications.
