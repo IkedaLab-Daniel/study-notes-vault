@@ -76,3 +76,37 @@
   * **Part-of-speech tagging** – identifying the grammatical role of each token (e.g., “make” as noun vs verb)
   * **Named Entity Recognition (NER)** – identifying entities (Arizona → U.S. state, Ralph → person)
 * These tools help convert human language into structured data for use in AI applications.
+
+## Introduction to In-Context Learning
+
+* **In-context learning (ICL)** is a prompt-engineering method where the model learns a new task from examples included directly in the prompt.
+* ICL requires **no additional training or fine-tuning**—the model adapts using only the provided examples at inference time.
+* **Advantages of ICL:**
+
+  * No need for fine-tuning on task-specific datasets
+  * Saves time and compute resources
+  * Improves performance using small example sets
+* **Limitations of ICL:**
+
+  * Context window limits how many examples can be provided
+  * Complex tasks may still need traditional training or gradient updates
+* **Prompts** are instructions or inputs given to an LLM to guide it toward a desired output.
+* A prompt contains two core components:
+
+  * **Instructions** – direct, clear commands
+  * **Context** – relevant information supporting the task
+* **Prompt engineering** is the practice of designing and refining prompts to get accurate, relevant, high-quality outputs from LLMs.
+* Benefits of prompt engineering:
+
+  * Boosts accuracy and effectiveness
+  * Ensures responses match context and expectations
+  * Reduces misunderstandings
+  * Removes the need for continuous model fine-tuning
+* **Example:** A simple prompt like “The wind is” can lead GPT-3.5 to generate a creative poetic continuation.
+* **A well-structured prompt includes:**
+
+  1. **Instructions** – what the LLM must do
+  2. **Context** – background details
+  3. **Input data** – the text or content to analyze
+  4. **Output indicator** – where the model should place its answer
+* Recap: ICL uses examples inside prompts; prompt engineering improves LLM usefulness; prompts have four essential elements.
