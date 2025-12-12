@@ -202,3 +202,100 @@
 * Tools enable easier development, testing, and optimization of prompts
 * LangChain uses prompt templates for structured, scalable prompting
 * Agents use prompts to perform sophisticated, real-world tasks
+
+## LangChain LCEL Chaining Method
+
+### What LCEL Is
+
+* **LangChain Expression Language (LCEL)** is a modern method for building LangChain applications.
+* Uses the **pipe (|) operator** to connect components, creating clean and readable chains.
+* Replaces the older “LLM chain” approach with a more flexible, composable system.
+
+---
+
+### How LCEL Works
+
+To build an LCEL chain, you:
+
+1. **Define a prompt template** with variables in `{}`
+2. **Create a PromptTemplate instance**
+3. **Connect components** using the pipe operator
+4. **Invoke the chain** with input values
+
+LCEL chains are built from **runnables**, which act as modular building blocks such as:
+
+* LLMs
+* Retrievers
+* Tools
+* Custom functions
+
+---
+
+### Runnable Composition Primitives
+
+* **RunnableSequence**
+
+  * Executes components in order; each output becomes the next input
+  * LCEL replaces this with the **pipe operator** for cleaner syntax
+
+* **RunnableParallel**
+
+  * Runs multiple components at the same time with the same input
+  * Often created automatically when using a **dictionary** in LCEL
+
+---
+
+### Automatic Type Coercion
+
+LCEL converts regular Python structures into runnable components automatically:
+
+* **Functions → RunnableLambda**
+
+  * Used to transform inputs
+* **Dictionaries → RunnableParallel**
+
+  * Each key becomes a parallel task
+* Happens behind the scenes, reducing boilerplate
+
+Example:
+A dictionary with tasks `{summary, translation, sentiment}` becomes a parallel chain producing outputs for all three at once.
+
+---
+
+### Example Workflow
+
+A simple LCEL chain might look like:
+
+* A **RunnableLambda** formats the prompt
+* The pipe operator sends the formatted prompt to the **LLM**
+* Another pipe sends the result to **StrOutputParser**
+
+This creates a clean, readable sequence:
+
+```
+input → formatting → LLM → output parsing
+```
+
+---
+
+### When to Use LCEL
+
+* Best for **simple to moderately complex orchestration**
+* Supports:
+
+  * Parallel execution
+  * Async operations
+  * Streaming
+  * Automatic tracing
+
+For more complex workflows or branching logic, **LangGraph** is recommended, with LCEL usable inside individual nodes.
+
+---
+
+### Key Takeaways
+
+* LCEL chains use the **pipe operator** for clear, linear data flow.
+* Prompt templates use **variables with curly braces**.
+* **RunnableSequence** and **RunnableParallel** form the foundation, but LCEL provides simpler syntax.
+* **Type coercion** automatically turns functions and dictionaries into runnable components.
+* LCEL improves readability, composability, and maintainability of GenAI applications.
