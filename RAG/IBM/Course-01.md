@@ -36,3 +36,22 @@
   * Creative capability comes from GANs, VAEs, transformers, and diffusion models.
   * Foundation models can be customized for specific use cases.
   * Generative AI tools are rapidly expanding across domains.
+
+## What is Generative AI Models?
+
+* Large language models (LLMs) like ChatGPT belong to a broader category called **foundation models**, a concept introduced by Stanford researchers.
+* Traditional AI used many small, task-specific models, while foundation models act as **general-purpose models** that can transfer to many tasks.
+* Foundation models are trained on massive amounts of **unstructured data** (terabytes) in an **unsupervised** way by predicting the next word in a sequence—making them a key part of **generative AI**.
+* Although trained for text generation, foundation models can be **tuned** with small labeled datasets to perform specific NLP tasks (classification, NER, etc.).
+* Even without labeled data, models can perform tasks via **prompting / prompt engineering**, where instructions guide the model to produce the desired output.
+* **Advantages of foundation models:**
+
+  * **High performance** due to exposure to huge datasets.
+  * **Productivity gains** because they require far less labeled data for downstream tasks.
+* **Disadvantages:**
+
+  * **High compute cost**—expensive to train and expensive to run inference (often needing multiple GPUs).
+  * **Trust issues** due to training on large, unvetted internet datasets that may introduce bias, toxic content, or unknown data sources.
+* IBM is working on improving the **efficiency**, **trustworthiness**, and **reliability** of foundation models for enterprise use.
+* Foundation models extend beyond language to **vision** (e.g., DALL·E 2), **code** (e.g., Copilot), **chemistry** (e.g., IBM’s Moleformer), and **climate science** (e.g., Earth science foundation models).
+* IBM integrates foundation model innovations into products such as **Watson Assistant**, **Watson Discovery**, **Maximo Visual Inspection**, and Red Hat’s **Project Wisdom**.
