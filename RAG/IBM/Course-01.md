@@ -110,3 +110,34 @@
   3. **Input data** – the text or content to analyze
   4. **Output indicator** – where the model should place its answer
 * Recap: ICL uses examples inside prompts; prompt engineering improves LLM usefulness; prompts have four essential elements.
+
+## Introduction to Langchain
+
+* **LangChain** is an open-source Python framework that simplifies building applications powered by Large Language Models (LLMs).
+* It helps retrieve, extract, process, and generate information from large text sources (e.g., research papers, legal documents) by chaining steps together.
+
+### Key Benefits
+
+* **Modularity:** Components work like building blocks that can be reused to reduce development time.
+* **Extensibility:** Developers can add features, integrate external tools, and adapt components with minimal code changes.
+* **Decomposition:** Breaks complex problems into smaller steps, improving reasoning and response accuracy.
+* **Vector Database Integration:** Enables fast semantic search and efficient retrieval from large datasets.
+
+### Practical Uses
+
+* **Summarization:** Breaks down complex documents such as legal papers or reports.
+* **Data Extraction:** Pulls key statistics or facts from text.
+* **Question & Answer Systems:** Provides context-aware, multi-turn responses for support or knowledge bases.
+* **Automated Content Generation:** Drafts emails, documentation, or brainstorms ideas.
+
+### Working with Other Data Types
+
+* Although text-focused, LangChain can handle **images, audio, and video** by using external tools (e.g., speech-to-text).
+* Embeddings from these data types can be stored in vector databases for semantic search.
+
+### Key Takeaways
+
+* LangChain streamlines LLM workflows.
+* Offers modular, extensible, and decomposable components.
+* Useful for summarization, extraction, Q&A systems, and content generation.
+* Supports other data types through external models and vector embeddings.
