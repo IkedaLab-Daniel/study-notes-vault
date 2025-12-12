@@ -141,3 +141,64 @@
 * Offers modular, extensible, and decomposable components.
 * Useful for summarization, extraction, Q&A systems, and content generation.
 * Supports other data types through external models and vector embeddings.
+
+## Advanced Methods of Prompt Engineering
+
+### Advanced Prompting Techniques
+
+* **Zero-shot prompting:**
+  The LLM performs a task without prior examples.
+  *Example:* Classifying a fact (“The Eiffel Tower is in Berlin”) as true or false.
+
+* **One-shot prompting:**
+  The LLM is given **one example** as a template before completing a similar task.
+  *Example:* Showing one English→French translation, then asking for another.
+
+* **Few-shot prompting:**
+  The model receives **multiple examples** to generalize from.
+  *Example:* Classifying emotions using three labeled statements, then inferring the emotion of a new one.
+
+* **Chain-of-Thought (CoT) prompting:**
+  Guides the model through **step-by-step reasoning**, helpful for multi-step problems.
+  *Example:* Apple arithmetic problem broken into sequential steps to reach the correct answer.
+
+* **Self-consistency:**
+  The model generates **multiple independent answers**, then the consistent result is selected.
+  *Example:* Age calculation problem solved in three different ways to confirm accuracy.
+
+### Tools for Prompt Engineering
+
+* Tools such as **OpenAI Playground**, **LangChain**, **Hugging Face Model Hub**, and **IBM AI Classroom** help:
+
+  * Build, experiment, and deploy prompts
+  * Test and adjust prompts in real-time
+  * Access pre-trained models
+  * Share and collaborate on prompts
+  * Analyze results and optimize prompt performance
+
+### LangChain for Prompt Engineering
+
+* LangChain provides **prompt templates**, reusable structures for creating consistent prompts.
+* Templates may include:
+
+  * Instructions for the LLM
+  * One-shot or few-shot examples
+  * The final question or request
+* Example: Filling placeholders in a joke template → “Tell me a *funny* joke about *chickens*.”
+
+### Agents in Prompt Applications
+
+* **Agents**, powered by LLMs and tools like LangChain, can perform complex tasks via prompts.
+* Types of agents include:
+
+  * Q&A agents (with citations)
+  * Content creation & summarization agents
+  * Analytic & business intelligence agents
+  * Multilingual translation agents
+
+### Key Takeaways
+
+* Advanced prompting methods: **zero-shot, one-shot, few-shot, chain-of-thought, self-consistency**
+* Tools enable easier development, testing, and optimization of prompts
+* LangChain uses prompt templates for structured, scalable prompting
+* Agents use prompts to perform sophisticated, real-world tasks
