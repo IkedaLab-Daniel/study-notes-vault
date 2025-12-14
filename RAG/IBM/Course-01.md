@@ -317,3 +317,82 @@ For more complex workflows or branching logic, **LangGraph** is recommended, wit
 - Components can be linked using RunnableSequence for sequential execution.
 - RunnableParallel allows multiple components to run concurrently with the same input.
 - LCEL provides a more concise syntax by replacing RunnableSequence with the pipe operator.-  - Type coercion in LCEL automatically converts functions and dictionaries into compatible components.
+
+> # Module 2
+## LangChain: Core Concepts
+
+### What is LangChain?
+
+* **LangChain** is an open-source framework that simplifies building applications using **Large Language Models (LLMs)**.
+* Provides a **structured interface** to integrate LLMs into use cases like **NLP**, **data retrieval**, and more.
+
+---
+
+### Core Components of LangChain
+
+1. **Language Models (LLMs)**
+
+   * Generate text output from text input.
+   * Can complete tasks, summarize documents, or generate responses.
+   * Examples: IBM WatsonX.AI, OpenAI, Google, Meta models.
+   * Can be customized with parameters like **tokens** and **temperature**.
+
+2. **Chat Models**
+
+   * Specialized LLMs for **conversational tasks**.
+
+   * Convert LLMs into a chat interface for dynamic dialogue.
+
+   * Handle multiple **chat message types**:
+
+     * **HumanMessage** – input from user
+     * **AIMessage** – response from model
+     * **SystemMessage** – instructions for model behavior
+     * **FunctionMessage** – calls functions with parameters
+     * **ToolMessage** – interacts with external tools
+
+   * Each chat message has:
+
+     * **Role** – who is speaking
+     * **Content** – what is being said
+
+3. **Prompt Templates**
+
+   * Translate user input into **clear instructions** for the model.
+   * Types of prompt templates:
+
+     * **StringPromptTemplate** – single-string formatting
+     * **ChatPromptTemplate** – handles lists of messages
+
+       * Supports role-specific templates: AI, Human, System, and Tool messages
+     * **ViewShotPromptTemplate** – provides examples (“shots”) for few-shot learning
+   * **Example Selectors** help choose the most relevant examples:
+
+     * Semantic Similarity
+     * Max Marginal Relevance for diversity
+     * N-Gram Overlap for textual similarity
+
+4. **Output Parsers**
+
+   * Convert LLM output into **structured data** for easier handling.
+   * Supported formats: JSON, XML, CSV, Pandas DataFrames.
+   * Example: **Comma Separated List Output Parser** converts model output into CSV format.
+
+---
+
+### Workflow Example
+
+1. User input → Chat Prompt Template → LLM or Chat Model → Output Parser → Structured Output
+2. Example selector optimizes which examples to include in few-shot prompts, improving model accuracy.
+
+---
+
+### Key Takeaways
+
+* **LangChain** is a framework for integrating LLMs into applications efficiently.
+* **Language Models** generate outputs, **Chat Models** handle dialogue.
+* **Prompt Templates** guide model instructions and few-shot examples.
+* **Example Selectors** optimize context for LLMs.
+* **Output Parsers** convert unstructured outputs into usable formats.
+
+This structured approach makes building advanced AI applications more **modular, flexible, and maintainable**.
