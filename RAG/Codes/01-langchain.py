@@ -1,14 +1,14 @@
 # import warnings # ? Ignore Warning
 # warnings.filterwarnings("ignore", category=UserWarning, module="urllib3")
 
-from langchain_community.llms import Ollama
+from langchain_ollama import OllamaLLM
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 # > Step 1 - Connect to local LLM
-llm = Ollama(
-    model="codellma",
-    temperature=0.2
+llm = OllamaLLM(
+    model="gemma3:1b",
+    temperature=0.2,
 )
 
 # >  Step 2 - Prompt Template
@@ -30,6 +30,13 @@ chain = LLMChain(
     llm=llm,
     prompt=prompt
 )
+
+# > Step 4 - Run Chain
+result = chain.run(
+    task="Python function that checks if a number is prime"
+)
+
+print(result)
 
 
 
