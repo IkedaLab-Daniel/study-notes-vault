@@ -25,6 +25,13 @@ Return only the code.
 """
 )
 
+# > Step 3 - Create chain
+chain = LLMChain(
+    llm=llm,
+    prompt=prompt
+)
+
+
 
 print("""\033[92m
     |-----------------------------------------|
