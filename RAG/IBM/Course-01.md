@@ -396,3 +396,79 @@ For more complex workflows or branching logic, **LangGraph** is recommended, wit
 * **Output Parsers** convert unstructured outputs into usable formats.
 
 This structured approach makes building advanced AI applications more **modular, flexible, and maintainable**.
+
+## LangChain Chains and Agents for Building Applications
+
+### 1. **LangChain Overview**
+
+* **LangChain** is a platform with APIs that help developers build applications with **language processing capabilities**.
+* It uses **documents, chains, and agents** to structure workflows and integrate LLMs into applications.
+
+---
+
+### 2. **Chains in LangChain**
+
+* A **chain** is a **sequence of calls** where the output of one step becomes the input of the next.
+* **Sequential chains** allow multiple steps to create a smooth information flow.
+
+**Example: Three-Step Sequential Chain**
+
+1. **Chain 1 – Select Dish**
+
+   * Input: User-specified location (e.g., China)
+   * Output: Famous dish (e.g., Peking Duck)
+   * Implemented via a **prompt template** and **LLM chain**
+
+2. **Chain 2 – Provide Recipe**
+
+   * Input: Dish name from Chain 1
+   * Output: Recipe for that dish
+
+3. **Chain 3 – Estimate Cooking Time**
+
+   * Input: Recipe from Chain 2
+   * Output: Estimated cooking time
+
+* All three chains are combined into a **single sequential chain**, enabling a unified process.
+* **Verbose mode** allows tracking how each input transforms through the chain.
+
+---
+
+### 3. **Memory in LangChain**
+
+* **Memory storage** preserves historical context across interactions.
+* Chains can **read from memory** to enhance input and **write back outputs** for future use.
+* Example: **ChatMessageHistory**
+
+  * Stores **human messages** and **AI messages**
+  * Adds AI message: `"hi"` and user message: `"What is the capital of France?"`
+  * Maintains conversation continuity
+
+---
+
+### 4. **Agents in LangChain**
+
+* **Agents** are dynamic systems where an LLM **decides and sequences actions**.
+* LLMs generate instructions but **do not execute actions directly**; agents integrate with external **tools**.
+* Tools can include: search engines, databases, websites, or custom APIs.
+
+**Example: Pandas DataFrame Agent**
+
+* Allows users to query and visualize data using natural language.
+* Steps:
+
+  1. Instantiate `create_pandas_dataframe_agent` with LLM and DataFrame
+  2. Set `verbose=True` to view reasoning
+  3. Invoke queries like `"How many rows in the DataFrame?"`
+* The agent translates the query into Python code, executes it, and returns the answer (e.g., 139 rows).
+
+---
+
+### 5. **Key Takeaways**
+
+* **Chains**: Sequence of LLM calls; output of one step feeds the next.
+* **Memory**: Preserves historical data for context-aware interactions.
+* **Agents**: Use LLM reasoning + external tools to autonomously perform tasks.
+* LangChain allows **dynamic, context-aware applications** that combine LLMs, chains, memory, and agents for complex workflows.
+
+This structure enables developers to **build robust AI applications** with modular and maintainable components.
