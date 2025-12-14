@@ -472,3 +472,106 @@ This structured approach makes building advanced AI applications more **modular,
 * LangChain allows **dynamic, context-aware applications** that combine LLMs, chains, memory, and agents for complex workflows.
 
 This structure enables developers to **build robust AI applications** with modular and maintainable components.
+
+## LangChain LCEL (LangChain Expression Language) Chaining Method
+
+### 1. **Overview of LCEL**
+
+* **LCEL** is a modern pattern in LangChain for building **flexible, composable chains**.
+* It uses the **pipe (`|`) operator** to connect components, creating **readable and maintainable workflows**.
+* LCEL improves over traditional sequential LLM chains by offering:
+
+  * Better composability
+  * Clearer visualization of data flow
+  * Greater flexibility for complex chains
+
+---
+
+### 2. **Steps to Build an LCEL Chain**
+
+1. **Define a template**
+
+   * Use **variables and curly braces** for dynamic input.
+2. **Create a prompt template instance**
+
+   * Converts your template into a reusable component.
+3. **Build a chain** using the **pipe operator**
+
+   * Connects components sequentially or in parallel.
+4. **Invoke the chain** with input values
+
+---
+
+### 3. **Runnable Components**
+
+* **Runnables** are building blocks that connect LLMs, retrievers, tools, or functions.
+* **Two main composition types**:
+
+  1. **RunnableSequence** – runs components **sequentially**
+
+     * Output of one component → input of next
+  2. **RunnableParallel** – runs multiple components **concurrently** with the same input
+
+---
+
+### 4. **LCEL Syntax Shortcuts**
+
+* **Pipe operator (`|`)** replaces RunnableSequence for a **cleaner sequential chain**.
+* **Type coercion** automatically converts:
+
+  * **Functions** → `RunnableLambda`
+  * **Dictionaries** → `RunnableParallel`
+
+**Example:**
+
+```python
+{
+  "summary": llm_call,
+  "translation": llm_call,
+  "sentiment": llm_call
+}
+```
+
+* This dictionary becomes a **RunnableParallel**, processing all three tasks simultaneously.
+* Output: `{"summary": ..., "translation": ..., "sentiment": ...}`
+
+---
+
+### 5. **Building a Simple Chain**
+
+* Use **RunnableLambda** to wrap a function like `format_prompt`.
+* Pipe the formatted prompt to:
+
+  1. LLM for processing
+  2. Output parser (e.g., `StrOutputParser`)
+
+**Flow Example:**
+
+```
+RunnableLambda(format_prompt) | LLM | StrOutputParser
+```
+
+---
+
+### 6. **Best Practices & Strengths**
+
+* **LCEL is ideal for:** simpler orchestration tasks
+* For **complex workflows**, use **LangGraph** while leveraging LCEL within nodes
+* **Key strengths**:
+
+  * Parallel execution
+  * Async support
+  * Simplified streaming
+  * Automatic tracing
+* Promotes **readable, reusable, and maintainable pipelines**
+
+---
+
+### 7. **Key Takeaways**
+
+* **LCEL pattern** structures workflows using the **pipe operator**.
+* **Prompts** are defined using **templates with variables and curly braces**.
+* Components can run **sequentially** (RunnableSequence) or **in parallel** (RunnableParallel).
+* **Type coercion** automatically converts functions and dictionaries into runnable components, simplifying development.
+
+This method enables developers to **create clear, composable chains for various AI applications** efficiently.
