@@ -11,6 +11,21 @@ llm = Ollama(
     temperature=0.2
 )
 
+# >  Step 2 - Prompt Template
+prompt = PromptTemplate(
+    input_variables=["task"],
+    template="""
+You are a helpful coding assistant.
+Write clean, well-commented code.
+
+Task:
+{task}
+
+Return only the code.
+"""
+)
+
+
 print("""\033[92m
     |-----------------------------------------|
     |  Code execution completed successfully  |
