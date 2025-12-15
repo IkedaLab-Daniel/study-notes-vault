@@ -24,6 +24,10 @@ embeddings = OllamaEmbeddings(
 # > Step 4 - Create vector store
 vectorstore = FAISS.from_documents(chunks, embeddings)
 
+# > Step 5 - Create retriever
+retriever = vectorstore.as_retriever(
+    search_kwargs={"k":2}
+)
 
 print(f"""\033[92m
     |-----------------------------------------|
