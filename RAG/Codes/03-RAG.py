@@ -2,7 +2,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_community.llms import ollama
+from langchain_community.llms import Ollama
 from langchain.chains import retrieval_qa
 
 # > Step 1 - Load Document
@@ -27,6 +27,12 @@ vectorstore = FAISS.from_documents(chunks, embeddings)
 # > Step 5 - Create retriever
 retriever = vectorstore.as_retriever(
     search_kwargs={"k":2}
+)
+
+# > Step 6 - Load local LLM
+llm = Ollama(
+    model="gemma3:1b",
+    temperature=0
 )
 
 print(f"""\033[92m
