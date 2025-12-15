@@ -9,6 +9,12 @@ from langchain.chains import retrieval_qa
 loader = TextLoader("ai.txt")
 document = loader.load()
 
+# > Step 2 - Split document into chunk
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=300,
+    chunk_overlap=50
+)
+
 print(f"""\033[92m
     |-----------------------------------------|
     >> Code execution completed successfully <<
