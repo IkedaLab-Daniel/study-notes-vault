@@ -42,6 +42,31 @@ qa_chain = RetrievalQA.from_chain_type(
     chain_type="stuff"
 )
 
+# > Step 8 - Test Questions
+questions = [
+    "What is Artificial Intelligence?",
+    "What is machine learning?",
+    "Where is AI used?"
+]
+
+print("\n\n\n")
+
+for q in questions:
+    print(f"""\033[34m
+|----------------------------------------------------------------|
+        >>    Question: {q} <<
+|----------------------------------------------------------------|
+    \033[0m""")
+    answer = qa_chain.invoke(q)
+    print(f"""\033[92m
+|--------------------------------|
+            Answer:
+{answer["result"]}
+|--------------------------------|
+""")
+
+
+
 print(f"""\033[92m
     |-----------------------------------------|
     >> Code execution completed successfully <<
