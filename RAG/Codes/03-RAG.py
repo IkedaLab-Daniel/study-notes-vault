@@ -3,7 +3,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.llms import Ollama
-from langchain.chains import retrieval_qa
+from langchain.chains import RetrievalQA
 
 # > Step 1 - Load Document
 loader = TextLoader("ai.txt")
@@ -33,6 +33,13 @@ retriever = vectorstore.as_retriever(
 llm = Ollama(
     model="gemma3:1b",
     temperature=0
+)
+
+# > Step 7 - Build retrieval QA chain
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=retriever,
+    chain_type="stuff"
 )
 
 print(f"""\033[92m
