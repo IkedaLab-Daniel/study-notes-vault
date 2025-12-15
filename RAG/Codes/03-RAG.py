@@ -7,12 +7,18 @@ from langchain.chains import retrieval_qa
 
 # > Step 1 - Load Document
 loader = TextLoader("ai.txt")
-document = loader.load()
+documents = loader.load()
 
 # > Step 2 - Split document into chunk
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=300,
     chunk_overlap=50
+)
+chunks = text_splitter.split_documents(documents)
+
+# > Step 3 - Create Embedding
+embeddings = OllamaEmbeddings(
+    model="nomic-embed-text"
 )
 
 print(f"""\033[92m
