@@ -5,6 +5,10 @@ from langchain_community.vectorstores import faiss
 from langchain_community.llms import ollama
 from langchain.chains import retrieval_qa
 
+# > Step 1 - Load Document
+loader = TextLoader("ai.txt")
+document = loader.load()
+
 print(f"""\033[92m
     |-----------------------------------------|
     >> Code execution completed successfully <<
