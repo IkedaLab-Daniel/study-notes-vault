@@ -1,7 +1,7 @@
 from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
-from langchain_community.vectorstores import faiss
+from langchain_community.vectorstores import FAISS
 from langchain_community.llms import ollama
 from langchain.chains import retrieval_qa
 
@@ -20,6 +20,10 @@ chunks = text_splitter.split_documents(documents)
 embeddings = OllamaEmbeddings(
     model="nomic-embed-text"
 )
+
+# > Step 4 - Create vector store
+vectorstore = FAISS.from_documents(chunks, embeddings)
+
 
 print(f"""\033[92m
     |-----------------------------------------|
