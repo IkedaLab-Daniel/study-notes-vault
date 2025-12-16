@@ -45,7 +45,7 @@ qa_chain = RetrievalQA.from_chain_type(
 
 # > Step 8 - Test Questions
 questions = [
-    "Can Daniel code in Python? Why?"
+    "What is the text all about?"
 ]
 
 print("\n\n\n")
@@ -53,7 +53,7 @@ print("\n\n\n")
 for q in questions:
     print(f"""\033[34m
 |----------------------------------------------------------------|
-    >>    Question: {q} <<
+>>    Question: {q}
 |----------------------------------------------------------------|
     \033[0m""")
     answer = qa_chain.invoke(q)    
@@ -70,6 +70,6 @@ for q in questions:
 ⠀⠀⠀⠀⠀⠀⠛⢷⣜⢷⡌⠻⣿⣿⣦⣝⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣹⣷⣦⣹⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠉⠃⠀
           
 |----------------------------------------------------------------|    
-    >> {wrapped_answer}
+>> {wrapped_answer}
 |----------------------------------------------------------------|
 """)
