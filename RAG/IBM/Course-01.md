@@ -591,3 +591,111 @@ This method enables developers to **create clear, composable chains for various 
 - Memory storage is important for reading and writing historical data.
 - Agents are dynamic systems where the language model determines the sequence of actions.
 - Agents integrate with tools such as search engines, databases, and websites to fulfill user requests.
+
+> # Module 3
+
+## Summary: Choosing and Managing AI Models with a Multi-Model Approach
+
+### 1. **AI Models as a Garden Analogy**
+
+* AI models are compared to **vegetables in a garden**.
+* Before using a model, you must understand its **requirements** (data, environment, risks), or it may fail.
+* Ongoing **evaluation and optimization** are needed for models to thrive.
+* Relying on only one model is risky—**diversity is essential**, just like you can’t survive on carrots alone.
+
+---
+
+### 2. **Multi-Model Approach**
+
+* A **multi-model strategy** uses different models for different use cases.
+* This allows you to:
+
+  * Choose the **right model for the right problem**
+  * Compare how models are designed and behave
+* Key questions to ask about each model:
+
+  * Who built it?
+  * What data was it trained on?
+  * What guardrails exist?
+  * What risks and regulations apply?
+
+---
+
+### 3. **Starting with the Right Use Case and Prompt**
+
+* Everything begins with a **prompt**.
+* A good prompt clearly defines:
+
+  * The use case
+  * The user problem
+  * What the AI is expected to do
+  * Guardrails for acceptable outputs
+* Writing a precise prompt is the **first step** in model selection.
+
+---
+
+### 4. **Model Research and Evaluation**
+
+* After defining the prompt, research models based on:
+
+  * Size
+  * Performance
+  * Cost
+  * Risk
+  * Deployment method
+* Evaluate models **against the prompt**, not in isolation.
+
+---
+
+### 5. **Testing and Optimization Process**
+
+* Start testing with a **large model** to meet the prompt requirements.
+* Then try to **replicate results with smaller models**.
+* Pass the same prompt through different models to compare outcomes.
+* Select the model that best balances **performance and cost**.
+
+---
+
+### 6. **Ongoing Governance and Maintenance**
+
+* Model selection is **not a one-time task**.
+* Continuous responsibilities include:
+
+  * Performance evaluation
+  * Cost monitoring
+  * Governance and compliance
+  * Updating data and prompts
+  * Testing new models as they become available
+* Avoid long-term **model lock-in** as business and external conditions change.
+
+---
+
+### 7. **Key Factors in Model Selection**
+
+* Beyond accuracy and performance, consider:
+
+  * Reliability and speed
+  * Model size
+  * Deployment method
+  * Transparency
+  * Potential risks
+* These factors guide both selection and implementation.
+
+---
+
+### 8. **Collaboration and Measurement**
+
+* AI implementation should be **cross-functional**, not owned by a single department.
+* Teams must be able to:
+
+  * Measure performance benchmarks
+  * Produce datasets explaining how results are calculated
+* This enables informed decisions for future models and use cases.
+
+---
+
+### 9. **Final Takeaway**
+
+* AI models require **continuous care**, not just initial setup.
+* Through ongoing testing, governance, and optimization, models stay relevant and effective.
+* As models evolve, your **AI strategy must evolve too**—keep growing instead of stagnating.
