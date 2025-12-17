@@ -41,3 +41,66 @@
 * A solid understanding of RAG architectures
 * Practical experience building real-world RAG applications
 * Reusable skills for future GenAI and AI-powered projects
+
+## Introduction to Retrieval-Augmented Generation (RAG)
+
+* **Retrieval-Augmented Generation (RAG)** is an AI framework that improves the responses of large language models (LLMs) by combining them with external knowledge sources, without retraining the model.
+* It is especially useful for **domain-specific or confidential information** (e.g., company policies) that LLMs are not trained on.
+
+## Why RAG Is Needed
+
+* Pre-trained LLMs perform well on general knowledge but may produce **inaccurate or incomplete answers** for specialized domains.
+* RAG supplements LLMs with **organization-specific data** such as internal documents, policies, and large text files to ensure accurate responses.
+
+## Core Components of RAG
+
+* **Retriever**: The core of RAG, responsible for finding relevant information from a knowledge base.
+* **Generator**: The LLM that generates natural-language responses using the retrieved information.
+
+## RAG Process Overview
+
+1. **Text Embedding**
+
+   * User prompts and knowledge base documents are converted into **high-dimensional vectors**.
+   * A **question encoder** embeds the prompt.
+   * A **context encoder** embeds the knowledge base documents.
+
+2. **Chunking Knowledge Base**
+
+   * Large documents are split into **smaller text chunks** for efficient retrieval.
+   * Each chunk is embedded and stored with a unique **chunk ID**.
+
+3. **Vector Storage**
+
+   * Embedded chunks are stored in a **vector database**.
+   * Each vector represents the semantic meaning of a text chunk.
+
+4. **Retrieval**
+
+   * The system compares the prompt vector with stored vectors using **distance metrics**.
+   * Common metrics:
+
+     * **Dot product**: Considers magnitude and direction.
+     * **Cosine similarity**: Focuses on directional similarity.
+   * The **top K most similar chunks** are selected.
+
+5. **Augmented Query Creation**
+
+   * Retrieved text chunks are combined with the original prompt to form an **augmented query**.
+
+6. **Generation**
+
+   * The LLM uses the augmented query to generate a **context-aware, accurate response**.
+
+## Prompt and Context Encoding
+
+* **Token embedding** converts words or sub-words into vectors using models like BERT or GPT.
+* **Vector averaging** combines token vectors into a single representation for the prompt or text chunk.
+* This representation captures the overall meaning of the input text.
+
+## Key Takeaways
+
+* RAG enables chatbots to answer **domain-specific questions** without retraining the LLM.
+* It works by embedding prompts and documents, retrieving relevant context using similarity search, and generating responses from augmented input.
+* Proper chunking, embedding, and distance metric selection are crucial for **efficient and accurate retrieval**.
+* RAG significantly improves reliability when working with **private, large, or specialized datasets**.
