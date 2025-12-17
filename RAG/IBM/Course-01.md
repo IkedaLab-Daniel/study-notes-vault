@@ -824,3 +824,72 @@ Developers typically move through three key phases:
 - Developers implement AI in Flask applications by creating properly configured virtual environments, installing necessary libraries, designing template-based prompts, utilizing model-specific formatting tokens, and adding comprehensive error handling.
 - LangChain simplifies AI model management by providing consistent APIs across different models, structured output parsing, and support for multistep AI workflows in production applications.
 
+## Recap
+
+### 1. **Generative AI and Foundational Models**
+
+* **Generative AI models**: Predict and generate new content (text, images, code, audio) from input data.
+* **Foundational models**: A subset of generative AI, e.g., **Large Language Models (LLMs)**, which serve as the backbone for many AI applications.
+
+---
+
+### 2. **Prompts**
+
+* **Definition**: Instructions or inputs that guide an LLM to perform a task.
+* **Components**:
+
+  * **Instructions**: Clear, specific commands for the AI.
+  * **Context**: Background information to help the LLM understand the task.
+* **In-Context Learning**: Providing examples in the prompt itself to teach the model a new task without training.
+
+#### **Prompting Techniques**
+
+1. **Zero-shot**: Task performed with no examples.
+2. **One-shot**: Task performed with a single example.
+3. **Few-shot**: Task performed using a small set of examples.
+4. **Chain-of-Thought (CoT)**: Guides LLM reasoning step by step.
+5. **Self-Consistency**: Generates multiple reasoning paths and selects the most consistent output.
+
+---
+
+### 3. **LangChain Framework**
+
+* **Purpose**: Simplifies building applications using LLMs.
+* **Key Components**:
+
+  * Language model
+  * Chat model
+  * Chat messages
+  * Prompt templates
+  * Output parsers
+
+#### **Chains**
+
+* **Sequential chains**: Steps where the output of one becomes the input of the next.
+
+#### **Agents**
+
+* Dynamic systems where LLMs guide actions using chains.
+* Can integrate tools like **databases or search engines** to fulfill user requests.
+
+#### **LCEL (LangChain Expression Language)**
+
+* Uses the **pipe (`|`) operator** to connect components.
+* Provides **concise, readable, and flexible syntax** for building chains.
+* Simplifies sequential and parallel execution of components.
+
+---
+
+### 4. **Notable AI Models Covered**
+
+* **Llama3**: Strong reasoning, context understanding, handles nuanced problems.
+* **Granite (IBM watsonx.ai)**: Optimized for enterprise, strong in business and technical domains.
+* **Mixtro**: Mixture of experts; activates only the most relevant submodels for efficiency and adaptability.
+
+---
+
+### 5. **Next Steps**
+
+* Apply the concepts to **real-world GenAI projects**.
+* Explore additional courses in the professional certificate program (2–6 months to complete).
+* Continue **testing, fine-tuning, and experimenting** with models to refine your AI engineering skills.
