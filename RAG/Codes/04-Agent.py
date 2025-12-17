@@ -1,6 +1,13 @@
+from langchain_ollama import OllamaLLM
 from langchain_core.tools import Tool
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain_core.prompts import PromptTemplate
+
+# > Init Ollama LLM
+llama_llm = OllamaLLM(
+    model="gpt-oss:120b-cloud",
+    temperature=0.2
+)
 
 # > Create a simple calculator tool
 def calculator(expression: str) -> str:
@@ -92,7 +99,8 @@ agent = create_react_agent(
 agent_executor = AgentExecutor(
     agent=agent,
     tools=tools,
-    verbose=True
+    verbose=True,
+    handle_parsing_errors=True
 )
 
 # > Test with simple questions
