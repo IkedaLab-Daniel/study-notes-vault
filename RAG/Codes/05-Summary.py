@@ -41,27 +41,43 @@ flan_ul2_llm = ChatOllama(
     num_predict=256       # GenParams.MAX_NEW_TOKENS
 )
 
+# > Using Prompt Template
+prompt_template = """
+Use the information from the document to answer the question at the end. If you don't know the answer, just say that you don't know, definately do not try to make up an answer.
+
+{context}
+
+Question: {question}
+"""
+
+PROMPT = PromptTemplate(
+    template=prompt_template, input_variables=["context", "question"]
+)
+
+chain_type_kwargs = {"prompt": PROMPT}
+
 # > Retrieval | Intregrating Langchain
 
 qa = RetrievalQA.from_chain_type(
     llm=flan_ul2_llm,
     chain_type="stuff",
     retriever=docsearch.as_retriever(),
+    chain_type_kwargs=chain_type_kwargs,
     return_source_documents=False
 )
 query = input("Enter query: ")
 response = qa.invoke(query)
 
 print(f"""\033[92m
-|----------- Query --------------|
+|-------------------------- Query -----------------------------|
   >> {response['query']}
-|--------------------------------|
+|--------------------------------------------------------------|
 \033[0m""")
 print_agent()
 print(f""" \033[92m
-|----------- Answer -------------|
+|-------------------------- Answer ----------------------------|
   >> {response['result']}
-|--------------------------------|
+|--------------------------------------------------------------|
 \033[0m""")
 
 print("\n\n------------------------------------------\nAll working")
