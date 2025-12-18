@@ -97,21 +97,25 @@ def rag_with_memory():
     # ? Create a history list to store the chat history
     history = []
 
-    query = input("You >> ")
-    response = qa.invoke({"question": query, "chat_history": history})
-    print_agent()
+    while True:
+        query = input("You >> ")
+        if (query == "exit" or query == "quit"):
+            break
+        response = qa.invoke({"question": query, "chat_history": history})
+        history.append((query, response["answer"]))
+        print_agent()
 
-    print(f"""\033[92m
-    |-------------------------- Query -----------------------------|
-    >> {response['question']}
-    |--------------------------------------------------------------|
-    \033[0m""")
-    print_agent()
-    print(f""" \033[92m
-    |-------------------------- Answer ----------------------------|
-    >> {response['answer']}
-    |--------------------------------------------------------------|
-    \033[0m""")
+        print(f"""\033[92m
+        |-------------------------- Query -----------------------------|
+        >> {response['question']}
+        |--------------------------------------------------------------|
+        \033[0m""")
+        print_agent()
+        print(f""" \033[92m
+        |-------------------------- Answer ----------------------------|
+        >> {response['answer']}
+        |--------------------------------------------------------------|
+        \033[0m""")
 
 def main():
     while True:
