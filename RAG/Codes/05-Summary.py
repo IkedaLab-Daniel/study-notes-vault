@@ -32,7 +32,7 @@ texts = text_splitter.split_documents(documents)
 # > 3 - Embedding and Storing
 embeddings = HuggingFaceEmbeddings()
 docsearch = Chroma.from_documents(texts, embeddings)  # store the embedding in docsearch using Chromadb
-print('document ingested')
+# ! print('document ingested')
 
 # > LLM Model Construction
 flan_ul2_llm = ChatOllama(
@@ -57,27 +57,74 @@ PROMPT = PromptTemplate(
 chain_type_kwargs = {"prompt": PROMPT}
 
 # > Retrieval | Intregrating Langchain
+def basic_rag():
 
-qa = RetrievalQA.from_chain_type(
-    llm=flan_ul2_llm,
-    chain_type="stuff",
-    retriever=docsearch.as_retriever(),
-    chain_type_kwargs=chain_type_kwargs,
-    return_source_documents=False
-)
-query = input("Enter query: ")
-response = qa.invoke(query)
+    qa = RetrievalQA.from_chain_type(
+        llm=flan_ul2_llm,
+        chain_type="stuff",
+        retriever=docsearch.as_retriever(),
+        chain_type_kwargs=chain_type_kwargs,
+        return_source_documents=False
+    )
+    query = input("Enter query: ")
+    response = qa.invoke(query)
 
-print(f"""\033[92m
-|-------------------------- Query -----------------------------|
-  >> {response['query']}
-|--------------------------------------------------------------|
-\033[0m""")
-print_agent()
-print(f""" \033[92m
-|-------------------------- Answer ----------------------------|
-  >> {response['result']}
-|--------------------------------------------------------------|
-\033[0m""")
+    print(f"""\033[92m
+    |-------------------------- Query -----------------------------|
+    >> {response['query']}
+    |--------------------------------------------------------------|
+    \033[0m""")
+    print_agent()
+    print(f""" \033[92m
+    |-------------------------- Answer ----------------------------|
+    >> {response['result']}
+    |--------------------------------------------------------------|
+    \033[0m""")
+
+# > Make conversation have memory
+def rag_with_memory():
+    memory = ConversationBufferMemory(memory_key= "chat_history", return_messages=True)
+
+    qa = ConversationalRetrievalChain.from_llm(
+        llm=flan_ul2_llm,
+        chain_type="stuff",
+        retriever=docsearch.as_retriever(),
+        memory=memory,
+        get_chat_history=lambda h: h,
+        return_source_documents=False    
+    )
+
+    # ? Create a history list to store the chat history
+    history = []
+
+    query = input("You >> ")
+    response = qa.invoke({"question": query, "chat_history": history})
+    print_agent()
+
+    print(f"""\033[92m
+    |-------------------------- Query -----------------------------|
+    >> {response['question']}
+    |--------------------------------------------------------------|
+    \033[0m""")
+    print_agent()
+    print(f""" \033[92m
+    |-------------------------- Answer ----------------------------|
+    >> {response['answer']}
+    |--------------------------------------------------------------|
+    \033[0m""")
+
+def main():
+    while True:
+        choice = int(input("Do you wist to enter basic mode [1] or with memory [2]: "))
+        if choice == 1:
+            basic_rag()
+            break
+        elif choice == 2:
+            rag_with_memory()
+            break
+        else:
+            print("Invalid input")
+
+main()
 
 print("\n\n------------------------------------------\nAll working")
