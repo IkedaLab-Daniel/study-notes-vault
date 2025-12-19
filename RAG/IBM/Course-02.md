@@ -119,3 +119,89 @@
 - Distance Metrics measure similarity between user queries and document vectors using methods such as dot product (magnitude-based) or cosine similarity (direction-based).
 - RAG is an efficient response generation technique.  It retrieves the most relevant text chunks from the knowledge base to augment the model’s knowledge and produce an informed response. This ensures responses are accurate, domain-specific, and up-to-date.
 - RAG allows chatbots to provide specialized answers by integrating relevant external knowledge, making them more reliable for industry-specific or confidential topics.
+
+## Getting Started with Gradio
+### What is Gradio?
+
+* **Gradio** is an **open-source Python library** used to build simple, customizable **web-based user interfaces**.
+* It is especially popular for **machine learning models** and computational tools because it requires minimal code and setup.
+
+### How Gradio Works (Step-by-Step)
+
+1. **Write Python functions**
+
+   * Define the logic or model behavior you want users to interact with.
+2. **Create a Gradio interface**
+
+   * Use `gr.Interface()` to connect inputs and outputs to your function.
+3. **Configure inputs and outputs**
+
+   * Choose components like text boxes, numbers, or file uploads.
+4. **Launch the server**
+
+   * Call `.launch()` to start a local Gradio server.
+5. **Access the web UI**
+
+   * Gradio provides a **local or public URL** where users can interact in real time.
+
+---
+
+### Installing and Importing Gradio
+
+* Install using pip:
+
+  ```
+  pip install gradio
+  ```
+* Import in Python:
+
+  ```python
+  import gradio as gr
+  ```
+
+---
+
+### Creating a Simple Text Input–Output Interface
+
+* Define a function that processes user input (e.g., echoing text).
+* Use:
+
+  * `gr.Textbox()` for text input
+  * `gr.Textbox()` for text output
+* Launch the interface to display two text boxes: input and output.
+
+---
+
+### Using Multiple Inputs
+
+* Gradio supports multiple input types:
+
+  * `gr.Textbox()` → text input
+  * `gr.Number()` → numeric input
+* Inputs are passed as a **list** to `gr.Interface()`.
+* This allows combining different input types in one interface.
+
+---
+
+### Uploading Files with Gradio
+
+* `gr.File()` enables users to:
+
+  * Upload or drag-and-drop files
+  * Upload multiple files at once
+* Uploaded files are passed to the backend function as file paths.
+* Useful for tasks like file counting, processing documents, or ML inference.
+
+---
+
+### Key Takeaways
+
+* Gradio makes it easy to turn Python functions into **interactive web apps**.
+* Core steps:
+
+  * Write Python logic
+  * Create an interface
+  * Launch the server
+  * Share or access the UI via a URL
+* Supports **text, numbers, and file uploads** with minimal code.
+* Ideal for **rapid prototyping**, demos, and ML model interaction.
