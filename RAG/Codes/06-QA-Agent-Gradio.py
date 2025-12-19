@@ -36,7 +36,7 @@ def get_llm():
     return watsonx_llm
 
 ## > Document loader
-def document_load(file):
+def document_loader(file):
     loader = PyPDFLoader(file.name)
     loaded_document = loader.load()
     return loaded_document
@@ -51,7 +51,7 @@ def text_splitter(data):
     chunks = text_splitter.split_documents(data)
     return chunks
 
-## > Vercor Store
+## > Vector Store
 def vertor_database(chunks):
     embedding_model = watsonx_embedding()
     vectordb = Chroma.from_documents(chunks, embedding_model)
@@ -72,5 +72,12 @@ def watsonx_embedding():
     )
     return watsonx_embedding
 
+## > Define the retriver
+def retriever(file):
+    document = document_loader(file)
+    chunks = text_splitter(document)
+    vectordb = vertor_database(chunks)
+    retriever = vectordb.as_restriever()
+    return retriever
 
 print("-- End --")
