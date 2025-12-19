@@ -21,5 +21,16 @@ llm = ChatOllama(
     model="gemma3:1b", 
     temperature=0.7
 )
+# > 1 - Load
+    # ? See file Download.py
+
+# > 2 - Split
+filename = 'companyPolicies.txt'
+
+loader = TextLoader(filename)
+documents = loader.load()
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+texts = text_splitter.split_documents(documents)
+print(len(texts))
 
 print("\n\n------------------------------------------\nAll working")
