@@ -17,10 +17,6 @@ from langchain.memory import ConversationBufferMemory
 from langchain_community.chat_models import ChatOllama
 import wget
 
-llm = ChatOllama(
-    model="gemma3:1b", 
-    temperature=0.7
-)
 # > 1 - Load
     # ? See file Download.py
 
@@ -33,9 +29,16 @@ text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 texts = text_splitter.split_documents(documents)
 # ! print(len(texts))
 
-# > Embedding and Storing
+# > 3 - Embedding and Storing
 embeddings = HuggingFaceEmbeddings()
 docsearch = Chroma.from_documents(texts, embeddings)  # store the embedding in docsearch using Chromadb
 print('document ingested')
+
+# > LLM Model Construction
+flan_ul2_llm = ChatOllama(
+    model="gemma:2b",     # local LLM
+    temperature=0.5,      # GenParams.TEMPERATURE
+    num_predict=256       # GenParams.MAX_NEW_TOKENS
+)
 
 print("\n\n------------------------------------------\nAll working")
