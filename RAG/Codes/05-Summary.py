@@ -31,6 +31,11 @@ loader = TextLoader(filename)
 documents = loader.load()
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 texts = text_splitter.split_documents(documents)
-print(len(texts))
+# ! print(len(texts))
+
+# > Embedding and Storing
+embeddings = HuggingFaceEmbeddings()
+docsearch = Chroma.from_documents(texts, embeddings)  # store the embedding in docsearch using Chromadb
+print('document ingested')
 
 print("\n\n------------------------------------------\nAll working")
