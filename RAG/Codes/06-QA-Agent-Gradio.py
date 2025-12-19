@@ -80,4 +80,17 @@ def retriever(file):
     retriever = vectordb.as_restriever()
     return retriever
 
+# > QA Chain
+def retriever_qa(file, query):
+    llm = get_llm()
+    retriever_obj = retriever(file)
+    qa =  RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type="stuff",
+        retriever=retriever_obj,
+        return_source_document=False
+    )
+    response = qa.invoke(query)
+    return response
+
 print("-- End --")
