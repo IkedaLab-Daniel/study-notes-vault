@@ -15,7 +15,7 @@ from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 
 from langchain_community.chat_models import ChatOllama
-import wget
+from print_agent import print_agent
 
 # > 1 - Load
     # ? See file Download.py
@@ -36,9 +36,32 @@ print('document ingested')
 
 # > LLM Model Construction
 flan_ul2_llm = ChatOllama(
-    model="gemma:2b",     # local LLM
+    model="gemma3:1b",     # local LLM
     temperature=0.5,      # GenParams.TEMPERATURE
     num_predict=256       # GenParams.MAX_NEW_TOKENS
 )
+
+# > Retrieval | Intregrating Langchain
+
+qa = RetrievalQA.from_chain_type(
+    llm=flan_ul2_llm,
+    chain_type="stuff",
+    retriever=docsearch.as_retriever(),
+    return_source_documents=False
+)
+query = input("Enter query: ")
+response = qa.invoke(query)
+
+print(f"""\033[92m
+|----------- Query --------------|
+  >> {response['query']}
+|--------------------------------|
+\033[0m""")
+print_agent()
+print(f""" \033[92m
+|----------- Answer -------------|
+  >> {response['result']}
+|--------------------------------|
+\033[0m""")
 
 print("\n\n------------------------------------------\nAll working")
