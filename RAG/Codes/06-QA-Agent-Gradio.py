@@ -51,4 +51,26 @@ def text_splitter(data):
     chunks = text_splitter.split_documents(data)
     return chunks
 
+## > Vercor Store
+def vertor_database(chunks):
+    embedding_model = watsonx_embedding()
+    vectordb = Chroma.from_documents(chunks, embedding_model)
+    return vectordb
+
+## > Embedding model
+def watsonx_embedding():
+    embed_params = {
+        EmbedTextParamsMetaNames.TRUNCATE_INPUT_TOKENS: 3,
+        EmbedTextParamsMetaNames.RETURN_OPTIONS: {"input_text": True},
+    }
+    WatsonxEmbeddings(
+        model_id="ibm/slate-125m-english-rtrvr-v2",
+        url= "https://jp-tok.ml.cloud.ibm.com",
+        project_id= os.getenv("PROJECT_ID"),
+        params=embed_params,
+        apikey= os.getenv("API_KEY")
+    )
+    return watsonx_embedding
+
+
 print("-- End --")
