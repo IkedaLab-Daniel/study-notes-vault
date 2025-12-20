@@ -214,3 +214,120 @@
 - Setting up a Gradio interface comprises four steps: writing Python code, creating an interface, launching the web server, and accessing the web interface.
 - The key features of Gradio include gr.Textbox for text input/output, gr.Number for numeric inputs, and gr.File for file uploads, enabling multiple file selections.
 - Once deployed, users can interact with the interface in real time via a web link.
+
+> # Module 3
+
+## LlamaIndex: Document Ingestion and Chunking
+
+### What is LlamaIndex?
+
+* **LlamaIndex** is a framework for building **LLM-powered context augmentation**.
+* Context augmentation means making your **own data available to an LLM** so responses are grounded in that data.
+* It is commonly used as part of **Retrieval-Augmented Generation (RAG)** pipelines.
+
+---
+
+### Typical Use Cases
+
+1. **Question Answering (RAG)**
+
+   * Retrieve relevant documents and use them to generate accurate, context-aware answers.
+2. **Chatbots**
+
+   * Extend RAG with multi-turn conversations and follow-up questions.
+3. **Document Understanding & Data Extraction**
+
+   * Extract names, dates, addresses, figures, and other semantic information from large datasets.
+
+---
+
+### How LlamaIndex Works with RAG
+
+1. **Load source documents**
+2. **Chunk documents into smaller pieces (nodes)**
+3. **Embed each chunk** into vectors using an embedding model
+4. **Store embeddings in a vector store**
+5. **Embed the user query**
+6. **Retrieve relevant chunks** using vector similarity
+7. **Augment the query** with retrieved context
+8. **Generate a response** using an LLM grounded in the retrieved data
+
+---
+
+### LlamaIndex Document Class
+
+* The **Document** class is a generic container for source data.
+* Key components include:
+
+  * **Unique ID** – identifies the document
+  * **Embedding placeholder** – optional document-level embedding
+  * **Metadata dictionary** – source, date, or other info
+  * **Relationships dictionary** – links to other documents or nodes
+  * **Text content** – the actual document text
+
+This structure allows documents to be tracked, enriched, and connected.
+
+---
+
+### Loading Documents
+
+* LlamaIndex supports many formats:
+
+  * Text, PDF, Markdown, CSV, JSON, HTML
+* **SimpleDirectoryReader**:
+
+  * Load all files from a directory
+  * Load files recursively
+  * Load specific files
+  * Load only specific file extensions
+* Output: a **list of LlamaIndex Document objects**
+
+---
+
+### Chunking Documents into Nodes
+
+* A **node** is a chunk of text derived from a document.
+* Chunking improves:
+
+  * Context precision
+  * Retrieval accuracy
+  * Embedding quality
+
+#### SentenceSplitter
+
+* A built-in, effective chunking tool
+* Uses recursive splitting based on:
+
+  * Newlines
+  * Periods
+* Key parameters:
+
+  * **chunk_size** – maximum tokens per chunk
+  * **chunk_overlap** – shared tokens between chunks
+* Produces **TextNode objects**, similar in structure to documents
+
+---
+
+### Other Chunking Options
+
+* **Semantic Splitter**
+
+  * Splits text when sentence similarity drops below a threshold
+* **LangChain Splitter Wrapper**
+
+  * Allows reuse of any LangChain text splitter inside LlamaIndex
+
+---
+
+### Key Takeaways
+
+* LlamaIndex enables **context-aware LLM applications**
+* It is tightly integrated with **RAG workflows**
+* Documents are:
+
+  * Loaded into structured containers
+  * Split into meaningful chunks (nodes)
+  * Embedded and stored for efficient retrieval
+* Flexible loaders and splitters make it suitable for **real-world, domain-specific data**
+
+This makes LlamaIndex a strong foundation for building reliable, production-ready RAG systems.
