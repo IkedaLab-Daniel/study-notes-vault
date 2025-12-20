@@ -441,3 +441,105 @@ This makes LlamaIndex a strong foundation for building reliable, production-read
 - LlamaIndex offers built-in document loaders and customizable query engines, unlike LangChain, which emphasizes chaining steps in workflows. 
 - To design a conversational RAG app with LlamaIndex, ingest LinkedIn profile data, chunk it into nodes, embed and store vectors, and use a response synthesizer or query engine to generate personalized responses from user prompts. 
 - You can apply the RAG pipeline—loading, chunking, indexing, and querying—using LlamaIndex’s document, node, index, and query engine classes. 
+
+## Course Completion Recap: RAG with Gradio & LlamaIndex
+
+### 1. **Retrieval-Augmented Generation (RAG)**
+
+* **Definition:** RAG is a machine-learning technique that combines **information retrieval** with **generative AI** to produce accurate, context-aware responses.
+* **Benefits:**
+
+  * Integrates **external or domain-specific knowledge** without retraining the model
+  * Generates **specialized, accurate, and up-to-date outputs**
+  * Useful for **chatbots, AI assistants, and domain-specific tools**
+
+**RAG Pipeline Steps:**
+
+1. **Text Embedding & Prompt Encoding:**
+
+   * Break prompts and documents into chunks
+   * Convert chunks into high-dimensional vectors using models like **BERT** or **GPT**
+2. **Retrieval:**
+
+   * Retrieve relevant document vectors from the knowledge base using distance metrics (e.g., **dot product** or **cosine similarity**)
+3. **Augmented Query Creation:**
+
+   * Combine retrieved content with the user’s prompt to enrich context
+4. **Model Generation:**
+
+   * Generate context-aware responses using the augmented prompt
+
+**Key Components:**
+
+* **Retriever:** Finds relevant information from the knowledge base
+* **Generator:** Produces natural language responses from retrieved data
+
+**Why RAG Matters:**
+
+* Ensures responses are **accurate, domain-specific, and trustworthy**
+* Enables AI systems to answer **industry-specific or confidential queries** reliably
+
+---
+
+### 2. **Gradio**
+
+* **Definition:** Open-source Python library for creating **customizable web-based user interfaces**, ideal for ML models and computational tools
+* **Key Features:**
+
+  * Share interfaces via **unique URLs** for easy collaboration
+  * Supports multiple input/output types
+
+**Core Components:**
+
+* **gr.Textbox:** Input or display text (e.g., chatbot questions/answers)
+* **gr.Number:** Accept numeric inputs (e.g., calculators)
+* **gr.File:** Upload files to an app for processing
+
+**Setting Up a Gradio Interface:**
+
+1. Write Python functions for app logic
+2. Create a Gradio interface specifying inputs/outputs
+3. Launch the Gradio server
+4. Access the interface via a local or public URL
+
+---
+
+### 3. **LlamaIndex**
+
+* **Definition:** A flexible framework for **LLM-powered applications** focusing on **context augmentation**
+* **Typical Use Cases:**
+
+  * Question answering with RAG
+  * Chatbots for multi-turn conversations
+  * Document understanding and data extraction
+
+**RAG Pipeline with LlamaIndex:**
+
+1. **Document Ingestion:** Convert text, PDF, Markdown, CSV, JSON, and HTML files into **Document objects**
+
+   * Document object contains: unique ID, embedding placeholder, metadata, relationships, and text
+2. **Chunking (Nodes):** Split documents using:
+
+   * **SentenceSplitter** (recursive splitting by sentences)
+   * **Semantic Splitter** (splits by semantic similarity)
+   * LangChain splitters (optional)
+3. **Embedding & Storage:** Convert chunks into vectors and store in a vector database
+4. **Query & Response Generation:**
+
+   * Use **response synthesizers** or **query engines** to handle prompt augmentation and generate LLM responses
+
+**Document Loading with SimpleDirectoryReader:**
+
+* Load files from folders, subdirectories, specific files, or file types
+
+**Customization:**
+
+* Query engines can be customized with different **LLMs**, **prompt templates**, or **retrievers**
+
+---
+
+### Next Steps
+
+* Extend your RAG knowledge by applying it in real projects
+* Consider pursuing the **IBM Professional Certificate**, which can be completed in 2–6 months depending on your schedule
+* Apply these skills in work or personal projects to build **chatbots, RAG apps, or AI assistants**
