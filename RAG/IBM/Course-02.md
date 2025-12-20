@@ -331,3 +331,106 @@ This structure allows documents to be tracked, enriched, and connected.
 * Flexible loaders and splitters make it suitable for **real-world, domain-specific data**
 
 This makes LlamaIndex a strong foundation for building reliable, production-ready RAG systems.
+
+
+## LlamaIndex: Vector Stores, Retrieval, and Query Engines
+
+### RAG Recap
+
+* In **Retrieval-Augmented Generation (RAG)**:
+
+  * Documents are loaded, chunked, and embedded into vectors
+  * Vectors are stored in a **vector store**
+  * A user prompt is embedded and compared to stored vectors
+  * Relevant chunks are retrieved
+  * The prompt and retrieved context are combined and sent to an LLM
+  * The LLM generates a **context-aware response**
+
+---
+
+### Embeddings and Vector Stores in LlamaIndex
+
+* LlamaIndex uses **`VectorStoreIndex`** to:
+
+  * Generate embeddings for text chunks (nodes)
+  * Store those embeddings in a vector store
+* **Simple use case**:
+
+  * Pass nodes directly to `VectorStoreIndex`
+  * Uses a default embedding model
+  * Stores embeddings **in-memory**
+* **Advanced use case**:
+
+  * Use a custom embedding model (e.g., from HuggingFace)
+  * Use persistent vector storage (e.g., ChromaDB)
+  * Define a storage context and embedding model
+  * Pass nodes, embedding model, and storage context to `VectorStoreIndex`
+
+---
+
+### Retrieval in LlamaIndex
+
+* Retrieval is handled through a **retriever** created from `VectorStoreIndex`
+* Steps:
+
+  1. Call `as_retriever()` on the index
+  2. Pass the user prompt to `retrieve()`
+* You can control how many results are returned using:
+
+  * **`similarity_top_k`**
+* Output:
+
+  * A ranked list of the most relevant nodes
+  * Most similar nodes appear first
+
+---
+
+### Prompt Augmentation and LLM Querying
+
+* LlamaIndex uses a **response synthesizer** to:
+
+  * Combine retrieved nodes with the user prompt
+  * Send the augmented prompt to the LLM
+  * Generate a final response
+* Key point:
+
+  * Prompt embedding, augmentation, and LLM calls happen **automatically in the background**
+  * Users do not need to manage these steps manually
+
+---
+
+### Query Engines in LlamaIndex
+
+* A **query engine** simplifies RAG even further by combining:
+
+  * Prompt embedding
+  * Retrieval
+  * Prompt augmentation
+  * LLM querying
+  * Response generation
+* Using a query engine:
+
+  * Call `query()` with a user prompt
+  * Receive a complete response
+* This greatly reduces boilerplate code when building RAG applications
+
+---
+
+### Customization Options
+
+* LlamaIndex query engines can be customized by:
+
+  * Changing the default LLM
+  * Defining a custom prompt template
+  * Using a custom retriever
+* These options allow fine-grained control over the RAG pipeline
+
+---
+
+### Key Takeaways
+
+* **VectorStoreIndex** handles embedding generation and storage
+* Retrievers fetch the most relevant document chunks
+* **Response synthesizers** combine augmentation and LLM querying
+* **Query engines** bundle all RAG steps into a single, easy-to-use interface
+* LlamaIndex provides flexible customization for production-ready RAG systems
