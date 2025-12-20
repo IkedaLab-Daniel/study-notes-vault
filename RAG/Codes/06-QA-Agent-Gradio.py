@@ -9,6 +9,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.chains import RetrievalQA
 from dotenv import load_dotenv
 import os
+from print_agent import print_agent
 
 import gradio as gr
 load_dotenv()
@@ -37,7 +38,9 @@ def get_llm():
 
 ## > Document loader
 def document_loader(file):
-    loader = PyPDFLoader(file.name)
+    # Handle both string paths and file objects (like from Gradio)
+    file_path = file.name if hasattr(file, 'name') else file
+    loader = PyPDFLoader(file_path)
     loaded_document = loader.load()
     return loaded_document
 
@@ -63,21 +66,21 @@ def watsonx_embedding():
         EmbedTextParamsMetaNames.TRUNCATE_INPUT_TOKENS: 3,
         EmbedTextParamsMetaNames.RETURN_OPTIONS: {"input_text": True},
     }
-    WatsonxEmbeddings(
+    embedding = WatsonxEmbeddings(
         model_id="ibm/slate-125m-english-rtrvr-v2",
         url= "https://jp-tok.ml.cloud.ibm.com",
         project_id= os.getenv("PROJECT_ID"),
         params=embed_params,
         apikey= os.getenv("API_KEY")
     )
-    return watsonx_embedding
+    return embedding
 
 ## > Define the retriver
 def retriever(file):
     document = document_loader(file)
     chunks = text_splitter(document)
     vectordb = vertor_database(chunks)
-    retriever = vectordb.as_restriever()
+    retriever = vectordb.as_retriever()
     return retriever
 
 # > QA Chain
@@ -88,9 +91,28 @@ def retriever_qa(file, query):
         llm=llm,
         chain_type="stuff",
         retriever=retriever_obj,
-        return_source_document=False
+        return_source_documents=False
     )
     response = qa.invoke(query)
-    return response
+    return response['result']
+
+# > CLI Usage
+#result = retriever_qa("ai-agents-cheat-sheet.pdf", "What is the text all about")
+# print_agent(result["result"])
+
+# > Gradio Interface
+rag_application = gr.Interface(
+    fn=retriever_qa,
+    allow_flagging="never",
+    inputs=[
+        gr.File(label="Upload PDF File", file_count="single", file_types=['.pdf'], type="filepath"),
+        gr.Textbox(label="Input query")
+    ],
+    outputs=gr.Textbox(label="Output"),
+    title="RAG Chatbot",
+    description="Upload a PDF document and ask any question"
+)
+
+rag_application.launch(server_name="0.0.0.0", server_port=7860)
 
 print("-- End --")
