@@ -434,3 +434,10 @@ This makes LlamaIndex a strong foundation for building reliable, production-read
 * **Response synthesizers** combine augmentation and LLM querying
 * **Query engines** bundle all RAG steps into a single, easy-to-use interface
 * LlamaIndex provides flexible customization for production-ready RAG systems
+
+## Summary: Build RAG Apps with LlamaIndex
+
+- LlamaIndex is a flexible framework for building LLM-powered applications that focuses on context augmentation through structured document ingestion, chunking, indexing, and retrieval.  
+- LlamaIndex offers built-in document loaders and customizable query engines, unlike LangChain, which emphasizes chaining steps in workflows. 
+- To design a conversational RAG app with LlamaIndex, ingest LinkedIn profile data, chunk it into nodes, embed and store vectors, and use a response synthesizer or query engine to generate personalized responses from user prompts. 
+- You can apply the RAG pipeline—loading, chunking, indexing, and querying—using LlamaIndex’s document, node, index, and query engine classes. 
