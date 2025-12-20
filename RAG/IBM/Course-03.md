@@ -72,3 +72,83 @@ By the end of the course, you’ll have:
 * A solid understanding of **vector databases and similarity search**
 * Practical experience using **Chroma DB** in RAG and recommendation systems
 * The ability to apply these skills to **real-world AI applications**, including building recommendation engines
+
+## **Introduction to Vector Databases**
+
+* Traditional databases organize data in tables and are limited when handling complex or high-dimensional data.
+* **Vector databases** are designed to store, organize, and retrieve complex data types efficiently by representing data as **vectors** in a **multi-dimensional space**.
+* They are widely used for:
+
+  * Data retrieval and mining
+  * Similarity searches
+  * Recommendations and suggestions
+  * Machine learning and AI pipelines
+
+---
+
+## **Why Vector Databases Are Important**
+
+* Handle complex data types such as:
+
+  * Social connections/likes
+  * Geospatial data
+  * Genomic data
+  * Images, sounds, text, and patterns
+* Reduce the need for extensive pre-processing compared to traditional databases
+* Enable **similarity search**, which finds related items based on proximity in high-dimensional vector space
+* Critical for industries such as:
+
+  * Biology and healthcare
+  * E-commerce
+  * Social media
+  * Traffic analysis
+  * Climate modeling
+
+---
+
+## **Key Features of Vector Databases**
+
+* Store data as **high-dimensional vectors** rather than tables
+* Use **mathematical representations** (arrays of numbers) to describe features of data
+* Support **high performance and scalability** through:
+
+  * Distributed computing
+  * Indexing techniques
+  * Parallel processing
+
+---
+
+## **Understanding Vectors**
+
+* A **vector** is a mathematical object defined by **size** and **direction**
+* In a vector database, each vector represents a **data point** with multiple **dimensions**
+* Each **dimension** corresponds to a feature or attribute of the data
+
+**Example: Representing Books as Vectors**
+
+| Book Type       | Pages | Year | Rating | Vector Representation |
+| --------------- | ----- | ---- | ------ | --------------------- |
+| Fiction         | 350   | 2003 | 4.5    | [1, 350, 2003, 4.5]   |
+| Non-Fiction     | 250   | 2015 | 4.8    | [2, 250, 2015, 4.8]   |
+| Science Fiction | 400   | 1990 | 4.2    | [3, 400, 1990, 4.2]   |
+
+* Each number in the vector corresponds to a specific feature (genre, page count, publication year, rating).
+* Example search: Find **science fiction books** with ~200 pages and ratings 4.7–5.0. Instead of scanning all books, vectors allow a **quick similarity search** to identify relevant items efficiently.
+
+---
+
+## **Applications of Vector Databases**
+
+* Recommendation systems (e.g., products, movies, or books)
+* Machine learning workflows
+* Data analysis, clustering, and classification
+* High-dimensional searches in domains like healthcare, genomics, and geospatial analysis
+
+---
+
+### **Takeaways**
+
+1. Vector databases simplify storing and retrieving **complex, high-dimensional data**.
+2. They use **vectors** (arrays of numbers) to represent each data point in multi-dimensional space.
+3. Enable **similarity searches**, improving retrieval efficiency for recommendations or AI-powered queries.
+4. Essential for **machine learning pipelines**, providing scalability, speed, and accuracy.
