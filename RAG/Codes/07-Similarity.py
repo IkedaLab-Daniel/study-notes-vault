@@ -53,6 +53,7 @@ for i in range(embeddings.shape[0]):
 
 print(f"Distance of Vector 1, Vector 2: {l2_dist_manual_improved[0,1]}")
 print(f"Distance of Vector 2, Vector 1: {l2_dist_manual_improved[1,0]}")
+# ? Measure distance between vectors -> Lower = Similar/Closer to each other
 
 # > Calculate using scipy
 l2_dist_scipy = scipy.spatial.distance.cdist(embeddings, embeddings, "euclidean")
@@ -66,4 +67,28 @@ def dot_product_fn(vector1, vector2):
 print(f"\nDot Product of vector 1 and vector 2 is: {dot_product_fn(embeddings[0], embeddings[1])}")
 print(f"\nDot Product of vector 2 and vector 3 is: {dot_product_fn(embeddings[1], embeddings[2])}")
 
+# > Calculate dot product between all vectors
+dot_product_manual = np.empty([4,4])
+for i in range(embeddings.shape[0]):
+    for j in range(embeddings.shape[0]):
+        dot_product_manual[i,j] = dot_product_fn(embeddings[i], embeddings[j])
+
+print(f"Dot Product Manual: \n {dot_product_manual}")
+# ? Measures Similarity -> Higher = More Similar
+
+# > Matrix multiplication operator
+dot_product_operator = embeddings @ embeddings.T
+print(dot_product_manual)
+print(np.allclose(dot_product_manual, dot_product_operator, atol=1e-05))
+
+# ? Equivalent to `np.matmul()` if both arrays are 2-D:
+print(np.matmul(embeddings,embeddings.T))
+
+# > Calculate dot product distance
+"""
+    > The dot product between two vectors provides a similarity score. 
+    > If, on the other hand, we would like a distance, we can simply take the negative of the dot product:
+"""
+dot_product_distance = -dot_product_manual
+print(dot_product_distance)
 print("-- End --")
