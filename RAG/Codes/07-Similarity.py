@@ -27,10 +27,31 @@ def euclidean_distance_fn(vector1, vector2):
     squared_sum = sum((x - y) ** 2 for x, y in zip(vector1, vector2))
     return math.sqrt(squared_sum)
 
-print(f"\nEuclidean Distance for \n >> {documents[0]}\n >> {documents[1]}")
-print(euclidean_distance_fn(embeddings[0], embeddings[1]))
+# print(f"\nEuclidean Distance for \n >> {documents[0]}\n >> {documents[1]}")
+# print(euclidean_distance_fn(embeddings[0], embeddings[1]))
 
-print(f"\nEuclidean Distance for \n >> {documents[1]}\n >> {documents[2]}")
-print(euclidean_distance_fn(embeddings[1], embeddings[2]))
+# print(f"\nEuclidean Distance for \n >> {documents[1]}\n >> {documents[2]}")
+# print(euclidean_distance_fn(embeddings[1], embeddings[2]))
+
+# > Compare all
+l2_dist_manual = np.zeros([4,4])
+for i in range(embeddings.shape[0]):
+    for j in range(embeddings.shape[0]):
+        l2_dist_manual[i,j] = euclidean_distance_fn(embeddings[i], embeddings[j])
+
+print(f"Distance of Vector 1, Vector 2: {l2_dist_manual[0,1]}")
+print(f"Distance of Vector 2, Vector 1: {l2_dist_manual[1,0]}")
+
+# > Compare all - improved
+l2_dist_manual_improved = np.zeros([4,4])
+for i in range(embeddings.shape[0]):
+    for j in range(embeddings.shape[0]):
+        if j > i:
+            l2_dist_manual_improved[i,j] = euclidean_distance_fn(embeddings[i], embeddings[j])
+        elif i > j:
+            l2_dist_manual_improved[i,j] = l2_dist_manual_improved[j,i]
+
+print(f"Distance of Vector 1, Vector 2: {l2_dist_manual_improved[0,1]}")
+print(f"Distance of Vector 2, Vector 1: {l2_dist_manual_improved[1,0]}")
 
 print("-- End --")
