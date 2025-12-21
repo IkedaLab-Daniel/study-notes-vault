@@ -91,4 +91,23 @@ print(np.matmul(embeddings,embeddings.T))
 """
 dot_product_distance = -dot_product_manual
 print(dot_product_distance)
+
+# > Cosine Similarity and Distance
+# > Manual Implementation
+    # > Calculate L2 norm
+l2_norms = np.sqrt(np.sum(embeddings**2, axis=1))
+print("\n", l2_norms)
+
+    # > L2 norms reshape
+l2_norms_reshaped = l2_norms.reshape(-1, 1)
+print("\n", l2_norms_reshaped)
+
+# > Normalize embedding vectors
+normalized_embeddings_manual = embeddings/l2_norms_reshaped
+print("\n", normalized_embeddings_manual)
+
+# > Verify that vectors are normalized
+print("\nVerify:")
+print(np.sqrt(np.sum(normalized_embeddings_manual**2, axis=1)))
+
 print("-- End --")
