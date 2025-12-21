@@ -110,4 +110,27 @@ print("\n", normalized_embeddings_manual)
 print("\nVerify:")
 print(np.sqrt(np.sum(normalized_embeddings_manual**2, axis=1)))
 
+# > Normalize embedding using PyTorch
+normalized_embedding_torch = torch.nn.functional.normalize(
+    torch.from_numpy(embeddings)
+).numpy()
+
+print("\n", normalized_embedding_torch)
+# ? Verifiy
+print(np.allclose(normalized_embeddings_manual, normalized_embedding_torch))
+
+# > Calculate cosine similary manually
+print("\nCosine similary of Vector 1 and 2:", dot_product_fn(normalized_embeddings_manual[0], normalized_embeddings_manual[1]))
+
+# > Calculate All
+cosine_similarity_manual = np.empty([4,4])
+for i in range(normalized_embeddings_manual.shape[0]):
+    for j in range(normalized_embeddings_manual.shape[0]):
+        cosine_similarity_manual[i,j] = dot_product_fn(
+            normalized_embeddings_manual[i], 
+            normalized_embeddings_manual[j]
+        )
+
+print("\n", cosine_similarity_manual)
+
 print("-- End --")
