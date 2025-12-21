@@ -152,3 +152,129 @@ By the end of the course, you’ll have:
 2. They use **vectors** (arrays of numbers) to represent each data point in multi-dimensional space.
 3. Enable **similarity searches**, improving retrieval efficiency for recommendations or AI-powered queries.
 4. Essential for **machine learning pipelines**, providing scalability, speed, and accuracy.
+
+## **Types of Vector Databases**
+
+### **Overview**
+
+Vector databases can be categorized based on how and where vectors are stored, how they scale, and what types of queries they support. Each type is suited for different use cases such as real-time recommendations, large-scale similarity search, graph analysis, or time-series analytics.
+
+---
+
+### **1. In-Memory Vector Databases**
+
+* Store vectors directly in memory for **fast read and write operations**
+* Ideal for **real-time analytics** and **recommendation systems**
+* Limited by available memory
+
+**Examples:**
+
+* RedisAI
+* TorchServe
+
+---
+
+### **2. Disk-Based Vector Databases**
+
+* Store vectors on disk, suitable for **large datasets**
+* Use indexing and compression to improve performance
+* Trade slightly higher latency for scalability
+
+**Examples:**
+
+* Annoy (Approximate Nearest Neighbors Oh Yeah)
+* Milvus
+* ScaNN
+
+---
+
+### **3. Distributed Vector Databases**
+
+* Distribute vector data across multiple nodes
+* Provide **horizontal scalability** and **fault tolerance**
+* Designed for massive datasets and high-throughput workloads
+
+**Examples:**
+
+* FAISS (Facebook AI Similarity Search)
+* Elasticsearch (with vector plugin)
+* Dask-ML
+
+---
+
+### **4. Graph-Based Vector Databases**
+
+* Represent data as graphs with nodes and edges
+* Excellent for **relationship-heavy data** and **graph analytics**
+
+**Examples:**
+
+* Neo4j
+* Amazon Neptune
+* TigerGraph
+
+---
+
+### **5. Time-Series Vector Databases**
+
+* Manage vector data collected over time
+* Useful for **trend analysis**, **forecasting**, and **anomaly detection**
+
+**Examples:**
+
+* InfluxDB
+* TimescaleDB
+* Prometheus
+
+---
+
+## **Dedicated Vector Databases vs. Databases That Support Vector Search**
+
+### **Dedicated Vector Databases**
+
+* Built specifically for vector storage and operations
+* Optimized for **similarity search**, **nearest neighbor search**, and **distance calculations**
+* Use specialized data structures such as:
+
+  * Inverted indexes
+  * Product quantization
+  * Locality-sensitive hashing (LSH)
+* Highly scalable and customizable for performance
+
+**Popular Vendors:**
+
+* FAISS
+* Annoy
+* Milvus
+
+---
+
+### **Databases That Support Vector Search**
+
+* Traditional databases or frameworks with vector extensions
+* Store vectors as:
+
+  * BLOBs
+  * Arrays
+  * User-defined types (UDTs)
+* Often rely on plugins or external libraries
+* More flexible but typically **less optimized** than dedicated vector databases
+
+**Examples:**
+
+* SingleStore (integrates with IBM watsonx.ai)
+* Elasticsearch
+* PostgreSQL (PostGIS)
+* MySQL
+* RedisAI
+* MongoDB
+* Apache Cassandra
+
+---
+
+## **Key Takeaways**
+
+* Vector databases can be in-memory, disk-based, distributed, graph-based, or time-series based
+* Dedicated vector databases prioritize speed, scalability, and vector-specific operations
+* Traditional databases with vector support offer flexibility but may sacrifice performance
+* Choosing the right type depends on data size, latency needs, scalability, and application use case
