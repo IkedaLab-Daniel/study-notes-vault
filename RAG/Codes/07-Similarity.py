@@ -54,4 +54,16 @@ for i in range(embeddings.shape[0]):
 print(f"Distance of Vector 1, Vector 2: {l2_dist_manual_improved[0,1]}")
 print(f"Distance of Vector 2, Vector 1: {l2_dist_manual_improved[1,0]}")
 
+# > Calculate using scipy
+l2_dist_scipy = scipy.spatial.distance.cdist(embeddings, embeddings, "euclidean")
+print(l2_dist_scipy)
+print(np.allclose(l2_dist_manual, l2_dist_scipy))
+
+# > Manual implementation of dot product calculation
+def dot_product_fn(vector1, vector2):
+    return sum(x * y for x,y in zip(vector1, vector2))
+
+print(f"\nDot Product of vector 1 and vector 2 is: {dot_product_fn(embeddings[0], embeddings[1])}")
+print(f"\nDot Product of vector 2 and vector 3 is: {dot_product_fn(embeddings[1], embeddings[2])}")
+
 print("-- End --")
