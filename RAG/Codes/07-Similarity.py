@@ -133,4 +133,33 @@ for i in range(normalized_embeddings_manual.shape[0]):
 
 print("\n", cosine_similarity_manual)
 
+# > Calculate cosng similarity using matrix calculation
+cosine_similarity_operator = normalized_embeddings_manual @ normalized_embeddings_manual.T
+print("\n", cosine_similarity_operator)
+
+# > Calculate cosine distance
+print("\n")
+print(1 - cosine_similarity_manual)
+
+# > Similarity Search Using a Query
+# ? Embed the query
+query_embedding = model.encode(
+    ["Who is responsible for a coding project and fixing others' mistakes?"]
+)
+
+# ? Normalize the query embedding
+normalized_query_embedding = torch.nn.functional.normalize(
+    torch.from_numpy(query_embedding)
+).numpy()
+
+# ? Third, calculate the cosine similarity between the documents and the query by using the dot product:
+cosine_similarity_q3 = normalized_embeddings_manual @ normalized_query_embedding.T
+
+# ? Fourth, find the position of the vector with the highest cosine similarity:
+highest_cossim_position = cosine_similarity_q3.argmax()
+
+# ? Fifth, find the document in that position in the `documents` array:
+print("\n")
+print(documents[highest_cossim_position])
+
 print("-- End --")
