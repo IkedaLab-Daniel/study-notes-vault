@@ -16,7 +16,18 @@ collection_name = "my_grocery_collection"
 # > Define main functiuon to interact with the Chroma Database
 def main():
     try:
-        pass
+        collection = client.create_collection(
+            name=collection_name,
+            metadata={"description": "A collection for storing grocery data"},
+            configuration={
+                "hnsw": {"space": "cosine"},
+                "embedding_function": ef
+            }
+        )
+        print(f"Collection created:", collection.name)
     except Exception as error:
         print(f"Error: {error}")
-print(" --- End --- ")
+
+if __name__ == "__main__":
+    main()
+    print(" --- End --- ")
