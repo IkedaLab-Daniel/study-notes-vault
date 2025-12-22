@@ -1,6 +1,6 @@
 import chromadb
 from chromadb.utils import embedding_functions
-from utils import print_error, print_success, employees
+from utils import print_error, print_success, employees, print_agent
 
 ef = embedding_functions.SentenceTransformerEmbeddingFunction(
     model_name="all-MiniLM-L6-v2"
@@ -56,26 +56,54 @@ def generate_embeddings_add_text(collection):
 def perform_advanced_search(collection, all_items):
     try:
         print("=== Similarity Search Example ===")
-        
-        # > Example 1: Search for Python Developers
-        print("\n1. Searching for Python developers:")
-        query_text = "Python developer with web development experience"
+        custom(collection)
+
+    except Exception as error:
+        print_error(error)
+
+# ? Custom Query 
+def custom(collection):
+    # > Custom Query
+    while True:
+        query_text = input("Enter Query (type 'exit' to quit)\n   >> ")
+
+        if query_text == "exit":
+            break
+
         results = collection.query(
             query_texts=[query_text],
             n_results=3
         )
 
         print(f"Query: {query_text}")
+        print_agent()
         for i, (doc_id, document, distance) in enumerate(zip(
             results['ids'][0], results['documents'][0], results['distances'][0]
         )):
             metadata = results['metadatas'][0][i]
-            print(f"  {i+1}. {metadata['name']} ({doc_id}) - Distance: {distance:.4f}")
+            print(f"\033[92m  {i+1}. {metadata['name']} ({doc_id}) - Distance: {distance:.4f}")
             print(f"     Role: {metadata['role']}, Department: {metadata['department']}")
             print(f"     Document: {document[:100]}...")
+            print("------------------------------------------------\033[0m")
 
-    except Exception as error:
-        print_error(error)
+# ? Sample Query 1
+def example_1(collection):
+    # > Example 1: Search for Python Developers
+    print("\n1. Searching for Python developers:")
+    query_text = "Python developer with web development experience"
+    results = collection.query(
+        query_texts=[query_text],
+        n_results=3
+    )
+
+    print(f"Query: {query_text}")
+    for i, (doc_id, document, distance) in enumerate(zip(
+        results['ids'][0], results['documents'][0], results['distances'][0]
+    )):
+        metadata = results['metadatas'][0][i]
+        print(f"  {i+1}. {metadata['name']} ({doc_id}) - Distance: {distance:.4f}")
+        print(f"     Role: {metadata['role']}, Department: {metadata['department']}")
+        print(f"     Document: {document[:100]}...")
 
 def main():
     try:
