@@ -50,10 +50,38 @@ def generate_embeddings_add_text(collection):
     print_success("Data retrieved")
     print(f"Number of documents: {len(all_items['documents'])}")
 
+    return all_items
+
+# > Task 4: Perform Similarity Search, Metadata Filtering, and Full-Text Search
+def perform_advanced_search(collection, all_items):
+    try:
+        print("=== Similarity Search Example ===")
+        
+        # > Example 1: Search for Python Developers
+        print("\n1. Searching for Python developers:")
+        query_text = "Python developer with web development experience"
+        results = collection.query(
+            query_texts=[query_text],
+            n_results=3
+        )
+
+        print(f"Query: {query_text}")
+        for i, (doc_id, document, distance) in enumerate(zip(
+            results['ids'][0], results['documents'][0], results['distances'][0]
+        )):
+            metadata = results['metadatas'][0][i]
+            print(f"  {i+1}. {metadata['name']} ({doc_id}) - Distance: {distance:.4f}")
+            print(f"     Role: {metadata['role']}, Department: {metadata['department']}")
+            print(f"     Document: {document[:100]}...")
+
+    except Exception as error:
+        print_error(error)
+
 def main():
     try:
         collection = create_a_collection()
-        generate_embeddings_add_text(collection)
+        all_items = generate_embeddings_add_text(collection)
+        perform_advanced_search(collection, all_items)
         
     except Exception as error:
         print_error(error)
