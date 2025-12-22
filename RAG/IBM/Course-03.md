@@ -580,3 +580,24 @@ Chroma DB works in several phases:
 - That Chroma DB uses an advanced algorithm for approximate nearest neighbor search, which efficiently finds the approximately closest chunks to a query within a collection
 - That Chroma DB is suitable for a wide range of applications, including recommender systems, document search, image retrieval, and AI-based chatbots
 - How to perform similarity search using Chroma DB
+
+> # Module 2
+
+## Essential Database Operations in Chroma DB
+
+* Chroma DB collections organize vector data similarly to tables in relational databases and form the foundation of vector-based applications.
+* To create a collection, you define an embedding model (commonly from SentenceTransformers), initialize a Chroma client, and use `create_collection()`. Metadata can be attached as key-value pairs to describe the collection’s purpose.
+* Existing collections can be accessed using `get_collection()`, allowing reuse and verification through stored metadata.
+* Collections can be modified using `modify()` to change names or metadata, but embedding models and distance metrics cannot be altered. Changing these requires cloning the collection, which can be computationally expensive.
+* Documents are added using the `add()` method, requiring document text, unique IDs, and optional metadata. Chroma DB automatically generates and stores embeddings.
+* Data retrieval is done using `get()`, which returns documents, IDs, and metadata as a Python dictionary. Embeddings are stored but not shown unless explicitly requested.
+* Individual documents can be retrieved by specifying their IDs.
+* Existing documents can be updated using `update()`, allowing changes to text and metadata. Chroma DB automatically re-embeds updated documents in the background.
+* Documents can be deleted by providing IDs, applying metadata-based filters, or combining both approaches.
+* Chroma DB uses the Hierarchical Navigable Small World (HNSW) algorithm for approximate nearest neighbor search.
+* The distance metric used by HNSW is defined at collection creation using the `space` parameter. Supported options include:
+
+  * `l2` (default): squared Euclidean distance
+  * `cosine`: cosine distance
+  * `ip`: inner product (dot product)
+* Core operations—create, modify, add, get, update, and delete—enable efficient management of vector data and are essential for building RAG and other AI-driven applications.
