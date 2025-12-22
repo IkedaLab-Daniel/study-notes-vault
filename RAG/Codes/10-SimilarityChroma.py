@@ -56,6 +56,8 @@ def generate_embeddings_add_text(collection):
 def perform_advanced_search(collection, all_items):
     try:
         print("=== Similarity Search Example ===")
+        example_1(collection)
+        example_2(collection)
         custom(collection)
 
     except Exception as error:
@@ -104,6 +106,25 @@ def example_1(collection):
         print(f"  {i+1}. {metadata['name']} ({doc_id}) - Distance: {distance:.4f}")
         print(f"     Role: {metadata['role']}, Department: {metadata['department']}")
         print(f"     Document: {document[:100]}...")
+
+# ? Example 2: Search for leadership roles
+def example_2(collection):
+    print_agent()
+    print("\n2. Searching for leadership and management roles:")
+    query_text = "team leader manager with experience"
+    results = collection.query(
+        query_texts=[query_text],
+        n_results=3
+    )
+    print(f"Query: '{query_text}'")
+    for i, (doc_id, document, distance) in enumerate(zip(
+        results['ids'][0], results['documents'][0], results['distances'][0]
+    )):
+        metadata = results['metadatas'][0][i]
+        print(f"  {i+1}. {metadata['name']} ({doc_id}) - Distance: {distance:.4f}")
+        print(f"     Role: {metadata['role']}, Experience: {metadata['experience']} years")
+        print(f"     Document: {document[:100]}...")
+
 
 def main():
     try:
