@@ -13,6 +13,23 @@ client = chromadb.Client()
 # > Define the name for the collection to be created or retrieved
 collection_name = "my_grocery_collection"
 
+# > Function to perform similarity search in the collection
+def perform_similarity_search(collection, all_items):
+    try:
+        query_term = input("Enter query term: \n >>> ")
+
+        # > Perform a query search for the most similar documents to the 'query_term'
+        results = collection.query(
+            query_text=[query_term],
+            n_result=3 # ? Top 3 result
+        )
+
+        print(f"\nQuery result for '{query_term}'")
+        print(results)
+
+    except Exception as error:
+        print("Error:", error)
+
 # > Define main functiuon to interact with the Chroma Database
 def main():
     try:
