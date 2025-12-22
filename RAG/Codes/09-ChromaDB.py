@@ -20,15 +20,33 @@ def perform_similarity_search(collection, all_items):
 
         # > Perform a query search for the most similar documents to the 'query_term'
         results = collection.query(
-            query_text=[query_term],
-            n_result=3 # ? Top 3 result
+            query_texts=[query_term],
+            n_results=3 # ? Top 3 result
         )
 
-        print(f"\nQuery result for '{query_term}'")
-        print(results)
+        if not results or not results['ids'] or len(results['ids'][0]) == 0:
+            print(f"No document found similar to '{query_term}'")
+            return
+
+        print(f"Top 3 similar documents to '{query_term}'")
+        # > Access the nested arrays in 'results["id"]' and 'results["distance"]'
+        for i in range(min(3, len(results['ids'][0]))):
+            doc_id = results['ids'][0][i] # ? Get ID from 'ids' array
+            score = results['distances'][0][i] # ? Get score from 'distance' array
+            # > Retrive text data from the results
+            text = results['documents'][0][i]
+
+            if not text:
+                    print(f'\n - ID: {doc_id}, Text: "Text not available", Score: {score:.4f}')
+            else:
+                print(f'\n - ID: {doc_id}, Text: "{text}", Score: {score:.4f}')
 
     except Exception as error:
-        print("Error:", error)
+        print(f"""\033[91m
+! ------------------------------------------------------------ !
+    Error: {error}
+! ------------------------------------------------------------ !    
+\033[0m""")
 
 # > Define main functiuon to interact with the Chroma Database
 def main():
@@ -81,6 +99,8 @@ def main():
         # > This will print out all the documents, IDs, and metadata stored in the collection
         # print("Collection contents:", all_items)
         # print(f"Number of documents: {len(all_items['documents'])}")
+
+        perform_similarity_search(collection, all_items)
 
     except Exception as error:
         print(f"Error: {error}")
