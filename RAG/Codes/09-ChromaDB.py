@@ -16,11 +16,12 @@ collection_name = "my_grocery_collection"
 # > Function to perform similarity search in the collection
 def perform_similarity_search(collection, all_items):
     try:
-        query_term = input("Enter query term: \n >>> ")
+        # ! query_term = input("Enter query term: \n >>> ")
+        query_term = ["red", "fresh"]
 
         # > Perform a query search for the most similar documents to the 'query_term'
         results = collection.query(
-            query_texts=[query_term],
+            query_texts=query_term,
             n_results=3 # ? Top 3 result
         )
 
@@ -28,18 +29,18 @@ def perform_similarity_search(collection, all_items):
             print(f"No document found similar to '{query_term}'")
             return
 
-        print(f"Top 3 similar documents to '{query_term}'")
-        # > Access the nested arrays in 'results["id"]' and 'results["distance"]'
-        for i in range(min(3, len(results['ids'][0]))):
-            doc_id = results['ids'][0][i] # ? Get ID from 'ids' array
-            score = results['distances'][0][i] # ? Get score from 'distance' array
-            # > Retrive text data from the results
-            text = results['documents'][0][i]
-
-            if not text:
-                    print(f'\n - ID: {doc_id}, Text: "Text not available", Score: {score:.4f}')
-            else:
-                print(f'\n - ID: {doc_id}, Text: "{text}", Score: {score:.4f}')
+        for q in range(len(query_term)):
+            print(f'Top 3 similar documents to "{query_term[q]}":')
+            # > Access the nested arrays in 'results["ids"]' and 'results["distances"]'
+            for i in range(min(3, len(results['ids'][q]))):
+                doc_id = results['ids'][q][i]  # > Get ID from 'ids' array
+                score = results['distances'][q][i]  # > Get score from 'distances' array
+                # > Retrieve text data from the results
+                text = results['documents'][q][i]
+                if not text:
+                    print(f' - ID: {doc_id}, Text: "Text not available", Score: {score:.4f}')
+                else:
+                    print(f' - ID: {doc_id}, Text: "{text}", Score: {score:.4f}')
 
     except Exception as error:
         print(f"""\033[91m
