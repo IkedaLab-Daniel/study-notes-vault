@@ -56,9 +56,9 @@ def generate_embeddings_add_text(collection):
 def perform_advanced_search(collection, all_items):
     try:
         print("=== Similarity Search Example ===")
-        example_1(collection)
+        # example_1(collection)
         example_2(collection)
-        custom(collection)
+        # custom(collection)
 
     except Exception as error:
         print_error(error)
@@ -112,19 +112,37 @@ def example_2(collection):
     print_agent()
     print("\n2. Searching for leadership and management roles:")
     query_text = "team leader manager with experience"
+    # query_text = "ice" # ? For testing
     results = collection.query(
         query_texts=[query_text],
         n_results=3
     )
-    print(f"Query: '{query_text}'")
-    for i, (doc_id, document, distance) in enumerate(zip(
-        results['ids'][0], results['documents'][0], results['distances'][0]
-    )):
-        metadata = results['metadatas'][0][i]
-        print(f"  {i+1}. {metadata['name']} ({doc_id}) - Distance: {distance:.4f}")
-        print(f"     Role: {metadata['role']}, Experience: {metadata['experience']} years")
-        print(f"     Document: {document[:100]}...")
 
+    output_result(results, query_text)
+
+# > Task 5: Handle the Results and Display Highly Similar Text
+def output_result(results, query_text):
+    # > Check if the results are empty or undefined
+    if not results or not results['ids'] or len(results['ids'][0]) == 0:
+        # > Log a message if no similar documents are found for the query term
+        print(f'No documents found similar to "{query_text}"')
+        return
+
+    # > Log the header for the top 3 similar documents based on the query term
+    print(f'Top 3 similar documents to "{query_text}":')
+    # > Loop through the top 3 results and log the document details
+    for i in range(min(3, len(results['ids'][0]))):
+        # ? Extract the document ID and similarity score from the results
+        doc_id = results['ids'][0][i]
+        score = results['distances'][0][i]
+        # ? Retrieve the document text corresponding to the current ID from the results
+        text = results['documents'][0][i]
+        # ? Check if the text is available; if not, log 'Text not available'
+        if not text:
+            print(f' - ID: {doc_id}, Text: "Text not available", Score: {score:.4f}')
+        else:
+            print(f' - ID: {doc_id}, Text: "{text}", Score: {score:.4f}')
+    
 
 def main():
     try:
