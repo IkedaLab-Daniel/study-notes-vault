@@ -79,4 +79,77 @@ def create_similarity_search_collection(collection_name: str, collection_metadat
         }
     )
 
+# > Data population function
+def populate_similarity_collection(collection, food_items: List[Dict]):
+    """Populate collection with food data and generate embeddings"""
+
+    documents = []
+    metadatas = []
+    ids = []
+
+    # > Create unique IDs to avoid duplicates
+    used_ids = set()
+
+    for i, food in enumerate(food_items):
+        # > Create comprehensive text for embedding using rich JSON structure
+        text = f"Name: {food['food_name']}. "
+        text += f"Description: {food.get('food_description', '')}. "
+        text += f"Ingredients: {', '.join(food.get('food_ingredients', []))}. "
+        text += f"Cuisine: {food.get('cuisine_type', 'Unknown')}. "
+        text += f"Cooking method: {food.get('cooking_method', '')}. "
+
+        # > Add taste profile from food_feature
+        taste_profile = food.get('taste_profile', '')
+        if taste_profile:
+            text += f"Taste and features: {taste_profile}."
+
+        # > Add health benefits if available
+        health_benefits = food.get('food_health_benefits', '')
+        if health_benefits:
+            text += f"Health benefits: {health_benefits}. "
+
+        # > Add nutritional information
+        if 'food_nutritional_factors' in food:
+            nutrition = food['food_nutritional_factors']
+            if isinstance(nutrition, dict):
+                nutrition_text = ', '.join([f"{k}: {v}" for k, v in nutrition.items()])
+                text += f"Nutrition: {nutrition_text}."
+        
+        # > Generate unique ID to avoid duplicates
+        base_id = str(food.get('food_id', i))
+        unique_id = base_id
+        counter = 1
+        while unique_id in used_ids:
+            unique_id = f"{base_id}_{counter}"
+            counter += 1
+        used_ids.add(unique_id)
+        
+        documents.append(text)
+        ids.append(unique_id)
+        metadatas.append({
+            "name": food["food_name"],
+            "cuisine_type": food.get("cuisine_type", "Unknown"),
+            "ingredients": ", ".join(food.get("food_ingredients", [])),
+            "calories": food.get("food_calories_per_serving", 0),
+            "description": food.get("food_description", ""),
+            "cooking_method": food.get("cooking_method", ""),
+            "health_benefits": food.get("food_health_benefits", ""),
+            "taste_profile": food.get("taste_profile", "")
+        })
+
+    # > Add all data to collection
+    collection.add(
+        documents=documents,
+        metadatas=metadatas,
+        ids=ids
+    )
+
+    print(f"Added {len(food_items)} food items to collection")
+
+# ! Test
+collection = create_similarity_search_collection("test")
+food_items = load_food_data("FoodDataSet.json")
+populate_similarity_collection(collection, food_items)
+
+
 print(" --- End --- ")
