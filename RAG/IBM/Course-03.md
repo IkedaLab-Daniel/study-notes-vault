@@ -601,3 +601,44 @@ Chroma DB works in several phases:
   * `cosine`: cosine distance
   * `ip`: inner product (dot product)
 * Core operations—create, modify, add, get, update, and delete—enable efficient management of vector data and are essential for building RAG and other AI-driven applications.
+
+## How Vector Databases Power RAG
+
+* Retrieval Augmented Generation (RAG) enhances large language models by retrieving relevant external information and injecting it into prompts, reducing hallucinations and overcoming limited context windows and frozen knowledge.
+* RAG solves key LLM limitations by grounding responses in up-to-date, relevant data retrieved at query time.
+* A typical RAG pipeline consists of the following steps:
+
+  * Collect and optionally chunk source documents
+  * Generate embeddings for documents or chunks
+  * Store embeddings and source data in a vector database
+  * Receive a user query
+  * Embed the user query
+  * Retrieve the most relevant chunks via similarity search
+  * Combine retrieved content with the original query to form an augmented prompt
+  * Send the augmented prompt to the LLM for a context-aware response
+* Vector databases are the backbone of RAG pipelines because they efficiently:
+
+  * Generate or manage embeddings
+  * Store high-dimensional vectors
+  * Perform fast and scalable similarity search
+  * Supply relevant content for prompt augmentation
+* Some steps (like embedding) can be done externally, but vector databases often simplify and unify these processes.
+* Using vector databases in RAG provides key benefits:
+
+  * Prevents critical errors such as mismatched embedding models or incorrect document–embedding mapping
+  * Simplifies development by reducing custom logic and system complexity
+  * Delivers high performance through optimized indexing and approximate nearest neighbor search
+* Common RAG pitfalls include:
+
+  * Using different embedding models for documents and queries
+  * Poor chunking strategies (chunks too large or too small)
+  * Forgetting to re-embed data after changing embeddings or distance metrics
+  * Assuming retrieved results are optimal without testing and tuning
+* Some RAG tasks typically occur outside the vector database:
+
+  * Document chunking
+  * Advanced retrieval logic (filtering, re-ranking)
+  * Prompt augmentation
+  * LLM integration
+* RAG frameworks like LangChain and LlamaIndex wrap around vector databases to manage the full pipeline, connecting document preparation, retrieval, and generation into a cohesive system.
+* Vector databases are essential to making RAG effective, scalable, and reliable, while frameworks help orchestrate the complete application workflow.
