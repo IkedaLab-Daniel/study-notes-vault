@@ -55,5 +55,28 @@ def load_food_data(file_path: str) -> List[Dict]:
         print("\033[911mError:", error)
         return []
 
+# > Collection Setup Function
+def create_similarity_search_collection(collection_name: str, collection_metadata: dict = None):
+    """"Create ChromaDB collection with sentence transformer embeddings"""
+    try:
+        # > Try to delete existing collection to start fresh
+        result = client.delete_collection(collection_name)
+    except Exception as error:
+        pass
+
+    # > Create embedding function
+    sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(
+        model_name="all-MiniLM-L6-v2"
+    )
+
+    # > Create new collection
+    return client.create_collection(
+        name=collection_name,
+        metadata=collection_metadata,
+        configuration={
+            "hnws": {"space": "cosine"},
+            "embedding_function": sentence_transformer_ef
+        }
+    )
 
 print(" --- End --- ")
