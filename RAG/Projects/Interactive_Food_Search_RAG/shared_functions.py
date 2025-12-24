@@ -222,8 +222,7 @@ def test():
        - Calories: {item['food_calories_per_serving']}
        - Simalarity Score: {item['similarity_score']}
 -------------------------------------------------------""")
-        
-test()
+    
 
 
-print(" --- End --- ")
+print(" --- End --- ") 
