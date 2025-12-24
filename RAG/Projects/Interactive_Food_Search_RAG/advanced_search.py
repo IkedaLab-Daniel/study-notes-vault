@@ -234,5 +234,29 @@ def run_search_demonstrations(collection):
         
         input("\n⏸️  Press Enter to continue to next demonstration...")
 
+def display_search_results(results, title, show_details=True):
+    """Display search results in a formatted way"""
+    print(f"\n📋 {title}")
+    print("=" * 50)
+    
+    if not results:
+        print("❌ No matching results found")
+        print("💡 Try adjusting your search terms or filters")
+        return
+    
+    for i, result in enumerate(results, 1):
+        score_percentage = result['similarity_score'] * 100
+        
+        if show_details:
+            print(f"\n{i}. 🍽️  {result['food_name']}")
+            print(f"   📊 Similarity Score: {score_percentage:.1f}%")
+            print(f"   🏷️  Cuisine: {result['cuisine_type']}")
+            print(f"   🔥 Calories: {result['food_calories_per_serving']}")
+            print(f"   📝 Description: {result['food_description']}")
+        else:
+            print(f"   {i}. {result['food_name']} ({score_percentage:.1f}% match)")
+    
+    print("=" * 50)
+
 if __name__ == "__main__":
     main()
