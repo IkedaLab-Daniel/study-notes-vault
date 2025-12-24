@@ -29,5 +29,23 @@ def main():
     except Exception as error:
         print("Error:", error)
 
+def interactive_food_chatbot(collection):
+    """Interactive CLI chatbot for food recommendations"""
+    print("\n" + "="*50)
+    print("🤖 INTERACTIVE FOOD SEARCH CHATBOT")
+    print("="*50)
+    print("Commands:")
+    print("  • Type any food name or description to search")
+    print("  • 'help' - Show available commands")
+    print("  • 'quit' or 'exit' - Exit the system")
+    print("  • Ctrl+C - Emergency exit")
+    print("-" * 50)
+
+    while True:
+        try:
+            pass
+        except Exception as ice:
+            print("Error:", ice)
+
 if __name__ == "__main__":
     main()
