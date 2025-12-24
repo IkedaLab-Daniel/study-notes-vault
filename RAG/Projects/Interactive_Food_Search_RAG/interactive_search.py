@@ -23,7 +23,7 @@ def main():
         populate_similarity_collection(collection, food_items)
 
         # > Start interactive chatbot
-        # interactive_food_chatbot(collection) # TODO
+        interactive_food_chatbot(collection)
         print(" --- ")
 
     except Exception as error:
