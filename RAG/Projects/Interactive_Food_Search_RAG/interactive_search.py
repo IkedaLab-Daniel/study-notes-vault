@@ -43,7 +43,28 @@ def interactive_food_chatbot(collection):
 
     while True:
         try:
-            pass
+            # > Get user input
+            user_input = input("\n🔍 Search for food: ").strip()
+
+            # > Handle empty input
+            if not user_input:
+                print("   Please enter a search term or 'help' for commands")
+                continue
+
+            # > Handle exit commands
+            if user_input.lower() in ['quit', 'exit', 'q']:
+                print("\n👋 Thank you for using the Food Recommendation System!")
+                print("   Goodbye!")
+                break
+            # > Handle help command
+            elif user_input.lower() in ['help', 'h']:
+                show_help_menu()
+            # Handle food search
+            else:
+                handle_food_search(collection, user_input)
+        except KeyboardInterrupt:
+            print("\n\n👋 System interrupted. Goodbye!")
+            break
         except Exception as ice:
             print("Error:", ice)
 
