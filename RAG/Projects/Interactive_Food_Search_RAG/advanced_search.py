@@ -121,5 +121,31 @@ def perform_cuisine_filtered_search(collection):
     
     display_search_results(results, f"Cuisine-Filtered Results ({cuisine_filter})")
 
+def perform_calorie_filtered_search(collection):
+    """Perform calorie-filtered similarity search"""
+    print("\n🔥 CALORIE-FILTERED SEARCH")
+    print("-" * 30)
+    
+    query = input("Enter search query: ").strip()
+    max_calories_input = input("Enter maximum calories (or press Enter for no limit): ").strip()
+    
+    if not query:
+        print("❌ Please enter a search term")
+        return
+    
+    max_calories = None
+    if max_calories_input.isdigit():
+        max_calories = int(max_calories_input)
+    
+    print(f"\n🔍 Searching for '{query}'" + 
+          (f" with max {max_calories} calories..." if max_calories else "..."))
+    
+    results = perform_filtered_similarity_search(
+        collection, query, max_calories=max_calories, n_results=5
+    )
+    
+    calorie_text = f"under {max_calories} calories" if max_calories else "any calories"
+    display_search_results(results, f"Calorie-Filtered Results ({calorie_text})")
+
 if __name__ == "__main__":
     main()
