@@ -81,6 +81,45 @@ def show_help_menu():
     print("\nCommands:")
     print("  • 'help' - Show this help menu")
     print("  • 'quit' - Exit the system")
+
+def handle_food_search(collection, query):
+    """Handle food similarity search with enhanced display"""
+    print(f"\n🔍 Searching for '{query}'...")
+    print("   Please wait...")
     
+    # > Perform similarity search
+    results = perform_similarity_search(collection, query, 5)
+    
+    if not results:
+        print("❌ No matching foods found.")
+        print("💡 Try different keywords like:")
+        print("   • Cuisine types: 'Italian', 'American'")
+        print("   • Ingredients: 'chocolate', 'flour', 'cheese'")
+        print("   • Descriptors: 'sweet', 'baked', 'dessert'")
+        return
+    
+    # > Display results with rich formatting
+    print(f"\n✅ Found {len(results)} recommendations:")
+    print("=" * 60)
+    
+    for i, result in enumerate(results, 1):
+        # > Calculate percentage score
+        percentage_score = result['similarity_score'] * 100
+        
+        print(f"\n{i}. 🍽️  {result['food_name']}")
+        print(f"   📊 Match Score: {percentage_score:.1f}%")
+        print(f"   🏷️  Cuisine: {result['cuisine_type']}")
+        print(f"   🔥 Calories: {result['food_calories_per_serving']} per serving")
+        print(f"   📝 Description: {result['food_description']}")
+        
+        # > Add visual separator
+        if i < len(results):
+            print("   " + "-" * 50)
+    
+    print("=" * 60)
+    
+    # > Provide suggestions for further exploration
+    suggest_related_searches(results)
+
 if __name__ == "__main__":
     main()
