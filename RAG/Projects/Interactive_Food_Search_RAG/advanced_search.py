@@ -67,5 +67,20 @@ def interactive_advanced_search(collection):
         except Exception as e:
             print(f"❌ Error: {e}")
 
+def perform_basic_search(collection):
+    """Perform basic similarity search without filters"""
+    print("\n🔍 BASIC SIMILARITY SEARCH")
+    print("-" * 30)
+    
+    query = input("Enter search query: ").strip()
+    if not query:
+        print("❌ Please enter a search term")
+        return
+    
+    print(f"\n🔍 Searching for '{query}'...")
+    results = perform_similarity_search(collection, query, 5)
+    
+    display_search_results(results, "Basic Search Results")
+
 if __name__ == "__main__":
     main()
