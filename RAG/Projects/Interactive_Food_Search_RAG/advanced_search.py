@@ -258,5 +258,21 @@ def display_search_results(results, title, show_details=True):
     
     print("=" * 50)
 
+def show_advanced_help():
+    """Display help information for advanced search"""
+    print("\n📖 ADVANCED SEARCH HELP")
+    print("=" * 40)
+    print("Search Types:")
+    print("  1. Basic Search - Standard similarity search")
+    print("  2. Cuisine Filter - Search within specific cuisine types")
+    print("  3. Calorie Filter - Search for foods under calorie limits")
+    print("  4. Combined Filters - Use multiple filters together")
+    print("  5. Demonstrations - See predefined search examples")
+    print("\nTips:")
+    print("  • Use descriptive terms: 'creamy', 'spicy', 'light'")
+    print("  • Combine ingredients: 'chicken vegetables'")
+    print("  • Try cuisine names: 'Italian', 'Thai', 'Mexican'")
+    print("  • Filter by calories for dietary goals")
+
 if __name__ == "__main__":
     main()
