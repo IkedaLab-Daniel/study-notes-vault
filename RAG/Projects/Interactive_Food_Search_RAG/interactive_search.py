@@ -68,5 +68,19 @@ def interactive_food_chatbot(collection):
         except Exception as ice:
             print("Error:", ice)
 
+def show_help_menu():
+    """Display help information for users"""
+    print("\n📖 HELP MENU")
+    print("-" * 30)
+    print("Search Examples:")
+    print("  • 'chocolate dessert' - Find chocolate desserts")
+    print("  • 'Italian food' - Find Italian cuisine")
+    print("  • 'sweet treats' - Find sweet desserts")
+    print("  • 'baked goods' - Find baked items")
+    print("  • 'low calorie' - Find lower-calorie options")
+    print("\nCommands:")
+    print("  • 'help' - Show this help menu")
+    print("  • 'quit' - Exit the system")
+    
 if __name__ == "__main__":
     main()
