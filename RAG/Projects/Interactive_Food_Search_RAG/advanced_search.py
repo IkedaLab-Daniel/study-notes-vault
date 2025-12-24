@@ -183,5 +183,56 @@ def perform_combined_filtered_search(collection):
     
     display_search_results(results, f"Combined Filtered Results ({filter_text})")
 
+def run_search_demonstrations(collection):
+    """Run predetermined demonstrations of different search types"""
+    print("\n📊 SEARCH DEMONSTRATIONS")
+    print("=" * 40)
+    
+    demonstrations = [
+        {
+            "title": "Italian Cuisine Search",
+            "query": "creamy pasta",
+            "cuisine_filter": "Italian",
+            "max_calories": None
+        },
+        {
+            "title": "Low-Calorie Healthy Options",
+            "query": "healthy meal",
+            "cuisine_filter": None,
+            "max_calories": 300
+        },
+        {
+            "title": "Asian Light Dishes",
+            "query": "light fresh meal",
+            "cuisine_filter": "Japanese",
+            "max_calories": 250
+        }
+    ]
+    
+    for i, demo in enumerate(demonstrations, 1):
+        print(f"\n{i}. {demo['title']}")
+        print(f"   Query: '{demo['query']}'")
+        
+        filters = []
+        if demo['cuisine_filter']:
+            filters.append(f"Cuisine: {demo['cuisine_filter']}")
+        if demo['max_calories']:
+            filters.append(f"Max Calories: {demo['max_calories']}")
+        
+        if filters:
+            print(f"   Filters: {', '.join(filters)}")
+        
+        results = perform_filtered_similarity_search(
+            collection,
+            demo['query'],
+            cuisine_filter=demo['cuisine_filter'],
+            max_calories=demo['max_calories'],
+            n_results=3
+        )
+        
+        display_search_results(results, demo['title'], show_details=False)
+        
+        input("\n⏸️  Press Enter to continue to next demonstration...")
+
 if __name__ == "__main__":
     main()
