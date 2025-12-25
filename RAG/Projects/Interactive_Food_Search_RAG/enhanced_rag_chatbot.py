@@ -107,6 +107,46 @@ def prepare_context_for_llm(query: str, search_results: List[Dict]) -> str:
     
     return "\n".join(context_parts)
 
+def generate_llm_rag_response(query: str, search_results: List[Dict]) -> str:
+    """Generate response using IBM Granite with retrieved context"""
+    try:
+        # > Prepare context from search result
+        context = prepare_context_for_llm(query, search_results)
+
+        # > Build the prompt for the LLM
+        prompt = f'''You are a helpful food recommendation assistant. A user is asking for food recommendations, and I've retrieved relevant options from a food database.
+User Query: "{query}"
+Retrieved Food Information:
+{context}
+Please provide a helpful, short response that:
+1. Acknowledges the user's request
+2. Recommends 2-3 specific food items from the retrieved options
+3. Explains why these recommendations match their request
+4. Includes relevant details like cuisine type, calories, or health benefits
+5. Uses a friendly, conversational tone
+6. Keeps the response concise but informative
+Response:'''
+        
+        # > Generate respoonse using IBM Granite
+        generated_response = model.generate(prompt=prompt, params=None)
+
+        # > Extract the generated text
+        if generated_response and "results" in generated_response:
+            response_text = generated_response["results"][0]["generated_text"]
+
+            # > Clean up the response if needed
+            response_text = response_text.strip()
+
+            # > If response is too short, provide a fallback
+            if len(response_text) < 50:
+                return generate_fallback_response(query, search_results)
+            
+            return response_text
+
+    except Exception as Ice:
+        print("Error generating LLM response:", Ice)
+        return generate_fallback_response(query, search_results)
+
 if __name__ == "__main__":
     main()
     print(" --- End --- ")
