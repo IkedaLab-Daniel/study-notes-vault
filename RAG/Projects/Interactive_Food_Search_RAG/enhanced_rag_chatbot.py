@@ -64,10 +64,48 @@ def main():
 
         # > 5 - Start enchanced RAG chatbot
         # TODO: enchanced_rag_food_chatbot(collection)
-        
 
     except Exception as Ice:
         print("Error", Ice)
+
+def prepare_context_for_llm(query: str, search_results: List[Dict]) -> str:
+    """Prepare structured context from search results for LLM"""
+    if not search_results:
+        return "No relevant food items found in the database."
+
+    context_parts = []
+    context_parts.append("Based on your query, here are the mnost relevant food options from out database:")
+    context_parts.append("")
+
+    for i, result in enumerate(search_results[:3], 1):
+        food_context = []
+        food_context.append(f"Option {i}: {result['food_name']}")
+        food_context.append(f"  - Description: {result['food_description']}")
+        food_context.append(f"  - Cuisine: {result['cuisine_type']}")
+        food_context.append(f"  - Calories: {result['food_calories_per_serving']} per serving")
+
+        if result.get('food_health_benefits'):
+            ingredients = result['food_ingredients']
+            if isinstance(ingredients, list):
+                food_context.append(f"  - Key ingredients: {', '.join(ingredients[:5])}")
+            else:
+                food_context.append(f"  - Key ingredients: {ingredients}")
+
+        if result.get('food_health_benefits'):
+            food_context.append(f"  - Health benefits: {result['food_health_benefits']}")
+        
+        if result.get('cooking_method'):
+            food_context.append(f"  - Cooking method: {result['cooking_method']}")
+        
+        if result.get('taste_profile'):
+            food_context.append(f"  - Taste profile: {result['taste_profile']}")
+        
+        food_context.append(f"  - Similarity score: {result['similarity_score']*100:.1f}%")
+        food_context.append("")
+
+        context_parts.extend(food_context)
+    
+    return "\n".join(context_parts)
 
 if __name__ == "__main__":
     main()
