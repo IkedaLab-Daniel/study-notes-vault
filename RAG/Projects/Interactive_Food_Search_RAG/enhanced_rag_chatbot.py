@@ -5,6 +5,7 @@ from ibm_watsonx_ai.foundation_models import ModelInference
 import json
 from dotenv import load_dotenv
 import os
+from utils import print_agent
 
 load_dotenv()
 
@@ -63,7 +64,7 @@ def main():
             return
 
         # > 5 - Start enchanced RAG chatbot
-        # TODO: enchanced_rag_food_chatbot(collection)
+        enchanced_rag_food_chatbot(collection)
 
     except Exception as Ice:
         print("Error", Ice)
@@ -163,6 +164,72 @@ def generate_fallback_response(query: str, search_results: List[Dict]) -> str:
         response_parts.append(f"Another great option would be {second_choice['food_name']}.")
     
     return " ".join(response_parts)
+
+def enchanced_rag_food_chatbot(collection):
+    """Enhanced RAG-powered conversational food chatbot with IBM Granite"""
+
+    # Clear the terminal for a clean start
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+    # Show agent header (if available)
+    try:
+        print_agent()
+    except Exception:
+        pass
+    print("\n" + "="*70)
+    print("🤖 ENHANCED RAG FOOD RECOMMENDATION CHATBOT")
+    print("   Powered by IBM's Granite Model")
+    print("="*70)
+    print("💬 Ask me about food recommendations using natural language!")
+    print("\nExample queries:")
+    print("  • 'I want something spicy and healthy for dinner'")
+    print("  • 'What Italian dishes do you recommend under 400 calories?'")
+    print("  • 'I'm craving comfort food for a cold evening'")
+    print("  • 'Suggest some protein-rich breakfast options'")
+    print("\nCommands:")
+    print("  • 'help' - Show detailed help menu")
+    print("  • 'compare' - Compare recommendations for two different queries")
+    print("  • 'quit' - Exit the chatbot")
+    print("-" * 70)
+
+    conversation_history = []
+
+    while True:
+        try:
+            user_input = input("\n👤 You: ").strip()
+            
+            if not user_input:
+                print_agent()
+                print(" >> Please tell me what kind of food you're looking for!")
+                continue
+
+            if user_input.lower() in ['quit', 'exit', 'q']:
+                print("\n\n")
+                print_agent()
+                print(" >> Thank you for using the Enhanced RAG Food Chatbot!")
+                print(" >> Hope you found some delicious recommendations! 👋")
+                break
+
+            elif user_input.lower() in ['help', 'h']:
+                show_enhanced_rag_help()
+
+            else:
+                # > Process the food query with enchanced RAG
+                handle_enhanced_rag_query(collection, user_input, conversation_history)
+                conversation_history.append(user_input)
+
+                # > Keep conversation history Manageable
+                if len(conversation_history) > 5:
+                    conversation_history = conversation_history[-3:]
+
+        except KeyboardInterrupt:
+            print_agent
+            print(" >> Goodbye! Hope you find something delicious! 👋")
+            break
+
+        except Exception as Ice:
+            print_agent()
+            print(" >> Error:", Ice)
 
 if __name__ == "__main__":
     main()
