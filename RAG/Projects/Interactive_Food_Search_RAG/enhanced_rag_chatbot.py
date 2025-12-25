@@ -262,6 +262,43 @@ def handle_enhanced_rag_query(collection, query: str, conversation_history: List
         if i < 3:
             print()
 
+def handle_enchanced_comparison_mode(collection):
+    """Enhanced comparison between two food queries using LLM"""
+    print("\n🔄 ENHANCED COMPARISON MODE")
+    print("   Powered by AI Analysis")
+    print("-" * 35)
+
+    query1 = input("Enter first food query: ").strip()
+    query2 = input("Enter second food query: ").strip()
+
+    if not query1 or not query2:
+        print("❌ Please enter both queries for comparison")
+        return
+    
+    print(f"\n🔍 Analyzing '{query1}' vs '{query2}' with AI...")
+
+    # > Get results for both queries
+    results1 = perform_similarity_search(collection, query1, 3)
+    results2 = perform_similarity_search(collection, query2, 3)
+    
+    # > Generate AI-powered comparison
+    comparison_response = generate_llm_comparison(query1, query2, results1, results2)
+
+    print_agent()
+    print(f" >> {comparison_response}")
+
+    # > Show side-by-side results
+    print(f"\n📊 DETAILED COMPARISON")
+    print("=" * 60)
+    print(f"{'Query 1: ' + query1[:20] + '...' if len(query1) > 20 else 'Query 1: ' + query1:<30} | {'Query 2: ' + query2[:20] + '...' if len(query2) > 20 else 'Query 2: ' + query2}")
+    print("-" * 60)
+    
+    max_results = max(len(results1), len(results2))
+    for i in range(min(max_results, 3)):
+        left = f"{results1[i]['food_name']} ({results1[i]['similarity_score']*100:.0f}%)" if i < len(results1) else "---"
+        right = f"{results2[i]['food_name']} ({results2[i]['similarity_score']*100:.0f}%)" if i < len(results2) else "---"
+        print(f"{left[:30]:<30} | {right[:30]}")
+
 if __name__ == "__main__":
     main()
     print(" --- End --- ")
