@@ -18,7 +18,8 @@ my_credentials = {
     "apikey": os.getenv("API_KEY")
 }
 
-model_id = 'ibm/granite-3-8b-instruct'
+#model_id = 'ibm/granite-3-8b-instruct'
+model_id = 'meta-llama/llama-3-3-70b-instruct'
 gen_parms = {"max_new_tokens": 400}
 project_id = os.getenv("PROJECT_ID")
 space_id = None
@@ -211,8 +212,13 @@ def enchanced_rag_food_chatbot(collection):
                 break
 
             elif user_input.lower() in ['help', 'h']:
-                # TODO show_enhanced_rag_help()
+                # show_enhanced_rag_help()
                 pass
+
+            elif user_input.lower() in ['compare']:
+                handle_enhanced_comparison_mode(collection)
+
+                
             else:
                 # > Process the food query with enchanced RAG
                 handle_enhanced_rag_query(collection, user_input, conversation_history)
@@ -298,8 +304,44 @@ def handle_enchanced_comparison_mode(collection):
         left = f"{results1[i]['food_name']} ({results1[i]['similarity_score']*100:.0f}%)" if i < len(results1) else "---"
         right = f"{results2[i]['food_name']} ({results2[i]['similarity_score']*100:.0f}%)" if i < len(results2) else "---"
         print(f"{left[:30]:<30} | {right[:30]}")
+        
+def handle_enhanced_comparison_mode(collection):
+    """Enhanced comparison between two food queries using LLM"""
+    print("\n🔄 ENHANCED COMPARISON MODE")
+    print("   Powered by AI Analysis")
+    print("-" * 35)
+    
+    query1 = input("Enter first food query: ").strip()
+    query2 = input("Enter second food query: ").strip()
+    
+    if not query1 or not query2:
+        print("❌ Please enter both queries for comparison")
+        return
+    
+    print(f"\n🔍 Analyzing '{query1}' vs '{query2}' with AI...")
+    
+    # > Get results for both queries
+    results1 = perform_similarity_search(collection, query1, 3)
+    results2 = perform_similarity_search(collection, query2, 3)
+    
+    # > Generate AI-powered comparison
+    comparison_response = generate_llm_comparison(query1, query2, results1, results2)
+    
+    print(f"\n🤖 AI Analysis: {comparison_response}")
+    
+    # > Show side-by-side results
+    print(f"\n📊 DETAILED COMPARISON")
+    print("=" * 60)
+    print(f"{'Query 1: ' + query1[:20] + '...' if len(query1) > 20 else 'Query 1: ' + query1:<30} | {'Query 2: ' + query2[:20] + '...' if len(query2) > 20 else 'Query 2: ' + query2}")
+    print("-" * 60)
+    
+    max_results = max(len(results1), len(results2))
+    for i in range(min(max_results, 3)):
+        left = f"{results1[i]['food_name']} ({results1[i]['similarity_score']*100:.0f}%)" if i < len(results1) else "---"
+        right = f"{results2[i]['food_name']} ({results2[i]['similarity_score']*100:.0f}%)" if i < len(results2) else "---"
+        print(f"{left[:30]:<30} | {right[:30]}")
 
-def generate_llm_comparison(query1: str, query2: str, results1: List[Dict], result2: List[Dict]) -> str:
+def generate_llm_comparison(query1: str, query2: str, results1: List[Dict], results2: List[Dict]) -> str:
     """Generate AI-powered comparison between two queries"""
     try:
         context1 = prepare_context_for_llm(query1, results1[:3])
@@ -328,6 +370,17 @@ Comparison:'''
         
     except Exception as e:
         return generate_simple_comparison(query1, query2, results1, results2)
+    
+def generate_simple_comparison(query1: str, query2: str, results1: List[Dict], results2: List[Dict]) -> str:
+    """Simple comparison fallback"""
+    if not results1 and not results2:
+        return "No results found for either query."
+    if not results1:
+        return f"Found results for '{query2}' but none for '{query1}'."
+    if not results2:
+        return f"Found results for '{query1}' but none for '{query2}'."
+    
+    return f"For '{query1}', I recommend {results1[0]['food_name']}. For '{query2}', {results2[0]['food_name']} would be perfect."
 
 if __name__ == "__main__":
     main()
