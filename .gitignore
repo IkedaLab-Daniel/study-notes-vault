@@ -2,10 +2,8 @@
 node_modules/
 **/venv/
 *.log
-.env
-.env.local
-.env.production
-.env.staging
+**/.env
+**/.env.*
 dist/
 build/
 .cache/
