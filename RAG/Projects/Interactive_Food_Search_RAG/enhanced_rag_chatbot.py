@@ -304,7 +304,7 @@ def handle_enchanced_comparison_mode(collection):
         left = f"{results1[i]['food_name']} ({results1[i]['similarity_score']*100:.0f}%)" if i < len(results1) else "---"
         right = f"{results2[i]['food_name']} ({results2[i]['similarity_score']*100:.0f}%)" if i < len(results2) else "---"
         print(f"{left[:30]:<30} | {right[:30]}")
-        
+
 def handle_enhanced_comparison_mode(collection):
     """Enhanced comparison between two food queries using LLM"""
     print("\n🔄 ENHANCED COMPARISON MODE")
@@ -381,6 +381,32 @@ def generate_simple_comparison(query1: str, query2: str, results1: List[Dict], r
         return f"Found results for '{query1}' but none for '{query2}'."
     
     return f"For '{query1}', I recommend {results1[0]['food_name']}. For '{query2}', {results2[0]['food_name']} would be perfect."
+
+def show_enhanced_rag_help():
+    """Display help information for enhanced RAG chatbot"""
+    print("\n📖 ENHANCED RAG CHATBOT HELP")
+    print("=" * 45)
+    print("🧠 This chatbot uses IBM watsonx.ai to understand your")
+    print("   food preferences and provide intelligent recommendations.")
+    print("\nHow to get the best recommendations:")
+    print("  • Be specific: 'healthy Italian pasta under 350 calories'")
+    print("  • Mention preferences: 'spicy comfort food for cold weather'")
+    print("  • Include context: 'light breakfast for busy morning'")
+    print("  • Ask about benefits: 'protein-rich foods for workout recovery'")
+    print("\nSpecial features:")
+    print("  • 🔍 Vector similarity search finds relevant foods")
+    print("  • 🧠 AI analysis provides contextual explanations")
+    print("  • 📊 Detailed nutritional and cuisine information")
+    print("  • 🔄 Smart comparison between different preferences")
+    print("\nCommands:")
+    print("  • 'compare' - AI-powered comparison of two queries")
+    print("  • 'help' - Show this help menu")
+    print("  • 'quit' - Exit the chatbot")
+    print("\nTips for better results:")
+    print("  • Use natural language - talk like you would to a friend")
+    print("  • Mention dietary restrictions or preferences")
+    print("  • Include meal timing (breakfast, lunch, dinner)")
+    print("  • Specify if you want healthy, comfort, or indulgent options")
 
 if __name__ == "__main__":
     main()
