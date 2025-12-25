@@ -147,6 +147,23 @@ Response:'''
         print("Error generating LLM response:", Ice)
         return generate_fallback_response(query, search_results)
 
+def generate_fallback_response(query: str, search_results: List[Dict]) -> str:
+    """Generate fallback response when LLM fails"""
+    if not search_results:
+        return "I couldn't find any food items matching your request. Try describing what you're in the mood for with different words!"
+    
+    top_result = search_results[0]
+    response_parts = []
+
+    response_parts.append(f"Based on your request for '{query}', I'd recommend {top_result['food_name']}.")
+    response_parts.append(f"It's a {top_result['cuisine_type']} dish with {top_result['food_calories_per_serving']} calories per serving.")
+    
+    if len(search_results) > 1:
+        second_choice = search_results[1]
+        response_parts.append(f"Another great option would be {second_choice['food_name']}.")
+    
+    return " ".join(response_parts)
+
 if __name__ == "__main__":
     main()
     print(" --- End --- ")
