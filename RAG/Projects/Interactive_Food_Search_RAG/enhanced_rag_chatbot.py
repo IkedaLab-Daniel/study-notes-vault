@@ -299,6 +299,36 @@ def handle_enchanced_comparison_mode(collection):
         right = f"{results2[i]['food_name']} ({results2[i]['similarity_score']*100:.0f}%)" if i < len(results2) else "---"
         print(f"{left[:30]:<30} | {right[:30]}")
 
+def generate_llm_comparison(query1: str, query2: str, results1: List[Dict], result2: List[Dict]) -> str:
+    """Generate AI-powered comparison between two queries"""
+    try:
+        context1 = prepare_context_for_llm(query1, results1[:3])
+        context2 = prepare_context_for_llm(query2, results2[:3])
+        
+        comparison_prompt = f'''You are analyzing and comparing two different food preference queries. Please provide a thoughtful comparison.
+Query 1: "{query1}"
+Top Results for Query 1:
+{context1}
+Query 2: "{query2}"
+Top Results for Query 2:
+{context2}
+Please provide a short comparison that:
+1. Highlights the key differences between these two food preferences
+2. Notes any similarities or overlaps
+3. Explains which query might be better for different situations
+4. Recommends the best option from each query
+5. Keeps the analysis concise but insightful
+Comparison:'''
+        generated_response = model.generate(prompt=comparison_prompt, params=None)
+
+        if generated_response and "results" in generated_response:
+            return generated_response["results"][0]["generated_text"].strip()
+        else:
+            return generate_simple_comparison(query1, query2, results1, results2)
+        
+    except Exception as e:
+        return generate_simple_comparison(query1, query2, results1, results2)
+
 if __name__ == "__main__":
     main()
     print(" --- End --- ")
