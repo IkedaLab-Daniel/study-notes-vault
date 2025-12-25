@@ -33,9 +33,42 @@ model = ModelInference(
     verify=verify
 )
 
-# > Test Watsonx LLM connection
-result = model.generate(prompt="Hello")
-print("\nResult:")
-print(result['results'][0]['generated_text'])
+def main():
+    """Main function for enchanced RAG chatbot system"""
+    try:
+        print("🤖 Enhanced RAG-Powered Food Recommendation Chatbot")
+        print("   Powered by IBM Granite & ChromaDB")
+        print("=" * 55)
 
-print("\n --- working ---")
+        #  > 1 - Load food data
+        global food_items
+        food_items = load_food_data('./FoodDataSet.json')
+
+        # > 2 - Create collection for RAG system
+        collection = create_similarity_search_collection(
+            "enchanced_rag_food_chatbot",
+            {'description': 'Enhanced RAG chatbot with IBM watsonx.ai integration'}
+        )
+
+        # > 3 - Add the loaded food items into collection
+        populate_similarity_collection(collection, food_items)
+
+        # > 4 - Test LLM conncetion
+        print("\nTesting LLM connection...")
+        test_response = model.generate(prompt="Hello", params=None)
+        if test_response and "results" in test_response:
+            print("✅ LLM connection established")
+        else:
+            print("❌ LLM connection failed")
+            return
+
+        # > 5 - Start enchanced RAG chatbot
+        # TODO: enchanced_rag_food_chatbot(collection)
+        
+
+    except Exception as Ice:
+        print("Error", Ice)
+
+if __name__ == "__main__":
+    main()
+    print(" --- End --- ")
