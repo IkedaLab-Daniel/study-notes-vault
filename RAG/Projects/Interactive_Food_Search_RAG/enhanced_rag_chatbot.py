@@ -212,7 +212,7 @@ def enchanced_rag_food_chatbot(collection):
                 break
 
             elif user_input.lower() in ['help', 'h']:
-                # show_enhanced_rag_help()
+                show_enhanced_rag_help()
                 pass
 
             elif user_input.lower() in ['compare']:
