@@ -91,5 +91,16 @@ loader = TextLoader("companypolicies.txt")
 txt_data = loader.load()
 chunks_txt = text_splitter(txt_data, 200, 20)
 
+    # > Store the embedding into a Chroma DB
+from langchain.vectorstores import Chroma
+
+vectordb =  Chroma.from_documents(chunks_txt, watsonx_embedding())
+
+query = "Email policy"
+retriever = vectordb.as_retriever(search_kwargs={"k": 3})  # ? K -> Limit retrival Result
+# docs = retriever.invoke(query)
+# print(docs)
+
+
 print("\033[92m --- END --- ")
 
