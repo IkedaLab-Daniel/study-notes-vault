@@ -113,6 +113,39 @@ threshold_retriever = vectordb.as_retriever(
 )
 
 thres_docs = threshold_retriever.invoke(query)
-print(thres_docs)
+# print(thres_docs)
+
+# > Multi-Query Reader
+from langchain_community.document_loaders import PyPDFLoader
+
+loader =  PyPDFLoader("langchain-paper.pdf")
+pdf_data = loader.load()
+
+# print(pdf_data[0]) # ? Print Page 1
+
+    # > Split
+chunks_pdf = text_splitter(pdf_data, 500, 20)
+
+    # > VectorDB
+ids = vectordb.get()["ids"]
+vectordb.delete(ids) # We need to delete existing embeddings from previous documents and then store current document embeddings in.
+vectordb = Chroma.from_documents(documents=chunks_pdf, embedding=watsonx_embedding())
+
+    # > MultiQueryRetriever
+from langchain.retrievers.multi_query import MultiQueryRetriever
+
+query = "What does the paper say about langchain?"
+
+retriever = MultiQueryRetriever.from_llm(
+    retriever=vectordb.as_retriever(), llm=llm()
+)
+    # > Set logging for the queries
+import logging
+
+logging.basicConfig()
+logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
+
+docs = retriever.invoke(query)
+print(docs)
 
 print("\033[92m --- END --- ")
