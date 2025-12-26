@@ -12,3 +12,39 @@ import os
 
 load_dotenv()
 
+# > 1 - Build LLM
+from ibm_watsonx_ai.foundation_models import ModelInference
+from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
+from ibm_watsonx_ai import Credentials
+from ibm_watsonx_ai.foundation_models.extensions.langchain import WatsonxLLM
+
+def llm():
+    model_id = 'mistralai/mistral-small-3-1-24b-instruct-2503'
+
+    parameter = {
+        GenParams.MAX_NEW_TOKENS: 256,
+        GenParams.TEMPERATURE: 0.5
+    }
+
+
+    credentials = {
+        "url": os.getenv('URL'),
+        "api_key": os.getenv('API_KEY')
+    }
+
+    project_id = os.getenv('PROJECT_ID')
+
+    model = ModelInference(
+        model_id=model_id,
+        params=parameter,
+        credentials=credentials,
+        project_id=project_id,
+    )
+    
+    watsonxLLM = WatsonxLLM(model=model)
+    return watsonxLLM
+
+llm()
+
+print("\033[92m --- END --- ")
+
