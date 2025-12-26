@@ -48,13 +48,17 @@ def llm():
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 def text_splitter(data, chunk_size, chunk_overlap):
-    text_splitter = RecursiveCharacterTextSplitter(
+    splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
         length_function=len,
     )
 
-    chunk = text_splitter.split_text(data)
+    # ? Use split_documents for Document objects, split_text for strings
+    if isinstance(data, list):
+        chunk = splitter.split_documents(data)
+    else:
+        chunk = splitter.split_text(data)
     return chunk
 
 # > Create embedding model
@@ -76,6 +80,16 @@ def watsonx_embedding():
     )
 
     return watsonx_embedding
+
+# > Use Retrievers
+    # > Vector Store-Backed Retriever
+    # > Use TextLoader
+
+from langchain_community.document_loaders import TextLoader
+
+loader = TextLoader("companypolicies.txt")
+txt_data = loader.load()
+chunks_txt = text_splitter(txt_data, 200, 20)
 
 print("\033[92m --- END --- ")
 
