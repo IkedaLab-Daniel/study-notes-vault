@@ -101,6 +101,18 @@ retriever = vectordb.as_retriever(search_kwargs={"k": 3})  # ? K -> Limit retriv
 # docs = retriever.invoke(query)
 # print(docs)
 
+    # > MMR Search
+mmr_retriever = vectordb.as_retriever(search_type="mmr")
+# docs = mmr_retriever.invoke(query)
+# print(docs)
+
+threshold_retriever = vectordb.as_retriever(
+    # ? You can also set a retrieval method that defines a similarity score threshold, returning only documents with a score above that threshold.
+    search_type="similarity_score_threshold",
+    search_kwargs={"score_threshold": 0.4}
+)
+
+thres_docs = threshold_retriever.invoke(query)
+print(thres_docs)
 
 print("\033[92m --- END --- ")
-
