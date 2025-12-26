@@ -61,3 +61,51 @@
 * The vector store-based retriever is simple and efficient because it does not require an LLM during retrieval.
 * In LangChain, this retriever can be created directly from a vector store using the `retriever` method.
 * Vector store-based retrievers are commonly used as the baseline retrieval method in RAG pipelines.
+
+## Explore Advanced Retrievers in Langchain: Part 2
+
+* A **LangChain retriever** is an interface that returns documents or chunks based on an unstructured query.
+* Beyond the basic vector store-based retriever, LangChain provides **advanced retrievers** to improve recall, relevance, and context handling.
+
+### Multi-Query Retriever
+
+* Uses an **LLM to generate multiple alternative versions of a user query**.
+* Each query variant is executed against a base retriever (usually a vector store-based retriever).
+* The results from all queries are combined and deduplicated to produce a richer set of documents.
+* Helps overcome issues caused by:
+
+  * Subtle differences in query wording
+  * Imperfect embeddings that fail to capture full semantics
+* Can work with different retrieval strategies such as similarity search or MMR.
+
+### Self-Query Retriever
+
+* Designed for documents that include **metadata** (e.g., year, rating, author).
+* Uses an LLM to split a user query into:
+
+  * A **semantic search query** (text)
+  * A **metadata filter** (structured constraints)
+* Requires:
+
+  * A vector store
+  * Descriptions of document metadata fields
+* Enables queries like filtering documents by numeric or categorical metadata (e.g., movies with ratings above a threshold).
+* Improves precision by combining semantic search with structured filtering.
+
+### Parent Document Retriever
+
+* Addresses the trade-off between **small chunks for accurate embeddings** and **large chunks for better context**.
+
+* Uses two text splitters:
+
+  * **Child splitter**: creates small chunks for embedding
+  * **Parent splitter**: creates larger chunks for retrieval
+
+* During retrieval:
+
+  * Small chunks are matched via embeddings
+  * Their parent documents are returned as results
+
+* Ensures retrieved content has sufficient context while maintaining embedding quality.
+
+* These advanced retrievers enhance RAG systems by improving recall, relevance, and contextual completeness compared to basic vector store-based retrieval.
