@@ -40,3 +40,24 @@
     * Semantic similarity search with FAISS
     * Building a YouTube transcript Q&A summarization tool using FAISS and LangChain
 * By the end of the course, you will be equipped to build intelligent, scalable, and context-aware RAG systems using advanced retrieval and indexing techniques.
+
+## Explore Advanced Retrievers in Langchain: Part 1
+
+* A **LangChain retriever** is an interface that returns documents or document chunks in response to an unstructured text query.
+* Retrievers are more general than vector stores; their role is retrieval, not necessarily storage.
+* A retriever takes a **string query as input** and returns a **list of documents or chunks** as output.
+* One of the simplest retriever types is the **vector store-based retriever**.
+* This retriever works on top of an existing **vector database** created by:
+
+  * Loading source documents
+  * Splitting them into chunks
+  * Embedding those chunks
+* The vector store-based retriever embeds the user query and compares it with stored embeddings to retrieve the most relevant chunks.
+* Retrieval can be performed using:
+
+  * **Similarity search**, which returns chunks most similar to the query
+  * **Maximum Marginal Relevance (MMR)**, which balances relevance and diversity
+* **MMR** reduces redundancy by selecting results that are relevant to the query while being less similar to each other.
+* The vector store-based retriever is simple and efficient because it does not require an LLM during retrieval.
+* In LangChain, this retriever can be created directly from a vector store using the `retriever` method.
+* Vector store-based retrievers are commonly used as the baseline retrieval method in RAG pipelines.
