@@ -57,5 +57,25 @@ def text_splitter(data, chunk_size, chunk_overlap):
     chunk = text_splitter.split_text(data)
     return chunk
 
+# > Create embedding model
+from ibm_watsonx_ai.metanames import EmbedTextParamsMetaNames
+from langchain_ibm import WatsonxEmbeddings
+
+def watsonx_embedding():
+    embed_params = {
+        EmbedTextParamsMetaNames.TRUNCATE_INPUT_TOKENS: 3,
+        EmbedTextParamsMetaNames.RETURN_OPTIONS: {"input_text": True},
+    }
+
+    watsonx_embedding = WatsonxEmbeddings(
+        model_id="ibm/slate-125m-english-rtrvr-v2",
+        url=os.getenv("URL"),
+        project_id=os.getenv("PROJECT_ID"),
+        params=embed_params,
+        apikey=os.getenv("API_KEY")
+    )
+
+    return watsonx_embedding
+
 print("\033[92m --- END --- ")
 
