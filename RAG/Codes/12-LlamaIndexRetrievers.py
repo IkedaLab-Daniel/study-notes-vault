@@ -146,4 +146,19 @@ for i, doc in enumerate(SAMPLE_DOCUMENTS[:3], 1):
     print(f"{i}. {doc}")
 print("...")
 
+# > Initialize Lab Environment
+class AdvancedRetrieversLab:
+    def __init__(self):
+        print("🚀 Initializing Advanced Retrievers Lab...")
+        self.documents = [Document(text=text) for text in SAMPLE_DOCUMENTS]
+        self.nodes = SentenceSplitter().get_nodes_from_documents(self.documents)
+
+        print("📊 Creating indexes...")
+        self.vector_index = VectorStoreIndex.from_documents(self.documents)
+        self.document_summary_index = DocumentSummaryIndex.from_documents(self.documents)
+        self.keyword_index = KeywordTableIndex.from_documents(self.documents)
+
+# > Init lab
+lab = AdvancedRetrieversLab()
+
 print(" --- working ---")
