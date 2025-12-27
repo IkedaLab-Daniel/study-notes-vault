@@ -227,7 +227,33 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.storage import InMemoryStore
 
     # > Set two splitters. One is with big chunk size (parent) and one is with small chunk size (child)
-parent_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=20, seperator="\n")
-child_splitter = CharacterTextSplitter(chunk_size=200, chunk_overlap=20, seperator="\n")
+parent_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=20, separator="\n")
+child_splitter = CharacterTextSplitter(chunk_size=200, chunk_overlap=20, separator="\n")
+
+vectordb = Chroma(
+    collection_name="split_parents", embedding_function=watsonx_embedding()
+)
+
+# ? Storage layer for the parent documents
+store = InMemoryStore()
+
+retriever = ParentDocumentRetriever(
+    vectorstore=vectordb,
+    docstore=store,
+    child_splitter=child_splitter,
+    parent_splitter=parent_splitter
+)
+
+retriever.add_documents(txt_data)
+# print(len(list(store.yield_keys()))) # ? Number of large chunks
+
+# ? Check if underlying vector store still retrieves the small chunks
+subdocs = vectordb.similarity_search("Smoking policity")
+# print(subdocs[0].page_content)
+
+# ? Retrieve relevant large chunk
+retrieved_docs = retriever.invoke("smoking policy")
+print(retrieved_docs[0].page_content)
+
 
 print("\033[92m --- END --- ")
