@@ -63,6 +63,6 @@ def main():
 
 if __name__ == "__main__":
     print(""" 
-11 - Exercise 2: Retrieve the top two results for the company policy document for the query "smoking policy" using the Vector Store-Backed Retriever.
+11 - Exercise 1: Retrieve the top two results for the company policy document for the query "smoking policy" using the Vector Store-Backed Retriever.
 """)
     main()
