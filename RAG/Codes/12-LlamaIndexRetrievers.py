@@ -92,11 +92,26 @@ def create_watson_llm():
         return llm
     except Exception as e:
         print(f"⚠️ watsonx.ai initialization error: {e}")
-        print("Falling back to mock LLM for demonstration")
+        print("⚠️ Falling back to mock LLM for demonstration")
         
         # ! Fallback mock LLM for demonstration
         from llama_index.core.llms.mock import MockLLM
         return MockLLM(max_tokens=512)
 
+# > Initialize embedding model first
+print("🔧 Initializing HuggingFace embeddings...")
+embed_model = HuggingFaceEmbedding(
+    model_name="BAAI/bge-small-en-v1.5"
+)
+print("✅ HuggingFace embeddings initialized!")
+
+# > Setup with watsonx.ai
+print("🔧 Initializing watsonx.ai LLM...")
+llm = create_watson_llm()
+
+# > Configure global settings
+Settings.llm = llm
+Settings.embed_model = embed_model
+print("✅ watsonx.ai LLM and embeddings configured!")
 
 print(" --- working ---")
