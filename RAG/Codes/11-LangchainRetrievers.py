@@ -218,7 +218,16 @@ retriever = SelfQueryRetriever.from_llm(
     metadata_field_info,
 )
 
-result = retriever.invoke("What's a highly rated (above 8.5) science fiction film?")
-print(result)
+# result = retriever.invoke("What's a highly rated (above 8.5) science fiction film?")
+# print(result)
+
+# > Parent Document Retriever
+from langchain.retrievers import ParentDocumentRetriever
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.storage import InMemoryStore
+
+    # > Set two splitters. One is with big chunk size (parent) and one is with small chunk size (child)
+parent_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=20, seperator="\n")
+child_splitter = CharacterTextSplitter(chunk_size=200, chunk_overlap=20, seperator="\n")
 
 print("\033[92m --- END --- ")
