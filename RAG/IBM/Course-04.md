@@ -109,3 +109,98 @@
 * Ensures retrieved content has sufficient context while maintaining embedding quality.
 
 * These advanced retrievers enhance RAG systems by improving recall, relevance, and contextual completeness compared to basic vector store-based retrieval.
+
+## Advanced Retrievers in LlamaIndex
+
+* **LlamaIndex** provides multiple index types and retrievers to build flexible, intelligent retrieval pipelines for RAG and search systems.
+
+### Core Index Types
+
+* **VectorStoreIndex**
+
+  * Stores vector embeddings for document chunks.
+  * Best for semantic search based on meaning.
+  * Commonly used with LLM-powered pipelines and RAG.
+
+* **DocumentSummaryIndex**
+
+  * Generates and stores summaries at indexing time.
+  * Uses summaries to filter relevant documents before retrieving full content.
+  * Ideal for large, diverse document collections that exceed LLM context limits.
+
+* **KeywordTableIndex**
+
+  * Extracts keywords and maps them to content chunks.
+  * Enables exact keyword matching.
+  * Useful for rule-based or hybrid search scenarios.
+
+### Core and Advanced Retrievers
+
+* **Vector Index Retriever**
+
+  * Uses embeddings to retrieve semantically similar content.
+  * Ideal for general-purpose search and RAG pipelines.
+
+* **BM25 Retriever**
+
+  * Keyword-based retrieval using exact matches.
+  * Improves on TF-IDF with term frequency saturation and document length normalization.
+  * Effective for technical or keyword-sensitive documents.
+
+* **Document Summary Index Retriever**
+
+  * Retrieves documents using summaries instead of full text.
+  * Two variants:
+
+    * LLM-based (more accurate but slower and more expensive)
+    * Embedding-based semantic similarity (more efficient for large datasets)
+  * Always returns full documents, not summaries.
+
+* **Auto Merging Retriever**
+
+  * Uses hierarchical chunking with parent and child nodes.
+  * If enough child nodes from the same parent are retrieved, returns the parent node.
+  * Preserves broader context in long documents.
+
+* **Recursive Retriever**
+
+  * Follows references between nodes, such as citations or metadata links.
+  * Supports chunk and metadata references.
+  * Useful for research papers and interconnected documents.
+
+* **Query Fusion Retriever**
+
+  * Combines results from multiple retrievers (e.g., vector + keyword).
+  * Can generate multiple query variations using an LLM.
+  * Improves recall through result fusion.
+
+### Fusion Strategies
+
+* **Reciprocal Rank Fusion**
+
+  * Prioritizes documents ranked highly across multiple retrievers.
+  * Robust and independent of score scales.
+
+* **Relative Score Fusion**
+
+  * Normalizes scores within each retriever.
+  * Preserves relative confidence of each result set.
+
+* **Distribution-Based Fusion**
+
+  * Uses statistical normalization (e.g., z-scores, percentiles).
+  * Handles large score variability effectively.
+
+### Recommended Use Cases
+
+* **General Q&A**: Vector Index Retriever + BM25 Retriever.
+
+* **Technical documents**: BM25 as primary, Vector Retriever as secondary.
+
+* **Long documents**: Auto Merging Retriever.
+
+* **Research papers**: Recursive Retriever.
+
+* **Large document collections**: Document Summary Index Retriever followed by Vector Search.
+
+* LlamaIndex’s combination of index types, retrievers, and fusion strategies enables scalable, accurate, and context-aware retrieval pipelines.
