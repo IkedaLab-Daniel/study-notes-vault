@@ -398,7 +398,41 @@ def demo_recursive_retriever():
 
         docs_with_refs.append(ref_doc)
 
-    print("END")
+    # > Create index with referenced documents
+    ref_index = VectorStoreIndex.from_documents(docs_with_refs)
+
+    # > Create retriever mapping
+    retriever_dict = {
+        f"doc_{i}": ref_index.as_retriever(similarity_top_k=1)
+        for i in range(len(docs_with_refs))
+    }
+
+    # > Base retriever
+    base_retriever = ref_index.as_retriever(similarity_top_k=2)
+
+    # > Add the root retriever to the dictionary
+    retriever_dict["vector"] = base_retriever
+    
+    # > Recursive retriever
+    recursive_retriever = RecursiveRetriever(
+        "vector",
+        retriever_dict=retriever_dict,
+        query_engine_dict={},
+        verbose=True
+    )
+
+    query = DEMO_QUERIES["applications"]
+    try:
+        nodes = recursive_retriever.retrieve(query)
+        print_agent()
+        print(f"Query: {query}")
+        print(f"Recursively retrieved {len(nodes)} nodes")
+        for i, node in enumerate(nodes[:3], 1):
+            print(f"{i}. Score: {node.score:.4f}" if hasattr(node, 'score') and node.score else f"{i}. (Recursive)")
+            print(f"   Text: {node.text[:100]}...")
+            print()
+    except Exception as Ice:
+        pass
 
 demo_recursive_retriever()
 
