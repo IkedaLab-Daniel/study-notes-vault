@@ -444,6 +444,35 @@ def demo_recursive_retriever():
             print(f"   Text: {node.text[:100]}...")
             print()
 
-demo_recursive_retriever()
+def demo_query_fusion_retriever():
+    print("=" * 60)
+    print("6. QUERY FUSION RETRIEVER - OVERVIEW")
+    print("=" * 60)
+
+    # > Create base retriever
+    base_retriever = lab.vector_index.as_retriever()
+
+    query = DEMO_QUERIES["comprehensive"]
+
+    print(f"Query: {query}")
+    print("QueryFusionRetriever generates multiple query variations and fuses results")
+    print("using one of three sophisticated fusion modes.")
+
+    print("\nOverview of Fusion Modes:")
+    print("1. RECIPROCAL_RERANK: Uses reciprocal rank fusion (most robust)")
+    print("2. RELATIVE_SCORE: Preserves score magnitudes (most interpretable)")  
+    print("3. DIST_BASED_SCORE: Statistical normalization (most sophisticated)")
+
+    print("\nDemonstration workflow:")
+    print("Each subsection below explores one fusion mode in detail with:")
+    print("- Theoretical explanation of the fusion method")
+    print("- Live demonstration using QueryFusionRetriever")
+    print("- Manual implementation showing the underlying mathematics")
+    print("- Use case recommendations and trade-offs")
+
+    print(f"\nUsing consistent test query throughout: '{query}'")
+    print("This allows direct comparison of how each fusion mode handles the same input.")
+
+    print("\nProceed to subsections 6.1, 6.2, and 6.3 for detailed demonstrations...")
 
 print(" --- working ---")
