@@ -313,7 +313,25 @@ def demo_document_summary_index_retriever():
             print()
     except Exception as Ice:
         print(f"LLM-based retrieval demo: {str(Ice)[:100]}...")
+
     
+    print("B) Embedding-based Document Summary Retriever:")
+    print("Uses vector similarity between query and document summaries")
+
+    try:
+        nodes_emb = doc_summary_retriever_embedding.retrieve(query)
+        print(f"Retrieved {len(nodes_emb)} nodes")
+        for i, node in enumerate(nodes_emb[:2], 1):
+            print(f"{i}. Score: {node.score:.4f}" if hasattr(node, 'score') and node.score else f"{i}. (Document summary)")
+            print(f"   Text: {node.text[:80]}...")
+            print()
+    except Exception as Ice:
+        print(f"Embedding-based retrieval demo: {str(Ice)[:100]}...")
+    
+    print("Document Summary Index workflow:")
+    print("1. Generates summaries for each document using LLM")
+    print("2. Uses summaries to select relevant documents")
+    print("3. Returns full content from selected documents")
 
 demo_document_summary_index_retriever()
 
