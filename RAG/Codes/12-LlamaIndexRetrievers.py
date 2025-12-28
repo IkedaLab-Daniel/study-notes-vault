@@ -378,6 +378,28 @@ def demo_hieracrhical_context_preservation():
         print(f"   Text: {node.text[:120]}...")
         print()
 
-demo_hieracrhical_context_preservation()
+def demo_recursive_retriever():
+    print("=" * 60)
+    print("5. RECURSIVE RETRIEVER")
+    print("=" * 60)
+
+    # > Create documents with references
+    docs_with_refs = []
+
+    for i, doc in enumerate(lab.documents):
+        # > Add reference metadata
+        ref_doc = Document(
+            text=doc.text,
+            metadata={
+                "doc_id": f"doc_{i}",
+                "references": [f"doc_{j}" for j in range(len(lab.documents)) if j != i][:2]
+            }
+        )
+
+        docs_with_refs.append(ref_doc)
+
+    print("END")
+
+demo_recursive_retriever()
 
 print(" --- working ---")
