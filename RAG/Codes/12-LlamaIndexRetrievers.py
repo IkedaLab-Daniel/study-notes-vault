@@ -281,6 +281,27 @@ def demo_BM25():
         print("   - Used in 83% of text-based recommender systems")
         print("   - Developed by Robertson & Spärck Jones at City University London")
 
-demo_BM25()
+def demo_document_summary_index_retriever():
+    print("=" * 60)
+    print("3. DOCUMENT SUMMARY INDEX RETRIEVERS")
+    print("=" * 60)
+
+    # > LLM-Based
+    doc_summary_retriever_llm = DocumentSummaryIndexLLMRetriever(
+        lab.document_summary_index,
+        choice_top_k=3
+    )
+
+    # > Embedding-Based
+    doc_summary_retriever_embedding = DocumentSummaryIndexEmbeddingRetriever(
+        lab.document_summary_index,
+        similarity_top_k=3
+    )
+
+    query = DEMO_QUERIES["learning_types"]
+    print(f"Query: {query}")
+    
+
+demo_document_summary_index_retriever()
 
 print(" --- working ---")
