@@ -263,6 +263,23 @@ def demo_BM25():
             if found_terms:
                 print(f"   → BM25 would boost this result for terms: {found_terms}")
             print()
+        
+        print("BM25 Concept Demonstration:")
+        print("1. TF-IDF Foundation:")
+        print("   - Term Frequency: How often words appear in document")
+        print("   - Inverse Document Frequency: How rare words are across collection")
+        print("   - TF-IDF = TF × IDF (balances frequency vs rarity)")
+        print()
+        print("2. BM25 Improvements:")
+        print("   - Saturation: Prevents over-scoring repeated terms")
+        print("   - Length normalization: Prevents long document bias")
+        print("   - Tunable parameters: k1 (saturation) and b (length adjustment)")
+        print()
+        print("3. Real-world Usage:")
+        print("   - Elasticsearch default scoring function")
+        print("   - Apache Lucene/Solr standard")
+        print("   - Used in 83% of text-based recommender systems")
+        print("   - Developed by Robertson & Spärck Jones at City University London")
 
 demo_BM25()
 
