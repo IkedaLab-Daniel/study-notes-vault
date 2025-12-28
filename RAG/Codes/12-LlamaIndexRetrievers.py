@@ -223,6 +223,22 @@ def demo_BM25():
             if found_terms:
                 print(f"    -> Found terms: {found_terms}")
             print()
+        
+        print("BM25 vs TF-IDF Comparison:")
+        print("TF-IDF Problem: Linear term frequency scaling")
+        print("  Example: 10 occurrences → score of 10, 100 occurrences → score of 100")
+        print("BM25 Solution: Saturation function")
+        print("  Example: 10 occurrences → high score, 100 occurrences → slightly higher score")
+        print()
+        print("TF-IDF Problem: No document length consideration")
+        print("  Example: Long documents dominate results")
+        print("BM25 Solution: Length normalization (b parameter)")
+        print("  Example: Scores adjusted based on document length vs. average")
+        print()
+        print("Key BM25 Parameters:")
+        print("- k1 ≈ 1.2: Term frequency saturation (how quickly scores plateau)")
+        print("- b ≈ 0.75: Document length normalization (0=none, 1=full)")
+        print("- IDF weighting: Rare terms get higher scores")
 
     except:
         pass
