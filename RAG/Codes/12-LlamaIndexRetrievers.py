@@ -5,6 +5,7 @@ import asyncio
 import warnings
 import numpy as np
 from typing import List, Optional
+from utils import print_agent
 
 warnings.filterwarnings('ignore')
 load_dotenv()
@@ -196,12 +197,32 @@ def demo_BM25():
         import Stemmer
 
         # > Create BM25 retriever with default parameters
-        BM25Retriever.from_defaults(
+        bm25_retriever = BM25Retriever.from_defaults(
             nodes=lab.nodes,
             similarity_top_k=3,
             stemmer=Stemmer.Stemmer("english"),
             language="english"
         )
+
+        query = DEMO_QUERIES["technical"]
+        nodes = bm25_retriever.retrieve(query)
+        print_agent()
+        print(f"Query: {query}")
+        print("BM25 analyzes exact keyword matches with sophisticated scoring")
+        print(f"Retrieved {len(nodes)} nodes:")
+
+        for i, node in enumerate(nodes, 1):
+            score = node.score if hasattr(node, 'score') and node.score else 0
+            print(f"{i}. BM25 Score: {score:.4f}")
+            print(f"    Text: {node.text[:100]}")
+
+            # > Highlight which query terms appear in text
+            text_lower = node.text.lower()
+            query_terms = query.lower().split()
+            found_terms = [term for term in query_terms if term in text_lower]
+            if found_terms:
+                print(f"    -> Found terms: {found_terms}")
+            print()
 
     except:
         pass
