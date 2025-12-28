@@ -162,28 +162,50 @@ class AdvancedRetrieversLab:
 lab = AdvancedRetrieversLab()
 
 # > Core Retriever Demonstration - Vector Index Retriever
-print("=" * 60)
-print("1. VECTOR INDEX RETRIEVER")
-print("=" * 60)
+def demo_vector_index_retriever():
+    print("=" * 60)
+    print("1. VECTOR INDEX RETRIEVER")
+    print("=" * 60)
 
-    # >> Basic Vector Retriever
-vector_retriever = VectorIndexRetriever(
-    index=lab.vector_index,
-    similarity_top_k=3
-)
+        # >> Basic Vector Retriever
+    vector_retriever = VectorIndexRetriever(
+        index=lab.vector_index,
+        similarity_top_k=3
+    )
 
-    # > Alternative creation method
-alt_retriever = lab.vector_index.as_retriever(similarity_top_k=3)
+        # > Alternative creation method
+    alt_retriever = lab.vector_index.as_retriever(similarity_top_k=3)
 
-query = DEMO_QUERIES["basic"]
-nodes = vector_retriever.retrieve(query)
+    query = DEMO_QUERIES["basic"]
+    nodes = vector_retriever.retrieve(query)
 
-print(f"Query: {query}")
-print(f"Retrieved {len(nodes)} nodes:")
+    print(f"Query: {query}")
+    print(f"Retrieved {len(nodes)} nodes:")
 
-for i, node in enumerate(nodes, 1):
-    print(f"{i}. Score: {node.score:.4F}")
-    print(f"    Text: {node.text[:100]}")
-    print()
+    for i, node in enumerate(nodes, 1):
+        print(f"{i}. Score: {node.score:.4F}")
+        print(f"    Text: {node.text[:100]}")
+        print()
+
+def demo_BM25():
+    print("=" * 60)
+    print("2. BM25 Retriever")
+    print("=" * 60)
+
+    try:
+        import Stemmer
+
+        # > Create BM25 retriever with default parameters
+        BM25Retriever.from_defaults(
+            nodes=lab.nodes,
+            similarity_top_k=3,
+            stemmer=Stemmer.Stemmer("english"),
+            language="english"
+        )
+
+    except:
+        pass
+
+demo_BM25()
 
 print(" --- working ---")
