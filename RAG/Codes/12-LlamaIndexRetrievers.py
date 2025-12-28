@@ -240,8 +240,29 @@ def demo_BM25():
         print("- b ≈ 0.75: Document length normalization (0=none, 1=full)")
         print("- IDF weighting: Rare terms get higher scores")
 
-    except:
-        pass
+    except ImportError:
+        print("⚠️ BM25Retriever requires 'pip install PyStemmer'")
+        print("Demonstrating BM25 concepts with fallback vector search...")
+
+        fallback_retriever = lab.vector_index.as_retriever(similarity_top_k=3)
+        query = DEMO_QUERIES["technical"]
+        nodes = fallback_retriever.retrieve(query)
+
+        print(f"Query: {query}")
+        print("(Using vector fallback to demonstrate BM25 concepts)")
+        
+        for i, node in enumerate(nodes, 1):
+            print(f"{i}. Vector Score: {node.score:.4f}")
+            print(f"   Text: {node.text[:100]}...")
+            
+            # > Demonstrate TF-IDF concept manually
+            text_lower = node.text.lower()
+            query_terms = query.lower().split()
+            found_terms = [term for term in query_terms if term in text_lower]
+            
+            if found_terms:
+                print(f"   → BM25 would boost this result for terms: {found_terms}")
+            print()
 
 demo_BM25()
 
