@@ -432,7 +432,17 @@ def demo_recursive_retriever():
             print(f"   Text: {node.text[:100]}...")
             print()
     except Exception as Ice:
-        pass
+        print(f"Query: {query}")
+        print(f"Recursive retriever demo: {str(Ice)}")
+        print("Note: Recursive retriever requires specific node reference setup")
+        
+        # Fallback to basic retrieval for demonstration
+        print("\nFalling back to basic retrieval demonstration...")
+        base_nodes = base_retriever.retrieve(query)
+        for i, node in enumerate(base_nodes[:2], 1):
+            print(f"{i}. Score: {node.score:.4f}")
+            print(f"   Text: {node.text[:100]}...")
+            print()
 
 demo_recursive_retriever()
 
