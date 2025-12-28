@@ -300,6 +300,19 @@ def demo_document_summary_index_retriever():
 
     query = DEMO_QUERIES["learning_types"]
     print(f"Query: {query}")
+
+    print("\nA) LLM-based Document Summary Retriever:")
+    print("Uses LLM to select relevant documents based on summaries")
+    try:
+        nodes_llm = doc_summary_retriever_llm.retrieve(query)
+        print_agent()
+        print(f"Retrieved {len(nodes_llm)} nodes:")
+        for i, node in enumerate(nodes_llm[:2], 1):
+            print(f"{i}. Score: {node.score:.4f}" if hasattr(node, 'score') and node.score else f"{i}. (Document summary)")
+            print(f"   Text: {node.text[:80]}...")
+            print()
+    except Exception as Ice:
+        print(f"LLM-based retrieval demo: {str(Ice)[:100]}...")
     
 
 demo_document_summary_index_retriever()
