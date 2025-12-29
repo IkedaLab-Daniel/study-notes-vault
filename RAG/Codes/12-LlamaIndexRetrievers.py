@@ -589,7 +589,6 @@ def demo_relative_score():
     query = DEMO_QUERIES["comprehensive"]
 
     try:
-        trigger_error = "Ice" + 123
         # > Create query fusion retriever with relative score mode
         rel_score_fusion = QueryFusionRetriever(
             [base_retriever],
@@ -662,6 +661,28 @@ def demo_relative_score():
                     'original': original_score,
                     'normalized': normalized_score
                 })
+            
+            # > Step 2: Sort by combined relative score
+            sorted_results = sorted(
+                all_results.values(),
+                key=lambda x: x['combined_score'],
+                reverse=True
+            )
+
+            print(f"\nCombined Relative Score Results (top 3):")
+            for i, result in enumerate(sorted_results[:3], 1):
+                print(f"{i}. Combined Score: {result['combined_score']:.4f}")
+                print(f"   Score breakdown:")
+                for contrib in result['contributions']:
+                    print(f"     Query {contrib['query']}: {contrib['original']:.3f} → {contrib['normalized']:.3f}")
+                print(f"   Text: {result['node'].text[:100]}...")
+                print()
+            
+            print("Relative Score Normalization Process:")
+            print("1. For each query variation, find max_score")
+            print("2. Normalize: normalized_score = original_score / max_score")
+            print("3. Sum normalized scores across all query variations")
+            print("4. Documents with consistently high scores across queries win")
 
 
 demo_relative_score()
