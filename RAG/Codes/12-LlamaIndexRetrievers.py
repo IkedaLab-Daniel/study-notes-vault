@@ -576,7 +576,52 @@ def demo_RRF():
             print("- Rank 3 in query: 1/(3+60) = 0.0159")
             print("Documents appearing in multiple queries get higher combined scores")
 
-demo_query_fusion_retriever()
-demo_RRF()
+def demo_relative_score():
+    print_agent()
+    print("=" * 60)
+    print("6.2 RELATIVE SCORE FUSION MODE DEMONSTRATION")
+    print("=" * 60)
+
+    # > Create QueryFusionRetriever with RRF mode
+    base_retriever = lab.vector_index.as_retriever(similarity_top_k=5)
+
+    # > Use the same query for consistenct across all fusion modes
+    query = DEMO_QUERIES["comprehensive"]
+
+    try:
+        # > Create query fusion retriever with relative score mode
+        rel_score_fusion = QueryFusionRetriever(
+            [base_retriever],
+            similarity_top_k=3,
+            num_queries=3,
+            mode="relative_score",
+            use_async=False,
+            verbose=True
+        )
+
+        print(f"\nQuery: {query}")
+        print("QueryFusionRetriever with relative_score will:")
+        print("1. Generate query variations")
+        print("2. Normalize scores within each variation (score/max_score)")
+        print("3. Combine normalized scores")
+        
+        nodes = rel_score_fusion.retrieve(query)
+        
+        print(f"\nRelative Score Fusion Results:")
+        for i, node in enumerate(nodes, 1):
+            print(f"{i}. Combined Relative Score: {node.score:.4f}")
+            print(f"   Text: {node.text[:100]}...")
+            print()
+        
+        print("Relative Score Benefits in Query Fusion:")
+        print("- Preserves confidence information from embedding model")
+        print("- Ensures fair contribution from each query variation")
+        print("- More interpretable than rank-only methods")
+    except Exception as Ice:
+        pass
+
+demo_relative_score()
+
+
 
 print(" --- working ---")
