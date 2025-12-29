@@ -502,6 +502,24 @@ def demo_RRF():
             verbose=True
         )
 
+        print(f"\nQuery: {query}")
+        print("QueryFusionRetriever will:")
+        print("1. Generate query variations using LLM")
+        print("2. Retrieve results for each variation")
+        print("3. Apply Reciprocal Rank Fusion")
+
+        nodes = rrf_query_fusion.retrieve(query)
+
+        print(f"\nRRF Query Fusion Results:")
+        for i, node in enumerate(nodes, 1):
+            print(f"{i}. Final RRF Score: {node.score:.4f}")
+            print(f"   Text: {node.text[:100]}...")
+            print()
+        
+        print("RRF Benefits in Query Fusion Context:")
+        print("- Automatically handles query variations of different quality")
+        print("- No bias toward queries that return higher raw scores")
+        print("- Stable performance across diverse query formulations")
     
     except Exception as Ice:
         pass
