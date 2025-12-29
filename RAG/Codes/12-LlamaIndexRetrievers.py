@@ -522,8 +522,59 @@ def demo_RRF():
         print("- Stable performance across diverse query formulations")
     
     except Exception as Ice:
-        pass
+        print(f"QueryFusionRetriever error: {Ice}")
+        print("Demonstrating RRF concept manually with query variations...")
 
+        # > Manual demonstration with query variation derived from the main query
+        query_variation = [
+            DEMO_QUERIES["comprehensive"], # > Original query
+            "machine learning approaches and methods",
+            "different ML Techniques and algorithms"
+        ]
+
+        print("Manual RRF with Query Variations:")
+        all_results = {}
+
+        for i, query_var in enumerate(query_variation):
+            print(f"\nQuery variation {i+1}: {query_var}")
+            nodes = base_retriever.retrieve(query_var)
+
+            # > Apply RRF Scoring
+            for rank, node in enumerate(nodes):
+                node_id = node.node.node_id
+                if node_id not in all_results:
+                    all_results[node_id] = {
+                        'node': node,
+                        'rrf_score': 0,
+                        'query_ranks': []
+                    }
+                
+                # > Calculate RRF contribution: 1 / (rank + k)
+                k = 60 # > Standard
+                rrf_contribution = 1.0 / (rank + 1 + k)
+                all_results[node_id]['rrf_score'] += rrf_contribution
+                all_results[node_id]['query_ranks'].append((i, rank + 1))
+            
+            # > Sort by final RRF score
+            sorted_results = sorted(
+                all_results.values(),
+                key=lambda x: x['rrf_score'],
+                reverse=True
+            )
+
+            print(f"\nCombined RRF Results (top 3):")
+            for i, result in enumerate(sorted_results[:3], 1):
+                print(f"{i}. Final RRF Score: {result['rrf_score']:.4f}")
+                print(f"   Query ranks: {result['query_ranks']}")
+                print(f"   Text: {result['node'].text[:100]}...")
+                print()
+            
+            print("RRF Formula Demonstration:")
+            print("For each document: RRF_score = Σ(1 / (rank + 60))")
+            print("- Rank 1 in query: 1/(1+60) = 0.0164")
+            print("- Rank 2 in query: 1/(2+60) = 0.0161")
+            print("- Rank 3 in query: 1/(3+60) = 0.0159")
+            print("Documents appearing in multiple queries get higher combined scores")
 
 demo_query_fusion_retriever()
 demo_RRF()
