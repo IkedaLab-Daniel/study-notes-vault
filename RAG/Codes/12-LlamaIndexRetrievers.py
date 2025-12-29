@@ -589,6 +589,7 @@ def demo_relative_score():
     query = DEMO_QUERIES["comprehensive"]
 
     try:
+        trigger_error = "Ice" + 123
         # > Create query fusion retriever with relative score mode
         rel_score_fusion = QueryFusionRetriever(
             [base_retriever],
@@ -618,7 +619,50 @@ def demo_relative_score():
         print("- Ensures fair contribution from each query variation")
         print("- More interpretable than rank-only methods")
     except Exception as Ice:
-        pass
+        print(f"QueryFusionRetriever error: {Ice}")
+        print("Demonstrating Relative Score concept manually...")
+        
+        # > Manual demonstration with query variations derived from the main query
+        query_variations = [
+            DEMO_QUERIES["comprehensive"],  # Original query
+            "machine learning approaches and methods",
+            "different ML techniques and algorithms"
+        ]
+        
+        print("Manual Relative Score Fusion with Query Variations:")
+        all_results = {}
+        query_max_scores = []
+
+        # > Step 1: Get results and find max scores for each query
+        for i, query_var in enumerate(query_variations):
+            print(f"\nQuery variation {i+1}: {query_var}")
+            nodes = base_retriever.retrieve(query_var)
+            scores = [node.score or 0 for node in nodes]
+            max_score = max(scores) if scores else 1.0
+            query_max_scores.append(max_score)
+            
+            print(f"Max score for this query: {max_score:.4f}")
+
+            # > Store results with normaliuzation info
+            for node in nodes:
+                node_id = node.node.node_id
+                original_score = node.score or 0
+                normalized_score = original_score / max_score if max_score > 0 else 0
+
+                if node_id not in all_results:
+                    all_results[node_id] = {
+                        'node': node,
+                        'combined_score': 0,
+                        'contributions': []
+                    }
+
+                all_results[node_id]['combined_score'] += normalized_score
+                all_results[node_id]['contributions'].append({
+                    'query': i,
+                    'original': original_score,
+                    'normalized': normalized_score
+                })
+
 
 demo_relative_score()
 
