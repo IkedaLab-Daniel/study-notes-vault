@@ -696,8 +696,8 @@ def demo_distribution_based():
     print("Testing QueryFusionRetriever with dist_based_score mode:")
     print("This mode uses statistical analysis for the most sophisticated score fusion")
 
-    # Use the same query for consistency across all fusion modes
-    query = DEMO_QUERIES["comprehensive"]  # "What are the main approaches to machine learning?"
+    # > Use the same query for consistency across all fusion modes
+    query = DEMO_QUERIES["comprehensive"]
 
     try:
         # > Create query fusion retriever with distribution-based mode
@@ -731,10 +731,99 @@ def demo_distribution_based():
         print("- Adapts weighting based on query variation reliability")
     
     except Exception as Ice:
-        pass
+        print(f"QueryFusionRetriever error: {Ice}")
+        print("Demonstrating Distribution-Based concept manually...")
+        
+        if not SCIPY_AVAILABLE:
+            print("⚠️ Full statistical analysis requires scipy")
 
+        # > Manual demonstration with query variation derieved from the main query
+        query_variations = [
+            DEMO_QUERIES["comprehensive"],
+            "machine learning approaches and methods",
+            "different ML techniques and algorithms"
+        ]
+        
+        print("Manual Distribution-Based Fusion with Query Variations:")
+        all_results = {}
+        variation_stats = []
 
-    print
+        # > Step 1: Collect results and analyze distributions
+        for i, query_var in enumerate(query_variations):
+            print(f"\nQuery variation {i+1}: {query_var}")
+            nodes = base_retriever.retrieve(query_var)
+            scores = [node.score or 0 for node in nodes]
+            
+            # > Calculate distribution statistics
+            mean_score = np.mean(scores) if scores else 0
+            std_score = np.std(scores) if len(scores) > 1 else 1
+            min_score = np.min(scores) if scores else 0
+            max_score = np.max(scores) if scores else 1
+            
+            stats_info = {
+                'mean': mean_score,
+                'std': std_score,
+                'min': min_score,
+                'max': max_score,
+                'nodes': nodes,
+                'scores': scores
+            }
+            variation_stats.append(stats_info)
+            
+            print(f"Distribution stats: mean={mean_score:.3f}, std={std_score:.3f}")
+            print(f"Score range: [{min_score: .3f}, {max_score:.3f}]")
+            
+            # > Apply z-score normalization
+            for node, score in zip(nodes, scores):
+                node_id = node.node.node_id
+                
+                # > Z-score normalization
+                if std_score > 0:
+                    z_score = (score - mean_score) / std_score
+                else:
+                    z_score = 0
+                
+                # > Convert to [0,1] using sigmoid
+                normalized_score = 1 / (1 + np.exp(-z_score))
+                
+                if node_id not in all_results:
+                    all_results[node_id] = {
+                        'node': node,
+                        'combined_score': 0,
+                        'contributions': []
+                    }
+                
+                all_results[node_id]['combined_score'] += normalized_score
+                all_results[node_id]['contributions'].append({
+                    'query': i,
+                    'original': score,
+                    'z_score': z_score,
+                    'normalized': normalized_score
+                })
+        
+        # > Step 2: Sort by combined distribution-based score
+        sorted_results = sorted(
+            all_results.values(),
+            key=lambda x: x['combined_score'],
+            reverse=True
+        )
+        
+        print(f"\nCombined Distribution-Based Results (top 3):")
+        for i, result in enumerate(sorted_results[:3], 1):
+            print(f"{i}. Combined Score: {result['combined_score']:.4f}")
+            print(f"   Statistical breakdown:")
+            for contrib in result['contributions']:
+                print(f"     Query {contrib['query']}: {contrib['original']:.3f} → "
+                    f"z={contrib['z_score']:.2f} → {contrib['normalized']:.3f}")
+            print(f"   Text: {result['node'].text[:100]}...")
+            print()
+        
+        print("Distribution-Based Process:")
+        print("1. Calculate mean and std for each query variation")
+        print("2. Z-score normalize: z = (score - mean) / std")
+        print("3. Sigmoid transform: normalized = 1 / (1 + exp(-z))")
+        print("4. Sum normalized scores across variations")
+        print("5. Results reflect statistical significance across all query forms")
 
 demo_distribution_based()
 
