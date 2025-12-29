@@ -446,6 +446,7 @@ def demo_recursive_retriever():
 
 def demo_query_fusion_retriever():
     print("=" * 60)
+    print_agent()
     print("6. QUERY FUSION RETRIEVER - OVERVIEW")
     print("=" * 60)
 
@@ -474,5 +475,39 @@ def demo_query_fusion_retriever():
     print("This allows direct comparison of how each fusion mode handles the same input.")
 
     print("\nProceed to subsections 6.1, 6.2, and 6.3 for detailed demonstrations...")
+
+def demo_RRF():
+
+    print("=" * 60)
+    print("6.1 RECIPROCAL RANK FUSION MODE DEMONSTRATION")
+    print("=" * 60)
+
+    # > Create QueryFusionRetriever with RRF mode
+    base_retriever = lab.vector_index.as_retriever(similarity_top_k=5)
+
+    print("Testing QueryFusionRetriever with reciprocal_rerank mode:")
+    print("This demonstrates how RRF works within the query fusion framework")
+
+    # > Use the same query for consistency across all fusion modes
+    query = DEMO_QUERIES["comprehensive"]  # > "What are the main approaches to machine learning?"
+
+    try:
+        # > Create query fusion retriever with RRF mode
+        rrf_query_fusion = QueryFusionRetriever(
+            [base_retriever],
+            similarity_top_k=3,
+            num_queries=3,
+            mode="reciprocal_rerank",
+            use_async=False,
+            verbose=True
+        )
+
+    
+    except Exception as Ice:
+        pass
+
+
+demo_query_fusion_retriever()
+demo_RRF()
 
 print(" --- working ---")
