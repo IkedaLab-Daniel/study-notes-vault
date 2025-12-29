@@ -685,8 +685,57 @@ def demo_relative_score():
             print("4. Documents with consistently high scores across queries win")
 
 
-demo_relative_score()
+def demo_distribution_based():
+    print_agent()
+    print("=" * 60)
+    print("6.3 DISTRIBUTION-BASED SCORE FUSION MODE DEMONSTRATION")
+    print("=" * 60)
+    
+    base_retriever = lab.vector_index.as_retriever(similarity_top_k=8)
+
+    print("Testing QueryFusionRetriever with dist_based_score mode:")
+    print("This mode uses statistical analysis for the most sophisticated score fusion")
+
+    # Use the same query for consistency across all fusion modes
+    query = DEMO_QUERIES["comprehensive"]  # "What are the main approaches to machine learning?"
+
+    try:
+        # > Create query fusion retriever with distribution-based mode
+        dist_fusion = QueryFusionRetriever(
+            [base_retriever],
+            similarity_top_k=10,
+            num_queries=3,
+            mode="dist_based_score",
+            use_async=False,
+            verbose=False
+        )
+
+        print(f"\nQuery: {query}")
+        print("QueryFusionRetriever with dist_based_score will:")
+        print("1. Generate query variations")
+        print("2. Analyze score distributions for each variation")
+        print("3. Apply statistical normalization (z-score, percentiles)")
+        print("4. Combine with distribution-aware weighting")
+
+        nodes = dist_fusion.retrieve(query)
+
+        print(f"\nDistribution-Based Fusion Results:")
+        for i, node in enumerate(nodes, 1):
+            print(f"{i}. Statistically Normalized Score: {node.score:.4f}")
+            print(f"   Text: {node.text[:100]}...")
+            print()
+        
+        print("Distribution-Based Benefits in Query Fusion:")
+        print("- Accounts for score distribution differences between query variations")
+        print("- Statistically robust against outliers and noise")
+        print("- Adapts weighting based on query variation reliability")
+    
+    except Exception as Ice:
+        pass
 
 
+    print
+
+demo_distribution_based()
 
 print(" --- working ---")
