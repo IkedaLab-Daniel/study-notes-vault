@@ -908,24 +908,27 @@ def exercise_1():
         print()
 
 # > Exercise 2 - Create a Production RAG Pipeline¶
-def exercise_2():
+class ProductionRAGPipeline:
     """ Build a complete RAG pipeline that uses multiple retrieval strategies and includes evaluation metrics. """
-    # TODO: Implement production RAG pipeline
-    class ProductionRAGPipeline:
-        def __init__(self, index, llm):
-            self.index = index
-            self.llm = llm
-            # Your initialization code here
-        
-        def query(self, question, strategy="auto"):
-            # Your implementation here
-            pass
-        
-        def evaluate(self, test_queries, expected_answers):
-            # Your evaluation implementation here
-            pass
+    def __init__(self, index, llm):
+        self.index = index
+        self.llm = llm
+        self.vector_retriever = index.as_retriever(similarity_top_k=5)
+    
+    def query(self, question, strategy="auto"):
+        """Simple query routing based on question characteristics"""
+        if any(word in question.lower() for word in ["what", "explain", "describe"]):
+            return "semantic"
+        elif any(word in question.lower() for word in ["list", "types", "examples"]):
+            return "comprehensive"
+        else:
+            return "semantic"
+    
+    def evaluate(self, test_queries, expected_answers):
+        # Your evaluation implementation here
+        pass
 
-    # Test the pipeline
-    pipeline = ProductionRAGPipeline(lab.vector_index, llm)
+# Test the pipeline
+pipeline = ProductionRAGPipeline(lab.vector_index, llm)
 
 print(" --- working ---")
