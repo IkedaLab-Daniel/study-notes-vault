@@ -897,4 +897,16 @@ def exercise_1():
         "supervised learning techniques"  # Mixed query
     ]
 
+    for query in test_queries:
+        print_agent()
+        print(f"Query: {query}")
+        results = hybrid_retrieve(query, top_k=3)
+        for i, result in enumerate(results, 1):
+            print(f"{i}. Hybrid Score: {result['hybrid_score']:.3f}")
+            print(f"   Vector: {result['vector_score']:.3f}, BM25: {result['bm25_score']:.3f}")
+            print(f"   Text: {result['node'].text[:80]}...")
+        print()
+
+exercise_1()
+
 print(" --- working ---")
