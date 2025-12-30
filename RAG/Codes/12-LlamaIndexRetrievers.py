@@ -872,6 +872,24 @@ def exercise_1():
             bm25_scores[text_key] = normalized_score
             all_nodes[text_key] = result
 
+        # > Calculate hybrid scores
+        hybrid_results = []
+        for text_key in all_nodes:
+            vector_score = vector_scores.get(text_key, 0)
+            bm25_score = bm25_scores.get(text_key, 0)
+            hybrid_score = 0.7 * vector_score + 0.3 * bm25_score
+            
+            hybrid_results.append({
+                'node': all_nodes[text_key],
+                'vector_score': vector_score,
+                'bm25_score': bm25_score,
+                'hybrid_score': hybrid_score
+            })
+        
+        # > Sort by hybrid score and return top k
+        hybrid_results.sort(key=lambda x: x['hybrid_score'], reverse=True)
+        return hybrid_results[:top_k]
+
     # > Step 3: Test with different queries
     test_queries = [
         "What is machine learning?",  # Semantic query
