@@ -981,11 +981,42 @@ Answer:"""
                 "status": f"error: {str(Ice)}"
             }
     
-    def evaluate(self, test_queries, expected_answers):
-        # Your evaluation implementation here
-        pass
+    def evaluate(self, test_queries):
+        results = []
+        for query in test_queries:
+            result = self.query(query)
+            results.append({
+                "query": query,
+                "result": result,
+                "success": result["status"] == "success"
+            })
+        
+        success_rate = sum(1 for r in results if r["success"]) / len(results)
+        return {
+            "success_rate": success_rate,
+            "results": results
+        }
 
-# Test the pipeline
-pipeline = ProductionRAGPipeline(lab.vector_index, llm)
+def test_pipeline():
+    # > Test the pipeline
+    pipeline = ProductionRAGPipeline(lab.vector_index, llm)
+
+    test_queries = [
+        "What is machine learning?",
+        "List different types of learning algorithms",
+        "Explain neural networks"
+    ]
+
+    print("Testing Production RAG Pipeline:")
+    for query in test_queries:
+        result = pipeline.query(query)
+        print(f"\nQuery: {query}")
+        print(f"Strategy: {result['strategy']}")
+        print(f"Status: {result['status']}")
+        print(f"Answer: {result['answer'][:100]}...")
+
+    # > Evaluate performance
+    evaluation = pipeline.evaluate(test_queries)
+    print(f"\nPipeline Success Rate: {evaluation['success_rate']:.2%}")
 
 print(" --- working ---")
