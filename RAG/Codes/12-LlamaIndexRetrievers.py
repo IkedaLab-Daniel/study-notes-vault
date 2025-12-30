@@ -1019,4 +1019,19 @@ def test_pipeline():
     evaluation = pipeline.evaluate(test_queries)
     print(f"\nPipeline Success Rate: {evaluation['success_rate']:.2%}")
 
+def chatbot():
+    pipeline = ProductionRAGPipeline(lab.vector_index, llm)
+
+    query = input(" >> ")
+
+    result = pipeline.query(query)
+    print_agent()
+    print(f"""\033[92m
+----------------------------------------------------------------
+    >> {result['answer']}
+----------------------------------------------------------------
+\033[0m""")
+
+chatbot()
+
 print(" --- working ---")
