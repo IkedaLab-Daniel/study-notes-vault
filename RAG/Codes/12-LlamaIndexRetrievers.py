@@ -825,6 +825,25 @@ def demo_distribution_based():
         print("4. Sum normalized scores across variations")
         print("5. Results reflect statistical significance across all query forms")
 
-demo_distribution_based()
+# > Exercise 1 - Build a Custom Hybrid Retriever
+def exercise_1():
+    """ Your task is to create a hybrid retriever that combines both vector similarity and BM25 keyword search for improved results."""
+
+    # TODO: Implement hybrid retriever
+    # > Step 1: Create both retrievers
+    vector_retriever = # Your code here
+    bm25_retriever = # Your code here
+
+    # > Step 2: Implement score fusion
+    def hybrid_retrieve(query, top_k=5):
+        # Your implementation here
+        pass
+
+    # > Step 3: Test with different queries
+    test_queries = [
+        "What is machine learning?",  # Semantic query
+        "neural networks deep learning",  # Keyword query
+        "supervised learning techniques"  # Mixed query
+    ]
 
 print(" --- working ---")
