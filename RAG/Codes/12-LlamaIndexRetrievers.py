@@ -833,8 +833,8 @@ def exercise_1():
     # > Step 1: Create both retrievers
         # > Vector Index
     vector_retriever = VectorIndexRetriever(
-        index=lab.vector_index,
-        similarity_top_k=3
+        index=lab.vector_index, # ? 
+        similarity_top_k=10
     )
         # > BM25
     import Stemmer
@@ -847,8 +847,30 @@ def exercise_1():
 
     # > Step 2: Implement score fusion
     def hybrid_retrieve(query, top_k=5):
-        # Your implementation here
-        pass
+        # > Get results from both retrievers
+        vector_results = vector_retriever.retrieve(query)
+        bm25_results = bm25_retriever.retrieve(query)
+
+        # > Create dictionaries using text content as keys (since node IDs differ)
+        vector_scores = {}
+        bm25_scores = {}
+        all_nodes = {}
+
+        # > Normalize vector scores
+        max_vector_score = max([r.score for r in vector_results]) if vector_results else 1
+        for result in vector_results:
+            text_key = result.text.strip()  # Use text content as key
+            normalized_score = result.score / max_vector_score
+            vector_scores[text_key] = normalized_score
+            all_nodes[text_key] = result
+        
+        # > Normalize BM25 scores
+        max_bm25_score = max([r.score for r in bm25_results]) if bm25_results else 1
+        for result in bm25_results:
+            text_key = result.text.strip()  # Use text content as key
+            normalized_score = result.score / max_bm25_score
+            bm25_scores[text_key] = normalized_score
+            all_nodes[text_key] = result
 
     # > Step 3: Test with different queries
     test_queries = [
