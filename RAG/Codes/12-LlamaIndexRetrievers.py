@@ -914,8 +914,8 @@ class ProductionRAGPipeline:
         self.index = index
         self.llm = llm
         self.vector_retriever = index.as_retriever(similarity_top_k=5)
-    
-    def query(self, question, strategy="auto"):
+
+    def _route_query(self, question):
         """Simple query routing based on question characteristics"""
         if any(word in question.lower() for word in ["what", "explain", "describe"]):
             return "semantic"
@@ -923,6 +923,63 @@ class ProductionRAGPipeline:
             return "comprehensive"
         else:
             return "semantic"
+    
+    def query(self, question, strategy="auto"):
+        try:
+            # > Route query if strategy is auto
+            if strategy == "auto":
+                strategy = self._route_query(question)
+            
+            # > Retrieve relevant documents
+            if strategy == "semantic":
+                retriever = self.vector_retriever
+                top_k = 3
+            elif strategy == "comprehensive":
+                retriever = self.vector_retriever
+                top_k = 5
+            else:
+                retriever = self.vector_retriever
+                top_k = 3
+            
+            # > Get relevant documents
+            relevant_docs = retriever.retrieve(question)
+            
+            # > Prepare context
+            context = "\n\n".join([doc.text for doc in relevant_docs[:top_k]])
+
+            # > Generate response
+            prompt = f"""Based on the following context, please answer the question:
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+            
+            try:
+                response = self.llm.complete(prompt)
+                return {
+                    "answer": response.text,
+                    "strategy": strategy,
+                    "num_docs": len(relevant_docs),
+                    "status": "success"
+                }
+            except Exception as Ice:
+                return {
+                    "answer": f"Based on the retrieved documents: {context[:200]}...",
+                    "strategy": strategy,
+                    "num_docs": len(relevant_docs),
+                    "status": f"llm_error: {str(Ice)}"
+                }
+                
+        except Exception as Ice:
+            return {
+                "answer": "I encountered an error processing your question.",
+                "strategy": strategy,
+                "num_docs": 0,
+                "status": f"error: {str(Ice)}"
+            }
     
     def evaluate(self, test_queries, expected_answers):
         # Your evaluation implementation here
