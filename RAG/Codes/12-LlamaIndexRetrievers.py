@@ -831,8 +831,19 @@ def exercise_1():
 
     # TODO: Implement hybrid retriever
     # > Step 1: Create both retrievers
-    vector_retriever = # Your code here
-    bm25_retriever = # Your code here
+        # > Vector Index
+    vector_retriever = VectorIndexRetriever(
+        index=lab.vector_index,
+        similarity_top_k=3
+    )
+        # > BM25
+    import Stemmer
+    bm25_retriever = BM25Retriever.from_defaults(
+            nodes=lab.nodes,
+            similarity_top_k=3,
+            stemmer=Stemmer.Stemmer("english"),
+            language="english"
+        )
 
     # > Step 2: Implement score fusion
     def hybrid_retrieve(query, top_k=5):
