@@ -228,3 +228,132 @@
 - The Recursive Retriever follows relationships between nodes and uses references such as citations in academic papers or metadata links
 - The Query Fusion Retriever combines results from different retrievers using fusion strategies
 - The fusion strategies supported by the Query Fusion Retriever are Reciprocal Rank Fusion, Relative Score Fusion, and Distribution-Based Fusion
+
+> # Module 2
+
+## Introduction to FAISS vs Chroma DB
+
+* **FAISS (Facebook AI Similarity Search)** and **Chroma DB** are tools for vector similarity search, but they’re designed for different goals and use cases.
+
+---
+
+### What is FAISS?
+
+* A **library** developed by Meta for fast vector similarity search.
+* Runs on a **single machine** (CPU or GPU).
+* No built-in database or server—you interact with it purely through code.
+* Offers **fine-grained control** and **high performance**.
+* Best when you want maximum optimization and are comfortable managing everything yourself.
+
+---
+
+### What is Chroma DB?
+
+* A **full vector database** built specifically for AI applications.
+* Stores **vectors + metadata** (tags, descriptions, IDs).
+* Can run **locally or as a server**.
+* Easy to integrate with **LangChain and LlamaIndex**.
+* Optimized for fast prototyping and developer convenience.
+
+---
+
+### Key Differences: FAISS vs Chroma DB
+
+| Feature                | FAISS             | Chroma DB                      |
+| ---------------------- | ----------------- | ------------------------------ |
+| Type                   | Library           | Database                       |
+| Deployment             | Single-node only  | Single-node or distributed     |
+| Metadata support       | ❌ Not native      | ✅ Built-in                     |
+| Index options          | Many              | HNSW only                      |
+| Ease of use            | Low-level, manual | High-level, developer-friendly |
+| LangChain / LlamaIndex | ✅ Yes             | ✅ Yes                          |
+
+---
+
+### FAISS Index Types
+
+Indexes trade off **speed, memory, and accuracy**.
+
+### 1. Flat Index
+
+* Brute-force comparison against all vectors.
+* Uses Euclidean distance or dot product.
+* ✅ Most accurate
+* ❌ Very slow for large datasets
+
+---
+
+### 2. Inverted File Index (IVF)
+
+* Clusters vectors using methods like **k-means**.
+* Searches only within the nearest clusters (Voronoi cells).
+* ✅ Much faster than flat
+* ⚠️ Slight accuracy loss
+
+---
+
+### 3. Locality-Sensitive Hashing (LSH)
+
+* Uses hash functions to group similar vectors.
+* Fast and memory-efficient.
+* Good for **high-dimensional sparse data** (e.g., text).
+* ⚠️ Neither the fastest nor most accurate option
+
+---
+
+### 4. Hierarchical Navigable Small World (HNSW)
+
+* Organizes vectors into **multiple graph layers**.
+* Top layers: sparse, fast navigation
+* Lower layers: dense, fine-grained search
+* Search starts at the top and moves downward.
+* ✅ Fast **and** accurate for large datasets
+* This is the **only index type used by Chroma DB**
+
+---
+
+## Extending FAISS with Milvus
+
+FAISS alone lacks:
+
+* Metadata filtering
+* Distributed scaling
+
+**Milvus** fills these gaps:
+
+* Uses FAISS as an indexing engine.
+* Supports **metadata + hybrid queries**
+  *(e.g., “find similar items under $50”)*
+* Enables **distributed, production-scale deployments**
+
+---
+
+## When to Use What?
+
+* **Use FAISS**
+
+  * You want full control and maximum performance.
+  * Single-machine setup is enough.
+  * You’re building custom or experimental systems.
+
+* **Use Chroma DB**
+
+  * You want fast prototyping.
+  * You need metadata filtering.
+  * You’re building AI apps or RAG pipelines quickly.
+
+* **Use Milvus**
+
+  * You need production-ready scalability.
+  * You want metadata + hybrid search.
+  * You’re working with large, distributed datasets.
+
+---
+
+## Key Takeaways
+
+* FAISS = power and control, but low-level.
+* Chroma DB = ease of use and metadata support.
+* Milvus = FAISS + scalability + metadata.
+* All three can integrate with **LangChain** and **LlamaIndex**.
+* Choose based on **project size, complexity, and infrastructure needs**.
