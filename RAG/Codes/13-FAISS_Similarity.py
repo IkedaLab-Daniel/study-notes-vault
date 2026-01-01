@@ -62,4 +62,17 @@ print("\033[92mPreprocessed post:\n")
 print(preprocess_text(data[sample_index]))
 print("\n" + "-"*80 + "\n\033[0m")
 
+# > Universal Sentence Encoder
+import tensorflow_hub as hub
+import numpy as np
+
+# Load the Universal Sentence Encoder's TF Hub module (first time can take a bit)
+embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
+
+# Suppose processed_documents is your list of preprocessed texts
+# Instead of looping, embed everything at once
+X_use = embed(processed_documents).numpy()
+
+print(X_use)
+
 print("\n --- End ---")
