@@ -93,13 +93,17 @@ def search(query_text, k=5):
     return distances, indices
 
 # > Example Query
-query_text = "motorcycle"
-distances, indices = search(query_text)
+while True:
+    query_text = input("\nEnter query >>")
 
-# > Display the results
-print_agent()
-for i, idx in enumerate(indices[0]):
-    # ? Ensure that the displayed document is the preprocessed one
-    print(f"Rank {i+1}: (Distance: {distances[0][i]})\n{processed_documents[idx]}\n")
+    if query_text == "quit":
+        break
+    distances, indices = search(query_text)
+
+    # > Display the results
+    print_agent()
+    for i, idx in enumerate(indices[0]):
+        # ? Ensure that the displayed document is the preprocessed one
+        print(f"Rank {i+1}: (Distance: {distances[0][i]})\n{processed_documents[idx]}\n")
 
 print("\n --- End ---")
