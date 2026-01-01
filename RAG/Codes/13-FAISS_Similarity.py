@@ -75,4 +75,9 @@ X_use = embed(processed_documents).numpy()
 
 print(X_use)
 
+# > Indexing with FAISS
+dimension = X_use.shape[1]
+index = faiss.IndexFlatL2(dimension)  # Creating a FAISS index
+index.add(X_use)  # Adding the document vectors to the index
+
 print("\n --- End ---")
