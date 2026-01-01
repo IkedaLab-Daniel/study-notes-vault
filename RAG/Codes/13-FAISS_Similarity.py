@@ -48,4 +48,18 @@ def preprocess_text(text):
 # ? Preprocess each document
 processed_documents = [preprocess_text(doc) for doc in data]
 
+
+# > Choose a sample post to display
+sample_index = 0  # for example, the first post in the dataset
+
+# ? Print the original post
+print("\033[93mOriginal post:\n")
+print(data[sample_index])
+print("\n" + "-"*80 + "\n\033[0m")
+
+# ? Print the preprocessed post
+print("\033[92mPreprocessed post:\n")
+print(preprocess_text(data[sample_index]))
+print("\n" + "-"*80 + "\n\033[0m")
+
 print("\n --- End ---")
