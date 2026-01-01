@@ -6,6 +6,7 @@ import re
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer
 from pprint import pprint
+from utils import print_agent
 
 # Suppressing warnings
 def warn(*args, **kwargs):
@@ -79,5 +80,26 @@ print(X_use)
 dimension = X_use.shape[1]
 index = faiss.IndexFlatL2(dimension)  # Creating a FAISS index
 index.add(X_use)  # Adding the document vectors to the index
+
+# > Quering with FAISS
+# > Function to perform a query using the Faiss index
+def search(query_text, k=5):
+    # ? Preprocess the query text
+    preprocessed_query = preprocess_text(query_text)
+    # ? Generate the query vector
+    query_vector = embed([preprocessed_query]).numpy()
+    # ? Perform the search
+    distances, indices = index.search(query_vector.astype('float32'), k)
+    return distances, indices
+
+# > Example Query
+query_text = "motorcycle"
+distances, indices = search(query_text)
+
+# > Display the results
+print_agent()
+for i, idx in enumerate(indices[0]):
+    # ? Ensure that the displayed document is the preprocessed one
+    print(f"Rank {i+1}: (Distance: {distances[0][i]})\n{processed_documents[idx]}\n")
 
 print("\n --- End ---")
