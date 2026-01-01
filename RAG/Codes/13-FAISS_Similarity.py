@@ -30,3 +30,22 @@ for i in range(3):
     print(f"Sample post {i+1}:\n")
     pprint(data[i])
     print("\n" + "-" * 80 + "\n")
+
+# > Basic preprocessing of text data
+def preprocess_text(text):
+    # ? Remove email headers
+    text = re.sub(r'^From:.*\n?', '', text, flags=re.MULTILINE)
+    # ? Remove email addresses
+    text = re.sub(r'\S*@\S*\s?', '', text)
+    # ? Remove punctuations and numbers
+    text = re.sub(r'[^a-zA-Z\s]', '', text)
+    # ? Convert to lowercase
+    text = text.lower()
+    # ? Remove excess whitespace
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+# ? Preprocess each document
+processed_documents = [preprocess_text(doc) for doc in data]
+
+print("\n --- End ---")
