@@ -13,5 +13,12 @@ from ibm_watsonx_ai.foundation_models.utils.enums import EmbeddingTypes  # > For
 from langchain_community.vectorstores import FAISS  # > For efficient vector storage and similarity search
 from langchain.chains import LLMChain  # > For creating chains of operations with LLMs
 from langchain.prompts import PromptTemplate  # > For defining prompt templates
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+PROJECT_ID = os.getenv("PROJECT_ID")
+API_KEY = os.getenv("API_KEY")
+URL = os.getenv("URL")
 
 print(" --- End ---")
