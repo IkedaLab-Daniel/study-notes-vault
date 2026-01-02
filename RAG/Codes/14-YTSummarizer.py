@@ -56,4 +56,13 @@ def get_transcript(url):
     
     return transcript if transcript else None
 
+# ? Sample YouTube URL
+# url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+
+# ? Fetching the transcript
+#transcript = get_transcript(url)
+
+# ? Output the fetched transcript
+# print(transcript)
+
 print(" --- End ---")
