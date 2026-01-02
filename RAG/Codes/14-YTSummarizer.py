@@ -72,11 +72,37 @@ def process(transcript):
     # > Loop through each entry in the transcript
     for i in transcript:
         try:
-            # > Append the text and its start time tot the output string
-            txt += f"Text: {i.text} Start: {i.start}\n"
+            # > Append the text and its start time to the output string
+            txt += f"Text: {i['text']} Start: {i['start']}\n"
         except KeyError:
             pass
     
     return txt
+
+# ? Sample process() usage
+# ? Sample transcript list
+# transcript = [
+#     {
+#         "text": "We're no strangers to love.",
+#         "start": 0.0,
+#         "duration": 3.5
+#     },
+#     {
+#         "text": "You know the rules and so do I.",
+#         "start": 3.5,
+#         "duration": 4.0
+#     },
+#     {
+#         "text": "A full commitment's what I'm thinking of.",
+#         "start": 7.5,
+#         "duration": 4.0
+#     }
+# ]
+
+# ? Processing the transcript
+# formatted_transcript = process(transcript)
+
+# ? Output the processed transcript
+# print(formatted_transcript)
 
 print(" --- End ---")
