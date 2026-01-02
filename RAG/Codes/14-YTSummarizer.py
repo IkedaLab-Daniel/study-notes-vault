@@ -65,4 +65,18 @@ def get_transcript(url):
 # ? Output the fetched transcript
 # print(transcript)
 
+def process(transcript):
+    # > Initialize an empty string to hold the formatted transcript
+    txt = ""
+
+    # > Loop through each entry in the transcript
+    for i in transcript:
+        try:
+            # > Append the text and its start time tot the output string
+            txt += f"Text: {i.text} Start: {i.start}\n"
+        except KeyError:
+            pass
+    
+    return txt
+
 print(" --- End ---")
