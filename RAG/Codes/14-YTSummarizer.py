@@ -26,5 +26,10 @@ def get_video_id(url):
     match = re.search(pattern, url)
     return match.group(1) if match else None
 
+# ? sample get_video_id usage
+url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+video_id = get_video_id(url)
+print(video_id)
+
 
 print(" --- End ---")
