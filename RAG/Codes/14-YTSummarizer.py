@@ -1,4 +1,3 @@
-# Import necessary libraries for the YouTube bot
 import gradio as gr
 import re # > For extracting video id 
 from youtube_transcript_api import YouTubeTranscriptApi  # > For extracting transcripts from YouTube videos
@@ -20,5 +19,12 @@ load_dotenv()
 PROJECT_ID = os.getenv("PROJECT_ID")
 API_KEY = os.getenv("API_KEY")
 URL = os.getenv("URL")
+
+def get_video_id(url):
+    # > Regex pattern to match YT video URLs
+    pattern = r'https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})'
+    match = re.search(pattern, url)
+    return match.group(1) if match else None
+
 
 print(" --- End ---")
