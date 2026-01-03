@@ -216,5 +216,16 @@ def create_summary_prompt():
     
     return prompt
 
+def create_summary_chain(llm, prompt, verbose=True):
+    """
+    Create an LLMChain for generating summaries.
+    
+    :param llm: Language model instance
+    :param prompt: PromptTemplate instance
+    :param verbose: Boolean to enable verbose output (default: True)
+    :return: LLMChain instance
+    """
+    return LLMChain(llm=llm, prompt=prompt, verbose=verbose)
+
 
 print(" --- End ---")
