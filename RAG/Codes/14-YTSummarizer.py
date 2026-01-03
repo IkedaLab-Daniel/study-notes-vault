@@ -153,4 +153,12 @@ def initialize_watsonx_llm(model_id, credentials, project_id, parameters):
         params=parameters
     )
 
+def setup_embedding_model(credentials, project_id):
+    # > Create and return an instance of WatsonXEmbeddings
+    return WatsonxEmbeddings(
+        model_id='ibm/slate-30m-english-rtrvr-v2',
+        url=credentials["url"],
+        project_id=project_id
+    )
+
 print(" --- End ---")
