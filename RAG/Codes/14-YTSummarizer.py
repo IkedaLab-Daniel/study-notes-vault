@@ -161,4 +161,15 @@ def setup_embedding_model(credentials, project_id):
         project_id=project_id
     )
 
+def create_faiss_index(chunks, embedding_model):
+    """
+    Create a FAISS index from text chunks using the specified embedding model.
+    
+    :param chunks: List of text chunks
+    :param embedding_model: The embedding model to use
+    :return: FAISS index
+    """
+    # > Use the FAISS library to create an index from the provided text chunks
+    return FAISS.from_texts(chunks, embedding_model)
+
 print(" --- End ---")
