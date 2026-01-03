@@ -118,14 +118,31 @@ def chunk_transcript(processed_transcript, chunk_size=200, chunk_overlap=20):
     return chunks
 
 # ? Sample processed transcript string
-processed_transcript = """Text: We're no strangers to love. Start: 0.0
-Text: You know the rules and so do I. Start: 3.5
-Text: A full commitment's what I'm thinking of. Start: 7.5"""
+# processed_transcript = """Text: We're no strangers to love. Start: 0.0
+# Text: You know the rules and so do I. Start: 3.5
+# Text: A full commitment's what I'm thinking of. Start: 7.5"""
 
 # ? Chunking the transcript
-chunks = chunk_transcript(processed_transcript)
+# chunks = chunk_transcript(processed_transcript)
 
 # ? Output the chunks
-print(chunks)
+# print(chunks)
+
+def setup_credentials():
+    # > Define model id
+    model_id = "meta-llama/llama-3-3-70b-instruct"
+
+    # > Set up the credentials byspecifying the URL for IBM watchson services
+    credentials = Credentials(url=URL)
+
+    # > Create an API client using the credentials
+    client = APIClient(credentials)
+    
+    # > Define the project ID associated with the WatsonX platform
+    project_id = PROJECT_ID
+    
+    # > Return the model ID, credentials, client, and project ID (plus API_KEY) for later use
+    return model_id, credentials, client, project_id, API_KEY
+
 
 print(" --- End ---")
