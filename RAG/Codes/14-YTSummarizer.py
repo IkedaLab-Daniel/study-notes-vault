@@ -185,4 +185,36 @@ def perform_similarity_search(faiss_index, query, k=3):
     results = faiss_index.similarity_search(query, k=k)
     return results
 
+# > Summarizing the transcript
+def create_summary_prompt():
+    """
+    Create a PromptTemplate for summarizing a YouTube video transcript.
+    
+    :return: PromptTemplate object
+    """
+    # > Define the template for the summary prompt
+    template = """
+    <|begin_of_text|><|start_header_id|>system<|end_header_id|>
+    You are an AI assistant tasked with summarizing YouTube video transcripts. Provide concise, informative summaries that capture the main points of the video content.
+
+    Instructions:
+    1. Summarize the transcript in a single concise paragraph.
+    2. Ignore any timestamps in your summary.
+    3. Focus on the spoken content (Text) of the video.
+
+    Note: In the transcript, "Text" refers to the spoken words in the video, and "start" indicates the timestamp when that part begins in the video.<|eot_id|><|start_header_id|>user<|end_header_id|>
+    Please summarize the following YouTube video transcript:
+
+    {transcript}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+    """
+    
+    # > Create the PromptTemplate object with the defined template
+    prompt = PromptTemplate(
+        input_variables=["transcript"],
+        template=template
+    )
+    
+    return prompt
+
+
 print(" --- End ---")
