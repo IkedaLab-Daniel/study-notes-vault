@@ -144,5 +144,13 @@ def setup_credentials():
     # > Return the model ID, credentials, client, and project ID (plus API_KEY) for later use
     return model_id, credentials, client, project_id, API_KEY
 
+def initialize_watsonx_llm(model_id, credentials, project_id, parameters):
+    # > Create and return an instance of the WatsonLLM with specified configuratiuon
+    return WatsonxLLM(
+        model_id=model_id,
+        url=credentials.get("url"),
+        project_id=project_id,
+        params=parameters
+    )
 
 print(" --- End ---")
