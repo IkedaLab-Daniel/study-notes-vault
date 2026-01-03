@@ -117,4 +117,15 @@ def chunk_transcript(processed_transcript, chunk_size=200, chunk_overlap=20):
     chunks = text_splitter.split_text(processed_transcript)
     return chunks
 
+# ? Sample processed transcript string
+processed_transcript = """Text: We're no strangers to love. Start: 0.0
+Text: You know the rules and so do I. Start: 3.5
+Text: A full commitment's what I'm thinking of. Start: 7.5"""
+
+# ? Chunking the transcript
+chunks = chunk_transcript(processed_transcript)
+
+# ? Output the chunks
+print(chunks)
+
 print(" --- End ---")
