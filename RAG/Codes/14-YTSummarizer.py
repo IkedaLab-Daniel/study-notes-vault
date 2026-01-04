@@ -243,4 +243,28 @@ def retrieve(query, faiss_index, k=7):
     relevant_context = faiss_index.similarity_search(query, k=k)
     return relevant_context
 
+# > Creating the Q&A prompt template
+def create_qa_prompt_template():
+    """
+    Create a PromptTemplate for question answering based on video content.
+    Returns:
+        PromptTemplate: A PromptTemplate object configured for Q&A tasks.
+    """
+    
+    # > Define the template string
+    qa_template = """
+    You are an expert assistant providing detailed answers based on the following video content.
+    Relevant Video Context: {context}
+    Based on the above context, please answer the following question:
+    Question: {question}
+    """
+
+    # > Create thje PromptTemplate Object
+    prompt_template = PromptTemplate(
+        input_variables=["centext", "questions"],
+        template=qa_template
+    )
+
+    return prompt_template
+
 print(" --- End ---")
