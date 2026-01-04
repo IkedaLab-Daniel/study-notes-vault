@@ -74,7 +74,7 @@ def process(transcript):
     for i in transcript:
         try:
             # > Append the text and its start time to the output string
-            txt += f"Text: {i['text']} Start: {i['start']}\n"
+            txt += f"Text: {i.text} Start: {i.start}\n"
         except KeyError:
             pass
     
@@ -134,7 +134,7 @@ def setup_credentials():
     model_id = "meta-llama/llama-3-3-70b-instruct"
 
     # > Set up the credentials byspecifying the URL for IBM watchson services
-    credentials = Credentials(url=URL)
+    credentials = Credentials(url=URL, api_key=API_KEY)
 
     # > Create an API client using the credentials
     client = APIClient(credentials)
@@ -143,7 +143,7 @@ def setup_credentials():
     project_id = PROJECT_ID
     
     # > Return the model ID, credentials, client, and project ID (plus API_KEY) for later use
-    return model_id, credentials, client, project_id, API_KEY
+    return model_id, credentials, client, project_id
 
 def initialize_watsonx_llm(model_id, credentials, project_id, parameters):
     # > Create and return an instance of the WatsonLLM with specified configuratiuon
@@ -151,7 +151,8 @@ def initialize_watsonx_llm(model_id, credentials, project_id, parameters):
         model_id=model_id,
         url=credentials.get("url"),
         project_id=project_id,
-        params=parameters
+        params=parameters,
+        apikey=API_KEY
     )
 
 def setup_embedding_model(credentials, project_id):
@@ -323,5 +324,54 @@ def generate_answer(question, faiss_index, qa_chain, k=7):
     answer = qa_chain.predict(context=relevant_context, question=question)
 
     return answer
+
+# > Summarizing a video
+# > Initialize an empty string to store the processed transcript after fetching and preprocessing
+processed_transcript = ""
+def summarize_video(video_url):
+    """
+    Title: Summarize Video
+    Description:
+    This function generates a summary of the video using the preprocessed transcript.
+    If the transcript hasn't been fetched yet, it fetches it first.
+    Args:
+        video_url (str): The URL of the YouTube video from which the transcript is to be fetched.
+    Returns:
+        str: The generated summary of the video or a message indicating that no transcript is available.
+    """
+    global fetched_transcript, processed_transcript
+
+    if video_url:
+        # > Fetch and preprocess transcript
+        fetched_transcript = get_transcript(video_url)
+        processed_transcript = process(fetched_transcript)
+    else:
+        return "Please provide a valid YouTube URL"
+    
+    if processed_transcript:
+        # > Step 1: Set up IBM Watson credentials
+        model_id, credentials, client, project_id, = setup_credentials()
+
+        # > Step 2: Init WatsonX LLM for summarization
+        # llm = initialize_watsonx_llm(model_id, credentials, project_id, define_parameters())
+        parameters = {
+            "min_new_token" : 10
+        }
+        llm = initialize_watsonx_llm(model_id, credentials, project_id, parameters=parameters)
+
+        # > Step 3: Create the summary prompt and chain
+        summary_prompt = create_summary_prompt()
+        summary_chain = create_summary_chain(llm, summary_prompt)
+
+        # > Step 4: Generate the video summary
+        summary = summary_chain.run({"transcript": processed_transcript})
+        return summary
+    else:
+        return "No transcript available. Please fetch the transcript first"
+
+
+result = summarize_video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+print_agent()
+print(result)
 
 print(" --- End ---")
