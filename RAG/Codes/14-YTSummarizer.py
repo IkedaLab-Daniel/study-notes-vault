@@ -160,7 +160,8 @@ def setup_embedding_model(credentials, project_id):
     return WatsonxEmbeddings(
         model_id='ibm/slate-30m-english-rtrvr-v2',
         url=credentials["url"],
-        project_id=project_id
+        project_id=project_id,
+        apikey=API_KEY
     )
 
 def create_faiss_index(chunks, embedding_model):
@@ -369,9 +370,72 @@ def summarize_video(video_url):
     else:
         return "No transcript available. Please fetch the transcript first"
 
+# > Answering a user's quuestion
+def answer_question(video_url, user_question):
+    """
+    Title: Answer User's Question
+    Description:
+    This function retrieves relevant context from the FAISS index based on the user’s query 
+    and generates an answer using the preprocessed transcript.
+    If the transcript hasn't been fetched yet, it fetches it first.
+    Args:
+        video_url (str): The URL of the YouTube video from which the transcript is to be fetched.
+        user_question (str): The question posed by the user regarding the video.
+    Returns:
+        str: The answer to the user's question or a message indicating that the transcript 
+             has not been fetched.
+    """
 
-result = summarize_video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    global fetched_transcript, processed_transcript
+
+    # > Check if the transcript needs to be fetched
+    if not processed_transcript:
+        if video_url:
+            # > Fetch and preprocess transcript
+            fetched_transcript = get_transcript(video_url)
+            processed_transcript = process(fetched_transcript)
+        else:
+            return "Please provide a valid YouTube URL"
+    
+    if processed_transcript and user_question:
+        # > Step 1: Chunk the transcript (only for Q&A)
+        chunks = chunk_transcript(processed_transcript)
+
+        # > Step 2: Set up IBM Watson credentials
+        model_id, credentials, client, project_id = setup_credentials()
+
+        # > Step 3: Initialize WatsonX LLM for Q&A
+        # llm = initialize_watsonx_llm(model_id, credentials, project_id, define_parameters())
+        parameters = {
+            "min_new_token" : 10
+        }
+        llm = initialize_watsonx_llm(model_id, credentials, project_id, parameters=parameters)
+
+        # > Step 4: Create FAISS index for transcript chunks (only needed for Q&A)
+        embedding_model = setup_embedding_model(credentials, project_id)
+        faiss_index = create_faiss_index(chunks, embedding_model)
+
+        # > Steo 5: Setup the Q&A prompt and chain
+        qa_prompt = create_qa_prompt_template()
+        qa_chain = create_qa_chain(llm, qa_prompt)
+
+        # > Step 6: Generate the answer using FAISS index
+        answer = generate_answer(user_question, faiss_index, qa_chain)
+        return answer
+    else:
+        return "Please provide a valid question and ensure the transcript has been fetched."
+    
 print_agent()
-print(result)
+print(""" 
+    -----------------------------------------------
+    |   >> Hi! Welcome to YouTube Q&A CLI - RAG!  |
+    -----------------------------------------------
+""")
+video_url = input("Enter YouTube video's URL: ")
+query = input("Input query/questions: ")
+answer = answer_question(video_url, query)
+print_agent()
+print(answer)
+
 
 print(" --- End ---")
