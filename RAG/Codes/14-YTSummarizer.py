@@ -280,4 +280,23 @@ def example_usage_prompt_template():
     print_agent()
     print(generate_prompt)
 
+# > Setting up the Q&A LLMChain
+def create_qa_chain(llm, prompt_template, verbose=True):
+    """
+    Create an LLMChain for question answering.
+
+    Args:
+        llm: Language model instance
+            The language model to use in the chain (e.g., WatsonxGranite).
+        prompt_template: PromptTemplate
+            The prompt template to use for structuring inputs to the language model.
+        verbose: bool, optional (default=True)
+            Whether to enable verbose output for the chain.
+
+    Returns:
+        LLMChain: An instantiated LLMChain ready for question answering.
+    """
+    
+    return LLMChain(llm=llm, prompt=prompt_template, verbose=verbose)
+
 print(" --- End ---")
