@@ -356,7 +356,7 @@ def summarize_video(video_url):
         # > Step 2: Init WatsonX LLM for summarization
         # llm = initialize_watsonx_llm(model_id, credentials, project_id, define_parameters())
         parameters = {
-            "min_new_token" : 10
+            "max_new_tokens": 1000
         }
         llm = initialize_watsonx_llm(model_id, credentials, project_id, parameters=parameters)
 
@@ -407,7 +407,8 @@ def answer_question(video_url, user_question):
         # > Step 3: Initialize WatsonX LLM for Q&A
         # llm = initialize_watsonx_llm(model_id, credentials, project_id, define_parameters())
         parameters = {
-            "min_new_token" : 10
+            "max_new_tokens": 2000,
+            "min_new_tokens": 50
         }
         llm = initialize_watsonx_llm(model_id, credentials, project_id, parameters=parameters)
 
@@ -420,7 +421,7 @@ def answer_question(video_url, user_question):
         qa_chain = create_qa_chain(llm, qa_prompt)
 
         # > Step 6: Generate the answer using FAISS index
-        answer = generate_answer(user_question, faiss_index, qa_chain)
+        answer = generate_answer(user_question, faiss_index, qa_chain, 20)
         return answer
     else:
         return "Please provide a valid question and ensure the transcript has been fetched."
@@ -454,7 +455,7 @@ with gr.Blocks() as interface:
 
     # > Display status message for transcript fetch
     transcript_status = gr.Textbox(label="Transcript Status", interactive=False)
-    
+
     # > Setup button actions
     summary_btn.click(summarize_video, inputs=video_url, outputs=summary_output)
     question_btn.click(answer_question, inputs=[video_url, question_input], outputs=answer_output)

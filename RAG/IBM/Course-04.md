@@ -312,7 +312,7 @@ Indexes trade off **speed, memory, and accuracy**.
 
 ---
 
-## Extending FAISS with Milvus
+### Extending FAISS with Milvus
 
 FAISS alone lacks:
 
@@ -328,7 +328,7 @@ FAISS alone lacks:
 
 ---
 
-## When to Use What?
+### When to Use What?
 
 * **Use FAISS**
 
@@ -350,10 +350,18 @@ FAISS alone lacks:
 
 ---
 
-## Key Takeaways
+### Key Takeaways
 
 * FAISS = power and control, but low-level.
 * Chroma DB = ease of use and metadata support.
 * Milvus = FAISS + scalability + metadata.
 * All three can integrate with **LangChain** and **LlamaIndex**.
 * Choose based on **project size, complexity, and infrastructure needs**.
+
+## Summary: Build a Comprehensive RAG Application
+- FAISS and Chroma DB are built for different goals 
+- FAISS gives you control over indexing, but lacks metadata and distribution by default 
+- Chroma DB is easier to deploy and supports metadata, but has fewer indexing options 
+- You can extend FAISS with Milvus for scalability and metadata 
+- You can extend both tools with LangChain or LlamaIndex for RAG pipelines 
+- You should choose the right tool based on your project's size, complexity, and infrastructure
