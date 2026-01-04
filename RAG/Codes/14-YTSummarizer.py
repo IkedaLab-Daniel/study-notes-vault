@@ -14,6 +14,7 @@ from langchain.chains import LLMChain  # > For creating chains of operations wit
 from langchain.prompts import PromptTemplate  # > For defining prompt templates
 from dotenv import load_dotenv
 import os
+from utils import print_agent
 load_dotenv()
 
 PROJECT_ID = os.getenv("PROJECT_ID")
@@ -261,10 +262,22 @@ def create_qa_prompt_template():
 
     # > Create thje PromptTemplate Object
     prompt_template = PromptTemplate(
-        input_variables=["centext", "questions"],
+        input_variables=["centext", "question"],
         template=qa_template
     )
 
     return prompt_template
+
+def example_usage_prompt_template():
+    qa_prompt_template = create_qa_prompt_template()
+
+    # > Example of how to use the prompt template with context and a question
+    context = "This video explains the fundametals of quantum physics"
+    question = "What are the key principles discussed in the video"
+
+    # > Generating the prompt
+    generate_prompt = qa_prompt_template.format(context=context, question=question)
+    print_agent()
+    print(generate_prompt)
 
 print(" --- End ---")
