@@ -299,4 +299,29 @@ def create_qa_chain(llm, prompt_template, verbose=True):
     
     return LLMChain(llm=llm, prompt=prompt_template, verbose=verbose)
 
+# > Generating an answer
+def generate_answer(question, faiss_index, qa_chain, k=7):
+    """
+    Retrieve relevant context and generate an answer based on user input.
+    Args:
+        question: str
+            The user's question.
+        faiss_index: FAISS
+            The FAISS index containing the embedded documents.
+        qa_chain: LLMChain
+            The question-answering chain (LLMChain) to use for generating answers.
+        k: int, optional (default=3)
+            The number of relevant documents to retrieve.
+    Returns:
+        str: The generated answer to the user's question.
+    """
+
+    # > Retrieve relevant context
+    relevant_context = retrieve(question, faiss_index, k=k)
+
+    # > Generate answer using the QA chain
+    answer = qa_chain.predict(context=relevant_context, question=question)
+
+    return answer
+
 print(" --- End ---")
