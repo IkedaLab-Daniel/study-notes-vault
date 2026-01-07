@@ -410,18 +410,44 @@ def divide_numbers(inputs: str) -> dict:
 
     return {"result": result}
 
-# Testing multiply_tool
-multiply_test_input = "2, 3, and four "
-multiply_result = multiply_numbers.invoke(multiply_test_input)
-print("--- Testing MultiplyTool ---")
-print(f"Input: {multiply_test_input}")
-print_agent()
-print(f"Output: {multiply_result}")
+# ? Testing multiply_tool
+# multiply_test_input = "2, 3, and four "
+# multiply_result = multiply_numbers.invoke(multiply_test_input)
+# print("--- Testing MultiplyTool ---")
+# print(f"Input: {multiply_test_input}")
+# print_agent()
+# print(f"Output: {multiply_result}")
 
-# Testing divide_tool
-divide_test_input = "100, 5, two"
-divide_result = divide_numbers.invoke(divide_test_input)
-print("--- Testing DivideTool ---")
-print(f"Input: {divide_test_input}")
+# ? Testing divide_tool
+# divide_test_input = "100, 5, two"
+# divide_result = divide_numbers.invoke(divide_test_input)
+# print("--- Testing DivideTool ---")
+# print(f"Input: {divide_test_input}")
+# print_agent()
+# print(f"Output: {divide_result}")
+
+## --- Building the Agent --- ##
+tools = [add_numbers,subtract_numbers, multiply_numbers, divide_numbers]
+
+math_agent = create_react_agent(
+    model=groq_llm,
+    tools=tools,
+    # ? Optional:
+    prompt="You are a helpful mathematical assistant that can perform various operations. Use the tools precisely and explain your reasoning clearly."
+)
+
+response = math_agent.invoke({
+    "messages": [("human", "What is 25 divided by 4?")]
+})
+
+# final_answer = response["messages"][-1].content
+# print_agent()
+# print(final_answer)
+
+response_2 = math_agent.invoke({
+    "messages": [("human", "Subtract 100, 20, and 10.")]
+})
+
+final_answer_2 = response_2["messages"][-2].content
 print_agent()
-print(f"Output: {divide_result}")
+print(final_answer_2)
