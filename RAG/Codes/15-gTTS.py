@@ -50,15 +50,32 @@ def generate_story(topic):
     response = model.generate_text(prompt=prompt)
     return response
 
-def test_gen():
-    topic = input("Enter topic for the story to generate: ")
-    story = generate_story(topic)
-    if story:
-        print_agent()
-        print(f""" 
+
+topic = input("Enter topic for the story to generate: ")
+story = generate_story(topic)
+if story:
+    print_agent()
+    print(f""" 
 |-----------------------------------------------------------|
 >> {story}
 |-----------------------------------------------------------|
 """)
         
-test_gen()
+# > Convert the story to speech
+from gtts import gTTS
+from IPython.display import Audio
+import io
+
+# > Init TTS
+tts = gTTS(story)
+
+# > Save the audio to byyers buffer in memory
+audio_bytes = io.BytesIO()
+tts.write_to_fp(audio_bytes)
+audio_bytes.seek(0)
+
+# > Create and desplay an audop player widget
+Audio(audio_bytes.read(), autoplay=False)   # ! Only works on Jupyter notebook
+
+# Save as MP3 file
+tts.save("generated_story.mp3")
