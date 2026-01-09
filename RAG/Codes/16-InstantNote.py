@@ -7,19 +7,17 @@ def download_sample_audio():
 
     # ? Check if audio exist first
     try:
-        with open(audio_file_path, "wb") as file:
+        with open(audio_file_path, "r") as file:
             print("\033[92m\nOK ( ˶ˆᗜˆ˵ ) >> Sample audio already exist on this folder.")
             return
     except:
-        pass
+        response = requests.get(url)
 
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        with open(audio_file_path, "wb") as file:
-            file.write(response.content)
-            print("\033[92m\nOK ( ˶ˆᗜˆ˵ ) >> File downloaded successfully")
-    else:
-        print("\033[91m\nERROR (╥﹏╥) >> Failed to download file")
+        if response.status_code == 200:
+            with open(audio_file_path, "wb") as file:
+                file.write(response.content)
+                print("\033[92m\nOK ( ˶ˆᗜˆ˵ ) >> File downloaded successfully")
+        else:
+            print("\033[91m\nERROR (╥﹏╥) >> Failed to download file")
 
 download_sample_audio()
