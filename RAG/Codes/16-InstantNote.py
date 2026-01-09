@@ -32,16 +32,28 @@ pipe = pipeline(
     chunk_length_s=30,
 )
 
-# sample = 'sample-meeting.wav'
-sample = 'sample_audio.mp3'
+sample = 'sample-meeting.wav'
 
 # ? Perform speech recognition on the audio file
 prediction = pipe(sample, batch_size=8)["text"]
+
+if "ello" in prediction:
+    print("\033[92m\n( ˶ˆᗜˆ˵ ) HEYYAA! \033[0m")
 
 if prediction:
     print("\033[92m\nOK ( ˶ˆᗜˆ˵ ) >> Audio successfully transcribed: \033[0m")
     print(prediction)
 else:
     print("\033[91m\nERROR (╥﹏╥) >> Failed to transcribe audio sample\033[0m")
+
+# > Gradio Interface
+import gradio as gr
+
+def greet(name):
+    return "Hello " + name + "!"
+
+demo = gr.Interface(fn=greet, inputs="text", outputs="text")
+
+demo.launch(server_name="0.0.0.0", server_port=5002)
 
 print("\033[92mEND (ᵔ ᵕ ᵔ˶)\033[0m")
