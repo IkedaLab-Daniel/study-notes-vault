@@ -93,6 +93,13 @@ granite_llm = WatsonxLLM(
     apikey=os.getenv("API_KEY"),
 )
 
+def test_llm_integration():
+    query = input("Testing granite LLM integration | Ask any question: ")
+    response = granite_llm.invoke(query)
+
+    print("\033[92m\nOK ( ˶ˆᗜˆ˵ ) >> LLM integration confirmed. Response: ")
+    print(response)
+
 print("""\033[92m
   |-----------------|
   |    ( ˶ˆᗜˆ˵ )    |
