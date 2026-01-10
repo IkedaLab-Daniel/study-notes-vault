@@ -375,3 +375,43 @@
 - Applications: Captioning, virtual assistants, medical transcription, language learning, note-taking, meeting and court transcription
 - Challenges: Background noise, speaker variability, real-time processing, domain adaptation, low-resource languages, context understanding
 - Future trends: Self-supervised learning, multilingual models, contextual understanding, personalization, edge computing
+
+> # Module 2
+## Understanding Image Captioning with Meta’s Llama
+
+* **Image captioning** is the automatic generation of textual descriptions for images using a combination of **computer vision** and **natural language processing (NLP)**.
+* It enables efficient organization, search, and understanding of large image collections, saving time and improving accuracy compared to manual classification.
+
+### How Multimodal Image Captioning Works
+
+* The image captioning process using a **multimodal large language model (LLM)** consists of three main stages:
+
+  1. **Input processing**: The system receives an image and an optional text prompt, preprocesses the image (resizing, normalization), and uses the prompt to guide focus.
+  2. **Image validation and encoding**: The system validates the image for suitability, then encodes it (e.g., base64) into numerical representations capturing objects, scenes, and relationships.
+  3. **Multimodal LLM processing**: Visual features from the image and embeddings from the text prompt are fused into a unified representation, which the model uses to generate a natural language caption.
+
+### Core Components of a Multimodal Model
+
+* **Visual encoder** to extract visual features from images
+* **Text embedding** to convert prompts into numerical vectors
+* **Multimodal fusion layer** to combine visual and textual information
+* **Language generation module** to produce human-readable captions tailored to the prompt
+
+### Implementing Image Captioning in Python
+
+* Image captioning systems traditionally combine a **CNN** for image encoding with an **RNN or transformer-based decoder** for text generation.
+* Using **Meta’s Llama 4 Maverick model** via **IBM WatsonX**, implementation involves:
+
+  * Importing libraries for authentication, image processing, and API interaction
+  * Authenticating access to IBM WatsonX
+  * Encoding images into a format suitable for the LLM
+  * Initializing the Llama model with appropriate parameters
+  * Sending combined text prompts and encoded images to the model
+  * Extracting and displaying generated captions from the model’s response
+
+### Key Takeaways
+
+* Image captioning leverages multimodal AI to transform visual data into meaningful text.
+* The process relies on structured stages: input preparation, image encoding, and multimodal reasoning.
+* Meta’s Llama models, accessed through IBM WatsonX, provide powerful tools for visual reasoning and caption generation.
+* This approach enables scalable, accurate image understanding for real-world applications such as image classification, search, and content management.
