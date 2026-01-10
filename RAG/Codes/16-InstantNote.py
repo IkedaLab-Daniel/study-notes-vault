@@ -127,6 +127,35 @@ A list of the words or phrases that were changed"""
 # generated_transcript = transcript_audio("generated_story.mp3")
 # clean_up_with_llm(generated_transcript)
 
+# > Add PromptTemplate and Chain
+from langchain.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+
+template = """
+Generate meeting minutes and a list of tasks based on the provided context.
+
+Context:
+{context}
+
+Meeting Minutes:
+- Key points discussed
+- Decisions made
+
+Task List:
+- Actionable items with assignees and deadlines
+"""
+
+prompt = ChatPromptTemplate.from_template(template)
+
+# ? Define the chain
+chain = (
+    {"context": RunnablePassthrough()} # Pass the transcript as context
+    | prompt
+    | granite_llm
+    | StrOutputParser()
+)
+
 
 print("""\033[92m
   |-----------------|
