@@ -58,7 +58,7 @@ iface = gr.Interface(
     api_name=False,
 )
 
-iface.launch(server_name="0.0.0.0", server_port=5005)
+# iface.launch(server_name="0.0.0.0", server_port=5005)
 
 # > Integrating LLM using IBM watsonx Granite
 from ibm_watsonx_ai.foundation_models.utils.enums import ModelTypes # ? Specifying model types
@@ -69,6 +69,9 @@ from langchain_ibm import WatsonxLLM, WatsonxEmbeddings # ? For interacting with
 from ibm_watsonx_ai.foundation_models.utils import get_embedding_model_specs # ? for retrieving model specification
 from langchain.chains import LLMChain # ? For creating chains of operations with LLMs
 from langchain.prompts import PromptTemplate # ? For defining prompt templates
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 parameters = {
     GenParam.DECODING_METHOD: "sample",
@@ -78,3 +81,22 @@ parameters = {
     GenParam.TOP_K: 50,
     GenParam.TOP_P: 1,
 }
+
+model_id = 'ibm/granite-3-8b-instruct' # !'ibm/granite-3-3-8b-instruct' (not available on free tier (╥﹏╥))
+project_id = os.getenv("PROJECT_ID")
+
+granite_llm = WatsonxLLM(
+    model_id=model_id,
+    url=os.getenv("URL"),
+    project_id=project_id,
+    params=parameters,
+    apikey=os.getenv("API_KEY"),
+)
+
+print("""\033[92m
+  |-----------------|
+  |    ( ˶ˆᗜˆ˵ )    |
+  |     ~ end ~     |
+  |-----------------|
+
+\033[0m""")
