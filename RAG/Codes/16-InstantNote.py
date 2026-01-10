@@ -100,6 +100,34 @@ def test_llm_integration():
     print("\033[92m\nOK ( ˶ˆᗜˆ˵ ) >> LLM integration confirmed. Response: ")
     print(response)
 
+def clean_up_with_llm(generated_transcript):
+    system_prompt = """You are an intelligent assistant tasked with processing spoken or written transcripts. Your job is to ensure that all domain-specific terms, abbreviations, and acronyms are presented in a clear and standardized format.
+
+For each term that is commonly abbreviated as an acronym, spell out the full term followed by the acronym in parentheses the first time it appears. For example, “REM” should be transformed to “Rapid Eye Movement (REM)”, and “API” should be transformed to “Application Programming Interface (API)”.
+
+If numbers or terms are spoken aloud and represent a specific named concept, convert them into their standard numeric or formal representation, followed by the full name in parentheses when appropriate. For example, “seven to nine hours” may remain as is, but “four zero one k” would be converted into its proper standardized form if it refers to a known concept.
+
+Be aware that some acronyms or terms may have multiple meanings depending on context. You must determine the correct meaning based on surrounding content and apply the appropriate expansion. If a spoken number or phrase does not represent a specific named concept or standardized term, leave it unchanged.
+
+Your task is to analyze the text, apply these transformations consistently, and ensure clarity without altering the original meaning or tone.
+
+Once complete, output:
+
+The adjusted transcript
+
+A list of the words or phrases that were changed"""
+    # Concatenate the system prompt and the user transcript
+    prompt_input = system_prompt + "\n" + generated_transcript
+
+    response = granite_llm.invoke(prompt_input)
+    print("\033[92m\nNOT SURE ( ˶ˆᗜˆ˵ ) >> LLM Responded, but not sure if it does the job good. Check it out:")
+    print(response)
+
+# ? Clean up transcript usage
+# generated_transcript = transcript_audio("generated_story.mp3")
+# clean_up_with_llm(generated_transcript)
+
+
 print("""\033[92m
   |-----------------|
   |    ( ˶ˆᗜˆ˵ )    |
