@@ -17,7 +17,7 @@ client = APIClient(credentials)
 client.foundation_models.TextModels
 
 # > PRINT doct of Enums
-client.foundation_models.TextModels.show()
+# client.foundation_models.TextModels.show()
 
 ### --- Image Preparation --- ###
 url_image_1 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/5uo16pKhdB1f2Vz7H8Utkg/image-1.png'
@@ -52,4 +52,33 @@ model = ModelInference(
     params=params
 )
 
+### --- Encode the Image --- ###
+import base64
+import requests
+
+def encode_image_to_base64(image_urls):
+    """
+    Downloads and encodes a list of image URLs to base64 strings.
+
+    Parameters:
+    - image_urls (list): A list of image URLs.
+
+    Returns:
+    - list: A list of base64-encoded image strings.
+    """
+    encoded_images = []
+
+    for url in image_urls:
+        response = requests.get(url)
+        if response.status_code == 200:
+            encoded_image = base64.b64encode(response.content).decode("utf-8")
+            encoded_images.append(encoded_image)
+            print(type(encoded_image))
+        else:
+            print(f"Warning: Failed to fetch image from {url} (Status code: {response.status_code})")
+            encoded_images.append(None)
+
+    return encoded_images
+
+encode_image_to_base64(image_urls)
 print(" --- End --- ")
