@@ -28,14 +28,28 @@ url_image_4 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.clou
 image_urls = [url_image_1, url_image_2, url_image_3, url_image_4] 
 
 ### --- Watsonx.AI --- ###
-model_id = 'ibm/granite-vision-3-2-2b'
+# ! model_id = 'ibm/granite-vision-3-2-2b'      --- Model 'ibm/granite-vision-3-2-2b' is not supported for this environment
+model_id = 'meta-llama/llama-3-2-11b-vision-instruct'   # ? Alternative model
+
 
 from ibm_watsonx_ai.foundation_models.schema import TextChatParameters
-TextChatParameters.show()
+# TextChatParameters.show()
 
 params = TextChatParameters(
     temperature=0.2,
     top_p=0.5,
 )
 
-print(params)
+# print(params)
+
+# > Initalize the Model
+from ibm_watsonx_ai.foundation_models import ModelInference
+
+model = ModelInference(
+    model_id=model_id,
+    credentials=credentials,
+    project_id=PROJECT_ID,
+    params=params
+)
+
+print(" --- End --- ")
