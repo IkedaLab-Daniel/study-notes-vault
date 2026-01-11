@@ -415,3 +415,15 @@
 * The process relies on structured stages: input preparation, image encoding, and multimodal reasoning.
 * Meta’s Llama models, accessed through IBM WatsonX, provide powerful tools for visual reasoning and caption generation.
 * This approach enables scalable, accurate image understanding for real-world applications such as image classification, search, and content management.
+
+## Text-to-Video Generation with OpenAI Sora
+
+OpenAI’s Sora is a multimodal, diffusion-based transformer model capable of generating high-quality videos from text or image prompts. It represents a major advancement in AI-driven video creation, enabling applications such as creative storytelling, game and VR/AR content, cinematic video generation, advanced video editing (upscaling, interpolation, gap-filling), and synthetic data generation for simulations.
+
+Sora works by interpreting detailed natural language prompts and translating them into coherent moving visuals. Effective prompt design is critical and should include three key elements: **scene context** (environment, location, weather), **visual details** (lighting, color tones, camera angles), and **motion** (camera movement, pacing, actions). Using cinematic and film-style vocabulary improves output quality.
+
+The basic workflow for generating a video with Sora involves writing a descriptive prompt, submitting it through the Sora interface, and receiving generated video clips. Users access Sora via the web interface, where they can explore community-generated videos, compose prompts, adjust settings such as resolution, aspect ratio, duration, and number of variations, and then generate videos.
+
+After generation, users can preview and select variations, then refine them using built-in editing tools. These include **Remix** for natural language edits, **Storyboard/recut** for timeline adjustments, **Blend** for combining videos, and **Loop** for seamless repetition. Changes are applied through text instructions, producing new video variations.
+
+Overall, Sora demonstrates how structured prompting combined with multimodal AI enables intuitive, high-quality text-to-video generation and flexible post-generation editing using natural language.
