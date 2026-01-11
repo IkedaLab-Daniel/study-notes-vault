@@ -80,5 +80,49 @@ def encode_image_to_base64(image_urls):
 
     return encoded_images
 
-encode_image_to_base64(image_urls)
+encoded_images = encode_image_to_base64(image_urls)
+
+def generate_model_response(encoded_image, user_query, assistant_prompt="You are a helpful assistant. Answer the following user query in 1 or 2 sentences: "):
+    """
+    Sends an image and a query to the model and retrieves the description or answer.
+
+    Parameters:
+    - encoded_image (str): Base64-encoded image string.
+    - user_query (str): The user's question about the image.
+    - assistant_prompt (str): Optional prompt to guide the model's response.
+
+    Returns:
+    - str: The model's response for the given image and query.
+    """
+
+    # ? Create the message object
+    messages = [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": assistant_prompt + user_query
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "data:image/jpeg;base64," + encoded_image,
+                    }
+                }
+            ]
+        }
+    ]
+
+    # ? send the request to the model
+    response = model.chat(messages=messages)
+
+    # ? return the model's response
+    return response['choices'][0]['message']['content']
+
+response = generate_model_response(encoded_images[0], "Describe the photo")
+
+# ? Print the response with a formatted description
+print(f"Description for image: {response}/n/n")
+
 print(" --- End --- ")
