@@ -20,12 +20,14 @@ client.foundation_models.TextModels
 # client.foundation_models.TextModels.show()
 
 ### --- Image Preparation --- ###
+# url_image_0 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwi1tt9wRKB9WFZV2JVO_y9kU_Db9Sb5atdw&s'
+url_image_0 = 'https://media.tenor.com/FI9CZRTgweMAAAAe/lain-lain-iwakura.png'
 url_image_1 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/5uo16pKhdB1f2Vz7H8Utkg/image-1.png'
 url_image_2 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/fsuegY1q_OxKIxNhf6zeYg/image-2.png'
 url_image_3 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/KCh_pM9BVWq_ZdzIBIA9Fw/image-3.png'
 url_image_4 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/VaaYLw52RaykwrE3jpFv7g/image-4.png'
 
-image_urls = [url_image_1, url_image_2, url_image_3, url_image_4] 
+image_urls = [url_image_0, url_image_1, url_image_2, url_image_3, url_image_4] 
 
 ### --- Watsonx.AI --- ###
 # ! model_id = 'ibm/granite-vision-3-2-2b'      --- Model 'ibm/granite-vision-3-2-2b' is not supported for this environment
@@ -120,9 +122,15 @@ def generate_model_response(encoded_image, user_query, assistant_prompt="You are
     # ? return the model's response
     return response['choices'][0]['message']['content']
 
-response = generate_model_response(encoded_images[0], "Describe the photo")
+user_query = "Describe the photo"
 
-# ? Print the response with a formatted description
-print(f"Description for image: {response}/n/n")
+for i in range(len(encoded_images)):
+    image = encoded_images[i]
+
+    response = generate_model_response(image, user_query)
+
+    # > print response
+    print(f"Description for image {i + 1}: {response}\n\n")
+
 
 print(" --- End --- ")
