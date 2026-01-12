@@ -1,6 +1,6 @@
 # Build Multimodal Generative AI Applications
 
-> # Module 1
+> # Module 1 - Foundations of Multimodal AI
 ## Multimodal Generative AI Course Overview
 
 ### What Is Multimodal Generative AI
@@ -376,7 +376,7 @@
 - Challenges: Background noise, speaker variability, real-time processing, domain adaptation, low-resource languages, context understanding
 - Future trends: Self-supervised learning, multilingual models, contextual understanding, personalization, edge computing
 
-> # Module 2
+> # Module 2 - Integrating Visual and Video Modalities
 ## Understanding Image Captioning with Meta’s Llama
 
 * **Image captioning** is the automatic generation of textual descriptions for images using a combination of **computer vision** and **natural language processing (NLP)**.
@@ -474,3 +474,84 @@ Text-to-video generation with OpenAI’s Sora
   - Use “Blend” to merge with another video
   - Use “Loop” to create seamless repeats
 - After editing, a new variation is added to your set.
+
+> # Module 3 - Advanced Multimodal Application
+## Introduction to Multimodal Retrieval Augmented Generation (MM-RAG)
+
+Multimodal Retrieval Augmented Generation, or **MM-RAG**, is a powerful AI approach that combines **multimodal understanding**—processing multiple types of data like text, images, audio, and video—with **retrieval augmented generation (RAG)** to produce accurate and context-rich outputs. By integrating retrieval mechanisms with generative AI, MM-RAG systems can leverage both pre-existing knowledge bases and multimodal inputs to generate high-quality responses.
+
+### What MM-RAG Means
+
+* **Multimodal:** Involves working with multiple data types or modalities (e.g., text, images, videos).
+* **Retrieval Augmented:** Enhances generative AI responses by fetching relevant information from a knowledge base or database.
+* **Generation:** Uses the retrieved multimodal context to generate detailed, accurate, and informative outputs.
+
+Unlike standard LLMs, which only rely on training data, MM-RAG can access external domain-specific knowledge to provide precise answers, making it ideal for specialized applications.
+
+### Core MM-RAG Pattern
+
+The MM-RAG workflow generally follows **three steps**:
+
+1. **Multimodal Data Retrieval:** Retrieve relevant information across modalities using specialized retrievers for text, images, audio, and video.
+2. **Contrastive Learning:** Map related data from different modalities into similar vector representations, enabling the system to connect, for example, a photo of a cat and the phrase “domestic feline.”
+3. **Generative Contextualization:** Feed the retrieved multimodal data as input to a generative model to produce a response grounded in rich, multimodal context.
+
+### MM-RAG Pipeline
+
+A typical implementation pipeline consists of **four main stages**:
+
+1. **Data Indexing:**
+
+   * Convert diverse data types into embeddings.
+   * Store embeddings in a vector database for efficient semantic search.
+   * Supports unstructured data like text, images, audio, and video.
+
+2. **Data Retrieval:**
+
+   * Convert user queries (text, image, or both) into embeddings.
+   * Search the vector database for semantically relevant information across modalities.
+
+3. **Augmentation:**
+
+   * Combine retrieved multimodal data with the original query.
+   * Provides a comprehensive context for the generative model.
+
+4. **Response Generation:**
+
+   * Input the augmented query into a multimodal generative model.
+   * Generate outputs that blend information from all retrieved modalities.
+
+### Practical Example: Style Finder Application
+
+The **Style Finder** system demonstrates MM-RAG in action for fashion analysis:
+
+1. **Image Encoding:**
+
+   * Users upload outfit images.
+   * Pre-trained **ResNet50** converts images into feature vectors and Base64 strings.
+
+2. **Similarity Search:**
+
+   * Cosine similarity measures closeness between uploaded images and dataset embeddings.
+   * The system identifies the most visually similar fashion items.
+
+3. **Context Retrieval:**
+
+   * Fetch structured data related to matched items, such as product names, prices, and URLs.
+   * Combine this information with the image for the generative model prompt.
+
+4. **MM-RAG Response Generation:**
+
+   * Send the structured prompt and encoded image to a **Llama Vision Instruct model**.
+   * The model generates a structured, markdown-compatible response that describes materials, colors, patterns, and other visual details.
+
+This pipeline blends **visual reasoning** with **retrieved metadata**, producing detailed outputs that are both accurate and contextually rich.
+
+### Key Takeaways
+
+* **MM-RAG** integrates multimodal inputs with retrieval-augmented generation for richer AI responses.
+* The MM-RAG pattern involves multimodal retrieval, contrastive embeddings, and generative output.
+* The pipeline stages include **data indexing**, **data retrieval**, **augmentation**, and **response generation**.
+* Practical applications include domains like fashion analysis, medical imaging, education, and any field requiring multimodal reasoning augmented by external knowledge.
+
+MM-RAG demonstrates how combining **multimodal understanding** with **retrieval-augmented LLMs** can produce intelligent, context-aware systems that go far beyond single-modality AI.
