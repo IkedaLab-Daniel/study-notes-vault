@@ -20,8 +20,8 @@ client.foundation_models.TextModels
 # client.foundation_models.TextModels.show()
 
 ### --- Image Preparation --- ###
-# url_image_0 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwi1tt9wRKB9WFZV2JVO_y9kU_Db9Sb5atdw&s'
-url_image_0 = 'https://media.tenor.com/FI9CZRTgweMAAAAe/lain-lain-iwakura.png'
+url_image_0 = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwi1tt9wRKB9WFZV2JVO_y9kU_Db9Sb5atdw&s'
+# url_image_0 = 'https://media.tenor.com/FI9CZRTgweMAAAAe/lain-lain-iwakura.png'
 url_image_1 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/5uo16pKhdB1f2Vz7H8Utkg/image-1.png'
 url_image_2 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/fsuegY1q_OxKIxNhf6zeYg/image-2.png'
 url_image_3 = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/KCh_pM9BVWq_ZdzIBIA9Fw/image-3.png'
@@ -122,15 +122,26 @@ def generate_model_response(encoded_image, user_query, assistant_prompt="You are
     # ? return the model's response
     return response['choices'][0]['message']['content']
 
-user_query = "Describe the photo"
+def demo_image_captioning():
+    user_query = "Describe the photo"
 
-for i in range(len(encoded_images)):
-    image = encoded_images[i]
+    for i in range(len(encoded_images)):
+        image = encoded_images[i]
 
-    response = generate_model_response(image, user_query)
+        response = generate_model_response(image, user_query)
 
-    # > print response
-    print(f"Description for image {i + 1}: {response}\n\n")
+        # > print response
+        print(f"Description for image {i + 1}: {response}\n\n")
+
+def demo_object_detection():
+    image = encoded_images[2]
+
+    user_query = "How many cars are in this image?"
+
+    print("User query: ", user_query)
+    print("Model response: ", generate_model_response(image, user_query))
+
+demo_object_detection()
 
 
 print(" --- End --- ")
