@@ -29,7 +29,7 @@ model = ModelInference(
     params=params
 )
 
-### --- Preparing an image for processing ---
+### --- Preparing an image for processing --- ###
 def prepare_image(image_path):
     with open(image_path, "rb") as image_file:
         encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
@@ -39,5 +39,29 @@ def prepare_iamge_from_url(image_url):
     response = requests.get(image_url)
     encoded_image = base64.b64encode(response.content).decode('utf-8')
     return encoded_image
+
+### --- Creating the multimodal query function --- ###
+def query_multimodal_model(encoded_image, user_question, system_prompt=""):
+    messages = [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": system_prompt + user_question
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "data:image/jpeg;base64," + encoded_image
+                    }
+                }
+            ]
+        }
+    ]
+
+    response = model.chat(messages=messages)
+
+    return response['choices'][0]['message']['content']
 
 print(" --- Working ---")
