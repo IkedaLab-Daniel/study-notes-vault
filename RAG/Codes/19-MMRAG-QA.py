@@ -11,3 +11,22 @@ load_dotenv()
 
 from PIL import Image
 
+### --- initializing the model --- ###
+credentials = Credentials(
+    url=os.getenv("URL"),
+    api_key=os.getenv("API_KEY")
+)
+client = APIClient(credentials)
+
+model_id = "meta-llama/llama-3-2-11b-vision-instruct"
+project_id = os.getenv("PROJECT_ID")
+params = TextChatParameters()
+
+model = ModelInference(
+    model_id=model_id,
+    credentials=credentials,
+    project_id=project_id,
+    params=params
+)
+
+print(" --- Working ---")
