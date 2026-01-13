@@ -555,3 +555,59 @@ This pipeline blends **visual reasoning** with **retrieved metadata**, producing
 * Practical applications include domains like fashion analysis, medical imaging, education, and any field requiring multimodal reasoning augmented by external knowledge.
 
 MM-RAG demonstrates how combining **multimodal understanding** with **retrieval-augmented LLMs** can produce intelligent, context-aware systems that go far beyond single-modality AI.
+
+## Multimodal Chatbots and Question-Answering (QA) Systems
+
+Multimodal chatbots and QA systems are advanced AI applications that can process, understand, and generate responses using **multiple data types**, such as text, images, audio, and sometimes video. Unlike traditional text-only chatbots, these systems perceive and reason about the world in a more human-like way by combining different input modalities.
+
+### What Are Multimodal AI Systems?
+
+* **Multimodal AI** processes inputs like text, images, audio, and video simultaneously.
+* These systems can interpret voice commands, analyze images, and respond with context-aware answers.
+* They significantly enhance **human–computer interaction** by enabling richer, more natural communication.
+
+### Architecture of Multimodal Chatbots
+
+* **Multiple Inputs:** Text queries, images (photos, diagrams), audio (voice, sounds), and video.
+* **Separate Processing:** Each modality is processed independently using specialized components.
+* **Fusion Layer:** Information from all modalities is combined to form a unified understanding.
+* **Response Generation:** The system produces outputs such as text answers, suggestions, or actions based on the fused context.
+
+### Basic Implementation Using IBM Watson X
+
+A multimodal QA system can be implemented using **Meta’s LLaMA 3.2 90B Vision Instruct model** via IBM Watson X:
+
+1. **Environment Setup**
+
+   * Import required Python libraries.
+   * Authenticate using IBM Watson X credentials (API key, URL).
+   * Specify the model ID and project ID.
+   * Configure chat parameters (e.g., temperature).
+
+2. **Image Preparation**
+
+   * Convert images into **Base64-encoded strings** so the model can process them.
+   * Use separate functions for:
+
+     * Local images (read binary data → Base64).
+     * Online images (download → Base64).
+
+3. **Multimodal Query Function**
+
+   * Combine text and image data into a structured message format expected by the API.
+   * Send both modalities together so the model can reason about them jointly.
+   * Extract and return the text response from the model output.
+
+4. **Asking Questions**
+
+   * Prepare the image.
+   * Write a question related to the image (general or specific).
+   * Optionally include a **system prompt** to define the model’s role (e.g., nutritionist, safety inspector).
+   * The model generates a context-aware response based on both visual and textual input.
+
+### Key Takeaways
+
+* Multimodal chatbots and QA systems handle **multiple input modalities** and generate contextual responses.
+* They offer more natural, human-like interactions compared to text-only systems.
+* Core features include **multimodal input processing, integrated understanding, and contextual response generation**.
+* Basic implementation involves environment setup, model initialization, image encoding, multimodal querying, and response extraction.
