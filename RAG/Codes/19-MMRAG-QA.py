@@ -29,4 +29,15 @@ model = ModelInference(
     params=params
 )
 
+### --- Preparing an image for processing ---
+def prepare_image(image_path):
+    with open(image_path, "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+    return encoded_image
+
+def prepare_iamge_from_url(image_url):
+    response = requests.get(image_url)
+    encoded_image = base64.b64encode(response.content).decode('utf-8')
+    return encoded_image
+
 print(" --- Working ---")
