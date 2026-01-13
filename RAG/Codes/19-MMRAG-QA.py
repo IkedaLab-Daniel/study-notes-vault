@@ -35,7 +35,7 @@ def prepare_image(image_path):
         encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
     return encoded_image
 
-def prepare_iamge_from_url(image_url):
+def prepare_image_from_url(image_url):
     response = requests.get(image_url)
     encoded_image = base64.b64encode(response.content).decode('utf-8')
     return encoded_image
@@ -63,5 +63,11 @@ def query_multimodal_model(encoded_image, user_question, system_prompt=""):
     response = model.chat(messages=messages)
 
     return response['choices'][0]['message']['content']
+
+image = prepare_image_from_url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwi1tt9wRKB9WFZV2JVO_y9kU_Db9Sb5atdw&s") # lain iwakura
+question = "What can you see in this image?"
+result = query_multimodal_model(image, question)
+
+print(result)
 
 print(" --- Working ---")
