@@ -54,7 +54,29 @@ def input_image_setup(uploaded_file):
     else:
         raise FileNotFoundError("No file upload")
     
-### Step 4
+def format_response(response_text):
+    """
+    Formats the model response to display each item on a new line as a list.
+    Converts numbered items into HTML `<ul>` and `<li>` format.
+    Adds additional HTML elements for better presentation of headings and separate sections.
+    """
+    # Replace section headers that are bolded with '**' to HTML paragraph tags with bold text
+    response_text = re.sub(r"\*\*(.*?)\*\*", r"<p><strong>\1</strong></p>", response_text)
+
+    # Convert bullet points denoted by "*" to HTML list items
+    response_text = re.sub(r"(?m)^\s*\*\s(.*)", r"<li>\1</li>", response_text)
+
+    # Wrap list items within <ul> tags for proper HTML structure and indentation
+    response_text = re.sub(r"(<li>.*?</li>)+", lambda match: f"<ul>{match.group(0)}</ul>", response_text, flags=re.DOTALL)
+
+    # Ensure that all paragraphs have a line break after them for better separation
+    response_text = re.sub(r"</p>(?=<p>)", r"</p><br>", response_text)
+
+    # Ensure the disclaimer and other distinct paragraphs have proper line breaks
+    response_text = re.sub(r"(\n|\\n)+", r"<br>", response_text)
+
+    return response_text
+
 ### Step 5
 @app.route('/generate', methods=['POST'])
 def index():
