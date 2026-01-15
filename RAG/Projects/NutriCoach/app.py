@@ -12,9 +12,27 @@ from PIL import Image
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
+load_dotenv()
 
+### --- Step 2 --- ###
+credentials = Credentials(
+    url = os.getenv('URL'),
+    api_key=os.getenv('API_KEY')
+)
 
-### You will add code from Step 2 here
+client = APIClient(credentials)
+
+model_id = "meta-llama/llama-4-maverick-17b-128e-instruct-fp8"
+project_id = os.getenv('PROJECT_ID')
+params = TextChatParameters()
+
+model = ModelInference(
+    model_id=model_id,
+    credentials=credentials,
+    project_id=project_id,
+    params=params
+)
+
 ### Step 3
 ### Step 4
 ### Step 5
