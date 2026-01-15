@@ -33,7 +33,27 @@ model = ModelInference(
     params=params
 )
 
-### Step 3
+### --- Step 3 --- ###
+def input_image_setup(uploaded_file):
+    """
+    Encodes the uploaded image file into a base64 string to be used with AI models.
+    Parameters:
+    - uploaded_file: File-like object uploaded via a file uploader (Streamlit or other frameworks)
+    Returns:
+    - encoded_image (str): Base64 encoded string of the image data
+    """
+    # ? Check if a file has been uploaded
+    if uploaded_file is not None:
+        # ? Read the file into bytes
+        bytes_data = uploaded_file.read()
+
+        # ? Encode the image to a base64 string
+        encoded_image = base64.b64encode(bytes_data).decode("utf-8")
+
+        return encoded_image
+    else:
+        raise FileNotFoundError("No file upload")
+    
 ### Step 4
 ### Step 5
 @app.route('/generate', methods=['POST'])
