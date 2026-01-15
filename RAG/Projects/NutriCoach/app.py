@@ -77,7 +77,35 @@ def format_response(response_text):
 
     return response_text
 
-### Step 5
+### --- Step 5 --- ###
+def generate_model_response(encoded_image, user_query, assistant_prompt):
+    """
+    Sends an image and a query to the model and retrieves the description or answer.
+    Formats the response using HTML elements for better presentation.
+    """
+    # ? Create the messages object
+    messages = [
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": assistant_prompt + "\n\n" + user_query},
+                {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + encoded_image}}
+            ]
+        }
+    ]
+
+    try:
+        response = model.chat(messages=messages)
+        raw_response = response['choices'][0]['message']['content']
+
+        # ? Format the raw response
+        formatted_response = format_response(raw_response)
+        return formatted_response
+    
+    except Exception as Ice:
+        print(f"Error in generating response: {Ice}")
+        return "<p>An error occurred while generating the response.</p>"
+    
 @app.route('/generate', methods=['POST'])
 def index():
     # This is where you'll add your main application logic later, after step 5
