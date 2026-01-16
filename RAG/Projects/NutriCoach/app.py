@@ -106,22 +106,24 @@ def generate_model_response(encoded_image, user_query, assistant_prompt):
         print(f"Error in generating response: {Ice}")
         return "<p>An error occurred while generating the response.</p>"
     
-@app.route('/generate', methods=['POST'])
+@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        # Retrieve user inputs
         user_query = request.form.get("user_query")
-        uploaded_file = request.form.get("file")
+        uploaded_file = request.files.get("file")
 
         if uploaded_file:
-            # ? process image
+            # Process the uploaded image
             encoded_image = input_image_setup(uploaded_file)
-            
+
             if not encoded_image:
                 flash("Error processing the image. Please try again.", "danger")
                 return redirect(url_for("index"))
-            
+
+            # Assistant prompt (can be customized)
             assistant_prompt = """
-        You are an expert nutritionist. Your task is to analyze the food items displayed in the image and provide a detailed nutritional assessment using the following format:
+            You are an expert nutritionist. Your task is to analyze the food items displayed in the image and provide a detailed nutritional assessment using the following format:
 
         1. **Identification**: List each identified food item clearly, one per line.
         2. **Portion Size & Calorie Estimation**: For each identified food item, specify the portion size and provide an estimated number of calories. Use bullet points with the following structure:
@@ -150,15 +152,20 @@ def index():
         For precise dietary advice or medical guidance, consult a qualified nutritionist or healthcare provider.
 
         Format your response exactly like the template above to ensure consistency.
+
         """
+
+            # Generate the model's response
             response = generate_model_response(encoded_image, user_query, assistant_prompt)
 
+            # Render the result
             return render_template("index.html", user_query=user_query, response=response)
+
         else:
             flash("Please upload an image file.", "danger")
             return redirect(url_for("index"))
-    
+
     return render_template("index.html")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
