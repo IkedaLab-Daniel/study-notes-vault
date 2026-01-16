@@ -1,0 +1,152 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f0f4f7, #e2e8f0);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 700px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    border-left: 6px solid #007BFF;
+    border-right: 6px solid #007BFF;
+}
+
+.header h1 {
+    text-align: center;
+    font-weight: 700;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-weight: 500;
+    color: #555;
+}
+
+input[type="text"],
+input[type="file"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus {
+    border-color: #007BFF;
+}
+
+.btn-primary {
+    padding: 12px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.result {
+    margin-top: 30px;
+    background: #f1f9ff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #007BFF;
+}
+
+.result h2 {
+    color: #007BFF;
+}
+
+.result div {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flashes li {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.result h2 {
+    color: #007BFF;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.result .response-content ul {
+    padding-left: 20px; 
+    margin-top: 0; 
+    margin-bottom: 0; 
+    list-style-type: disc;
+}
+
+.result .response-content li {
+    margin-bottom: 5px;
+}
+
+.result .response-content h3 {
+    color: #333;
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+.result .response-content p {
+    margin: 10px 0;
+}
+
+.loading {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fef9e7;
+    border: 1px solid #f9e79f;
+    border-radius: 6px;
+    text-align: center;
+    color: #d35400;
+    font-weight: 500;
+}
+
+.uploaded-image-preview {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
