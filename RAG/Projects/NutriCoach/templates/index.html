@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Nutrition Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        // JavaScript function to display the loading message when the form is submitted
+        function showLoading() {
+            document.getElementById("loading-message").style.display = "block";
+        }
+
+        // JavaScript function to display the uploaded image
+        function displayUploadedImage(event) {
+            const fileInput = event.target;
+            const imageContainer = document.getElementById('uploaded-image');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imageContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="uploaded-image-preview">`;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imageContainer.innerHTML = "";  // Clear the container if no image is selected
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI Nutrition Coach</h1>
+        </div>
+        <form method="POST" enctype="multipart/form-data" class="form" onsubmit="showLoading()">
+            <div class="input-group">
+                <label for="user_query">Ask a question about the uploaded image:</label>
+                <input type="text" name="user_query" id="user_query" value="How many calories are in this food?" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="file">Choose an image:</label>
+                <input type="file" name="file" id="file" accept="image/*" required onchange="displayUploadedImage(event)">
+            </div>
+
+            <button type="submit" class="btn-primary">Tell me the total calories</button>
+        </form>
+
+        <!-- Loading message -->
+        <div id="loading-message" style="display: none;" class="loading">
+            <p>Calculating, please wait...</p>
+        </div>
+
+        <!-- Div to display the uploaded image -->
+        <div id="uploaded-image" style="margin-top: 20px; text-align: center;"></div>
+
+        <!-- Flash messages for errors or notifications -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Display the model's response along with the image -->
+        {% if response %}
+            <div class="result">
+                <h2>Here is a calorie breakdown of the food in this image:</h2>
+                <div class="response-content">{{ response|safe }}</div>  <!-- Using safe to allow HTML content -->
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
