@@ -15,3 +15,74 @@ The curriculum begins by explaining what AI agents are, how they differ from tra
 **Module 3** emphasizes building solutions using LangChain’s built-in agents. Learners create natural language data visualizations and conversational agents that query SQL databases using plain English, implementing two complete agents through guided walkthroughs.
 
 To succeed, learners are encouraged to engage fully with videos, readings, practice quizzes, hands-on labs, and the graded assessment to solidify their understanding of AI agent development.
+
+## What Are AI Agents and Why They Matter
+
+AI agents emerge from a major shift in generative AI, moving away from **monolithic models** toward **compound AI systems**. Standalone models are limited by their training data, lack access to private or real-time information, and are costly to adapt through fine-tuning. While useful for tasks like summarization or drafting, their true power is unlocked when they are embedded within systems that integrate models with external data sources, tools, and logic.
+
+## From Models to Compound AI Systems
+
+Compound AI systems solve problems through **system design**, combining multiple modular components such as language models, databases, tools, and verification logic. A common example is **Retrieval Augmented Generation (RAG)**, where a model retrieves relevant information from a database before generating a response. These systems are faster to adapt and more flexible than retraining models, but they often rely on **fixed, human-defined control logic**, meaning every query follows the same predefined path.
+
+## Control Logic and Its Limitations
+
+In traditional compound systems, the control logic determines how queries are handled. This works well for narrow, well-defined problems but fails when queries fall outside the expected scope. The rigidity of predefined paths limits flexibility and scalability for complex or unpredictable tasks.
+
+## Enter AI Agents: LLMs in Control
+
+AI agents represent an **agentic approach**, where a large language model is placed in charge of the system’s control logic. This is enabled by advances in LLM reasoning capabilities. Instead of following fixed instructions, the model can:
+
+* Think slowly and plan
+* Break down complex problems
+* Decide when and how to use external tools
+* Iterate based on observations until a solution is reached
+
+This shift moves systems along a spectrum from **low autonomy (programmatic, fast, rigid)** to **high autonomy (agentic, slow, flexible)**.
+
+## Core Capabilities of AI Agents
+
+### Reasoning
+
+The model plans and reasons through problems step by step, rather than producing immediate answers.
+
+### Acting (Tool Use)
+
+Agents can call external tools such as web search, databases, calculators, APIs, code execution, or even other models, deciding dynamically which tools to use and when.
+
+### Memory
+
+Agents can store and retrieve information, including:
+
+* Intermediate reasoning steps
+* Past interactions and conversation history
+  This enables continuity, learning, and personalization.
+
+## The ReAct Pattern
+
+A popular way to implement agents is the **ReAct (Reason + Act)** framework:
+
+1. User query is sent to the LLM
+2. The LLM plans and reasons about the problem
+3. The LLM decides to call a tool
+4. The system observes the tool’s output
+5. The LLM adjusts its plan if needed
+6. The loop continues until a final answer is produced
+
+## Why Agentic Systems Are Powerful
+
+Agentic systems excel at **complex, multi-step problems** with many possible solution paths. For example, solving a vacation planning question may involve:
+
+* Retrieving personal vacation data
+* Checking weather forecasts
+* Consulting public health guidelines
+* Performing calculations
+  An agent can dynamically orchestrate all these steps without hardcoding every path.
+
+## Choosing Between Programmatic and Agentic Approaches
+
+* **Programmatic systems** are best for narrow, predictable tasks where efficiency and consistency matter.
+* **Agentic systems** are better for broad, complex, and unpredictable tasks where flexibility and reasoning are required.
+
+## The Road Ahead
+
+Compound AI systems are here to stay, and they are becoming increasingly **agentic**. Developers will choose the level of autonomy based on trade-offs between efficiency, complexity, and control. While agentic systems are still evolving, combining system design with agent behavior is driving rapid progress, with humans remaining in the loop as accuracy continues to improve.
