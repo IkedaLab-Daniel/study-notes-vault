@@ -1,12 +1,12 @@
 from langchain_ibm import ChatWatsonx
-from langchain.agents import Tool
+from langchain.agents import Tool, initialize_agent
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
 llm = ChatWatsonx(
-    model_id="ibm/granite-3-8b-instruct",
+    model_id="meta-llama/llama-3-3-70b-instruct",
     url=os.getenv('URL'),
     project_id=os.getenv('PROJECT_ID'),
     apikey=os.getenv('API_KEY')
@@ -36,3 +36,16 @@ add_tool = Tool(
 )
 
 print("Tool object", add_tool)
+
+agent = initialize_agent(
+    tools=[add_tool],
+    llm=llm,
+    agent="structured-chat-zero-shot-react-description",
+    verbose=True,
+    handle_parsing_errors=True,
+    max_iterations=5
+)
+
+response = agent.run("Add 15, 25, and 35")
+
+print("Agent Response: ", response)
