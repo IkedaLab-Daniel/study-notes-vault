@@ -136,3 +136,20 @@ Embedded tool calling improves reliability by introducing a **library or framewo
 ## Key Takeaway
 
 Tool calling enables LLMs to interact with real-world systems. While traditional tool calling gives flexibility, embedded tool calling offers a safer and more reliable approach by delegating tool execution and validation to a dedicated library or framework.
+
+## Why AI Needs Tools: From Guessing to Real-World Action
+
+* Large Language Models (LLMs) are powerful at generating human-like text but are limited to pattern recognition and guessing without tools.
+* On their own, LLMs cannot access real-time data, perform reliable math, call APIs, or interact with the real world, which leads to errors and hallucinations.
+* Tools enable LLMs to move beyond text generation into accurate problem-solving and real-world action.
+* With tools, LLMs can:
+
+  * Retrieve external information such as company documents, personal files, or specialized databases (Retrieval-Augmented Generation or RAG).
+  * Process non-text data like images, audio, and multimodal inputs.
+  * Maintain memory across sessions and handle data beyond context window limits.
+  * Interact with APIs, software, and digital services to perform real actions.
+* Tools significantly improve accuracy, such as using a calculator to perform correct mathematical computations instead of guessing.
+* Examples of tools include calculators, web access, search engines, code execution environments, SQL databases, and visualization tools.
+* When equipped with tools, LLMs become intelligent, agentic systems that can observe, reason, and act.
+* The agentic workflow follows a clear loop: user request → tool selection → tool execution → meaningful response.
+* Tools are essential for transforming LLMs from unreliable guessers into precise, real-world problem solvers.
