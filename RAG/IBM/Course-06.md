@@ -153,3 +153,26 @@ Tool calling enables LLMs to interact with real-world systems. While traditional
 * When equipped with tools, LLMs become intelligent, agentic systems that can observe, reason, and act.
 * The agentic workflow follows a clear loop: user request → tool selection → tool execution → meaningful response.
 * Tools are essential for transforming LLMs from unreliable guessers into precise, real-world problem solvers.
+
+## Build Effective AI Tools for Advanced LLMs
+
+* LLMs understand and generate language, while agents extend LLMs by using tools to take real-world actions and make decisions.
+* Tools are functions that allow LLMs to access live data, perform precise calculations, retrieve private or enterprise data, execute actions, and support multi-step reasoning.
+* These capabilities transform LLMs from passive text generators into active, goal-driven agents.
+* In frameworks like LangChain, tools are typically Python functions with a single, well-defined purpose.
+* Effective tools require:
+
+  * A clear and descriptive name that reflects the tool’s intent.
+  * Well-defined, standardized inputs that are easy for LLMs to parse, often strings or structured JSON.
+  * Comprehensive documentation or docstrings describing purpose, parameters, outputs, examples, and limitations.
+  * A reliable function body that performs the intended logic.
+  * Consistent and predictable outputs, usually returned in a dictionary format.
+* Tool calling follows a structured flow: user query → parameter extraction → tool selection → tool execution → result returned to the LLM.
+* Simple tools may accept unstructured string input, while structured tools support multiple typed inputs and named parameters.
+* The `Tool` class and `@tool` decorator in LangChain allow wrapping Python functions into agent-compatible tools, with the decorator offering cleaner syntax and better support for structured inputs.
+* Structured tools define input schemas using Python typing, enabling lists, booleans, and other JSON-serializable types.
+* Optional parameters and default values allow flexible tool behavior, such as summing absolute values when requested.
+* Tools can return variable outputs, including success results or error messages, using typing constructs like `Dict` and `Union`.
+* Testing is essential, as different LLMs and agents may vary in how well they handle structured inputs and outputs.
+* Careful tool design, clear interfaces, and version control are critical due to the fast-evolving nature of agent frameworks like LangChain.
+* Well-designed tools enable context-aware workflows and allow agents to orchestrate multiple tools for smarter, more reliable responses.
