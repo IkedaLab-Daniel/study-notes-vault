@@ -52,3 +52,27 @@ print("\nGroq Response: ", response.content)
 
 # response = openai_llm.invoke("Hi there! I'm Ice!")
 # print("\nResponse: ", response.content)
+
+def add_numbers(inputs:str) -> dict:
+    """
+    Adds a list of numbers provided in the input dictionary or extracts numbers from a string.
+
+    Parameters:
+    - inputs (str): 
+    string, it should contain numbers that can be extracted and summed.
+
+    Returns:
+    - dict: A dictionary with a single key "result" containing the sum of the numbers.
+
+    Example Input (Dictionary):
+    {"numbers": [10, 20, 30]}
+
+    Example Input (String):
+    "Add the numbers 10, 20, and 30."
+
+    Example Output:
+    {"result": 60}
+    """
+    numbers = [int(x) for x in inputs.replace(",", "").split() if x.isdigit()]
+    result = sum(numbers)
+    return {"result": result}
