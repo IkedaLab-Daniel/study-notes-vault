@@ -199,3 +199,21 @@ Tool calling enables LLMs to interact with real-world systems. While traditional
 * Effective agent design relies on experimentation due to the rapid evolution of LangChain and LLM capabilities.
 * Well-designed agents transform LLMs into dynamic, context-aware systems capable of precise, multi-step problem solving.
 s
+
+## Build a Custom Math Toolkit Agent with LangChain
+
+* The video demonstrates how to build flexible, custom agents using **LangChain and LangGraph**, focusing on math-focused toolkits and multi-step reasoning.
+* You learn to create a **custom math toolkit** with tools for addition, subtraction, multiplication, and division, instead of relying on a single tool.
+* LangGraph is introduced as a more flexible and robust alternative to `initialize_agent`, especially for complex, multi-step workflows.
+* Using **create_react_agent**, you can fully customize the agent’s prompt, giving more control over reasoning style and behavior compared to predefined agent strategies.
+* Agents are created by passing an **LLM**, a **list of tools**, and optionally a **custom prompt** that defines the agent’s role, such as a helpful math assistant.
+* Interaction with agents is done through the **invoke method**, passing structured chat-style messages.
+* The agent reasons through the query, selects the appropriate tool, executes it, validates the output, and returns a final response.
+* Full agent responses include **tool call traces and intermediate steps**, which are useful for debugging and understanding agent behavior.
+* Real-world agents often require **multiple tools**, as a single tool cannot handle all user requests.
+* A multi-tool math agent demonstrates how agents dynamically choose the correct tool based on the query.
+* LangChain provides many **prebuilt tools**, such as Wikipedia search, web search, Python execution, weather queries, and video search.
+* You learn to build a **custom Wikipedia search tool** using the Tool Decorator and LangChain’s community integrations, with clear input/output types and documentation.
+* By combining math tools with the Wikipedia search tool, the agent can handle **hybrid queries** that require both information retrieval and calculation.
+* Example workflow: retrieve Canada’s population from Wikipedia, then apply a math tool to compute a percentage of it.
+* Key takeaways include building ReAct-style agents with full customization, orchestrating multiple tools in one agent, guiding behavior with prompts, and extending agents with external data sources for real-world, multi-step problem solving.
