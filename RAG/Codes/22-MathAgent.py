@@ -22,9 +22,6 @@ llm = ChatOllama(
     model="llama3.2:3b"
 )
 
-response = llm.invoke("Hi there! I'm Ice!")
-print("\nResponse: ", response.content)
-
 ## -- Open AI Alternative: Groq (FREE!) -- ##
 # Get free API key at: https://console.groq.com/keys
 from langchain_openai import ChatOpenAI
@@ -35,8 +32,8 @@ groq_llm = ChatOpenAI(
      base_url="https://api.groq.com/openai/v1"
  )
 
-response = groq_llm.invoke("Hi there! I'm Ice!")
-print("\nGroq Response: ", response.content)
+# response = groq_llm.invoke("Hi there! I'm Ice!")
+# print("\nGroq Response: ", response.content)
 
 ## -- Or just use your existing Ollama (simplest!) -- ##
 # response = llm.invoke("What's 5 + 3?")
@@ -52,6 +49,8 @@ print("\nGroq Response: ", response.content)
 
 # response = openai_llm.invoke("Hi there! I'm Ice!")
 # print("\nResponse: ", response.content)
+
+## -- Functions -- ##
 
 def add_numbers(inputs:str) -> dict:
     """
@@ -76,3 +75,13 @@ def add_numbers(inputs:str) -> dict:
     numbers = [int(x) for x in inputs.replace(",", "").split() if x.isdigit()]
     result = sum(numbers)
     return {"result": result}
+
+## -- Tool -- ##
+from langchain.agents import Tool
+add_tool = Tool(
+    name="AddTool",
+    func=add_numbers,
+    description="Adds a list of numbers and returns the results."
+)
+
+print("tool object", add_tool)
