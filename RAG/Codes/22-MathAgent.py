@@ -77,11 +77,34 @@ def add_numbers(inputs:str) -> dict:
     return {"result": result}
 
 ## -- Tool -- ##
-from langchain.agents import Tool
-add_tool = Tool(
-    name="AddTool",
-    func=add_numbers,
-    description="Adds a list of numbers and returns the results."
-)
+# from langchain.agents import Tool
+# add_tool = Tool(
+#     name="AddTool",
+#     func=add_numbers,
+#     description="Adds a list of numbers and returns the results."
+# )
 
-print("tool object", add_tool)
+## @tool operator ##
+from langchain_core.tools import tool
+import re
+
+@tool
+def add_numbers(inputs:str) -> dict:
+    """
+    Adds a list of numbers provided in the input string.
+    Parameters:
+    - inputs (str): 
+    string, it should contain numbers that can be extracted and summed.
+    Returns:
+    - dict: A dictionary with a single key "result" containing the sum of the numbers.
+    Example Input:
+    "Add the numbers 10, 20, and 30."
+    Example Output:
+    {"result": 60}
+    """
+    # Use regular expressions to extract all numbers from the input
+    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
+    # numbers = [int(x) for x in inputs.replace(",", "").split() if x.isdigit()]
+    
+    result = sum(numbers)
+    return {"result": result}
