@@ -12,7 +12,11 @@ pip install langchain==0.3.23 \n
 from langchain_community.chat_models import ChatOllama
 #from langchain_ibm import ChatWatsonx
 from langchain.agents import AgentType
+from dotenv import load_dotenv
+import os
 import re
+
+load_dotenv()
 
 llm = ChatOllama(
     model="llama3.2:3b"
@@ -21,13 +25,30 @@ llm = ChatOllama(
 response = llm.invoke("Hi there! I'm Ice!")
 print("\nResponse: ", response.content)
 
-## -- Open AI -- ##
+## -- Open AI Alternative: Groq (FREE!) -- ##
+# Get free API key at: https://console.groq.com/keys
 from langchain_openai import ChatOpenAI
 
-openai_llm = ChatOpenAI(
-    model="gpt-4.1-nano",
-    api_key="I DONT HAVE OPENAI TOKENSSSS!! ૮(˶ㅠ︿ㅠ)ა"
-)
+groq_llm = ChatOpenAI(
+     model="llama-3.3-70b-versatile",  # or "mixtral-8x7b-32768", "llama-3.1-8b-instant"
+     api_key=os.getenv('GROQ_API'),  # Get from https://console.groq.com
+     base_url="https://api.groq.com/openai/v1"
+ )
 
-response = openai_llm.invoke("Hi there! I'm Ice!")
-print("\nResponse: ", response.content)
+response = groq_llm.invoke("Hi there! I'm Ice!")
+print("\nGroq Response: ", response.content)
+
+## -- Or just use your existing Ollama (simplest!) -- ##
+# response = llm.invoke("What's 5 + 3?")
+# print("\nOllama Response: ", response.content)
+
+## -- Open AI (Paid) -- ##
+# from langchain_openai import ChatOpenAI
+
+# openai_llm = ChatOpenAI(
+#     model="gpt-4.1-nano",
+#     api_key="I DONT HAVE OPENAI TOKENSSSS!! ૮(˶ㅠ︿ㅠ)ა"
+# )
+
+# response = openai_llm.invoke("Hi there! I'm Ice!")
+# print("\nResponse: ", response.content)
