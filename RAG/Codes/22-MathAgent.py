@@ -6,11 +6,17 @@ pip install langchain==0.3.23 \n
     langchain-community==0.3.16 \n
     wikipedia==1.4.0 \n
     openai==1.77.0 \n
-    langchain-openai==0.3.16 \n
-    langchain_ollama==1.0.1       # > Using Local LLM with Ollama
+    langchain-openai==0.3.16
 """
 
-from langchain_ollama import ChatOllama
+from langchain_community.chat_models import ChatOllama
 #from langchain_ibm import ChatWatsonx
 from langchain.agents import AgentType
 import re
+
+llm = ChatOllama(
+    model="llama3.2:3b"
+)
+
+response = llm.invoke("Hi there! I'm Ice!")
+print("\nResponse: ", response.content)
