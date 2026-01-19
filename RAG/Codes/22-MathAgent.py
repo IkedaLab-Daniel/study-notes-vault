@@ -20,3 +20,14 @@ llm = ChatOllama(
 
 response = llm.invoke("Hi there! I'm Ice!")
 print("\nResponse: ", response.content)
+
+## -- Open AI -- ##
+from langchain_openai import ChatOpenAI
+
+openai_llm = ChatOpenAI(
+    model="gpt-4.1-nano",
+    api_key="I DONT HAVE OPENAI TOKENSSSS!! ૮(˶ㅠ︿ㅠ)ა"
+)
+
+response = openai_llm.invoke("Hi there! I'm Ice!")
+print("\nResponse: ", response.content)
