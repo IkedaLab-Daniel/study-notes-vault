@@ -77,12 +77,12 @@ def add_numbers(inputs:str) -> dict:
     return {"result": result}
 
 ## -- Tool -- ##
-# from langchain.agents import Tool
-# add_tool = Tool(
-#     name="AddTool",
-#     func=add_numbers,
-#     description="Adds a list of numbers and returns the results."
-# )
+from langchain.agents import Tool
+add_tool = Tool(
+    name="AddTool",
+    func=add_numbers,
+    description="Adds a list of numbers and returns the results."
+)
 
 ## @tool operator ##
 from langchain_core.tools import tool
@@ -116,3 +116,11 @@ def add_numbers(inputs:str) -> dict:
 # test_input = "what is the sum between 10, 20 and 30 " 
 # print(add_numbers.invoke(test_input))
 
+# --- Comparing Approaches --- #
+print("Tool Constructor Approach:")
+print(f"Has Schema: {hasattr(add_tool, 'args_schema')}")
+print("\n")
+
+print("@tool Decorator approach:")
+print(f"Has Schema: {hasattr(add_numbers, 'args_schema')}")
+print(f"Args schema information: {add_numbers.args}")
