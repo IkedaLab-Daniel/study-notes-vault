@@ -269,13 +269,61 @@ agent_exec = create_react_agent(
     tools=[sum_numbers_from_text]
 )
 
-msgs = agent_exec.invoke(
-    {
-        "messages": [
-            ("human", "Add the numbers -10, thirty-two, -20, -30")
-        ]
-    }
-)
+# msgs = agent_exec.invoke(
+#     {
+#         "messages": [
+#             ("human", "Add the numbers -10, thirty-two, -20, -30")
+#         ]
+#     }
+# )
 
-print_agent()
-print(msgs["messages"][-1].content)
+# print_agent()
+# print(msgs["messages"][-1].content)
+
+@tool
+def subtract_numbers(inputs: str) -> dict:
+    """
+    Extracts numbers from a string, negates the first number, and successively subtracts 
+    the remaining numbers in the list.
+
+    This function is designed to handle input in string format, where numbers are separated 
+    by spaces, commas, or other delimiters. It parses the string, extracts valid numeric values, 
+    and performs a step-by-step subtraction operation starting with the first number negated.
+
+    Parameters:
+    - inputs (str): 
+      A string containing numbers to subtract. The string may include spaces, commas, or 
+      other delimiters between the numbers.
+
+    Returns:
+    - dict: 
+      A dictionary containing the key "result" with the calculated difference as its value. 
+      If no valid numbers are found in the input string, the result defaults to 0.
+
+    Example Input:
+    "100, 20, 10"
+
+    Example Output:
+    {"result": -130}
+
+    Notes:
+    - Non-numeric characters in the input are ignored.
+    - If the input string contains only one valid number, the result will be that number negated.
+    - Handles a variety of delimiters (e.g., spaces, commas) but does not validate input formats 
+      beyond extracting numeric values.
+    """
+    # Extract numbers from the string
+    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+
+    # If no numbers are found, return 0
+    if not numbers:
+        return {"result": 0}
+
+    # Start with the first number negated
+    result = -1 * numbers[0]
+
+    # Subtract all subsequent numbers
+    for num in numbers[1:]:
+        result -= num
+
+    return {"result": result}
