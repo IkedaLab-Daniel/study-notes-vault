@@ -181,4 +181,26 @@ def sum_numbers_with_complex_output(inputs: str) -> Dict[str, Union[float, str]]
         total = sum(numbers)
         return {"result": total}
     except Exception as Ice:
-        return {"result": f"Error during summatiuon: {str(Ice)}"}
+        return {"result": f"Error during summation: {str(Ice)}"}
+
+result = sum_numbers_with_complex_output.invoke("kalsjdnajklsnbdklnb")
+print(result)
+result = sum_numbers_with_complex_output.invoke("10, 20, 30")
+print(result)
+
+# -- straight forward version -- #
+@tool
+def sum_numbers_from_text(inputs: str) -> float:
+    """
+    Adds a list of numbers provided in the input string.
+    
+    Args:
+        text: A string containing numbers that should be extracted and summed.
+        
+    Returns:
+        The sum of all numbers found in the input.
+    """
+    # Use regular expressions to extract all numbers from the input
+    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
+    result = sum(numbers)
+    return result
