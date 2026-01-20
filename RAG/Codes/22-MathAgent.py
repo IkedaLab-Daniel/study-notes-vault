@@ -327,3 +327,12 @@ def subtract_numbers(inputs: str) -> dict:
         result -= num
 
     return {"result": result}
+
+print("Name: \n", subtract_numbers.name)
+print("Description: \n", subtract_numbers.description) 
+print("Args: \n", subtract_numbers.args) 
+
+print("Calling Tool Function:")
+test_input = "10 20 30 and four a b" 
+print_agent()
+print(subtract_numbers.invoke(test_input))  # Example
