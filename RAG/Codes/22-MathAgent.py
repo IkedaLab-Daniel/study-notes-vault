@@ -204,3 +204,18 @@ def sum_numbers_from_text(inputs: str) -> float:
     numbers = [int(num) for num in re.findall(r'\d+', inputs)]
     result = sum(numbers)
     return result
+
+# --- initialize_agent --- #
+from langchain.agents import initialize_agent
+
+agent = initialize_agent(
+    [add_tool],
+    llm,
+    agent="zero-shot-react-description",
+    verbose=True,
+    handle_parsing_errors=True
+)
+
+response = agent.run("In 2023, the US GDP was approximately $27.72 trillion, while Canada's was around $2.14 trillion and Mexico's was about $1.79 trillion what is the total.")
+
+print("\n\n",response)
