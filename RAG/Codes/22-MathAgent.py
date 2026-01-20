@@ -372,3 +372,40 @@ def multiply_numbers(inputs: str) -> dict:
         print(num)
 
     return {"result": result}
+
+@tool
+def divide_numbers(inputs: str) -> dict:
+    """
+    Extracts numbers from a string and calculates the result of dividing the first number 
+    by the subsequent numbers in sequence.
+
+    Parameters:
+    - inputs (str): A string containing numbers separated by spaces, commas, or other delimiters.
+
+    Returns:
+    - dict: A dictionary with the key "result" containing the quotient.
+
+    Example Input:
+    "100, 5, 2"
+
+    Example Output:
+    {"result": 10.0}
+
+    Notes:
+    - If no numbers are found, the result defaults to 0.
+    - Division by zero will raise an error.
+    """
+    # Extract numbers from the string
+    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+
+
+    # If no numbers are found, return 0
+    if not numbers:
+        return {"result": 0}
+
+    # Calculate the result of dividing the first number by subsequent numbers
+    result = numbers[0]
+    for num in numbers[1:]:
+        result /= num
+
+    return {"result": result}
