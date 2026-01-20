@@ -124,3 +124,22 @@ print("\n")
 print("@tool Decorator approach:")
 print(f"Has Schema: {hasattr(add_numbers, 'args_schema')}")
 print(f"Args schema information: {add_numbers.args}")
+
+# --- add_number with option --- #
+from typing import List
+
+@tool
+def add_numbers_with_options(numbers: List[float], absolute: bool = False) -> float:
+    """
+    Adds a list of numberes provided as input
+    
+    Parameters:
+    - numbers (Lost[float]): A list of numbers to be summed.
+    - absolute (bool): If true, use the absolute values of the numbers before summing.
+
+    Returns:
+    - float: The total sum of the numbers.
+    """
+    if absolute:
+        numbers = [abs(n) for n in numbers]
+    return sum(numbers)
