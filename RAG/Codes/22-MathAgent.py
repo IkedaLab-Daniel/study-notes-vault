@@ -149,3 +149,36 @@ def add_numbers_with_options(numbers: List[float], absolute: bool = False) -> fl
 # print("\n-------------------------------\n")
 # print(add_numbers_with_options.invoke({"numbers":[-1.1,-2.1,-3.0],"absolute":False}))
 # print(add_numbers_with_options.invoke({"numbers":[-1.1,-2.1,-3.0],"absolute":True}))
+
+# --- Improved tool return types with Python typing --- #
+from typing import Dict, Union
+
+@tool
+def sum_numbers_with_complex_output(inputs: str) -> Dict[str, Union[float, str]]:
+    """
+    Extracts and sums all integers and decimal numbers from the input string.
+
+    Parameters:
+    - inputs (str): A string that may contain numeric values.
+
+    Returns:
+    - dict: A dictionary with the key "result". If numbers are found, the value is their sum (float). 
+            If no numbers are found or an error occurs, the value is a corresponding message (str).
+
+    Example Input:
+    "Add 10, 20.5, and -3."
+
+    Example Output:
+    {"result": 27.5}
+    """
+    matches = re.findall(r'-?\d+(?:\.\d+)?', inputs)
+
+    if not matches:
+        return {"result": "No numbers found in input"}
+    
+    try:
+        numbers = [float(num) for num in matches]
+        total = sum(numbers)
+        return {"result": total}
+    except Exception as Ice:
+        return {"result": f"Error during summatiuon: {str(Ice)}"}
