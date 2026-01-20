@@ -6,7 +6,8 @@ pip install langchain==0.3.23 \n
     langchain-community==0.3.16 \n
     wikipedia==1.4.0 \n
     openai==1.77.0 \n
-    langchain-openai==0.3.16
+    langchain-openai==0.3.16 \n
+    langgraph==0.6.1
 """
 
 from langchain_community.chat_models import ChatOllama
@@ -253,9 +254,28 @@ agent_4 = initialize_agent(
     verbose=True
 )
 
-response = agent_4.invoke({
-    "input": "Add -10, -20, and -30 using absolute values."
-})
+# response = agent_4.invoke({
+#      "input": "Add -10, -20, and -30 using absolute values."
+# })
+
+# print_agent()
+# print("   >> ", response)
+
+## --- create_react_agent --- ##
+from langgraph.prebuilt import create_react_agent
+
+agent_exec = create_react_agent(
+    model=groq_llm,
+    tools=[sum_numbers_from_text]
+)
+
+msgs = agent_exec.invoke(
+    {
+        "messages": [
+            ("human", "Add the numbers -10, thirty-two, -20, -30")
+        ]
+    }
+)
 
 print_agent()
-print("   >> ", response)
+print(msgs["messages"][-1].content)
