@@ -210,12 +210,26 @@ from langchain.agents import initialize_agent
 
 agent = initialize_agent(
     [add_tool],
-    llm,
+    llm=groq_llm,
     agent="zero-shot-react-description",
     verbose=True,
     handle_parsing_errors=True
 )
 
-response = agent.run("In 2023, the US GDP was approximately $27.72 trillion, while Canada's was around $2.14 trillion and Mexico's was about $1.79 trillion what is the total.")
+# response = agent.run("In 2023, the US GDP was approximately $27.72 trillion, while Canada's was around $2.14 trillion and Mexico's was about $1.79 trillion what is the total.")
 
-print("\n\n",response)
+# print("\n\n",response)
+
+# agent.invoke({"input": "Add 10, 20, two and 30"})
+
+## --- Structured chat zero react-description ---#
+agent_2 = initialize_agent(
+    [sum_numbers_from_text],
+    llm=groq_llm,
+    agent="structured-chat-zero-shot-react-description",
+    verbose=True,
+    handling_parsing_errors=True
+)
+
+response = agent_2.invoke({"input": "Add 10, 20, two, and 30"})
+print("\n\n", response)
