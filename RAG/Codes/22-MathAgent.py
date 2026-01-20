@@ -108,3 +108,11 @@ def add_numbers(inputs:str) -> dict:
     
     result = sum(numbers)
     return {"result": result}
+
+# print("Name: \n", add_numbers.name)
+# print("Description: \n", add_numbers.description) 
+# print("Args: \n", add_numbers.args) 
+
+# test_input = "what is the sum between 10, 20 and 30 " 
+# print(add_numbers.invoke(test_input))
+
