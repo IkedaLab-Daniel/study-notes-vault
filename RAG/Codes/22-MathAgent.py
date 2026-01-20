@@ -117,13 +117,13 @@ def add_numbers(inputs:str) -> dict:
 # print(add_numbers.invoke(test_input))
 
 # --- Comparing Approaches --- #
-print("Tool Constructor Approach:")
-print(f"Has Schema: {hasattr(add_tool, 'args_schema')}")
-print("\n")
+# print("Tool Constructor Approach:")
+# print(f"Has Schema: {hasattr(add_tool, 'args_schema')}")
+# print("\n")
 
-print("@tool Decorator approach:")
-print(f"Has Schema: {hasattr(add_numbers, 'args_schema')}")
-print(f"Args schema information: {add_numbers.args}")
+# print("@tool Decorator approach:")
+# print(f"Has Schema: {hasattr(add_numbers, 'args_schema')}")
+# print(f"Args schema information: {add_numbers.args}")
 
 # --- add_number with option --- #
 from typing import List
@@ -143,3 +143,9 @@ def add_numbers_with_options(numbers: List[float], absolute: bool = False) -> fl
     if absolute:
         numbers = [abs(n) for n in numbers]
     return sum(numbers)
+
+# print(f"Args Schema Info: {add_numbers_with_options.args}")
+# print(f"Args Schema Info: {add_numbers.args}")
+# print("\n-------------------------------\n")
+# print(add_numbers_with_options.invoke({"numbers":[-1.1,-2.1,-3.0],"absolute":False}))
+# print(add_numbers_with_options.invoke({"numbers":[-1.1,-2.1,-3.0],"absolute":True}))
