@@ -233,3 +233,13 @@ agent_2 = initialize_agent(
 
 response = agent_2.invoke({"input": "Add 10, 20, two, and 30"})
 print("\n\n", response)
+
+agent_3 = initialize_agent(
+    [sum_numbers_with_complex_output],
+    llm=groq_llm, agent="openai-functions",
+    verbose=True,
+    handle_parsing_errors=True
+)
+
+response = agent_3.invoke({"input": "Add 10, 20 and 30"})
+print(response)
