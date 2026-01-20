@@ -15,6 +15,7 @@ from langchain.agents import AgentType
 from dotenv import load_dotenv
 import os
 import re
+from utils import print_agent
 
 load_dotenv()
 
@@ -231,15 +232,30 @@ agent_2 = initialize_agent(
     handling_parsing_errors=True
 )
 
-response = agent_2.invoke({"input": "Add 10, 20, two, and 30"})
-print("\n\n", response)
+# response = agent_2.invoke({"input": "Add 10, 20, two, and 30"})
+# print("\n\n", response)
 
 agent_3 = initialize_agent(
     [sum_numbers_with_complex_output],
-    llm=groq_llm, agent="openai-functions",
+    llm=groq_llm, 
+    agent="openai-functions",
     verbose=True,
     handle_parsing_errors=True
 )
 
-response = agent_3.invoke({"input": "Add 10, 20 and 30"})
-print(response)
+# response = agent_3.invoke({"input": "Add 10, 20 and 30"})
+# print(response)
+
+agent_4 = initialize_agent(
+    [add_numbers_with_options],
+    llm=groq_llm,
+    agent="structured-chat-zero-shot-react-description",
+    verbose=True
+)
+
+response = agent_4.invoke({
+    "input": "Add -10, -20, and -30 using absolute values."
+})
+
+print_agent()
+print("   >> ", response)
