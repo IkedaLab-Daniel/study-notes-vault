@@ -409,3 +409,19 @@ def divide_numbers(inputs: str) -> dict:
         result /= num
 
     return {"result": result}
+
+# Testing multiply_tool
+multiply_test_input = "2, 3, and four "
+multiply_result = multiply_numbers.invoke(multiply_test_input)
+print("--- Testing MultiplyTool ---")
+print(f"Input: {multiply_test_input}")
+print_agent()
+print(f"Output: {multiply_result}")
+
+# Testing divide_tool
+divide_test_input = "100, 5, two"
+divide_result = divide_numbers.invoke(divide_test_input)
+print("--- Testing DivideTool ---")
+print(f"Input: {divide_test_input}")
+print_agent()
+print(f"Output: {divide_result}")
