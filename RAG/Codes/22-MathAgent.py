@@ -28,9 +28,24 @@ llm = ChatOllama(
 # Get free API key at: https://console.groq.com/keys
 from langchain_openai import ChatOpenAI
 
+# Model options for Groq (currently supported as of Jan 2026):
+# 1. llama-3.1-8b-instant - RECOMMENDED: Fast & reliable for function calling
+# 2. mixtral-8x7b-32768 - Good alternative for function calling
+# 3. llama-3.3-70b-versatile - Most capable but can have function calling quirks
+# 4. gemma2-9b-it - Google's Gemma model
+
+# NOTE: llama-3.1-70b-versatile was decommissioned. Use 8b-instant instead.
+
 groq_llm = ChatOpenAI(
-     model="llama-3.3-70b-versatile",  # or "mixtral-8x7b-32768", "llama-3.1-8b-instant"
+     model="llama-3.1-8b-instant",  # Fast, reliable, good for function calling
      api_key=os.getenv('GROQ_API'),  # Get from https://console.groq.com
+     base_url="https://api.groq.com/openai/v1"
+ )
+
+# Alternative: More capable but slower
+groq_llm_advanced = ChatOpenAI(
+     model="gemma2-9b-it",
+     api_key=os.getenv('GROQ_API'),
      base_url="https://api.groq.com/openai/v1"
  )
 
@@ -185,10 +200,10 @@ def sum_numbers_with_complex_output(inputs: str) -> Dict[str, Union[float, str]]
     except Exception as Ice:
         return {"result": f"Error during summation: {str(Ice)}"}
 
-result = sum_numbers_with_complex_output.invoke("kalsjdnajklsnbdklnb")
-print(result)
-result = sum_numbers_with_complex_output.invoke("10, 20, 30")
-print(result)
+# result = sum_numbers_with_complex_output.invoke("kalsjdnajklsnbdklnb")
+# print(result)
+# result = sum_numbers_with_complex_output.invoke("10, 20, 30")
+# print(result)
 
 # -- straight forward version -- #
 @tool
@@ -343,7 +358,7 @@ def multiply_numbers(inputs: str) -> dict:
     Extracts numbers from a string and calculates their product.
 
     Parameters:
-    - inputs (str): A string containing numbers separated by spaces, commas, or other delimiters.
+    - inputs (str): A string containing numbers (including decimals) separated by spaces, commas, or other delimiters.
 
     Returns:
     - dict: A dictionary with the key "result" containing the product of the numbers.
@@ -356,9 +371,10 @@ def multiply_numbers(inputs: str) -> dict:
 
     Notes:
     - If no numbers are found, the result defaults to 1 (neutral element for multiplication).
+    - Supports both integers and decimal numbers.
     """
-    # Extract numbers from the string using regex
-    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
+    # Extract both integers and decimals from the string using regex
+    numbers = [float(num) for num in re.findall(r'-?\d+(?:\.\d+)?', inputs)]
 
     # If no numbers are found, return 1
     if not numbers:
@@ -513,7 +529,7 @@ math_agent_new = create_react_agent(
     prompt="You are a helpful mathematical assistant that can perform various operations. Use the tools precisely and explain your reasoning clearly."
 )
 
-print("ageng", math_agent_new)
+# print("agent", math_agent_new)
 
 # Test Cases
 test_cases = [
@@ -540,38 +556,134 @@ test_cases = [
 
 ]
 
-correct_tasks = []
-# Corrected test execution
-for index, test in enumerate(test_cases, start=1):
-    query = test["query"]
-    expected_result = test["expected"]["result"]  # Extract just the value
-    
-    print(f"\n--- Test Case {index}: {test['description']} ---")
-    print(f"Query: {query}")
-    
-    # Properly format the input
-    response = math_agent_new.invoke({"messages": [("human", query)]})
-    
-    # Find the tool message in the response
-    tool_message = None
-    for msg in response["messages"]:
-        if hasattr(msg, 'name') and msg.name in ['add_numbers', 'new_subtract_numbers', 'multiply_numbers', 'divide_numbers']:
-            tool_message = msg
-            break
-    
-    if tool_message:
-        # Parse the tool result from its content
-        import json
-        tool_result = json.loads(tool_message.content)["result"]
-        print(f"Tool Result: {tool_result}")
-        print(f"Expected Result: {expected_result}")
-        
-        if tool_result == expected_result:
-            print(f"✅ Test Passed: {test['description']}")
-            correct_tasks.append(test["description"])
-        else:
-            print(f"❌ Test Failed: {test['description']}")
-    else:
-        print("❌ No tool was called by the agent")
+def test_agent():
 
-print("\nCorrectly passed tests:", correct_tasks)
+    correct_tasks = []
+    # Corrected test execution
+    for index, test in enumerate(test_cases, start=1):
+        query = test["query"]
+        expected_result = test["expected"]["result"]  # Extract just the value
+        
+        print(f"\n--- Test Case {index}: {test['description']} ---")
+        print(f"Query: {query}")
+        
+        # Properly format the input
+        response = math_agent_new.invoke({"messages": [("human", query)]})
+        
+        # Find the tool message in the response
+        tool_message = None
+        for msg in response["messages"]:
+            if hasattr(msg, 'name') and msg.name in ['add_numbers', 'new_subtract_numbers', 'multiply_numbers', 'divide_numbers']:
+                tool_message = msg
+                break
+        
+        if tool_message:
+            # Parse the tool result from its content
+            import json
+            tool_result = json.loads(tool_message.content)["result"]
+            print(f"Tool Result: {tool_result}")
+            print(f"Expected Result: {expected_result}")
+            
+            if tool_result == expected_result:
+                print(f"✅ Test Passed: {test['description']}")
+                correct_tasks.append(test["description"])
+            else:
+                print(f"❌ Test Failed: {test['description']}")
+        else:
+            print("❌ No tool was called by the agent")
+
+    print("\nCorrectly passed tests:", correct_tasks)
+
+# --- Built in: WikipediaAPIWrapper ---- #
+from langchain_community.utilities import WikipediaAPIWrapper
+
+@tool
+def search_wikipedia(query: str) -> str:
+    """Seacrch WWikipedia for factual information about a topic.
+
+    Parameters:
+    - query (str): The topic or question to search for on Wikipedia
+
+    Returns:
+    - query (str): A summary of relevant information from WWikipedia
+    """
+
+    wiki = WikipediaAPIWrapper()
+    return wiki.run(query)
+
+# response = search_wikipedia.invoke("What is tool calling?")
+# print_agent()
+# print(response)
+
+tools_updated = [add_numbers, new_subtract_numbers, multiply_numbers, divide_numbers, search_wikipedia]
+math_agent_updated = create_react_agent(
+    model=groq_llm,
+    tools=tools_updated,
+    # More concise prompt to avoid model generating too much reasoning text before tool calls
+    prompt="You are a helpful assistant. Use the available tools when needed."
+)
+
+# --- Example 1: Math Only (Works reliably) ---
+print("\n" + "="*80)
+print("EXAMPLE 1: MATH ONLY")
+print("="*80)
+
+query_math = "What is 100 multiplied by 25?"
+response = math_agent_updated.invoke({"messages": [("human", query_math)]})
+print(f"\nQuery: {query_math}")
+print(f"Answer: {response['messages'][-1].content}")
+
+# --- Example 2: Wikipedia + Math (Can be challenging) ---
+print("\n" + "="*80)
+print("EXAMPLE 2: WIKIPEDIA + MATH (Multi-step reasoning)")
+print("="*80)
+
+# For complex queries combining Wikipedia + Math, a two-step approach works better:
+# Step 1: Search Wikipedia
+# Step 2: Extract info and do math
+
+query_wiki_math = "What is the population of Canada? Multiply it by 0.75"
+print(f"\nQuery: {query_wiki_math}")
+print("Note: This requires multi-step reasoning (search Wikipedia, then do math)")
+
+try:
+    response = math_agent_updated.invoke({"messages": [("human", query_wiki_math)]})
+    print(f"Answer: {response['messages'][-1].content}")
+    
+    print("\n--- Message Sequence ---")
+    for i, msg in enumerate(response["messages"]):
+        print(f"\nMessage {i+1} ({type(msg).__name__}):")
+        if hasattr(msg, 'content') and msg.content:
+            content_preview = msg.content[:150] + "..." if len(msg.content) > 150 else msg.content
+            print(f"  Content: {content_preview}")
+        if hasattr(msg, 'name'):
+            print(f"  Tool: {msg.name}")
+            
+except Exception as e:
+    print(f"❌ Error occurred: {type(e).__name__}")
+    print(f"Message: {str(e)[:200]}")
+    print("\nThis query is challenging because:")
+    print("1. Wikipedia returns text summaries, not structured data")
+    print("2. The model must extract population from text")
+    print("3. Then perform math on that number")
+    print("\nWorkaround: Use a manual two-step approach (see below)")
+
+# --- Workaround: Manual Two-Step Approach ---
+print("\n" + "="*80)
+print("WORKAROUND: MANUAL TWO-STEP APPROACH")
+print("="*80)
+
+# Step 1: Search Wikipedia
+wiki_result = search_wikipedia.invoke("Canada")
+print("\nStep 1 - Wikipedia Search:")
+print(wiki_result[:400] + "...")
+
+# Step 2: User extracts the number manually and does math
+# (In a real app, you could use regex or another LLM call to extract the number)
+print("\n\nStep 2 - Extract population and calculate:")
+print("From the Wikipedia text, Canada's population is approximately 40 million.")
+print("Manual calculation: 40,000,000 × 0.75 = 30,000,000")
+
+# Or use the math tool
+calc_result = multiply_numbers.invoke("40000000 0.75")
+print(f"Using multiply tool: 40,000,000 × 0.75 = {calc_result['result']:,.0f}")
