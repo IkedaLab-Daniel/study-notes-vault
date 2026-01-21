@@ -359,7 +359,6 @@ def multiply_numbers(inputs: str) -> dict:
     """
     # Extract numbers from the string
     numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
-    print(numbers)
 
     # If no numbers are found, return 1
     if not numbers:
@@ -369,7 +368,6 @@ def multiply_numbers(inputs: str) -> dict:
     result = 1
     for num in numbers:
         result *= num
-        print(num)
 
     return {"result": result}
 
@@ -436,18 +434,30 @@ math_agent = create_react_agent(
     prompt="You are a helpful mathematical assistant that can perform various operations. Use the tools precisely and explain your reasoning clearly."
 )
 
-response = math_agent.invoke({
-    "messages": [("human", "What is 25 divided by 4?")]
-})
+# response = math_agent.invoke({
+#     "messages": [("human", "What is 25 divided by 4?")]
+# })
 
 # final_answer = response["messages"][-1].content
 # print_agent()
 # print(final_answer)
 
-response_2 = math_agent.invoke({
-    "messages": [("human", "Subtract 100, 20, and 10.")]
-})
+# response_2 = math_agent.invoke({
+#     "messages": [("human", "Subtract 100, 20, and 10.")]
+# })
 
-final_answer_2 = response_2["messages"][-2].content
-print_agent()
-print(final_answer_2)
+# final_answer_2 = response_2["messages"][-2].content
+# print_agent()
+# print(final_answer_2)
+
+print("\n--- Testing MultiplyTool ---")
+response = math_agent.invoke({
+    "messages": [("human", "Multiply 2, 3, and four.")]
+})
+print("Agent Response:", response["messages"][-1].content)
+
+print("\n--- Testing DivideTool ---")
+response = math_agent.invoke({
+    "messages": [("human", "Divide 100 by 5 and then by 2.")]
+})
+print("Agent Response:", response["messages"][-1].content)
