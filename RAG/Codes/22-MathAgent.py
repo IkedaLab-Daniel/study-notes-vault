@@ -357,8 +357,8 @@ def multiply_numbers(inputs: str) -> dict:
     Notes:
     - If no numbers are found, the result defaults to 1 (neutral element for multiplication).
     """
-    # Extract numbers from the string
-    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+    # Extract numbers from the string using regex
+    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
 
     # If no numbers are found, return 1
     if not numbers:
@@ -393,9 +393,8 @@ def divide_numbers(inputs: str) -> dict:
     - If no numbers are found, the result defaults to 0.
     - Division by zero will raise an error.
     """
-    # Extract numbers from the string
-    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
-
+    # Extract numbers from the string using regex
+    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
 
     # If no numbers are found, return 0
     if not numbers:
@@ -450,17 +449,17 @@ math_agent = create_react_agent(
 # print_agent()
 # print(final_answer_2)
 
-print("\n--- Testing MultiplyTool ---")
-response = math_agent.invoke({
-    "messages": [("human", "Multiply 2, 3, and four.")]
-})
-print("Agent Response:", response["messages"][-1].content)
+# print("\n--- Testing MultiplyTool ---")
+# response = math_agent.invoke({
+#     "messages": [("human", "Multiply 2, 3, and four.")]
+# })
+# print("Agent Response:", response["messages"][-1].content)
 
-print("\n--- Testing DivideTool ---")
-response = math_agent.invoke({
-    "messages": [("human", "Divide 100 by 5 and then by 2.")]
-})
-print("Agent Response:", response["messages"][-1].content)
+# print("\n--- Testing DivideTool ---")
+# response = math_agent.invoke({
+#     "messages": [("human", "Divide 100 by 5 and then by 2.")]
+# })
+# print("Agent Response:", response["messages"][-1].content)
 
 @tool
 def new_subtract_numbers(inputs: str) -> dict:
@@ -488,8 +487,8 @@ def new_subtract_numbers(inputs: str) -> dict:
     Limitations:
     - The function does not handle cases where numbers are formatted with decimals or other non-integer representations.
     """
-    # Extract numbers from the string
-    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+    # Extract numbers from the string using regex
+    numbers = [int(num) for num in re.findall(r'\d+', inputs)]
 
     # If no numbers are found, return 0
     if not numbers:
@@ -503,3 +502,76 @@ def new_subtract_numbers(inputs: str) -> dict:
         result -= num
 
     return {"result": result}
+
+## -- Updated Agent -- ##
+tools_updated = [add_numbers, new_subtract_numbers, multiply_numbers, divide_numbers]
+
+math_agent_new = create_react_agent(
+    model=groq_llm,
+    tools=tools_updated,
+    # ? Optional
+    prompt="You are a helpful mathematical assistant that can perform various operations. Use the tools precisely and explain your reasoning clearly."
+)
+
+print("ageng", math_agent_new)
+
+# Test Cases
+test_cases = [
+    {
+        "query": "Subtract 100, 20, and 10.",
+        "expected": {"result": 70},
+        "description": "Testing subtraction tool with sequential subtraction."
+    },
+    {
+        "query": "Multiply 2, 3, and 4.",
+        "expected": {"result": 24},
+        "description": "Testing multiplication tool for a list of numbers."
+    },
+    {
+        "query": "Divide 100 by 5 and then by 2.",
+        "expected": {"result": 10.0},
+        "description": "Testing division tool with sequential division."
+    },
+    {
+        "query": "Subtract 50 from 20.",
+        "expected": {"result": -30},
+        "description": "Testing subtraction tool with negative results."
+    }
+
+]
+
+correct_tasks = []
+# Corrected test execution
+for index, test in enumerate(test_cases, start=1):
+    query = test["query"]
+    expected_result = test["expected"]["result"]  # Extract just the value
+    
+    print(f"\n--- Test Case {index}: {test['description']} ---")
+    print(f"Query: {query}")
+    
+    # Properly format the input
+    response = math_agent_new.invoke({"messages": [("human", query)]})
+    
+    # Find the tool message in the response
+    tool_message = None
+    for msg in response["messages"]:
+        if hasattr(msg, 'name') and msg.name in ['add_numbers', 'new_subtract_numbers', 'multiply_numbers', 'divide_numbers']:
+            tool_message = msg
+            break
+    
+    if tool_message:
+        # Parse the tool result from its content
+        import json
+        tool_result = json.loads(tool_message.content)["result"]
+        print(f"Tool Result: {tool_result}")
+        print(f"Expected Result: {expected_result}")
+        
+        if tool_result == expected_result:
+            print(f"✅ Test Passed: {test['description']}")
+            correct_tasks.append(test["description"])
+        else:
+            print(f"❌ Test Failed: {test['description']}")
+    else:
+        print("❌ No tool was called by the agent")
+
+print("\nCorrectly passed tests:", correct_tasks)
