@@ -461,3 +461,45 @@ response = math_agent.invoke({
     "messages": [("human", "Divide 100 by 5 and then by 2.")]
 })
 print("Agent Response:", response["messages"][-1].content)
+
+@tool
+def new_subtract_numbers(inputs: str) -> dict:
+    """
+    Extracts numbers from a string and performs subtraction sequentially, starting with the first number.
+
+    This function is designed to handle input in string format, where numbers may be separated by spaces, 
+    commas, or other delimiters. It parses the input string, extracts numeric values, and calculates 
+    the result by subtracting each subsequent number from the first. inputs[0]-inputs[1]-inputs[2]
+
+    Parameters:
+    - inputs (str): 
+      A string containing numbers to subtract. The string can include spaces, commas, or other 
+      delimiters between the numbers.
+
+    Returns:
+    - dict: 
+      A dictionary containing the key "result" with the calculated difference as its value. 
+      If no valid numbers are found in the input string, the result defaults to 0.
+
+    Example Usage:
+    - Input: "100, 20, 10"
+    - Output: {"result": 70}
+
+    Limitations:
+    - The function does not handle cases where numbers are formatted with decimals or other non-integer representations.
+    """
+    # Extract numbers from the string
+    numbers = [int(num) for num in inputs.replace(",", "").split() if num.isdigit()]
+
+    # If no numbers are found, return 0
+    if not numbers:
+        return {"result": 0}
+
+    # Start with the first number
+    result = numbers[0]
+
+    # Subtract all subsequent numbers
+    for num in numbers[1:]:
+        result -= num
+
+    return {"result": result}
