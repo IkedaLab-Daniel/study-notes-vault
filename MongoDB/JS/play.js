@@ -11,8 +11,23 @@ const dbname = "sample"
 const connectToDatabase = async () => {
     try {
         await client.connect();
-        console.log(`Connect to ${dbname} database`)
+        console.log(`
+₊˚｡⋆❆⋆｡˚₊
+            `)
+        console.log(`Connected to "${dbname}" database`)
     } catch (ice) {
         console.log(`Error connecting to database: ${ice}`)
     }
 }
+
+const main = async () => {
+    try {
+        await connectToDatabase();
+    } catch (ice) {
+        console.log(`Error connecting to the database: ${ice}`)
+    } finally {
+        await client.close()
+    }
+}
+
+main()
