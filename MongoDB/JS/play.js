@@ -15,6 +15,9 @@ const connectToDatabase = async () => {
 ₊˚｡⋆❆⋆｡˚₊
             `)
         console.log(`Connected to "${dbname}" database`)
+        const databaselist = await client.db().admin().listDatabases()
+        console.log("\nDatabases: ")
+        console.log(databaselist)
     } catch (ice) {
         console.log(`Error connecting to database: ${ice}`)
     }
