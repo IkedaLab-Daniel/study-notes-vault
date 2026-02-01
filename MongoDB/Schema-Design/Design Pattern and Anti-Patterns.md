@@ -439,3 +439,82 @@ Since the bookstore only displays **three reviews** on the book page, embedding 
 The golden rule still applies:
 
 > **Store together what you query together — but only in controlled amounts.**
+
+## Bloated Documents Antipattern in MongoDB
+
+### What Is the Bloated Documents Antipattern?
+
+Bloated documents happen when **all related data is stored in a single document**, even when different parts of that data are accessed at different times.
+
+This violates MongoDB’s practical rule:
+
+> **Store together what is accessed together — not everything that’s related.**
+
+Bloated documents increase average document size, which inflates the **working set** (frequently accessed data). When the working set no longer fits in memory, performance drops.
+
+### Why This Hurts Performance
+
+MongoDB (via WiredTiger) relies on an **internal cache** to keep frequently used documents and indexes in RAM.
+
+* If the working set fits in cache → fast queries
+* If it exceeds cache → disk reads → slow pages
+
+In the bookstore example:
+
+* Homepage randomly loads books → *all book documents become part of the working set*
+* Average book document size ≈ 1.12 KB
+* Hundreds of thousands of books → logical data size ≈ 500+ MB
+* WiredTiger cache ≈ 512 MB
+
+Once indexes and other data are included, the working set **exceeds memory**, causing homepage slowness.
+
+### How to Detect the Problem
+
+Estimate logical data size:
+
+* Logical size = number of documents × average document size
+* Use `db.collection.stats()` to get both values
+
+If this approaches or exceeds WiredTiger cache, you likely have bloated documents.
+
+### Two Possible Fixes
+
+1. Add more RAM (costly)
+2. Improve the data model (preferred)
+
+### The Real Fix: Split by Access Pattern
+
+Only a few fields are used on the homepage (for example: `title`, `author`).
+Most fields are only needed on the details page.
+
+So the solution is to **split the document**:
+
+### Summary Collection
+
+* Contains lightweight fields used frequently (title, author, etc.)
+* Very small documents (~79 bytes)
+* Fits easily in memory
+
+### Details Collection
+
+* Stores large, infrequently accessed fields
+* Queried only when viewing book details
+
+After splitting:
+
+* Working set drops to ~35 MB
+* Fits comfortably in cache
+* Performance is restored
+
+### Key Takeaways
+
+* Bloated documents store data that is accessed separately in one document
+* This increases working set size and degrades performance
+* Diagnose by estimating logical data size vs cache size
+* Fix by separating documents based on **access patterns**, not just relationships
+
+### Golden Reminder
+
+> **Design for how your application reads data — not just how entities relate.**
+
+Splitting documents into “summary” and “details” is a powerful way to keep hot data small and fast.
