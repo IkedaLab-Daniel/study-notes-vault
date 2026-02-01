@@ -365,3 +365,77 @@ Finally, we run the aggregation pipeline by invoking the aggregate method on the
 
 db.reviews.aggregate(reshape_review_docs_pipeline)
 ```
+
+## Unbounded Array Antipattern in MongoDB
+
+### What Is an Unbounded Array?
+
+An **unbounded array** is a document field that keeps growing without limit (for example, embedding all reviews inside a single book document).
+
+This is dangerous because:
+
+* Documents can exceed MongoDB’s **16 MB BSON size limit**
+* Index performance degrades as arrays grow
+* Large documents strain application memory and network resources
+
+### Why It Happens
+
+MongoDB encourages embedding data that’s accessed together, often using arrays.
+But when the “many” side of a one-to-many relationship grows indefinitely (like reviews on a popular book), embedding everything becomes an antipattern.
+
+### Rules of Thumb to Avoid Unbounded Arrays
+
+* Only embed data that is **queried together**
+* Arrays should **not grow without bounds**
+* Avoid embedding **high-cardinality** data
+
+### Fixing the Antipattern
+
+Two schema patterns help control array growth:
+
+### Extended Reference Pattern
+
+* Move child documents (reviews) into their own collection
+* Duplicate relevant parent data (book info) into each review
+* Remove the reviews array from the book document
+
+**Downsides in the bookstore case:**
+
+* Heavy data duplication
+* More complex queries
+* Must fetch book info from reviews
+* Poor fit when books remain the primary entity
+
+### Subset Pattern (Best Fit for This Use Case)
+
+* Store **all reviews** in a separate `reviews` collection
+* Embed only a **small, frequently accessed subset** (for example, top 3 reviews) in the book document
+
+Benefits:
+
+* Eliminates unbounded arrays
+* Keeps commonly used data together
+* Avoids `$lookup` for the main book page
+* Controls document size
+* Accepts minor duplication for major performance gains
+
+Since the bookstore only displays **three reviews** on the book page, embedding just those while storing the rest separately is the optimal design.
+
+### Key Takeaways
+
+* The unbounded array antipattern occurs when embedded arrays grow without limit
+* It risks document size limits and hurts performance
+* Avoid by:
+
+  * Embedding only what’s queried together
+  * Preventing unlimited array growth
+  * Not embedding high-cardinality data
+* Two main solutions:
+
+  * **Extended Reference Pattern**
+  * **Subset Pattern**
+* Choose based on your application’s access patterns and business needs
+
+The golden rule still applies:
+
+> **Store together what you query together — but only in controlled amounts.**
