@@ -108,7 +108,6 @@ def router(state):
 ## --- Creating the Graph --- ##
 from langgraph.graph import StateGraph
 from langgraph.graph import END
-
 # ? Create an instance of StateGraph
 workflow = StateGraph(AuthState)
 print(workflow)
@@ -119,3 +118,22 @@ workflow.add_node("ValidateCredential", validate_credentials_node)
 workflow.add_node("Success", success_node)
 workflow.add_node("Failure", failure_node)
 
+### -- Edges -- ###
+workflow.add_edge("InputNode", "ValidateCredential")
+workflow.add_edge("Success", END)
+workflow.add_edge("Failure", "InputNode")
+
+### -- Building an Authentication Workflow -- ###
+workflow.add_conditional_edges("ValidateCredential", router, {"success_node": "Success", "failure_node": "Failure"})
+
+### -- Setting the Entry Point -- ###
+workflow.set_entry_point("InputNode")
+
+### -- Compiling the Workflow -- ###
+app = workflow.compile()
+
+### -- Running the Application -- ###
+inputs = {"username": "test_user"}
+result = app.invoke(inputs)
+print(result)
+print(result['output'])
