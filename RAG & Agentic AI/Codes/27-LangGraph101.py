@@ -88,3 +88,34 @@ auth_state_3: AuthState = {
 print(f"auth_state_3: {auth_state_3}")
 
 print(validate_credentials_node(auth_state_3))
+
+## -- Success & Failure Node -- ##
+def success_node(state):
+    return {"output": "Authentication successful! Welcome."}
+
+print(success_node(auth_state_3))
+
+def failure_node(state):
+    return {"output": "NOt successful, please try again!"}
+
+# > Router Node
+def router(state):
+    if state['is_authenticated']:
+        return "success_node"
+    else:
+        return "failure_node"
+    
+## --- Creating the Graph --- ##
+from langgraph.graph import StateGraph
+from langgraph.graph import END
+
+# ? Create an instance of StateGraph
+workflow = StateGraph(AuthState)
+print(workflow)
+
+# > Adding nodes to the graph
+workflow.add_node("InputNode", input_node)
+workflow.add_node("ValidateCredential", validate_credentials_node)
+workflow.add_node("Success", success_node)
+workflow.add_node("Failure", failure_node)
+
