@@ -1,4 +1,4 @@
-> # Relational to Document Model
+# Relational to Document Model
 ## MongoDB Data Modeling for Relational Developers
 
 ### From Relational Schemas to Document Models
