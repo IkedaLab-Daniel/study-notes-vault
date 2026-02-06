@@ -180,3 +180,88 @@ db.books.find({ _id: 3 })
   }
 ]
 ```
+
+## MongoDB Computed Pattern (Precomputing for Performance)
+
+### What the Computed Pattern Is
+
+The **computed pattern** improves performance by **precomputing expensive values when data changes** (on write or on schedule) instead of recalculating them every time users read data.
+
+This avoids repeated calculations and is especially important at scale (for example, millions or billions of reviews).
+
+In short:
+
+> **Compute once, read many.**
+
+### Mathematical Computations (Example: Average Star Rating)
+
+Problem:
+Calculating a book’s average rating on every page view would require scanning many review documents repeatedly.
+
+Solution:
+Store the computed values directly in the **book document**.
+
+Add a `rating` subdocument:
+
+* `reviewCount` – total number of reviews
+* `average` – current average star rating
+
+When a new review arrives:
+
+1. Multiply the old average by the old review count
+2. Add the new star rating
+3. Increment the review count
+4. Divide by the new total review count
+5. Store the updated values back in the book document
+
+Result:
+
+* Ratings are updated **only when a review is written**
+* Product pages read **one document**
+* No repeated aggregation over the reviews collection
+
+Much faster and more scalable.
+
+### Roll-Up Operations (Aggregating Groups of Data)
+
+Roll-ups summarize many documents into higher-level views, such as:
+
+* hourly → daily → monthly
+* per-book → per-product-type
+
+Example requirement:
+
+Stakeholders want, per product type:
+
+* Total number of books
+* Average number of authors
+
+Instead of computing this on every request:
+
+* Run an aggregation pipeline on a schedule (for example, daily)
+* Store the results in summary documents
+
+Typical pipeline steps:
+
+1. **Group** by `productType`
+2. **$sum** to count books
+3. **$size** to count authors per book
+4. **$avg** to compute average authors per product type
+
+This produces compact summary documents for audiobooks, ebooks, and printed books.
+
+This approach is ideal when:
+
+* Writes are frequent
+* Slightly stale data is acceptable
+* Reports don’t need real-time precision
+
+### Key Takeaways
+
+* The **computed pattern** shifts work from reads to writes (or scheduled jobs).
+* It stores precomputed results for fast access.
+* Two common forms:
+
+  * **Mathematical computations** (like averages, totals)
+  * **Roll-ups** (grouped summaries over time or categories)
+* This pattern dramatically improves performance and scalability by eliminating repeated calculations during reads.
