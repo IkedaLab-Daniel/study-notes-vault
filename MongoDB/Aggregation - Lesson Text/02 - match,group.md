@@ -21,9 +21,10 @@ The $group stage groups documents by a group key.
       <field>: { <accumulator> : <expression> }
     }
  }
+```
 $match and $group in an Aggregation Pipeline
 The following aggregation pipeline finds the documents with a field named "state" that matches a value "CA" and then groups those documents by the group key "$city" and shows the total number of zip codes in the state of California.
-
+```js
 db.zips.aggregate([
 {   
    $match: { 
