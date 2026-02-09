@@ -230,3 +230,108 @@ s
 - Tools help LLMs access external data and support RAG, enabling the use of the organization's or other specialized databases.
 - Tools help process images, audio, and video to enable vision, voice, and multimodal reasoning, manage long conversations, and connect to APIs to perform real-world actions.
 - The Zero-Shot ReAct Agent uses zero-shot reasoning to solve tasks it hasn't seen before and works best for simple or well-structured problems.
+
+> # Module 2: LCEL and Manual Tool Calling in Langchain
+
+## LangChain LCEL (LangChain Expression Language) Chaining Method
+
+### Overview
+
+LCEL is LangChain’s modern, recommended way to build AI workflows. It uses the **pipe (`|`) operator** to connect components, creating clean, readable, and composable chains that move data from input to output.
+
+Compared to older LLMChain approaches, LCEL offers:
+
+* Clearer data flow
+* Better composability
+* Easier visualization of pipelines
+* More flexibility for building complex systems
+
+### Core LCEL Workflow
+
+A typical LCEL chain follows these steps:
+
+1. Define a prompt template using variables in `{curly_braces}`
+2. Create a PromptTemplate instance
+3. Connect components with the pipe (`|`) operator
+4. Invoke the chain with input values
+
+### Runnables: Building Blocks of LCEL
+
+LCEL is built on **runnables**, which connect prompts, LLMs, retrievers, tools, and functions into pipelines.
+
+There are two main composition types:
+
+#### RunnableSequence
+
+* Runs components sequentially
+* Output of one becomes input to the next
+* In LCEL, this is simply written with `|`
+
+#### RunnableParallel
+
+* Runs multiple components at the same time using the same input
+* Created automatically when you use a dictionary
+
+### Elegant Syntax with the Pipe Operator
+
+Instead of explicitly creating RunnableSequence objects, LCEL lets you write:
+
+```
+component1 | component2 | component3
+```
+
+This produces a sequential chain with much cleaner syntax.
+
+### Automatic Type Coercion
+
+LCEL automatically converts common Python objects into runnable components:
+
+* **Functions → RunnableLambda**
+* **Dictionaries → RunnableParallel**
+
+You don’t need to handle this manually.
+
+Example behavior:
+
+* A function becomes a transformation step
+* A dictionary triggers parallel execution
+* Each parallel task receives the same input
+
+This allows patterns like:
+
+* Summarization
+* Translation
+* Sentiment analysis
+
+to run simultaneously from a single input.
+
+### Example Flow (Conceptual)
+
+1. RunnableLambda formats a prompt using input variables
+2. Pipe sends formatted prompt to the LLM
+3. Pipe sends LLM output to an output parser (for example, StrOutputParser)
+
+Each step is connected with `|`, forming a readable pipeline.
+
+### Parallel Execution Example
+
+Using a dictionary automatically creates RunnableParallel:
+
+* Same input goes to multiple tasks
+* Outputs are returned as keyed results (for example: summary, translation, sentiment)
+
+### When to Use LCEL vs LangGraph
+
+* **Use LCEL** for simpler orchestration and linear or parallel pipelines
+* **Use LangGraph** for complex, multi-step agent workflows
+* LCEL can still be used *inside* LangGraph nodes
+
+### Key Advantages of LCEL
+
+* Pipe-based readable chaining
+* Parallel execution support
+* Async compatibility
+* Simplified streaming
+* Automatic tracing
+* Reduced boilerplate
+* Reusable chain patterns
