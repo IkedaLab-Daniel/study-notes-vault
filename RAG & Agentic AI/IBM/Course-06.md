@@ -335,3 +335,59 @@ Using a dictionary automatically creates RunnableParallel:
 * Automatic tracing
 * Reduced boilerplate
 * Reusable chain patterns
+
+## When to Call Tools Manually
+
+### Overview
+
+LLMs can recommend tools and parameters to solve tasks, and agents can automatically execute these tools. While automation is powerful, manual tool invocation gives developers greater control, safety, and accuracy—especially in sensitive or high-risk systems.
+
+### How Tool Suggestion and Execution Works
+
+* LLMs analyze user input and **suggest which tool to use**, along with required parameters (for example, location for a weather API).
+* Agents can then **automatically execute** the suggested tool and return results to the user.
+* This creates a fast, hands-free workflow—but removes human oversight.
+
+### Why Manual Tool Invocation Matters
+
+Automatic execution isn’t always ideal. Manual invocation is preferred when:
+
+#### Safety
+
+* Prevents unintended or risky actions (for example, modifying financial or production databases).
+* Allows validation before executing sensitive operations.
+
+#### Cost Control
+
+* Avoids unnecessary API calls or expensive operations.
+* Lets developers decide when a tool is truly needed.
+
+#### Accuracy
+
+* Ensures tools are called with correct parameters.
+* Allows verification of inputs and outputs before accepting results.
+
+### Agents vs Manual Control
+
+* **Agents**: Fully automate tool execution based on LLM recommendations.
+* **Manual invocation**: Developers review tool choices, validate parameters, and explicitly trigger execution.
+
+Manual control keeps humans “in the loop,” making it easier to:
+
+* Inspect LLM recommendations
+* Approve or reject actions
+* Adjust parameters
+* Confirm results
+
+### Key Takeaways
+
+* LLMs can suggest tools and required inputs, but humans should evaluate those suggestions.
+* Agents automate execution, improving speed—but reducing oversight.
+* Manual invocation provides:
+
+  * Greater safety
+  * Better cost management
+  * Higher accuracy
+* Choosing between automation and manual control depends on your use case, especially for high-stakes or regulated environments.
+
+Manual tool invocation puts you back in the driver’s seat—offering precision, reliability, and peace of mind when building real-world AI systems.
