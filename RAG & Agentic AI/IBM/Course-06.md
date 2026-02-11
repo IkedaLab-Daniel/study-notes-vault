@@ -496,3 +496,118 @@ This enables name-based function execution and scalable tool orchestration.
 * Chat history can be preserved to enable personalized, multi-turn interactions.
 
 This approach transforms an LLM from a text generator into a practical, tool-powered agent.
+
+## Build Interactive LLM Agents
+
+### Overview
+
+This lesson shows how to move from basic tool-enabled LLMs to **fully interactive agents** that can manage conversations, extract tool calls, execute functions, and return natural responses—end to end.
+
+The focus is on **manually orchestrating the tool-calling loop** and then wrapping everything into an agent class.
+
+---
+
+### Structuring Conversations with Chat History
+
+* User input is wrapped in a `HumanMessage` to mark it as coming from the user.
+* Messages are stored in a `chat_history` list.
+* This history includes:
+
+  * User messages
+  * LLM responses
+  * Tool outputs
+
+Keeping this full history ensures the model always has context.
+
+---
+
+### Running the Tool-Enabled LLM
+
+1. Pass `chat_history` into the LLM (with tools bound).
+2. Instead of plain text, the model returns an `AIMessage` containing a **tool_calls array**.
+3. Each tool call includes:
+
+   * Tool name (for example, `AddTool`)
+   * Arguments (as JSON)
+   * A unique tool call ID
+   * Type (`tool_call`)
+
+This is the LLM saying: *“Call this function with these parameters.”*
+
+---
+
+### Extracting and Executing Tool Calls
+
+From the `AIMessage`:
+
+* Extract the tool name.
+* Extract the arguments (for example, `a=3`, `b=2`).
+* Extract the tool call ID (important when multiple tools are involved).
+
+Then:
+
+* Use a **tool map** (dictionary mapping tool names → functions).
+* Call the correct tool with the provided arguments.
+* Get the tool result (for example, `5`).
+
+---
+
+### Returning Tool Results to the LLM
+
+* Wrap the tool output in a `ToolMessage`.
+* Append this `ToolMessage` to `chat_history`.
+
+Now the conversation contains:
+
+1. Original `HumanMessage`
+2. LLM’s `AIMessage` requesting a tool
+3. `ToolMessage` with the tool result
+
+Send this updated history back to the LLM.
+
+The model uses the tool output to generate a **final, natural-language response**.
+
+---
+
+### Building a ToolCallingAgent Class
+
+To automate this entire workflow, you create an agent class (for example, `ToolCallingAgent`) that:
+
+* Binds tools to the LLM
+* Manages chat history
+* Parses tool calls
+* Extracts tool names and arguments
+* Executes tools
+* Feeds results back to the LLM
+* Returns the final answer
+
+With this structure:
+
+* Users can ask imprecise questions like *“1 minus 2”*
+* The agent:
+
+  * Infers intent
+  * Chooses the correct tool
+  * Runs it
+  * Responds accurately
+
+---
+
+### Key Takeaways
+
+* User input is wrapped in `HumanMessage` and stored in chat history.
+* LLM responses may include structured **tool calls** instead of plain text.
+* Tool calls provide:
+
+  * Tool name
+  * Arguments
+  * Unique IDs
+* You manually:
+
+  * Parse tool instructions
+  * Execute the tool
+  * Return results via `ToolMessage`
+* Updating chat history enables multi-step, context-aware reasoning.
+* Encapsulating everything in an agent class creates a reusable, intelligent system.
+
+This process transforms LLMs from passive responders into **interactive agents** that can reason, act, and integrate real-world tools.
