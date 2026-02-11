@@ -391,3 +391,108 @@ Manual control keeps humans “in the loop,” making it easier to:
 * Choosing between automation and manual control depends on your use case, especially for high-stakes or regulated environments.
 
 Manual tool invocation puts you back in the driver’s seat—offering precision, reliability, and peace of mind when building real-world AI systems.
+
+## Build LLM Agents with Tools (Manual Tool Calling)
+
+### Overview
+
+This video introduces the first steps in **manual tool calling**, showing how to turn a basic LLM into an interactive agent by connecting it to custom tools like arithmetic functions.
+
+The goal is to let the LLM **identify when a tool is needed, extract parameters, call the tool, and use the result to generate a final response**.
+
+---
+
+### Core Workflow
+
+1. User asks a question (for example: *What is 3 plus 2?*)
+2. The LLM:
+
+   * Understands the intent
+   * Extracts parameters (3 and 2)
+   * Selects the correct tool (add)
+3. The tool executes the operation.
+4. The result is returned to the LLM.
+5. The LLM produces a natural-language answer (5).
+
+This is the foundation of an agent that can interact with the real world.
+
+---
+
+### Initializing the Chat Model
+
+* Use `initChatModel` to create a chat-capable LLM.
+* Load a model (for example, GPT-4.0 mini via OpenAI).
+* Store it as `LLM`.
+* From this point on, `LLM.invoke()` is how you communicate with the model.
+
+The LLM becomes the central hub for user queries and tool calls.
+
+---
+
+### Creating Custom Tools
+
+* Use the `@tool` decorator to mark Python functions as callable tools.
+* Example: an `add(a, b)` function that returns `a + b`.
+* The tool’s docstring tells the LLM **when and how** to use it.
+
+At this stage, tools exist—but are not yet connected to the model.
+
+---
+
+### Binding Tools to the LLM
+
+* Place tools in a list (for example: `[add]`).
+* Bind them to the model to create `LLMWithTools`.
+
+Now the LLM is “tool-aware” and can call `add` automatically when needed.
+
+---
+
+### Expanding Tool Capabilities
+
+* Add more tools such as:
+
+  * `subtract`
+  * `multiply`
+
+Bind all tools together so the LLM can choose between them dynamically.
+
+---
+
+### Dynamic Function Execution with Mapping Dictionaries
+
+To support flexible tool calls:
+
+* Create a mapping dictionary:
+
+  * Tool name (string) → function
+* Build an input dictionary matching parameter names:
+
+  * `{ "a": 1, "b": 2 }`
+* Call the tool dynamically using:
+
+  * `tool_map["add"].invoke(input_dict)`
+
+This enables name-based function execution and scalable tool orchestration.
+
+---
+
+### Key Takeaways
+
+* Manual tool calling is a core building block for AI agents.
+* You learned how to:
+
+  * Initialize a chat model for tool use
+  * Define tools with decorators
+  * Bind tools to an LLM
+  * Add multiple tools (add, subtract, multiply)
+  * Use mapping dictionaries for dynamic function calls
+* LLMs can:
+
+  * Identify the correct tool
+  * Extract parameters
+  * Execute functions
+  * Return precise, context-aware results
+* Chat history can be preserved to enable personalized, multi-turn interactions.
+
+This approach transforms an LLM from a text generator into a practical, tool-powered agent.
