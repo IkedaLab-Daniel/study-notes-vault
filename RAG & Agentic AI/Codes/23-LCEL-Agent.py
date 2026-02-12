@@ -260,7 +260,6 @@ agent = create_openai_tools_agent(llm, tools, prompt)
 # print("Tool input:", action.tool_input)
 # print("Log:\n", action.log.strip())
 
-# ! ----------------------------------------
 ### -- Agent Executer ReAct -- ###
 from langchain.agents import AgentExecutor
 
@@ -274,7 +273,7 @@ print_agent()
 print("     >> Ask questions about your dataset (type 'exit' to quit):")
 
 while True:
-    user_input = input("      >> You:")
+    user_input = input("     >> You: ")
     if user_input.strip().lower() in ['exit', 'quit']:
         print("     >> See yaaa")
         break
