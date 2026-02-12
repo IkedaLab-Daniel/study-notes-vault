@@ -58,21 +58,65 @@ def multiply(a: int, b: int) -> int:
     return a * b
 
 ### -- Testing the functions -- ###
-# tool_map = {
-#     "add": add,
-#     "subtract": subtract,
-#     "multiply": multiply
-# }
+tool_map = {
+    "add": add,
+    "subtract": subtract,
+    "multiply": multiply
+}
 
-# input_ = {
-#     "a": 1,
-#     "b": 2
-# }
+input_ = {
+    "a": 1,
+    "b": 2
+}
 
 # result = tool_map["add"].invoke(input_)
 # print_agent()
 # print(result)
 
-result = add.invoke({ "a": 123123, "b": 190238921})
+# result = add.invoke({ "a": 123123, "b": 190238921})
+# print_agent()
+# print(result)
+
+### -- Add new tools to LLM -- ###
+tools = [add, subtract, multiply]
+
+llm_with_tools = llm.bind_tools(tools)
+
+### -- Interacting with the Model -- ###
+# ? Craft the user query
+query = "What is 3 + 2?"
+chat_history = [HumanMessage(content=query)]
+
+# ? Invoke the model
+response_1 = llm_with_tools.invoke(chat_history)
+chat_history.append(response_1)
+
 print_agent()
-print(result)
+print(type(response_1))
+print(response_1)
+
+# ? Paese tool calls
+tool_calls_1 = response_1.tool_calls
+
+tool_1_name = tool_calls_1[0]["name"]
+tool_1_args = tool_calls_1[0]["args"]
+tool_call_1_id = tool_calls_1[0]["id"]
+
+print_agent()
+print(f'tool name:\n{tool_1_name}')
+print(f'tool args:\n{tool_1_args}')
+print(f'tool call ID:\n{tool_call_1_id}')
+
+# ? Invoke the Tool
+tool_response = tool_map[tool_1_name].invoke(tool_1_args)
+tool_message = ToolMessage(content=tool_response, tool_call_id=tool_call_1_id)
+
+print(tool_message)
+
+chat_history.append(tool_message)
+
+# ? Generate a final answer from chat history
+answer = llm_with_tools.invoke(chat_history)
+print_agent()
+print(type(answer))
+print(answer.content)
