@@ -238,5 +238,31 @@ prompt = ChatPromptTemplate.from_messages([
 from langchain.chat_models import init_chat_model
 
 # ! llm = init_chat_model("gpt-4o-mini", model_provider="openai", streaming=False )
+llm = groq_llm
 
 tools = [list_csv_files, preload_datasets, get_dataset_summaries, call_dataframe_method, evaluate_classfication_dataset, evaluate_regression_dataset]
+
+### -- Agent creation and limitations --- ###
+# ? Contruct the tool calling agent
+agent = create_openai_tools_agent(llm, tools, prompt)
+
+response = agent.invoke({
+    "input": "Can you tell me about the dataset?",
+    "intermediate_steps": []
+})
+
+# ? Get the first ToolAgentAcation from the list
+action = response[0]
+
+# ? print the key deatails
+print("Agent decided to call a tool:")
+print("Tool name:", action.tool)
+print("Tool input:", action.tool_input)
+print("Log:\n", action.log.strip())
+
+# ! ----------------------------------------
+### -- Agent Executer ReAct -- ###
+# from langchain.agents import AgentExecutor
+
+# agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
+# agent_executor.agent.stream_runnable = False
