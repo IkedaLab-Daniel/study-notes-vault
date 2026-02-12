@@ -220,3 +220,23 @@ def evaluate_regression_dataset(file_name: str, target_column: str) -> Dict[str,
             "r2_score": r2,
             "mean_squared_error": mse
         }
+
+### -- Agents -- ###
+from langchain_openai import ChatOpenAI
+from langchain.agents import create_openai_tools_agent
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", 
+     "You are a data science assistant. Use the available tools to analyze CSV files. "
+     "Your job is to determine whether each dataset is for classification or regression, based on its structure."),
+    
+    ("user", "{input}"),
+    ("placeholder", "{agent_scratchpad}")
+])
+
+from langchain.chat_models import init_chat_model
+
+# ! llm = init_chat_model("gpt-4o-mini", model_provider="openai", streaming=False )
+
+tools = [list_csv_files, preload_datasets, get_dataset_summaries, call_dataframe_method, evaluate_classfication_dataset, evaluate_regression_dataset]
