@@ -102,7 +102,7 @@ def get_dataset_summaries(dataset_paths: List[str]) -> List[Dict[str, Any]]:
         summary = {
             "file_name": path,
             "column_names": df.columns.tolist(),
-            "data_types": df.dtypes.ast
+            "data_types": df.dtypes.at
         }
 
         summaries.append(summary)
@@ -246,23 +246,39 @@ tools = [list_csv_files, preload_datasets, get_dataset_summaries, call_dataframe
 # ? Contruct the tool calling agent
 agent = create_openai_tools_agent(llm, tools, prompt)
 
-response = agent.invoke({
-    "input": "Can you tell me about the dataset?",
-    "intermediate_steps": []
-})
+# response = agent.invoke({
+#    "input": "Can you tell me about the dataset?",
+#    "intermediate_steps": []
+#})
 
 # ? Get the first ToolAgentAcation from the list
-action = response[0]
+# action = response[0]
 
 # ? print the key deatails
-print("Agent decided to call a tool:")
-print("Tool name:", action.tool)
-print("Tool input:", action.tool_input)
-print("Log:\n", action.log.strip())
+# print("Agent decided to call a tool:")
+# print("Tool name:", action.tool)
+# print("Tool input:", action.tool_input)
+# print("Log:\n", action.log.strip())
 
 # ! ----------------------------------------
 ### -- Agent Executer ReAct -- ###
-# from langchain.agents import AgentExecutor
+from langchain.agents import AgentExecutor
 
-# agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
-# agent_executor.agent.stream_runnable = False
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
+agent_executor.agent.stream_runnable = False
+
+from utils import print_agent
+
+print_agent()
+
+print("     >> Ask questions about your dataset (type 'exit' to quit):")
+
+while True:
+    user_input = input("      >> You:")
+    if user_input.strip().lower() in ['exit', 'quit']:
+        print("     >> See yaaa")
+        break
+
+    result = agent_executor.invoke({"input": user_input})
+    print_agent()
+    print(f"    >> {result['output']}")
