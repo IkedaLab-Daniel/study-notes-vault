@@ -1,2 +1,6 @@
 venv/*
 generations/*
+.venv/*
+./.venv
+./.venv/
+./.venv/*
