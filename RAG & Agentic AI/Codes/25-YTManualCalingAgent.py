@@ -31,4 +31,28 @@ llm = init_chat_model(
     api_key=os.getenv("GROQ_API")
 )
 
-print(llm.invoke("Hello! I'm Ice.").content)
+### -- Defining video ID extractor tool -- ###
+@tool
+def extract_video_id(url: str) -> str:
+    """
+    Extracts the 11-character YouTube video ID from a URL.
+    
+    Args:
+        url (str): A YouTube URL containing a video ID.
+
+    Returns:
+        str: Extracted video ID or error message if parsing fails.
+    """
+    
+    # Regex pattern to match video IDs
+    pattern = r'(?:v=|be/|embed/)([a-zA-Z0-9_-]{11})'
+    match = re.search(pattern, url)
+    return match.group(1) if match else "Error: Invalid YouTube URL"
+
+print(extract_video_id.name)
+print("----------------------------")
+print(extract_video_id.description)
+print("----------------------------")
+print(extract_video_id.func)
+
+print(extract_video_id.run("https://www.youtube.com/watch?v=hfIUstzHs9A"))
