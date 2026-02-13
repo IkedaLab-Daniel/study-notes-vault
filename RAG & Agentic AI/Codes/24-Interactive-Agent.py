@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 from utils import print_agent
 import os
 
+import sys
+print("DEBUG USING:", sys.executable)
+
 load_dotenv()
 
 ### -- LLM Setup -- ###
@@ -12,7 +15,7 @@ from langchain_openai import ChatOpenAI
 llm = init_chat_model(
     "llama-3.1-8b-instant", 
     model_provider="groq",
-    api_key=os.getenv('GROQ_API')
+    api_key=os.getenv("GROQ_API")
 )
 
 ### -- Defining an add functiuon -- ###
@@ -78,48 +81,48 @@ input_ = {
 # print(result)
 
 ### -- Add new tools to LLM -- ###
-tools = [add, subtract, multiply]
+# tools = [add, subtract, multiply]
 
-llm_with_tools = llm.bind_tools(tools)
+# llm_with_tools = llm.bind_tools(tools)
 
 ### -- Interacting with the Model -- ###
 # ? Craft the user query
-query = "What is 3 + 2?"
-chat_history = [HumanMessage(content=query)]
+# query = "What is 3 + 2?"
+# chat_history = [HumanMessage(content=query)]
 
 # ? Invoke the model
-response_1 = llm_with_tools.invoke(chat_history)
-chat_history.append(response_1)
+# response_1 = llm_with_tools.invoke(chat_history)
+# chat_history.append(response_1)
 
-print_agent()
-print(type(response_1))
-print(response_1)
+# print_agent()
+# print(type(response_1))
+# print(response_1)
 
 # ? Paese tool calls
-tool_calls_1 = response_1.tool_calls
+# tool_calls_1 = response_1.tool_calls
 
-tool_1_name = tool_calls_1[0]["name"]
-tool_1_args = tool_calls_1[0]["args"]
-tool_call_1_id = tool_calls_1[0]["id"]
+# tool_1_name = tool_calls_1[0]["name"]
+# tool_1_args = tool_calls_1[0]["args"]
+# tool_call_1_id = tool_calls_1[0]["id"]
 
-print_agent()
-print(f'tool name:\n{tool_1_name}')
-print(f'tool args:\n{tool_1_args}')
-print(f'tool call ID:\n{tool_call_1_id}')
+# print_agent()
+# print(f'tool name:\n{tool_1_name}')
+# print(f'tool args:\n{tool_1_args}')
+# print(f'tool call ID:\n{tool_call_1_id}')
 
 # ? Invoke the Tool
-tool_response = tool_map[tool_1_name].invoke(tool_1_args)
-tool_message = ToolMessage(content=tool_response, tool_call_id=tool_call_1_id)
+# tool_response = tool_map[tool_1_name].invoke(tool_1_args)
+# tool_message = ToolMessage(content=tool_response, tool_call_id=tool_call_1_id)
 
-print(tool_message)
+# print(tool_message)
 
-chat_history.append(tool_message)
+# chat_history.append(tool_message)
 
 # ? Generate a final answer from chat history
-answer = llm_with_tools.invoke(chat_history)
-print_agent()
-print(type(answer))
-print(answer.content)
+# answer = llm_with_tools.invoke(chat_history)
+# print_agent()
+# print(type(answer))
+# print(answer.content)
 
 ### -- Building an Agent -- ###
 class ToolCallingAgent:
@@ -175,7 +178,7 @@ def calculate_tip(total_bill: int, tip_percent: int) -> int:
     
     :param total_bill: Total bill
     :type total_bill: int
-    :param tip_percent: Tip percentag
+    :param tip_percent: Tip percentage
     :type tip_percent: int
     :return: Description
     :rtype: the result value of calculation total_bill * (tip_percent / 100)
