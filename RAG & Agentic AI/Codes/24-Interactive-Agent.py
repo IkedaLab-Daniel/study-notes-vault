@@ -159,3 +159,33 @@ print_agent()
 print(my_agent.run("one plus 2"))
 print(my_agent.run("one - 2"))
 print(my_agent.run("three times two"))
+
+
+### -- Exercise 1 -- ###
+"""
+Use the example tool format provided in the notebook to create a new tool named calculate_tip that takes a total_bill and tip_percent, and returns the tip amount.
+Define and invoke the tool with sample inputs like total_bill=120, tip_percent=15.
+Create a tool_map with the calculate_tip tool.
+"""
+@tool
+def calculate_tip(total_bill: int, tip_percent: int) -> int:
+    """
+    Calculate total tip given total bill and tip percentaage.
+    total_bill * (tip_percent / 100)
+    
+    :param total_bill: Total bill
+    :type total_bill: int
+    :param tip_percent: Tip percentag
+    :type tip_percent: int
+    :return: Description
+    :rtype: the result value of calculation total_bill * (tip_percent / 100)
+    """
+    return total_bill * (tip_percent / 100)
+
+result = calculate_tip.invoke({"total_bill": 120, "tip_percent": 15})
+print("---------------------- Exercise Prints Below --------------------------")
+print(result)
+
+tool_map = {
+    "calculate_tip": calculate_tip
+}
