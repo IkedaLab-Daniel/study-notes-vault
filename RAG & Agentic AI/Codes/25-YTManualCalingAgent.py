@@ -5,6 +5,7 @@ import yt_dlp
 from typing import List, Dict
 from langchain_core.messages import HumanMessage, ToolMessage
 import json
+from utils import print_agent
 
 # > Suppress Warnings
 import warnings
@@ -56,3 +57,36 @@ print("----------------------------")
 print(extract_video_id.func)
 
 print(extract_video_id.run("https://www.youtube.com/watch?v=hfIUstzHs9A"))
+
+### -- Tool list -- ###
+tools = []
+tools.append(extract_video_id)
+
+### -- Defining transcript fetching tool -- ###
+from youtube_transcript_api import YouTubeTranscriptApi
+
+@tool
+def fetch_transcript(video_id: str, language: str = "en") -> str:
+    """
+    Fetches the transcript of a YouTube video.
+    
+    :param video_id: The YouTube video ID (e.g., "dQw4w9WgXcQ")
+    :type video_id: str
+    :param language: Language code for the transcript (e.g., "en", "es").
+    :type language: str
+    :return: The transcript text or an error message.
+    :rtype: str
+    """
+
+    try:
+        ytt_api = YouTubeTranscriptApi()
+        transcript = ytt_api.fetch(video_id, languages=[language])
+        return " ".join([snipper.text for snipper in transcript.snippets])
+    except Exception as ICE:
+        return f"Error: {str(ICE)}"
+
+# ? Test
+# print_agent()
+# print(fetch_transcript.run("hfIUstzHs9A"))
+
+tools.append(fetch_transcript)
