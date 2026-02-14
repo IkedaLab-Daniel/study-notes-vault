@@ -119,13 +119,14 @@ def search_youtube(query: str) -> List[Dict[str, str]]:
         ]
     except Exception as ICE:
         return f"Error: {str(ICE)}"
-    
+
+tools.append(search_youtube)
 # ? Test
 # search_out = search_youtube.run("Generative AI")
 # print_agent()
 # print(search_out)
 
-### -- DMetadata Extraction Tool -- ###
+### -- Metadata Extraction Tool -- ###
 @tool
 def get_full_metadata(url: str) -> dict:
     """Extract metadata given a YouTube URL, including title, views, duration, channel, likes, comments, and chapters."""
@@ -140,7 +141,46 @@ def get_full_metadata(url: str) -> dict:
             'comments': info.get('comment_count'),
             'chapters': info.get('chapters', [])
         }
+tools.append(get_full_metadata)
+# meta_data=get_full_metadata.run("https://www.youtube.com/watch?v=T-D1OfcDW1M")
+# print_agent()
+# pprint.pprint(meta_data, indent=4)
 
-meta_data=get_full_metadata.run("https://www.youtube.com/watch?v=T-D1OfcDW1M")
-print_agent()
-pprint.pprint(meta_data, indent=4)
+###  -- Defining thumbnail retrieval tool -- ###
+# ! NOT WORKING
+@tool
+def get_thumbnails(url: str) -> List[Dict]:
+    """
+    Get available thumbnails for a YouTube video using its URL.
+    
+    :param url: YouTube video URL (any format)
+    :type url: str
+    :return: List of dicstionaries with thumbnail URLs and resolutions in YouTube's natibve order
+    :rtype: List[Dict]
+    """
+
+    try:
+        with yt_dlp.YoutubeDL({'quiet': True, 'logger': yt_dlp_logger}) as ydl:
+            info = ydl.extract_info(url, download=False)
+
+            thumbnails = []
+
+            for t in info.get('thumbnail', []):
+                if 'url' in t:
+                    thumbnails.append({
+                        "url": t['url'],
+                        "width": t.get('width'),
+                        "height": t.get('height'),
+                        "resolution": f"{t.get('width', '')}x{t.get('height', '')}".strip('x')
+                    })
+            
+            return thumbnails
+        
+    except Exception as ICE:
+        return [{"error": f"Failed to get thumbnails: {str(ICE)}"}]
+    
+
+# result = thumbnails=get_thumbnails.run("https://www.youtube.com/watch?v=qWHaMrR5WHQ")
+# print_agent()
+# pprint.pprint(result, indent=4)
+tools.append(get_thumbnails)
