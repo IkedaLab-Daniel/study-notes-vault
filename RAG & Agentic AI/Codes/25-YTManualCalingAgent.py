@@ -184,3 +184,15 @@ def get_thumbnails(url: str) -> List[Dict]:
 # print_agent()
 # pprint.pprint(result, indent=4)
 tools.append(get_thumbnails)
+
+### -- Binding tools -- ###
+llm_with_tools = llm.bind_tools(tools)
+
+for tool in tools:
+    schema = {
+        "name": tool.name,
+        "description": tool.description,
+        "parameters": tool.args_schema.schema() if tool.args_schema else {},
+        "return": tool.return_type if hasattr(tool, "return_type") else None
+    }
+    pprint.pprint(schema)
