@@ -6,6 +6,7 @@ from typing import List, Dict
 from langchain_core.messages import HumanMessage, ToolMessage
 import json
 from utils import print_agent
+import pprint
 
 # > Suppress Warnings
 import warnings
@@ -120,6 +121,26 @@ def search_youtube(query: str) -> List[Dict[str, str]]:
         return f"Error: {str(ICE)}"
     
 # ? Test
-search_out = search_youtube.run("Generative AI")
+# search_out = search_youtube.run("Generative AI")
+# print_agent()
+# print(search_out)
+
+### -- DMetadata Extraction Tool -- ###
+@tool
+def get_full_metadata(url: str) -> dict:
+    """Extract metadata given a YouTube URL, including title, views, duration, channel, likes, comments, and chapters."""
+    with yt_dlp.YoutubeDL({'quiet': True, 'logger': yt_dlp_logger}) as ydl:
+        info = ydl.extract_info(url, download=False)
+        return {
+            'title': info.get('title'),
+            'views': info.get('view_count'),
+            'duration': info.get('duration'),
+            'channel': info.get('uploader'),
+            'likes': info.get('like_count'),
+            'comments': info.get('comment_count'),
+            'chapters': info.get('chapters', [])
+        }
+
+meta_data=get_full_metadata.run("https://www.youtube.com/watch?v=T-D1OfcDW1M")
 print_agent()
-print(search_out)
+pprint.pprint(meta_data, indent=4)
