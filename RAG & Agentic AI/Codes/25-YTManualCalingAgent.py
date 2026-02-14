@@ -195,4 +195,17 @@ for tool in tools:
         "parameters": tool.args_schema.schema() if tool.args_schema else {},
         "return": tool.return_type if hasattr(tool, "return_type") else None
     }
-    pprint.pprint(schema)
+    # pprint.pprint(schema)
+
+### -- LLM calls tool -- ###
+query = "I want to summarize youtube video: https://www.youtube.com/watch?v=T-D1OfcDW1M in english"
+print(f"    >> Query: {query}")
+
+messages = [HumanMessage(content=query)]
+print(f"Messages: \n{messages}")
+
+### -- LangChain tool binding process -- ###
+response_1 = llm_with_tools.invoke(messages)
+pprint.pprint(response_1)
+
+messages.append(response_1)
