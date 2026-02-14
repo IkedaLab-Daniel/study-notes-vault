@@ -90,3 +90,36 @@ def fetch_transcript(video_id: str, language: str = "en") -> str:
 # print(fetch_transcript.run("hfIUstzHs9A"))
 
 tools.append(fetch_transcript)
+
+### -- Defing YouTube search tool -- ###
+from pytube import Search
+
+@tool
+def search_youtube(query: str) -> List[Dict[str, str]]:
+    """
+    Search YouTube for videos matching the query.
+    
+    :param query: The search terrm to look for on YouTube
+    :type query: str
+    :return: List of disctionaries containing video titles and IDs in format:
+        [{'title': 'Video Title', 'video_id': 'abc123'}, ...]
+        Returns error message if search fails
+    :rtype: List[Dict[str, str]]
+    """
+    try:
+        s = Search(query)
+        return [
+            {
+                "title": yt.title,
+                "video_id": yt.video_id,
+                "url": f"https://youtu.be/{yt.video_id}"
+            }
+            for yt in s.results
+        ]
+    except Exception as ICE:
+        return f"Error: {str(ICE)}"
+    
+# ? Test
+search_out = search_youtube.run("Generative AI")
+print_agent()
+print(search_out)
