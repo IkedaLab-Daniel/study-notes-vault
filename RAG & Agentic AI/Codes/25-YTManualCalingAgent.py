@@ -236,3 +236,53 @@ print_agent()
 print(response['title'])
 
 messages.append(ToolMessage(content=response, tool_call_id = tool_call_id))
+
+response_2 = llm_with_tools.invoke(messages)
+print(response_2)
+
+messages.append(response_2)
+
+### -- Debug Message History -- ###
+def debug_messages(messages):
+    RED = "\033[31m"
+    GREEN = "\033[32m"
+    YELLOW = "\033[33m"
+    BLUE = "\033[34m"
+    CYAN = "\033[36m"
+    RESET = "\033[0m"
+    DIM = "\033[2m"
+
+    print(f"\n\n{RED}!! DEBUG -------- Messages:{RESET}\n")
+
+    for i, m in enumerate(messages):
+        name = type(m).__name__
+
+        # Pick color based on message type
+        if name == "HumanMessage":
+            color = GREEN
+            icon = "👤"
+        elif name == "AIMessage":
+            color = BLUE
+            icon = "🤖"
+        elif name == "ToolMessage":
+            color = YELLOW
+            icon = "🛠"
+        else:
+            color = CYAN
+            icon = "❓"
+
+        print(f"{color}{icon} [{i}] {name}{RESET}")
+
+        if hasattr(m, "content") and m.content:
+            print(f"{DIM}Content:{RESET} {m.content[:300]}")
+
+        if hasattr(m, "tool_calls") and m.tool_calls:
+            print(f"{DIM}Tool calls:{RESET}")
+            for t in m.tool_calls:
+                print(f"   🔧 {CYAN}{t['name']}{RESET}")
+                print(f"      args = {t['args']}")
+
+        print(f"{DIM}{'-'*40}{RESET}")
+
+
+debug_messages(messages)
