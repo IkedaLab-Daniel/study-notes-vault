@@ -206,9 +206,25 @@ def process_tool_calls(messages):
     ]
 
     # > Add tool responses to message history
-    updated_messages = messages + tool_mapping
+    updated_messages = messages + tool_messages
 
     # > Get next LLM response
     next_ai_response = llm_with_tools.invoke(updated_messages)
 
     return updated_messages + [next_ai_response]
+
+# > Create recursive stopping condition
+def should_continue(messages):
+    """Check if you need another iteration"""
+    last_message = messages[-1]
+    return bool(getattr(last_message, 'tool_calls', None))
+
+# > Implement recursive function
+def _recursive_chain(messages):
+    """Recursively process tool calls until completion"""
+    if should_continue(messages):
+        new_messages = process_tool_calls(messages)
+        return _recursive_chain(new_messages)
+    return messages
+
+recursive_chain = RunnableLambda(_recursive_chain)
