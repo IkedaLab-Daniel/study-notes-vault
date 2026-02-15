@@ -306,3 +306,55 @@ def execute_tool(tool_call):
             content=f"Error: {str(ICE)}",
             tool_call_id=tool_call["id"]
         )
+
+### -- Building the summarization chain -- ###
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
+
+summarization_chain = (
+    # > Start with initial query
+    RunnablePassthrough.assign(
+        messages= lambda x: [HumanMessage(content=x["query"])]
+    )
+
+    # > First LLM call (extract video ID)
+    | RunnablePassthrough.assign(
+        ai_response = lambda x: llm_with_tools.invoke(x["messages"])
+    )
+
+    # > Process first tool call
+    | RunnablePassthrough.assign(
+        tool_messages = lambda x: [
+            execute_tool(tc) for tc in x["ai_response"].tool_calls
+        ]
+    )
+
+    # > Update message history
+    | RunnablePassthrough.assign(
+        messages = lambda x: x["messages"] + [x["ai_response"]] + x["tool_messages"]
+    )
+
+    # > Second LLM call (fetch transcript)
+    | RunnablePassthrough.assign(
+        ai_response2 = lambda x: llm_with_tools.invoke(x["messages"])
+    )
+
+    # > Process second tool call
+    | RunnablePassthrough.assign(
+        tool_messages2 = lambda x: [
+            execute_tool(tc) for tc in x["ai_response2"].tool_calls
+        ]
+    )
+
+    # > Final message update
+    | RunnablePassthrough.assign(
+        messages = lambda x: x["messages"] + [x["ai_response2"]] + x["tool_messages2"]
+    )
+
+    # > Generate final summary
+    | RunnablePassthrough.assign(
+        summary = lambda x: llm_with_tools(x["messages"]).content
+    )
+
+    # > Return just the summary text
+    | RunnableLambda(lambda x: x["summary"])
+)
