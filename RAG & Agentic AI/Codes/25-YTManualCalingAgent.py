@@ -317,21 +317,23 @@ summarization_chain = (
     )
 
     # > First LLM call (extract video ID)
-    | RunnablePassthrough.assign(
-        ai_response = lambda x: llm_with_tools.invoke(x["messages"])
-    )
+    # ! Disabled - Supposed that model is smart enought to auto detect video ID
+    # | RunnablePassthrough.assign(
+    #     ai_response = lambda x: llm_with_tools.invoke(x["messages"])
+    # )
 
     # > Process first tool call
-    | RunnablePassthrough.assign(
-        tool_messages = lambda x: [
-            execute_tool(tc) for tc in x["ai_response"].tool_calls
-        ]
-    )
+    # | RunnablePassthrough.assign(
+    #     tool_messages = lambda x: [
+    #         execute_tool(tc) for tc in x["ai_response"].tool_calls
+    #     ]
+    # )
 
     # > Update message history
-    | RunnablePassthrough.assign(
-        messages = lambda x: x["messages"] + [x["ai_response"]] + x["tool_messages"]
-    )
+    # | RunnablePassthrough.assign(
+    #    # ! messages = lambda x: x["messages"] + [x["ai_response"]] + x["tool_messages"]
+    #    messages = lambda x: x["messages"] + x["tool_messages"]
+    # )
 
     # > Second LLM call (fetch transcript)
     | RunnablePassthrough.assign(
@@ -352,9 +354,19 @@ summarization_chain = (
 
     # > Generate final summary
     | RunnablePassthrough.assign(
-        summary = lambda x: llm_with_tools(x["messages"]).content
+        summary = lambda x: llm_with_tools.invoke(x["messages"]).content
     )
 
     # > Return just the summary text
     | RunnableLambda(lambda x: x["summary"])
 )
+
+# > Usage
+
+result = summarization_chain.invoke({
+    "query": "I want to summarize youtube video: https://www.youtube.com/watch?v=LNHBMFCzznE in english"
+})
+
+print("Video Summary: \n", result)
+
+# - > Langchain Workflow
