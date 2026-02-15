@@ -1,5 +1,5 @@
 import re
-from pytube import YouTube
+from pytube import YouTube, Search
 from langchain_core.tools import tool
 import yt_dlp
 from typing import List, Dict
@@ -7,6 +7,8 @@ from langchain_core.messages import HumanMessage, ToolMessage
 import json
 from utils import print_agent
 import pprint
+
+from youtube_transcript_api import YouTubeTranscriptApi
 
 # > Suppress Warnings
 import warnings
@@ -166,3 +168,47 @@ tools = [extract_video_id, fetch_transcript, search_youtube, get_full_metadata, 
 
 llm_with_tools = llm.bind_tools(tools)
 
+tool_mapping = {
+    "get_thumbnails" : get_thumbnails,
+    "extract_video_id": extract_video_id,
+    "fetch_transcript": fetch_transcript,
+    "search_youtube": search_youtube,
+    "get_full_metadata": get_full_metadata
+}
+
+### -- Recursive Chain Flow -- ###
+from langchain_core.runnables import RunnableBranch, RunnableLambda
+from langchain_core.messages import HumanMessage, ToolMessage
+import json
+
+def execute_tool(tool_call):
+    """Execute single tool call and return ToolMessage"""
+    try:
+        result = tool_mapping[tool_call["name"]].invoke(tool_call["args"])
+        content = json.dumps(result) if isinstance(result, (dict, list)) else str(result)
+    except Exception as e:
+        content = f"Error: {str(e)}"
+    
+    return ToolMessage(
+        content=content,
+        tool_call_id=tool_call["id"]
+    )
+
+# > Define core processing logic
+def process_tool_calls(messages):
+    """Recursive tool call processor"""
+    last_message = messages[-1]
+
+    # > Execute all tool calls in parallel
+    tool_messages = [
+        execute_tool(tc)
+        for tc in getattr(last_message, 'tool_calls', [])
+    ]
+
+    # > Add tool responses to message history
+    updated_messages = messages + tool_mapping
+
+    # > Get next LLM response
+    next_ai_response = llm_with_tools.invoke(updated_messages)
+
+    return updated_messages + [next_ai_response]
