@@ -57,7 +57,7 @@ print(extract_video_id.description)
 print("----------------------------")
 print(extract_video_id.func)
 
-print(extract_video_id.run("https://www.youtube.com/watch?v=hfIUstzHs9A"))
+print(extract_video_id.run("https://www.youtube.com/watch?v=hxvt-zhGhXp4"))
 
 ### -- Tool list -- ###
 tools = []
@@ -198,7 +198,7 @@ for tool in tools:
     # pprint.pprint(schema)
 
 ### -- LLM calls tool -- ###
-query = "I want to summarize youtube video: https://www.youtube.com/watch?v=T-D1OfcDW1M in english"
+query = "I want to summarize youtube video: https://www.youtube.com/watch?v=LNHBMFCzznE in english"
 print(f"    >> Query: {query}")
 
 messages = [HumanMessage(content=query)]
@@ -223,19 +223,21 @@ tool_calls_1 = response_1.tool_calls
 # print_agent()
 pprint.pprint(tool_calls_1)
 
-tool_name = tool_calls_1[0]['name']
-print(tool_name)
-tool_call_id = tool_calls_1[0]['id']
-print(tool_call_id)
-args=tool_calls_1[0]['args']
-print(args)
+### -- Process ALL tool calls from the response -- ###
+for tc in tool_calls_1:
+    tool_name = tc['name']
+    tool_call_id = tc['id']
+    args = tc['args']
+    print(f"\n  >> Calling tool: {tool_name} with args: {args}")
 
-my_tool = tool_mapping[tool_calls_1[0]['name']]
-response = my_tool.invoke(tool_calls_1[0]['args'])
-print_agent()
-print(response['title'])
+    my_tool = tool_mapping[tool_name]
+    result = my_tool.invoke(args)
+    print_agent()
+    print(f"  >> Result preview: {str(result)[:200]}")
 
-messages.append(ToolMessage(content=response, tool_call_id = tool_call_id))
+    # Content must be a string for ToolMessage
+    content = json.dumps(result) if not isinstance(result, str) else result
+    messages.append(ToolMessage(content=content, tool_call_id=tool_call_id))
 
 response_2 = llm_with_tools.invoke(messages)
 print(response_2)
@@ -274,7 +276,7 @@ def debug_messages(messages):
         print(f"{color}{icon} [{i}] {name}{RESET}")
 
         if hasattr(m, "content") and m.content:
-            print(f"{DIM}Content:{RESET} {m.content[:300]}")
+            print(f"{DIM}Content:{RESET} {m.content[:500]} ...")
 
         if hasattr(m, "tool_calls") and m.tool_calls:
             print(f"{DIM}Tool calls:{RESET}")
@@ -284,5 +286,6 @@ def debug_messages(messages):
 
         print(f"{DIM}{'-'*40}{RESET}")
 
-
+response_3 = llm_with_tools.invoke(messages)
+messages.append(response_3)
 debug_messages(messages)
