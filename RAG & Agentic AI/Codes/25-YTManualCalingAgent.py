@@ -289,3 +289,20 @@ def debug_messages(messages):
 response_3 = llm_with_tools.invoke(messages)
 messages.append(response_3)
 debug_messages(messages)
+
+
+### -- Automating the tool calling process -- ###
+# > Extracint tool information from LLM Response
+def execute_tool(tool_call):
+    """Execute single tool call and return ToolMessage"""
+    try:
+        result = tool_mapping[tool_call["name"]].invoke(tool_call["args"])
+        return ToolMessage(
+            content=str(result),
+            tool_call_id=tool_call["id"]
+        )
+    except Exception as ICE:
+        return ToolMessage(
+            content=f"Error: {str(ICE)}",
+            tool_call_id=tool_call["id"]
+        )
