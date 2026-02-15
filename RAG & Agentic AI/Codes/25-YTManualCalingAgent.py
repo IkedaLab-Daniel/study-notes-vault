@@ -209,3 +209,30 @@ response_1 = llm_with_tools.invoke(messages)
 pprint.pprint(response_1)
 
 messages.append(response_1)
+
+### -- Extracting tool call information -- ###
+tool_mapping = {
+    "get_thumbnails" : get_thumbnails,
+    "extract_video_id": extract_video_id,
+    "fetch_transcript": fetch_transcript,
+    "search_youtube": search_youtube,
+    "get_full_metadata": get_full_metadata
+}
+
+tool_calls_1 = response_1.tool_calls
+# print_agent()
+pprint.pprint(tool_calls_1)
+
+tool_name = tool_calls_1[0]['name']
+print(tool_name)
+tool_call_id = tool_calls_1[0]['id']
+print(tool_call_id)
+args=tool_calls_1[0]['args']
+print(args)
+
+my_tool = tool_mapping[tool_calls_1[0]['name']]
+response = my_tool.invoke(tool_calls_1[0]['args'])
+print_agent()
+print(response['title'])
+
+messages.append(ToolMessage(content=response, tool_call_id = tool_call_id))
