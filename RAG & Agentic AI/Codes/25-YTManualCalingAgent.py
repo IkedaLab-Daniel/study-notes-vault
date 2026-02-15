@@ -370,3 +370,22 @@ result = summarization_chain.invoke({
 print("Video Summary: \n", result)
 
 # - > Langchain Workflow
+# > Create initial message setup
+initial_setup = RunnablePassthrough.assign(
+    messages = lambda x: [HumanMessage(content=x["query"])]
+)
+
+# > Define first LLM Interaction
+first_llm_call = RunnablePassthrough.assign(
+    ai_response= lambda x: llm_with_tools.invoke(x["messages"])
+)
+
+# > Process the first tool call
+first_tool_processing = RunnablePassthrough.assign(
+    tool_messages = lambda x: [
+        execute_tool(tc) for tc in x["ai_response"].tool_calls
+    ]
+).assign(
+    messages = lambda x: x["messages"] + [x["ai_response"]] + x["tool_messages"]
+)
+
