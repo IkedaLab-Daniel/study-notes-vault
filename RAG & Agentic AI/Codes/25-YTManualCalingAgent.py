@@ -389,3 +389,24 @@ first_tool_processing = RunnablePassthrough.assign(
     messages = lambda x: x["messages"] + [x["ai_response"]] + x["tool_messages"]
 )
 
+# > Generate final summary
+final_summary = RunnablePassthrough.assign(
+    summary=lambda x: llm_with_tools.invoke(x["messages"]).content
+) | RunnableLambda(lambda x: x["summary"])
+
+# > Assembling the complete chain
+chain = (
+    initial_setup
+    | first_llm_call
+    | first_tool_processing
+    # | second_llm_call             # ! Model is smart enough to detect video ID
+    # | second_tool_processing
+    | final_summary
+)
+
+# query = {"query": "I want to summarize youtube video: https://www.youtube.com/watch?v=T-D1OfcDW1M in english"}
+query = {"query": "Get top 3 youtube videos in India and their metadata"}
+
+print_agent()
+result = chain.invoke(query)
+print(result)
