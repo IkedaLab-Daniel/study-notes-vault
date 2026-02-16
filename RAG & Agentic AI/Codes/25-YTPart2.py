@@ -239,9 +239,57 @@ universal_chain = (
 query_us = {"query": "Get the video transcript and summarize the video: https://www.youtube.com/watch?v=ipw1LWtStCw"}
 
 try:
-    response = universal_chain.invoke(query_us)
-    print("\n\033[37m   >> Query:", query_us, "\033[36m")
-    print_agent()
-    print("\n\033[92m >> ", response[-1].content, "\033[0m")
+    # response = universal_chain.invoke(query_us)
+    # print("\n\033[37m   >> Query:", query_us, "\033[36m")
+    # print_agent()
+    # print("\n\033[92m >> ", response[-1].content, "\033[0m")
+    pass
 except Exception as ICE:
     print("Error", ICE)
+
+# > Exercise 1
+video_id = "8ePtY_J3PBE"
+
+# > Exercise 2
+url = "https://www.youtube.com/watch?v=8ePtY_J3PBE"
+video_id = extract_video_id.run(url)
+print("\nExtracted video id:", video_id)
+
+# > Exercise 3
+video_metadata = get_full_metadata.run(url)
+print(f"\nRetrieved metadata for: {video_metadata['title']}")
+
+# > Exercise 4
+video_trasncript = fetch_transcript.run(video_id)
+print(f"\nFull video transcript: {video_trasncript[:350]} ...")
+
+# > Exercise 5
+# ! Not working
+thumbnails = get_thumbnails.run(video_id)
+print(f"\nRetrieved {len(thumbnails)} thumbnails")
+
+## -- Prompt -- ##
+prompt = f"""
+Please analyze this YouTube video and provide a comprehensive summary.
+
+VIDEO TITLE: {video_metadata['title']}
+CHANNEL: {video_metadata['channel']}
+VIEWS: {video_metadata['views']}
+DURATION: {video_metadata['duration']} seconds
+LIKES: {video_metadata['likes']}
+
+TRANSCRIPT EXCERPT:
+{video_trasncript[:1000]}... (transcript truncated for brevity)
+
+Based on this information, please provide:
+1. A concise summary of the video content (3-5 bullet points)
+2. The main topics or themes discussed
+3. The intended audience for this content
+4. A brief analysis of why this video might be performing well (or not)
+"""
+
+# > Exercise 6 and 7 - Single LLM invokation, Display
+messages = [HumanMessage(content=prompt)]
+response = llm.invoke(messages)
+print_agent()
+print(response.content)
