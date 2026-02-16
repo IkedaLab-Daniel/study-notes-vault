@@ -228,3 +228,20 @@ def _recursive_chain(messages):
     return messages
 
 recursive_chain = RunnableLambda(_recursive_chain)
+
+# > Build complete universal chain
+universal_chain = (
+    RunnableLambda(lambda x: [HumanMessage(content=x["query"])])
+    | RunnableLambda(lambda messages: messages + [llm_with_tools.invoke(messages)])
+    | recursive_chain
+)
+
+query_us = {"query": "Get the video transcript and summarize the video: https://www.youtube.com/watch?v=ipw1LWtStCw"}
+
+try:
+    response = universal_chain.invoke(query_us)
+    print("\n\033[37m   >> Query:", query_us, "\033[36m")
+    print_agent()
+    print("\n\033[92m >> ", response[-1].content, "\033[0m")
+except Exception as ICE:
+    print("Error", ICE)
