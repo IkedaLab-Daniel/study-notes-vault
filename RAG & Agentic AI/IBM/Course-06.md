@@ -622,3 +622,130 @@ This process transforms LLMs from passive responders into **interactive agents**
 - You can manually control and validate tool inputs that the LLM can access by defining each tool using the @tool decorator.
 - Before using .invoke(), bind the tools to the LLM so the LLM can identify and apply the correct tool based on the prompt.
 - Use .invoke(input_) to pass a dictionary of key-value pairs that match the tool’s parameter names.
+
+> # Module 3: Using Built-in Agents in LangChain
+## Natural Language Data Visualization with LangChain Pandas Agent
+
+### Overview
+
+This lesson introduces the **LangChain Pandas DataFrame agent**, a built-in agent that lets you analyze and visualize data using **natural language** instead of writing Pandas code manually. It’s designed for **exploration and rapid prototyping**, not production (unless strong safeguards are added).
+
+The agent dynamically generates Python code to query and visualize your DataFrame based on plain-English prompts.
+
+---
+
+### What Makes the Pandas Agent Different
+
+Compared to other LangChain agents, the Pandas agent:
+
+* Uses **preconfigured prompts and tools**, so setup is faster.
+* Operates directly on an existing **Pandas DataFrame**.
+* Accepts **natural language questions** and returns:
+
+  * Numeric answers
+  * Summaries
+  * Visualizations (charts/plots)
+* Automatically generates and executes Python code behind the scenes.
+* Can expose intermediate steps (the generated code) for debugging and learning.
+
+It lives in **`langchain-experimental`**, reflecting its exploratory nature.
+
+---
+
+### Typical Workflow
+
+1. **Load your data**
+
+   * Import Pandas
+   * Load your CSV into a DataFrame (`df`)
+   * Inspect with `df.head()`
+
+2. **Initialize an LLM (example: IBM watsonx.ai)**
+
+   * Configure credentials (API key, project/space ID)
+   * Choose a model (for example, Llama 3 70B)
+   * Set generation parameters
+   * Connect the model to LangChain
+
+3. **Create the Pandas agent**
+
+* Use `create_pandas_dataframe_agent`
+* Pass:
+
+  * The LLM
+  * Your DataFrame
+* Optional flags:
+
+  * `verbose=True` to see reasoning
+  * `return_intermediate_steps=True` to inspect generated Python code
+
+4. **Ask questions in natural language**
+
+Examples:
+
+* “How many rows are in this file?”
+* “How many students are 18 years old?”
+* “Plot the gender count with bars.”
+
+The agent:
+
+* Translates your prompt into Pandas operations (filtering, counting, grouping)
+* Executes the code
+* Returns the result or visualization
+
+You can inspect `intermediate_steps` to see exactly what code was produced (for example, `len(df)` or DataFrame filters).
+
+---
+
+### Visualizations via Natural Language
+
+You can request charts directly:
+
+* “Plot the gender count with bars.”
+
+The agent:
+
+* Understands column intent (for example, mapping “gender” to `sex`)
+* Generates plotting code
+* Produces charts automatically
+
+No manual plotting required.
+
+---
+
+### How It Works Internally
+
+* Your prompt → LLM
+* LLM generates Python code
+* Code runs directly on the DataFrame
+* Results (values or plots) are returned
+* Optional: you can view the generated code for transparency
+
+---
+
+### Best Practices & Safety
+
+Because this agent executes code dynamically:
+
+* ✅ Use **sandboxed environments**
+* ✅ Never point it at production data without protections
+* ✅ Write **clear, specific prompts**
+* ✅ Watch for **prompt injection risks**
+* ✅ Validate results with human expertise
+* ✅ Iteratively refine prompts
+* ✅ Inspect generated code when possible
+
+This approach is powerful—but should be treated like letting AI write and run Python on your behalf.
+
+---
+
+### Key Takeaways
+
+* The LangChain Pandas agent enables **natural language data analysis and visualization**.
+* It’s ideal for **exploration and prototyping**, not production by default.
+* It works by generating Python code that directly operates on your DataFrame.
+* You can integrate external LLMs (like IBM watsonx.ai).
+* You can inspect intermediate steps to understand or debug the agent’s logic.
+* Safe usage requires sandboxing, clear prompts, and human validation.
+
+In short: it turns your DataFrame into a conversational, AI-powered analytics tool.
