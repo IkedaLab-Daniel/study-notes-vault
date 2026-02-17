@@ -749,3 +749,43 @@ This approach is powerful—but should be treated like letting AI write and run 
 * Safe usage requires sandboxing, clear prompts, and human validation.
 
 In short: it turns your DataFrame into a conversational, AI-powered analytics tool.
+
+## AI-Powered SQL Agents — Benefits, Capabilities, Limitations, and Workflow
+
+AI-powered SQL agents bridge **natural language and databases**, allowing users to query data without writing SQL. This makes data access available to non-technical users while still leveraging the power of relational databases.
+
+### Benefits
+
+* Enable **natural language access** to SQL databases, lowering the technical barrier.
+* Improve data accessibility across teams (analysts, business users, developers).
+* Automatically translate user questions into SQL and return results in readable language.
+
+### Key Capabilities
+
+* **Schema awareness:** Agents read database schemas and focus only on relevant tables for efficiency.
+* **Natural language → SQL generation:** LLMs convert user questions into SQL queries.
+* **Multi-step querying:** Agents can run multiple queries when one is not sufficient.
+* **Automatic error handling:** If a query fails, the agent analyzes the error and retries with a corrected version.
+* **Result formatting:** Raw database output is transformed into clear, human-friendly responses.
+
+### Limitations & Considerations
+
+* LLM interpretations can sometimes be **inaccurate**.
+* **Complex queries** may still require manual refinement.
+* Reliability depends on **continuous testing and validation**.
+* Human oversight is important for critical or high-stakes data tasks.
+
+### How AI-Powered SQL Agents Work (High-Level Flow)
+
+1. User asks a question in natural language.
+2. The agent passes the question to an LLM.
+3. The LLM generates an SQL query.
+4. A database connector sends the query to the database.
+5. The database returns raw results.
+6. Results are sent back to the LLM.
+7. The LLM processes and formats the data.
+8. The agent presents a clear natural-language answer to the user.
+
+### Summary
+
+AI-powered SQL agents make databases conversational by translating natural language into SQL, handling schemas, retrying failed queries, and presenting results clearly. While they greatly improve accessibility and productivity, they still require validation and occasional manual intervention—especially for complex queries—to ensure accuracy and reliability.
