@@ -1,0 +1,6 @@
+ibm-watsonx-ai==1.0.4
+ibm-watson-machine-learning==1.0.357
+langchain==0.2.1
+langchain-ibm==0.1.7
+langchain-experimental==0.0.59
+mysql-connector-python==8.4.0
