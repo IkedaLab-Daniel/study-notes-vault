@@ -789,3 +789,80 @@ AI-powered SQL agents bridge **natural language and databases**, allowing users 
 ### Summary
 
 AI-powered SQL agents make databases conversational by translating natural language into SQL, handling schemas, retrying failed queries, and presenting results clearly. While they greatly improve accessibility and productivity, they still require validation and occasional manual intervention—especially for complex queries—to ensure accuracy and reliability.
+
+## Implementing a LangChain AI-Powered SQL Agent (Setup & Usage)
+
+### Environment Setup
+
+* Create a Python virtual environment (for example, `virtualenv my_env`) to manage dependencies.
+* Install required libraries:
+
+  * `ibm-watsonx-ai`
+  * `langchain`
+  * `mysql-connector-python`
+
+### Database Preparation
+
+* Launch a MySQL server in your development environment.
+* Use the MySQL CLI to interact with the server.
+* Load the **Chinook** sample database (a digital media store schema):
+
+  * Download the SQL file (for example, via `wget`).
+  * Import it using `_SOURCE chinook-mysql.sql`.
+  * Verify with `SHOW DATABASES;`.
+* Test connectivity with a direct SQL query, such as:
+
+  * `USE Chinook;`
+  * `SELECT COUNT(*) FROM Album;`
+
+### Loading the IBM watsonx.ai LLM
+
+* Create a credentials dictionary (API key, project ID, optional space ID).
+* Configure generation parameters:
+
+  * `max_new_tokens` (controls response length)
+  * `temperature` (controls randomness vs determinism)
+* Initialize the Granite model using `ibm_watsonx_ai.foundation_models`.
+* Wrap it with `watsonxLLM` from `langchain_ibm` so it integrates seamlessly with LangChain chains and agents.
+
+### Connecting LangChain to MySQL
+
+* Define MySQL connection parameters:
+
+  * username, password, host, port (default 3306), and database name (`Chinook`).
+* Build a database URI from these values.
+* Use `SQLDatabase.from_uri()` to connect LangChain to MySQL.
+
+### Creating the SQL Agent
+
+* Import `create_sql_agent`.
+* Initialize the agent with:
+
+  * the watsonx LLM
+  * the SQL database connection
+  * an agent type (commonly zero-shot with reasoning)
+* Set `verbose=True` to see internal reasoning and generated SQL.
+
+### Running Natural Language Queries
+
+* Ask questions in plain English, for example:
+
+  * “How many albums are listed in the database?”
+* The agent:
+
+  1. Interprets the question.
+  2. Generates the SQL query.
+  3. Executes it against MySQL.
+  4. Returns a natural-language answer.
+* With `verbose=True`, you can inspect the full process, including the SQL generated.
+
+### Recap
+
+* Create a virtual environment and install required libraries.
+* Launch MySQL and load the Chinook database.
+* Initialize the IBM watsonx.ai Granite model and wrap it for LangChain.
+* Connect LangChain to MySQL using a database URI.
+* Build an SQL agent with `create_sql_agent`.
+* Run natural language queries and optionally enable verbose mode to observe reasoning and SQL execution.
+
+This workflow lets you query relational databases conversationally, turning natural language into SQL through LangChain and an LLM.
