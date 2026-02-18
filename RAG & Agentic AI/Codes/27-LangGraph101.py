@@ -16,7 +16,7 @@ GROQ_LLM = ChatGroq(
 )
 
 # ? Test LLM
-print(GROQ_LLM.invoke("Hello! I'm Ice.").content)
+# print(GROQ_LLM.invoke("Hello! I'm Ice.").content)
 
 ### -- States -- ###
 from typing import TypedDict, Optional
@@ -45,3 +45,46 @@ auth_state_2: AuthState = {
     "output": "Authentication failed."
 }
 print(f"auth_state_2: {auth_state_2}")
+
+### -- Nodes -- ###
+def input_node(state):
+    print(state)
+    if state.get('username', "") == "":
+        state['username'] = input("Enter username   >> ")
+    
+    passsword = input("Enter you password   >> ")
+
+    return {"password": passsword}
+
+input_node(auth_state_1)
+input_node(auth_state_2)
+
+def validate_credentials_node(state):
+    # ? Extract username and password from the state
+    username = state.get("username", "")
+    password = state.get("password", "")
+
+    print(f"Username: {username} | Password: {password}")
+    # ? Simulated credential validation
+    if username == "test_user" and password == "secure_password":
+        is_authenticated = True
+    else:
+        is_authenticated = False
+    
+    # ? Return the updated state
+    return {"is_authenticated": is_authenticated}
+
+## -- Test Functionality -- ##
+# ? Incorrect format
+validate_credentials_node(auth_state_1)
+
+# ? Correct format
+auth_state_3: AuthState = {
+    "username": "test_user",
+    "password": "secure_password",
+    "is_authenticated": False,
+    "output": "Authentication failed."
+}
+print(f"auth_state_3: {auth_state_3}")
+
+print(validate_credentials_node(auth_state_3))
