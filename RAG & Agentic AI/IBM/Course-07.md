@@ -178,3 +178,100 @@ Example: A customer support agent that can branch, loop, pause for human input, 
 * It supports **branching, looping, persistent memory, human-in-the-loop, and time-travel debugging**.
 * It offers superior flexibility over traditional programming constructs for building complex, autonomous agents.
 * Graph visualization helps maintain and reason about intricate workflows.
+
+## LangChain vs LangGraph — Key Differences and When to Use Each
+
+### LangChain: Chained LLM Workflows
+
+* LangChain is a framework for building **LLM-powered applications using sequential chains of components**.
+* It’s ideal when you know the order of steps in advance (for example: retrieve → summarize → answer).
+
+**Core characteristics:**
+
+* Uses **chains** (directed acyclic graphs) where execution moves forward step-by-step.
+* Provides modular components such as:
+
+  * Document loaders (fetch data)
+  * Text splitters (chunk large documents)
+  * Prompts (guide the LLM)
+  * LLMs (generate outputs)
+  * Memory (store limited conversational context)
+* Different stages can use **different LLMs**.
+* Best suited for:
+
+  * Linear or mostly linear workflows
+  * RAG pipelines
+  * Summarization → Q&A pipelines
+  * Applications where the flow is predictable
+
+**State management:**
+
+* Limited and mostly forward-passing.
+* Memory components exist, but persistent, shared state is not central to the design.
+
+---
+
+### LangGraph: Stateful, Agentic Systems
+
+* LangGraph is a specialized library within the LangChain ecosystem for building **stateful, multi-agent, non-linear workflows**.
+* It models applications as **graphs**, not chains.
+
+**Core primitives:**
+
+* **Nodes** – individual actions (add task, complete task, summarize, etc.)
+* **Edges** – transitions between nodes
+* **State** – shared memory accessible and modifiable by all nodes
+
+**Key capabilities:**
+
+* Looping and revisiting steps
+* Branching based on runtime conditions
+* Persistent state across interactions
+* Flexible control flow
+* Supports interactive and adaptive behavior
+
+Example: a task assistant where users can add tasks, complete tasks, or request summaries in any order, with all actions updating shared state.
+
+**State management:**
+
+* First-class feature.
+* All nodes can read and write state, enabling long-lived, context-aware agents.
+
+---
+
+### Direct Comparison
+
+**Primary focus**
+
+* LangChain: chaining LLM operations into applications
+* LangGraph: building stateful, multi-agent systems
+
+**Structure**
+
+* LangChain: chains (DAGs, mostly forward-only)
+* LangGraph: graphs (supports loops and revisiting states)
+
+**Components**
+
+* LangChain: prompts, LLMs, memory, agents, chains
+* LangGraph: nodes, edges, shared state
+
+**State**
+
+* LangChain: limited, mostly via memory components
+* LangGraph: robust, central, persistent
+
+**Best use cases**
+
+* LangChain: sequential pipelines (retrieve → process → respond)
+* LangGraph: complex, interactive agents requiring ongoing context and adaptive behavior
+
+---
+
+### Bottom Line
+
+* Use **LangChain** when your workflow is mostly linear and well-defined.
+* Use **LangGraph** when you need **agentic behavior**, shared state, looping, and dynamic decision-making.
+
+Both are powerful, but they solve different problems:
+LangChain excels at structured pipelines, while LangGraph shines in autonomous, stateful AI systems.
