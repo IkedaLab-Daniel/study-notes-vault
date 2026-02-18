@@ -123,3 +123,58 @@ This course prepares you to design **autonomous, self-improving, multi-agent sys
 * **Agentic AI = reason, plan, act, and adapt toward goals.**
 
 The future lies in **hybrid systems** that combine both: generating ideas when needed and autonomously executing multi-step actions when appropriate — becoming intelligent collaborators rather than passive tools.
+
+## Core Components of LangGraph
+
+### What LangGraph Is
+
+* LangGraph is an advanced framework in the LangChain ecosystem for building **stateful, multi-agent AI applications**.
+* It is **low-level and flexible**, giving developers full control over workflows without heavy abstractions.
+
+### Graph-Based Workflow Model
+
+LangGraph represents agent workflows as graphs made of three core primitives:
+
+* **Nodes** – Individual steps or functions that perform computation.
+* **Edges** – Paths that define how execution flows between nodes.
+* **State** – Shared memory that persists across nodes, maintaining context throughout the workflow.
+
+### Key Capabilities
+
+* **Looping and branching** – Agents can make dynamic decisions and change execution paths at runtime.
+* **State persistence** – Context is preserved across long interactions.
+* **Human-in-the-loop** – Allows manual intervention when needed.
+* **Time travel** – Enables debugging by rewinding to earlier states.
+
+### Why LangGraph Instead of Traditional Control Flow
+
+Traditional constructs like `for`, `while`, and `if` are linear and limited for complex workflows.
+
+LangGraph provides:
+
+* **Explicit state management** – Context is continuously updated and shared.
+* **Conditional transitions** – Runtime branching based on decisions.
+* **Modularity** – Nodes can be developed and tested independently.
+* **Enhanced observability** – Clear visibility into execution paths for debugging and monitoring.
+
+### Ideal Use Cases
+
+LangGraph excels in sophisticated agent systems that require:
+
+* Dynamic decision-making
+* Long-term memory
+* Adaptive workflows
+* Multi-step reasoning
+
+Example: A customer support agent that can branch, loop, pause for human input, and resume — all while retaining full conversation history.
+
+### Visualization
+
+* LangGraph workflows can be visualized using **Mermaid diagrams**, making nodes, edges, and execution paths easy to understand and debug.
+
+### Summary
+
+* LangGraph models AI workflows as graphs with **nodes, edges, and shared state**.
+* It supports **branching, looping, persistent memory, human-in-the-loop, and time-travel debugging**.
+* It offers superior flexibility over traditional programming constructs for building complex, autonomous agents.
+* Graph visualization helps maintain and reason about intricate workflows.
