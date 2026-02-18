@@ -275,3 +275,130 @@ Example: a task assistant where users can add tasks, complete tasks, or request 
 
 Both are powerful, but they solve different problems:
 LangChain excels at structured pipelines, while LangGraph shines in autonomous, stateful AI systems.
+
+
+## Getting Started with LangGraph 101 — Building Your First Stateful Workflow
+
+### What LangGraph Is
+
+LangGraph is a framework for building **stateful, multi-agent workflows** using graphs instead of linear chains. It models applications as:
+
+* **State** – a shared, evolving memory that holds inputs, intermediate values, and outputs
+* **Nodes** – functions that read and/or modify state
+* **Edges** – transitions that control how state flows between nodes
+
+This structure enables **looping, conditional branching, and dynamic execution**, which are essential for agentic systems.
+
+---
+
+### Defining State
+
+* State is commonly defined using `TypedDict`, but it can also be lists, nested objects, or message sequences.
+* Example state might include:
+
+  * `n` (an integer counter)
+  * `letter` (a random character)
+
+This typed state acts like a row in a table and travels through the graph, accumulating updates.
+
+---
+
+### Creating Nodes
+
+* Nodes are Python functions that accept the current state and return an updated state.
+
+Example patterns:
+
+* **Update node**
+
+  * Takes state
+  * Modifies values (e.g., increments `n`, generates a random letter)
+  * Returns the new state
+
+* **Side-effect node**
+
+  * Reads state (e.g., prints values)
+  * Returns state unchanged
+
+Some nodes transform data; others exist purely for logging or output.
+
+---
+
+### Building the Graph
+
+1. **Create a StateGraph**
+
+   * Initialize it with your state class.
+
+2. **Add nodes**
+
+   * Use `add_node(name, function)` to register logic.
+
+3. **Connect nodes with edges**
+
+   * Use `add_edge(source, destination)` to define execution flow.
+
+4. **Add conditional edges**
+
+   * Use `add_conditional_edges` to route execution dynamically based on state.
+   * A condition function evaluates the state and determines the next node (for example, loop back or end).
+
+Example logic:
+
+* If `n >= 13` → end workflow
+* Otherwise → loop back to the increment node
+
+5. **Set the entry point**
+
+   * Define which node runs first using `set_entry_point`.
+
+6. **Compile the graph**
+
+   * Call `compile()` to create a runnable application.
+
+---
+
+### Running the Workflow
+
+* Invoke the compiled graph with an initial state, such as:
+
+```text
+n = 1
+letter = ""
+```
+
+Execution flow:
+
+1. State enters the first node.
+2. Counter increments and a random letter is generated.
+3. Values are printed.
+4. A condition checks whether `n` has reached 13.
+5. If not, the workflow loops.
+6. When the condition is met, the graph transitions to the end node.
+
+The final state is returned after completion.
+
+---
+
+### Key Concepts Recap
+
+* **State**: Central memory holding all inputs, intermediate values, and outputs.
+* **Nodes**: Functions that process or observe state.
+* **Edges**: Define execution paths between nodes.
+* **Conditional edges**: Enable dynamic routing and looping.
+* **Entry point**: Starting node of the workflow.
+* **Compile + invoke**: Turns the graph into a runnable app and executes it.
+
+---
+
+### Why This Matters
+
+LangGraph lets you:
+
+* Build workflows with **loops and branching**
+* Maintain **persistent context**
+* Model complex agent behavior
+* Visualize execution paths
+* Create dynamic, state-aware AI systems far beyond simple linear pipelines
+
+This example counter demonstrates the core mechanics that power more advanced agentic applications.
