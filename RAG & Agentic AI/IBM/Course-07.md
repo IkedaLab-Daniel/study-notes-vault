@@ -82,3 +82,44 @@ You’ll learn how to:
 * Finish the graded assessment
 
 This course prepares you to design **autonomous, self-improving, multi-agent systems** and build real-world Agentic AI applications using LangChain and LangGraph.
+
+## Generative AI vs Agentic AI — Key Differences
+
+* **Generative AI is reactive.**
+  It waits for a user prompt, then generates content (text, images, code, audio) based on patterns learned during training. Once it produces the output, its job is done until the next prompt.
+
+* **Generative AI = pattern generation.**
+  It predicts what comes next using statistical relationships learned from massive datasets. Think chatbots, image generators, and code assistants. Humans stay in control: the AI suggests, the human reviews and refines.
+
+* **Agentic AI is proactive.**
+  It doesn’t just generate responses — it **pursues goals** through a continuous loop:
+
+  1. Perceive the environment
+  2. Decide on an action
+  3. Execute the action
+  4. Learn from the result
+  5. Repeat — often with minimal human intervention
+
+* **Generative AI stops at creation; Agentic AI continues into action.**
+
+* **Both often rely on LLMs**, but they use them differently:
+
+  * In generative AI, LLMs primarily generate content.
+  * In agentic AI, LLMs act as a **reasoning engine**, powering planning and decision-making.
+
+* Agentic systems use **chain-of-thought reasoning**, breaking complex problems into smaller steps (similar to how humans think through tasks).
+
+### Practical contrast
+
+* **Generative AI example:**
+  A YouTuber uses AI to draft scripts, suggest thumbnails, or generate music — but a human guides every step.
+
+* **Agentic AI example:**
+  A personal shopping agent autonomously searches for products, tracks prices, completes checkout, and manages delivery — only asking the user when necessary.
+
+### Core takeaway
+
+* **Generative AI = create content on demand.**
+* **Agentic AI = reason, plan, act, and adapt toward goals.**
+
+The future lies in **hybrid systems** that combine both: generating ideas when needed and autonomously executing multi-step actions when appropriate — becoming intelligent collaborators rather than passive tools.
