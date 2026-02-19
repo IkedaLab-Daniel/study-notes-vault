@@ -303,8 +303,6 @@ def print_out(state):
 """)
     
     return state
-    
-# ? Test
 
 ### -- EXERCISE 4 - Stop Condition -- ###
 """
@@ -316,3 +314,39 @@ Create a function that has a termination condition:
 def stop_condition(state):
     return state.get("n", 0) >= 13
 
+### -- EXERCISE 5 - Graph Contruction -- ###
+"""
+In this exercise, you'll build the LangGraph flow:
+
+- Create a `StateGraph` object using the `ChainState` that you made.
+- Add nodes `add` and `print`.
+- Add an edge between `add` and `print`
+- Add a conditional edge between `print` and `END` based on `stop_condition`.
+- Set `add` as entry point of the graph.
+"""
+counter_workflow = StateGraph(CounterState)
+
+counter_workflow.add_node("add", add)
+counter_workflow.add_node("print", print_out)
+
+counter_workflow.add_edge("add", "print")
+
+counter_workflow.add_conditional_edges("print", stop_condition, {
+    True: END,
+    False: "add"
+})
+
+counter_workflow.set_entry_point("add")
+
+### -- EXERCISE 6: Compile and Run -- ###
+"""
+Compile the graph and start execution with the given initial input:
+
+- The counter should begin at 1.
+- Keep letter empty (to be filled in by the add node).
+"""
+counter_app = counter_workflow.compile()
+
+result = counter_app.invoke({ "n": 1})
+print_agent()
+print(result)
