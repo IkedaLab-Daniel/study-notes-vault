@@ -418,3 +418,95 @@ This example counter demonstrates the core mechanics that power more advanced ag
 - Building a LangGraph application involves creating a StateGraph object, incorporating nodes, connecting them, setting an entry point, and then compiling the graph into a runnable application.
 - Running a LangGraph workflow is done by invoking the compiled application with an initial state.
 - Workflow visualization helps to understand the execution flow and how the state progresses through different nodes.
+
+> # Module 2: Build Self-Improving Agents with LangGraph
+
+## Types of AI Agents: From Simple Reflex to Learning Systems
+
+AI agents are categorized by how intelligently they perceive, decide, and act within their environment. Here are the **five main types of AI agents**, ordered from simplest to most advanced:
+
+---
+
+### 1. Simple Reflex Agents — *React*
+
+* Operate using **if–then condition–action rules**
+* Respond only to **current perceptions**
+* Have **no memory** or understanding of past states
+* Example: a thermostat turning heat on/off based on temperature
+
+**Pros:** fast, simple
+**Cons:** fail in dynamic environments; repeat mistakes
+
+---
+
+### 2. Model-Based Reflex Agents — *Remember*
+
+* Extend reflex agents with an **internal state (model of the world)**
+* Track how the environment changes and how their actions affect it
+* Can reason about parts of the world they can’t currently observe
+
+Example: robotic vacuum remembering cleaned areas and obstacles
+
+**Key upgrade:** memory + world model
+
+---
+
+### 3. Goal-Based Agents — *Aim*
+
+* Make decisions based on **explicit goals**
+* Use their internal model to **simulate future outcomes**
+* Choose actions that help achieve the goal
+
+Example: self-driving car choosing turns to reach a destination
+
+**Key upgrade:** planning toward objectives (not just reacting)
+
+---
+
+### 4. Utility-Based Agents — *Evaluate*
+
+* Go beyond goals by assigning **utility scores** (preference or “happiness”)
+* Compare multiple outcomes and select the **best** one
+* Optimize for factors like speed, safety, or energy efficiency
+
+Example: delivery drone choosing the fastest and most energy-efficient route
+
+**Key upgrade:** optimization via utility functions
+
+---
+
+### 5. Learning Agents — *Improve*
+
+* Adapt behavior over time using **experience and feedback**
+* Core components:
+
+  * **Performance element:** chooses actions
+  * **Critic:** evaluates outcomes (reward signal)
+  * **Learning element:** updates strategy
+  * **Problem generator:** explores new actions
+
+Example: chess AI improving by analyzing thousands of games
+
+**Key upgrade:** continuous learning from experience (often via reinforcement learning)
+
+---
+
+### Quick Comparison
+
+* **Simple reflex:** reacts (no memory)
+* **Model-based reflex:** remembers
+* **Goal-based:** plans toward goals
+* **Utility-based:** optimizes outcomes
+* **Learning agent:** improves over time
+
+---
+
+### Beyond Single Agents
+
+* Real systems often use **multi-agent architectures**, where multiple agents collaborate in a shared environment.
+* Despite advances, **human-in-the-loop** remains essential for oversight, especially in complex or high-stakes applications.
+
+---
+
+### Bottom line:
+Agentic AI progresses from reactive rule-following systems to adaptive learning systems capable of planning, optimization, and self-improvement—forming the foundation of modern autonomous AI workflows.
