@@ -1,5 +1,6 @@
 from langgraph.graph import StateGraph
 from langchain_groq import ChatGroq
+from utils import print_agent
 from dotenv import load_dotenv
 import os
 
@@ -184,3 +185,53 @@ def context_provider_node(state):
 
 # ? Test
 print(context_provider_node(qa_state_example))
+
+## -- Integrating LLM for QA Workflow -- ##
+def llm_qa_node(state):
+    # ? Extract the question and context from state
+    question = state.get("question", "")
+    context = state.get("context", None)
+
+    # ? Check context
+    if not context:
+        return {"answer": "I don't have enough context to answer your question."}
+
+    # ? Construct prompt
+    prompt = f"Context: {context}\nQuestion: {question}\nAnswer the question based on the provided context."
+
+    try:
+        response = GROQ_LLM.invoke(prompt)
+        return {"answer": response.content.strip()}
+    except Exception as ICE:
+        return {"answer": f"An error occurred: {str(ICE)}"}
+
+# ? Test
+print(llm_qa_node(qa_state_example))
+
+## -- Creating the QA Workflow Graph -- ##
+qa_workflow = StateGraph(QAState)
+
+# > Add nodes
+qa_workflow.add_node("InputNode", input_validation_node)
+qa_workflow.add_node("ContextNode", context_provider_node)
+qa_workflow.add_node("QANode", llm_qa_node)
+
+# > Entry points
+qa_workflow.set_entry_point("InputNode")
+
+# > Edges
+qa_workflow.add_edge("InputNode", "ContextNode")
+qa_workflow.add_edge("ContextNode", "QANode")
+qa_workflow.add_edge("QANode", END)
+
+# > Compile
+qa_agent = qa_workflow.compile()
+print_agent()
+response = qa_agent.invoke(qa_state_example)
+for key, value in response.items():
+    print(
+    f"""\033[32m
+| {key}: 
+|       - {value}\033[36m
+=====================================================\033[0m"""
+    )
