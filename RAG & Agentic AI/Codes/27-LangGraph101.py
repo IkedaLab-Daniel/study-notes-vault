@@ -226,12 +226,56 @@ qa_workflow.add_edge("QANode", END)
 
 # > Compile
 qa_agent = qa_workflow.compile()
+
+# ? Test
 print_agent()
-response = qa_agent.invoke(qa_state_example)
-for key, value in response.items():
-    print(
-    f"""\033[32m
-| {key}: 
-|       - {value}\033[36m
-=====================================================\033[0m"""
-    )
+# response = qa_agent.invoke(qa_state_example)
+# for key, value in response.items():
+#     print(
+#     f"""\033[32m
+# | {key}: 
+# |       - {value}\033[36m
+# =====================================================\033[0m"""
+#     )
+
+
+### -- EXERCISE 1 - Define the State Type -- ###
+"""
+Here, you will define the state schema used by the graph. It should keep track of:
+
+- n: a counter starting from 1.
+- letter: a randomly generated lowercase letter at each step.
+"""
+
+import random
+import string
+
+class CounterState(TypedDict):
+    n: Optional[int]
+    letter: Optional[str]
+
+### -- EXERCISE 2 - Create add() node function -- ###
+"""
+This node should represent the increment step such that:
+
+- It adds 1 to the current value of n.
+- It randomly selects a lowercase letter and updates the letter field.
+"""
+def add(state):
+    current_value = state.get("n", 1)
+    new_n = current_value + 1
+
+    letters = string.ascii_lowercase
+    random_letter = random.choice(letters)
+
+    return ({"n": new_n, "letter": random_letter})
+
+# ? Saple State
+exercise_state = CounterState(
+    n=1,
+    letter="a"
+)
+
+# ? Test
+print("\n\n")
+print(add(exercise_state))
