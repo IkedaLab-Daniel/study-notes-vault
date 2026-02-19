@@ -56,8 +56,8 @@ def input_node(state):
 
     return {"password": passsword}
 
-input_node(auth_state_1)
-input_node(auth_state_2)
+# input_node(auth_state_1)
+# input_node(auth_state_2)
 
 def validate_credentials_node(state):
     # ? Extract username and password from the state
@@ -76,7 +76,7 @@ def validate_credentials_node(state):
 
 ## -- Test Functionality -- ##
 # ? Incorrect format
-validate_credentials_node(auth_state_1)
+# validate_credentials_node(auth_state_1)
 
 # ? Correct format
 auth_state_3: AuthState = {
@@ -133,7 +133,25 @@ workflow.set_entry_point("InputNode")
 app = workflow.compile()
 
 ### -- Running the Application -- ###
-inputs = {"username": "test_user"}
-result = app.invoke(inputs)
-print(result)
-print(result['output'])
+# inputs = {"username": "test_user"}
+# result = app.invoke(inputs)
+# print(result)
+# print(result['output'])
+
+### -- Builing a QA Workflot Specific to the Guidede Project -- ###
+# > Define the structure if the QA State
+class QAState(TypedDict):
+    question: Optional[str]
+    context: Optional[str]
+    answer: Optional[str]
+
+# ? Sample object
+qa_state_example = QAState(
+    question="What is the purpose of this guided project?",
+    context="This project focuses on building a chatbot using Python.",
+    answer=None
+)
+
+print("\n", "-" * 60)
+for key, value in qa_state_example.items():
+    print(f"{key}: {value}")
