@@ -279,3 +279,40 @@ exercise_state = CounterState(
 # ? Test
 print("\n\n")
 print(add(exercise_state))
+
+### -- EXERCISE 3 - Create print_out() node Function -- ###
+"""
+This node should print the current state such that:
+
+- It logs the value of n and the current random letter.
+- The state is returned.
+"""
+def print_out(state):
+    n = state.get("n", None)
+    letter = state.get("letter", None)
+
+    if not n or not letter:
+        print("No `n` or No `letter` yet")
+        print("return new state with initial value")
+        return({ "n": 1, "letter": random.choice(string.ascii_lowercase)})
+    
+    print(f""" 
+    State current values
+    >>    n   :   {n}
+    >>  letter :  {letter}
+""")
+    
+    return state
+    
+# ? Test
+
+### -- EXERCISE 4 - Stop Condition -- ###
+"""
+Create a function that has a termination condition:
+
+- If the counter reaches 13 or more, the workflow should end.
+- Otherwise, it should loop back to add node.
+"""
+def stop_condition(state):
+    return state.get("n", 0) >= 13
+
