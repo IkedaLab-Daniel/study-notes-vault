@@ -155,3 +155,32 @@ qa_state_example = QAState(
 print("\n", "-" * 60)
 for key, value in qa_state_example.items():
     print(f"{key}: {value}")
+
+## -- Defining the Input Validation Node -- ##
+def input_validation_node(state):
+    # ? Extract question from the state
+    question = state.get("question", "").strip()
+
+    if not question:
+        return {"valid": False, "error": "Question cannot be empty."}
+    
+    return {"valid": True}
+
+# ? Test
+print(input_validation_node(qa_state_example))
+
+## -- Definiing the Context Provider -- ##
+def context_provider_node(state):
+    question = state.get("question", "").lower()
+    if "langgraph" in question or "guided project" in question:
+        context = (
+            "This guided project is about using LangGraph, a Python library to design state-based workflows. ",
+            "LangGraph simplifies building complex applications by connecting modular nodes with conditional edges."
+        )
+        return {"context": context}
+
+    # ? If unrelated, set context to null
+    return {"context": None}
+
+# ? Test
+print(context_provider_node(qa_state_example))
