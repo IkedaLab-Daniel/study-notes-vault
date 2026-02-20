@@ -1,0 +1,76 @@
+from langchain_groq import ChatGroq
+from langchain_core.messages import BaseMessage, HumanMessage
+from langgraph.graph import END, MessageGraph, StateGraph
+
+from typing import List, Sequence
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+### -- LLM Setup -- ###
+llm = ChatGroq(
+    model="llama-3.1-8b-instant",
+    max_tokens=256,
+    api_key=os.getenv("GROQ_API")
+)
+
+# ? Test
+print(llm.invoke("Hello! I'm Ice!").content)
+
+### -- Generation Prompt for Posts -- ###
+generation_prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            "You are a professional LinkedIn content assistant tasked with crafting engaging, insightful, and well-structured LinkedIn posts."
+            " Generate the best LinkedIn post possible for the user's request."
+            " If the user provides feedback or critique, respond with a refined version of your previous attempts, improving clarity, tone, or engagement as needed.",
+        ),
+        MessagesPlaceholder(variable_name="messages"),
+    ]
+)
+
+# > Creating the Chain for LinkedIn Post Generation
+generate_chain = generation_prompt | llm
+
+# > Reflection Prompt for LinkedIn Post Critique
+reflection_prompt = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are a professional LinkedIn content strategist and thought leadership expert. Your task is to critically evaluate the given LinkedIn post and provide a comprehensive critique. Follow these guidelines:
+
+        1. Assess the post’s overall quality, professionalism, and alignment with LinkedIn best practices.
+        2. Evaluate the structure, tone, clarity, and readability of the post.
+        3. Analyze the post’s potential for engagement (likes, comments, shares) and its effectiveness in building professional credibility.
+        4. Consider the post’s relevance to the author’s industry, audience, or current trends.
+        5. Examine the use of formatting (e.g., line breaks, bullet points), hashtags, mentions, and media (if any).
+        6. Evaluate the effectiveness of any call-to-action or takeaway.
+
+        Provide a detailed critique that includes:
+        - A brief explanation of the post’s strengths and weaknesses.
+        - Specific areas that could be improved.
+        - Actionable suggestions for enhancing clarity, engagement, and professionalism.
+
+        Your critique will be used to improve the post in the next revision step, so ensure your feedback is thoughtful, constructive, and practical.
+        """
+    ), 
+    MessagesPlaceholder(variable_name="messages")
+])
+
+# > Creating the Relfect Chain
+reflect_chain = reflection_prompt | llm
+
+### -- Defining the Agent State for Reflection Agent -- ###
+
+# ! Manual Satte Defination Example
+# from typing import List, Annotated, TypedDict
+# from langchain.schema import HumanMessage, AIMessage, SystemMessage
+
+# # Define State with TypedDict
+# class AgentState(TypedDict):
+#     messages: Annotated[List[HumanMessage | AIMessage | SystemMessage], "add_messages"]
+
+# > LangGraph's MessageGraph
+graph = MessageGraph()
