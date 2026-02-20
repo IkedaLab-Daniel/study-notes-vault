@@ -510,3 +510,147 @@ Example: chess AI improving by analyzing thousands of games
 
 ### Bottom line:
 Agentic AI progresses from reactive rule-following systems to adaptive learning systems capable of planning, optimization, and self-improvement—forming the foundation of modern autonomous AI workflows.
+
+## The Art of AI Self-Improvement: Building Reflection Agents
+
+### What Is a Reflection Agent?
+
+A **reflection agent** improves its own outputs through an iterative feedback loop. It typically includes two LLM roles:
+
+* **Generator** – Produces initial content.
+* **Reflector** – Critiques and suggests improvements.
+
+The process repeats for a fixed number of iterations or until a stopping condition is met.
+
+---
+
+### Types of Reflection-Based Agents
+
+Reflection agents fall into three categories:
+
+1. **Basic Reflection Agent** (focus of this lesson)
+2. **Reflexion Agent**
+3. **Language Agent Tree Search (LATS)**
+
+Basic reflection agents rely on simple generate → critique → refine cycles.
+
+---
+
+### How the Reflection Loop Works
+
+1. User provides a prompt.
+2. The **generator** produces an initial response.
+3. The **reflector** evaluates and critiques the response.
+4. The generator revises the content using the critique.
+5. Steps repeat until termination.
+
+Example evolution:
+
+* Initial suggestion: “Wear a fedora.”
+* Reflection: Critiques outdated advice.
+* Revised output: Focus on authenticity and personal style.
+
+Each iteration improves quality through structured self-evaluation.
+
+---
+
+### Use Case: LinkedIn Post Optimization Agent
+
+The system is designed with two phases:
+
+* **Post-generation phase**
+* **Reflection (AI review) phase**
+
+The generator produces a draft post.
+The reflector critiques tone, clarity, and strategy.
+The generator refines the post.
+The cycle continues until a final optimized version is produced.
+
+---
+
+### Implementing with LangChain
+
+* Initialize an LLM (for example, IBM Granite).
+* Create a **ChatPromptTemplate**:
+
+  * `SystemMessage` defines the LLM’s role.
+  * `MessagesPlaceholder` maintains conversational memory.
+* Connect prompt → LLM using the pipe operator (`|`) to build:
+
+  * `generate_chain`
+  * `reflect_chain`
+
+Prompt engineering ensures:
+
+* Structured generation
+* Structured critique
+* Iterative improvement
+
+---
+
+### Implementing with LangGraph
+
+LangGraph manages stateful iteration using **MessageGraph**, where state is a list of messages:
+
+* `HumanMessage`
+* `AIMessage`
+* `SystemMessage`
+
+Each iteration appends new messages to state.
+
+#### Core Nodes
+
+* **generate_node**
+
+  * Takes current message state
+  * Produces an `AIMessage`
+  * Appends to state automatically
+
+* **reflection_node**
+
+  * Critiques the latest output
+  * Returns critique wrapped as a `HumanMessage`
+  * Feeds feedback back into generator
+
+Using `HumanMessage` for critique ensures the generator interprets reflection as user feedback.
+
+---
+
+### Graph Construction
+
+1. Add nodes: `generate`, `reflect`
+2. Connect edges:
+
+   * reflect → generate (loop)
+3. Set entry point: `generate`
+4. Add conditional routing:
+
+   * If iteration count exceeds threshold → `END`
+   * Otherwise → `reflect`
+5. Compile workflow
+
+---
+
+### Execution Flow
+
+1. Initial `HumanMessage` enters graph.
+2. Generator produces draft (`AIMessage`).
+3. Reflector critiques (`HumanMessage`).
+4. Generator refines.
+5. Loop continues until stop condition.
+6. Final `AIMessage` returned.
+
+State continuously accumulates messages, enabling memory across iterations.
+
+---
+
+### Key Takeaways
+
+* Reflection agents improve outputs via **iterative self-critique**.
+* Generator creates; reflector critiques.
+* LangChain handles structured prompting.
+* LangGraph manages stateful looping with `MessageGraph`.
+* Nodes process state; edges control flow; conditional routing enables iteration.
+* The result is higher-quality, self-refined AI output.
+
+Reflection agents represent a foundational step toward more advanced self-improving agent architectures.
