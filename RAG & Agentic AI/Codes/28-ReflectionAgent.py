@@ -7,7 +7,18 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv
 import os
 
+from utils import print_agent
+
 load_dotenv()
+
+# ANSI color constants
+GREEN = "\033[92m"
+CYAN = "\033[96m"
+YELLOW = "\033[93m"
+MAGENTA = "\033[95m"
+BOLD = "\033[1m"
+RESET = "\033[0m"
+
 
 ### -- LLM Setup -- ###
 llm = ChatGroq(
@@ -77,7 +88,7 @@ graph = MessageGraph()
 
 ### -- Defining the Generation and Reflection Node -- ###
 def generation_node(state: Sequence[BaseMessage]) -> List[BaseMessage]:
-    generated_post = generate_chain.invoke({"message": state})
+    generated_post = generate_chain.invoke({"messages": state})
     return [AIMessage(content=generated_post.content)]
 
 def reflection_node(messages: Sequence[BaseMessage]) -> List[BaseMessage]:
@@ -105,3 +116,20 @@ def should_continue(state: List[BaseMessage]):
     return "reflect"
 
 graph.add_conditional_edges("generate", should_continue)
+
+# > Compiling the Workflow
+workflow = graph.compile()
+
+# > Define input
+inputs = HumanMessage(content="""Write a linkedin post on getting a software developer job at IBM under 160 characters""")
+
+# > Execute workflow
+response = workflow.invoke(inputs)
+
+print_agent()
+print("1:")
+print(f"{CYAN}{response[1].content}")
+print("2:")
+print(f"{GREEN}{response[2].content}")
+print("Final Output:")
+print(f"{YELLOW}{response[-1].content}")
