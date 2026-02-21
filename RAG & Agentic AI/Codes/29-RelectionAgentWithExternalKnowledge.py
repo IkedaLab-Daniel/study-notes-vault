@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import json
 import getpass
 from typing import List, Dict
 from pydantic import BaseModel, Field
@@ -60,10 +61,64 @@ print(response.content)
 
 # > Structuring the Agent's Output: Data Models
 class Reflection(BaseModel):
-    missing: str = Field(description="What information is missing")
-    superfluous: str = Field(description="What information is unnecessary")
+    missing: str = Field(default="", description="What information is missing")
+    superfluous: str = Field(default="", description="What information is unnecessary")
 
 class AnswerQuestion(BaseModel):
-    answer: str = Field(description="Main response tot the question")
-    reflection: Reflection = Field(description="Self-critique of the answer")
-    search_queries: List[str] = Field(description="Queries for additional research")
+    answer: str = Field(description="Main response to the question")
+    reflection: Reflection = Field(default_factory=Reflection, description="Self-critique of the answer")
+    search_queries: List[str] = Field(default_factory=list, description="Queries for additional research")
+
+### -- Binding tools to the Responder -- ###
+initial_chain = first_responder_prompt | llm.bind_tools(tools=[AnswerQuestion])
+response = initial_chain.invoke({"messages": [HumanMessage(question)]})
+print("----------- Full Structured Output ------------")
+print(response.tool_calls)
+
+answer_content = response.tool_calls[0]['args']['answer']
+print("---Initial Answer---")
+print(answer_content)
+
+Reflection_content = response.tool_calls[0]['args']['reflection']
+print("---Reflection Answer---")
+print(Reflection_content)
+
+search_queries = response.tool_calls[0]['args']['search_queries']
+print("---Search Queries---")
+print(search_queries)
+
+### -- Tool Execution -- ###
+response_list = []
+response_list.append(HumanMessage(content=question))
+response_list.append(response)
+
+tool_call = response.tool_calls[0]
+search_queries = tool_call["args"].get("search_queries", [])
+print(search_queries)
+
+tavily_tool=TavilySearchResults(max_results=3)
+
+def execute_tools(state: List[BaseMessage]) -> List[BaseMessage]:
+    last_ai_message = state[-1]
+    tool_messages = []
+    for tool_call in last_ai_message.tool_calls:
+        if tool_call["name"] in ["AnswerQuestion", "ReviseAnswer"]:
+            call_id = tool_call["id"]
+            search_queries = tool_call["args"].get("search_queries", [])
+            query_results = {}
+            for query in search_queries:
+                result = tavily_tool.invoke(query)
+                query_results[query] = result
+            tool_messages.append(ToolMessage(
+                content=json.dumps(query_results),
+                tool_call_id=call_id)
+            )
+    return tool_messages
+
+tool_response = execute_tools(response_list)
+# Use .extend() to add all tool messages from the list
+response_list.extend(tool_response)
+
+print("\n\n------")
+print(tool_response)
+print(response_list)
