@@ -94,4 +94,14 @@ graph.add_edge("reflect", "generate")
 # > Setting the Entry Point in the Graph
 graph.set_entry_point("generate")
 
+### -- Adding a Router Node for Decision Making -- ###
+# > Predefined Logic:
+def should_continue(state: List[BaseMessage]):
+    print(state)
+    print(len(state))
+    print("-" * 60)
+    if len(state) > 6:
+        return END
+    return "reflect"
 
+graph.add_conditional_edges("generate", should_continue)
