@@ -1,5 +1,5 @@
 from langchain_groq import ChatGroq
-from langchain_core.messages import BaseMessage, HumanMessage
+from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
 from langgraph.graph import END, MessageGraph, StateGraph
 
 from typing import List, Sequence
@@ -74,3 +74,24 @@ reflect_chain = reflection_prompt | llm
 
 # > LangGraph's MessageGraph
 graph = MessageGraph()
+
+### -- Defining the Generation and Reflection Node -- ###
+def generation_node(state: Sequence[BaseMessage]) -> List[BaseMessage]:
+    generated_post = generate_chain.invoke({"message": state})
+    return [AIMessage(content=generated_post.content)]
+
+def reflection_node(messages: Sequence[BaseMessage]) -> List[BaseMessage]:
+    res = reflect_chain.invoke({"messages": messages})
+    return [HumanMessage(content=res.content)]
+
+# > Adding the Generation Node to the Graph
+graph.add_node("generate", generation_node)
+
+# >  Adding the Reflect Node to the Graph
+graph.add_node("reflect", reflection_node)
+graph.add_edge("reflect", "generate")
+
+# > Setting the Entry Point in the Graph
+graph.set_entry_point("generate")
+
+
