@@ -654,3 +654,133 @@ State continuously accumulates messages, enabling memory across iterations.
 * The result is higher-quality, self-refined AI output.
 
 Reflection agents represent a foundational step toward more advanced self-improving agent architectures.
+
+## Understanding Reflexion Agents
+
+### What Makes Reflexion Different from Reflection?
+
+**Reflexion agents** extend basic reflection agents.
+While reflection agents iteratively *generate → critique → refine*, Reflexion agents go further by:
+
+* Integrating **external tools** (like web search or APIs)
+* Incorporating **real-time information**
+* Producing **verifiable responses with citations and references**
+* Continuously learning from past attempts, even after model training
+
+They don’t just improve wording — they improve **factual accuracy, relevance, and justification**.
+
+---
+
+### Core Capabilities of Reflexion Agents
+
+Reflexion agents are designed for **self-improvement over time**:
+
+* **Iterative self-critique** – analyze what went wrong and adjust strategy
+* **Tool integration** – pull in up-to-date information via search or APIs
+* **Evidence-backed outputs** – include citations and references
+* **Weakness detection** – identify gaps in prior responses and correct them
+* **Structured reasoning** – separate response, critique, and tool queries clearly
+
+This makes them ideal for tasks that require **current knowledge and transparency**.
+
+---
+
+### High-Level Reflexion Workflow
+
+1. **User Query**
+
+   * Example: *“I need more minerals in my diet.”*
+
+2. **Responder (Generator LLM)**
+
+   * Produces an initial answer.
+   * Outputs a **structured object**, not plain text:
+
+     * `response`
+     * `critique`
+     * `search_query`
+
+3. **Tool Call (e.g., Web Search)**
+
+   * Extracts `search_query`
+   * Returns results (title, content, URL)
+   * Appends tool output to a shared `response_list`
+
+4. **Revisor (Reflection LLM)**
+
+   * Consumes:
+
+     * Original response
+     * Self-critique
+     * Tool results
+   * Revises the answer
+   * Adds **citations and references**
+   * Outputs a new structured object:
+
+     * `revised_response`
+     * `references`
+     * `critique`
+     * `next_search_query`
+
+5. **Repeat Loop**
+
+   * Revisor output → tool → updated response list → revisor again
+   * Continues for a fixed number of iterations or until stopping criteria
+
+6. **Final Output**
+
+   * A refined, evidence-backed response with references.
+
+---
+
+### Why Structured Outputs Matter
+
+Instead of free-form text, Reflexion uses **schema-based outputs** (tables / data models) to clearly separate:
+
+* Response
+* Self-critique
+* Tool queries
+* References
+
+This prevents confusion between:
+
+* Model reasoning
+* Tool results
+* Final answers
+
+It also makes downstream processing reliable and deterministic.
+
+---
+
+### Key Roles in Reflexion
+
+* **Responder**
+
+  * Generates the initial answer
+  * Provides self-critique
+  * Suggests tool queries
+
+* **Tool**
+
+  * Fetches external, real-time information
+
+* **Revisor**
+
+  * Refines the responder’s output
+  * Integrates tool data
+  * Adds citations
+  * Produces improved responses
+
+All messages (human input, AI outputs, tool results) are stored in a running **response list**, enabling learning across iterations.
+
+---
+
+### Key Takeaways
+
+* Reflexion agents evolve beyond reflection by adding **tools, citations, and continuous learning**.
+* They operate in an **iterative loop**: generate → critique → search → revise.
+* They can **self-correct weaknesses**, integrate **real-time data**, and justify claims with **references**.
+* Structured schema-based outputs enable clean coordination between generator, tools, and revisor.
+* The system improves over multiple cycles, producing increasingly accurate and transparent answers.
+
+In short: **Reflexion agents turn LLMs into self-improving, evidence-aware systems.**
