@@ -135,3 +135,22 @@ from langgraph.graph.message import add_messages
 class AgentState(TypedDict):
     """The state of the agent"""
     messages: Annotated[Sequence[BaseMessage], add_messages]
+
+### -- Demo State Management -- ###
+state: AgentState = {"messages": []}
+
+# state["messages"] = add_messages(state["messages"], [HumanMessage(content="hellor")])
+# print("After greeting:", state["messages"])
+
+### -- Manual ReAct Execution (Understanding the Flow) -- ###
+dummy_state: AgentState = {
+    "messages": [HumanMessage( "What's the weather like in Zurich, and what should I wear based on the temperature?")]
+}
+
+response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
+
+dummy_state["messages"] = add_messages(dummy_state["messages"], [response])
+
+print("---" * 10)
+print(dummy_state)
+
