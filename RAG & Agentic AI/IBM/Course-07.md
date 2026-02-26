@@ -784,3 +784,89 @@ All messages (human input, AI outputs, tool results) are stored in a running **r
 * The system improves over multiple cycles, producing increasingly accurate and transparent answers.
 
 In short: **Reflexion agents turn LLMs into self-improving, evidence-aware systems.**
+
+
+## ReAct: Building Agents that Reason Before Acting
+
+**ReAct = Reason + Act.**
+It’s an agent pattern where an LLM doesn’t just “answer”—it **thinks step-by-step**, **calls tools**, reads the **tool outputs**, then **updates its plan** until it can give a final response.
+
+The classic loop looks like:
+
+* **Thought**: what I should do next (reasoning)
+* **Action**: which tool to use
+* **Action Input**: what to pass into the tool
+* **Observation**: what the tool returned
+* Repeat… until
+* **Final Answer**
+
+---
+
+### Why ReAct is useful
+
+ReAct is best when the question needs **multiple steps** or **external info**:
+
+* Current weather → needs a weather/search tool
+* “What should I wear?” → needs a recommendation tool + the weather result
+* “Find X, summarize it, then compute Y” → needs tools + chaining
+
+Without tools, the model is guessing. With ReAct, it **grounds** its answer in observations.
+
+---
+
+### What’s happening in the Tokyo example
+
+User: *“What’s the weather in Tokyo and what should I wear?”*
+
+1. LLM realizes it needs live weather → calls **search tool**
+2. Tool returns: *22°C, sunny*
+3. LLM uses that observation → calls **recommend_clothing**
+4. Tool returns: *t-shirt, shorts, sunglasses*
+5. LLM responds with a clean final answer
+
+That’s the ReAct cycle in action.
+
+---
+
+###ReAct in LangGraph: the mental model
+
+LangGraph makes this clean by splitting the workflow into **two main nodes**:
+
+### 1) `agent` node (the “brain”)
+
+* Sends current message history to the LLM
+* LLM returns either:
+
+  * a normal assistant answer (**no tool calls**) → finish
+  * a tool call request (structured) → go to tools node
+
+### 2) `tools` node (the “hands”)
+
+* Reads the tool call name + args
+* Executes the tool
+* Wraps the result as a `ToolMessage`
+* Appends it back into state
+* Routes back to `agent`
+
+### Conditional routing: `should_continue`
+
+* If last AI message has tool calls → **continue → tools**
+* Else → **end**
+
+So the graph is basically:
+
+`START → agent → (tools → agent)* → END`
+
+---
+
+### What state looks like
+
+A common LangGraph ReAct state is just:
+
+* `messages`: a growing list of:
+
+  * `HumanMessage`
+  * `AIMessage` (may contain tool_calls)
+  * `ToolMessage` (tool results)
+
+LangGraph’s `add_messages` (or equivalent) makes sure each node **appends** rather than overwrites.
