@@ -126,3 +126,12 @@ Always explain your thinking process to help users understand your approach.
 
 ### -- Binding Tools to the Model -- ###
 model_react=chat_prompt|model.bind_tools(tools)
+
+### -- Agent State -- ###
+from typing import (Annotated, Sequence, TypedDict)
+from langchain_core.messages import BaseMessage
+from langgraph.graph.message import add_messages
+
+class AgentState(TypedDict):
+    """The state of the agent"""
+    messages: Annotated[Sequence[BaseMessage], add_messages]
