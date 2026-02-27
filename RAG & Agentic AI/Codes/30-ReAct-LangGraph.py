@@ -93,7 +93,7 @@ def recommend_clothing(weather: str) -> str:
     
 tools = [search_tool, recommend_clothing]
 
-tools_by_names = {
+tools_by_name = {
     tool.name: tool
     for tool in tools
 }
@@ -143,6 +143,7 @@ state: AgentState = {"messages": []}
 # print("After greeting:", state["messages"])
 
 ### -- Manual ReAct Execution (Understanding the Flow) -- ###
+# > Step 1: Initial Query Processing
 dummy_state: AgentState = {
     "messages": [HumanMessage( "What's the weather like in Zurich, and what should I wear based on the temperature?")]
 }
@@ -151,6 +152,25 @@ response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
 
 dummy_state["messages"] = add_messages(dummy_state["messages"], [response])
 
-print("---" * 10)
-print(dummy_state)
+print("---" * 20)
+print(dummy_state["messages"][-1].content)
+print("Tool Call: ", response.tool_calls[-1])
+print("---" * 20)
 
+# > Step 2: Tool Execution
+tool_call = response.tool_calls[-1]
+print("Tool call:", tool_call)
+
+tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
+print("Tool result preview: ", tool_result[0]['title'])
+
+tool_message = ToolMessage(
+    content=json.dumps(tool_result),
+    name=tool_call["name"],
+    tool_call_id=tool_call["id"]
+)
+
+dummy_state["messages"] = add_messages(dummy_state["messages"], [tool_message])
+
+print("---" * 20)
+print(dummy_state["messages"])
