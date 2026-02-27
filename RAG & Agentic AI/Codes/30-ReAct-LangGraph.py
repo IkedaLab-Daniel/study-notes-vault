@@ -259,4 +259,20 @@ workflow.add_conditional_edges(
 workflow.set_entry_point("agent")
 
 # > compile
-workflow.compile()
+graph = workflow.compile()
+
+### -- Visualizing the Graph -- ###
+print(graph.get_graph().draw_mermaid())
+
+### -- Running the Complete ReAct Agent -- ###
+def print_stream(stream):
+    """Helper function for formatting the stream nicely."""
+    for s in stream:
+        message = s["messages"][-1]
+        if isinstance(message, tuple):
+            print(message)
+        else:
+            message.pretty_print()
+
+inputs = {"messages": [HumanMessage(content="What's the weather like in Zurich, and what should I wear based on the temperature?")]}
+print_stream(graph.stream(inputs, stream_mode="values"))
