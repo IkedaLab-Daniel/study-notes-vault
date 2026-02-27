@@ -235,3 +235,28 @@ def should_continue(state: AgentState):
         return "end"
     else:
         return "continue"
+
+# > Constructing the State Graph
+from langgraph.graph import StateGraph, END
+
+workflow = StateGraph(AgentState)
+# > nodes
+workflow.add_node("agent", call_model)
+workflow.add_node("tools", tool_node)
+# > edge
+workflow.add_edge("tools", "agent")
+# > conditional logic
+workflow.add_conditional_edges(
+    "agent",
+    should_continue,
+    {
+        "continue": "tools",
+        "end": END
+    }
+)
+
+# > entry
+workflow.set_entry_point("agent")
+
+# > compile
+workflow.compile()
