@@ -202,3 +202,20 @@ print("MOre tools needed:", bool(response.tool_calls))
 print("=========" * 20)
 print(dummy_state["messages"][-1].content)
 print("=========" * 20)
+
+### -- Automating ReAct with Graphs -- ###
+# > Building the Core Functions
+def tool_node(state: AgentState):
+    """Execute all tool calls from the last message in the state."""
+    outputs = []
+    for tool_call in state["messages"][-1].tool_calls:
+        tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
+        outputs.append(
+            ToolMessage(
+                content=json.dumps(tool_result),
+                name=tool_call["name"],
+                tool_call_id=tool_call["id"]
+            )
+        )
+    return {"messages": outputs}
+
