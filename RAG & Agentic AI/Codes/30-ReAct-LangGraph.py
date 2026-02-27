@@ -194,3 +194,11 @@ print("=========" * 20)
 print(dummy_state["messages"][-1].content)
 print("=========" * 20)
 
+# > Final Response Generation
+response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
+print("Final response generated: ", response.content is not None)
+print("MOre tools needed:", bool(response.tool_calls))
+
+print("=========" * 20)
+print(dummy_state["messages"][-1].content)
+print("=========" * 20)
