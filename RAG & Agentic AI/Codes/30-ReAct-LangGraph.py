@@ -219,3 +219,19 @@ def tool_node(state: AgentState):
         )
     return {"messages": outputs}
 
+# > Model invocation node
+def call_model(state: AgentState):
+    """Invoke the mopdel with current conversation state."""
+    response = model_react.invoke({"scratch_pad": state["messages"]})
+    return {"messages": [response]}
+
+# > Decision Logic
+def should_continue(state: AgentState):
+    """Determine whether to continue with tool use or end the conversation"""
+    messages = state["messages"]
+    last_message = messages[-1]
+    # ? If there is no function, then we finish
+    if not last_message.tool_calls:
+        return "end"
+    else:
+        return "continue"
