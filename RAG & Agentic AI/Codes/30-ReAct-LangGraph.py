@@ -152,56 +152,56 @@ response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
 
 dummy_state["messages"] = add_messages(dummy_state["messages"], [response])
 
-print("---" * 20)
-print(dummy_state["messages"][-1].content)
-print("Tool Call: ", response.tool_calls[-1])
-print("---" * 20)
+# print("---" * 20)
+# print(dummy_state["messages"][-1].content)
+# print("Tool Call: ", response.tool_calls[-1])
+# print("---" * 20)
 
 # > Step 2: Tool Execution
-tool_call = response.tool_calls[-1]
-print("Tool call:", tool_call)
+# tool_call = response.tool_calls[-1]
+# print("Tool call:", tool_call)
 
-tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
-print("Tool result preview: ", tool_result[0]['title'])
+# tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
+# print("Tool result preview: ", tool_result[0]['title'])
 
-tool_message = ToolMessage(
-    content=json.dumps(tool_result),
-    name=tool_call["name"],
-    tool_call_id=tool_call["id"]
-)
+# tool_message = ToolMessage(
+#     content=json.dumps(tool_result),
+#     name=tool_call["name"],
+#     tool_call_id=tool_call["id"]
+# )
 
-dummy_state["messages"] = add_messages(dummy_state["messages"], [tool_message])
+# dummy_state["messages"] = add_messages(dummy_state["messages"], [tool_message])
 
-print("---" * 20)
-print(dummy_state["messages"])
+# print("---" * 20)
+# print(dummy_state["messages"])
 
 # > Step 3: Processing Results and Next Action
-response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
-dummy_state["messages"] = add_messages(dummy_state["messages"], [response])
+# response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
+# dummy_state["messages"] = add_messages(dummy_state["messages"], [response])
 
-# ? Check if the model wants to use another tool
-if response.tool_calls:
-    tool_call = response.tool_calls[0]
-    tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
-    tool_message = ToolMessage(
-        content=json.dumps(tool_result),
-        name=tool_call["name"],
-        tool_call_id=tool_call["id"]
-    )
-    dummy_state["messages"] = add_messages(dummy_state["messages"], [tool_message])
+# # ? Check if the model wants to use another tool
+# if response.tool_calls:
+#     tool_call = response.tool_calls[0]
+#     tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
+#     tool_message = ToolMessage(
+#         content=json.dumps(tool_result),
+#         name=tool_call["name"],
+#         tool_call_id=tool_call["id"]
+#     )
+#     dummy_state["messages"] = add_messages(dummy_state["messages"], [tool_message])
 
-print("=========" * 20)
-print(dummy_state["messages"][-1].content)
-print("=========" * 20)
+# print("=========" * 20)
+# print(dummy_state["messages"][-1].content)
+# print("=========" * 20)
 
 # > Final Response Generation
-response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
-print("Final response generated: ", response.content is not None)
-print("MOre tools needed:", bool(response.tool_calls))
+# response = model_react.invoke({"scratch_pad": dummy_state["messages"]})
+# print("Final response generated: ", response.content is not None)
+# print("MOre tools needed:", bool(response.tool_calls))
 
-print("=========" * 20)
-print(dummy_state["messages"][-1].content)
-print("=========" * 20)
+# print("=========" * 20)
+# print(dummy_state["messages"][-1].content)
+# print("=========" * 20)
 
 ### -- Automating ReAct with Graphs -- ###
 # > Building the Core Functions
@@ -239,30 +239,32 @@ def should_continue(state: AgentState):
 # > Constructing the State Graph
 from langgraph.graph import StateGraph, END
 
-workflow = StateGraph(AgentState)
+# workflow = StateGraph(AgentState)
 # > nodes
-workflow.add_node("agent", call_model)
-workflow.add_node("tools", tool_node)
+# workflow.add_node("agent", call_model)
+# workflow.add_node("tools", tool_node)
+
 # > edge
-workflow.add_edge("tools", "agent")
+# workflow.add_edge("tools", "agent")
+
 # > conditional logic
-workflow.add_conditional_edges(
-    "agent",
-    should_continue,
-    {
-        "continue": "tools",
-        "end": END
-    }
-)
+# workflow.add_conditional_edges(
+#     "agent",
+#     should_continue,
+#     {
+#         "continue": "tools",
+#         "end": END
+#     }
+# )
 
 # > entry
-workflow.set_entry_point("agent")
+# workflow.set_entry_point("agent")
 
 # > compile
-graph = workflow.compile()
+# graph = workflow.compile()
 
 ### -- Visualizing the Graph -- ###
-print(graph.get_graph().draw_mermaid())
+# print(graph.get_graph().draw_mermaid())
 
 ### -- Running the Complete ReAct Agent -- ###
 def print_stream(stream):
@@ -274,5 +276,45 @@ def print_stream(stream):
         else:
             message.pretty_print()
 
-inputs = {"messages": [HumanMessage(content="What's the weather like in Zurich, and what should I wear based on the temperature?")]}
-print_stream(graph.stream(inputs, stream_mode="values"))
+# inputs = {"messages": [HumanMessage(content="What's the weather like in Zurich, and what should I wear based on the temperature?")]}
+# print_stream(graph.stream(inputs, stream_mode="values"))
+
+print("""\033[32m\n\n
+    
+              (˶˃ ᵕ ˂˶)
+            - Exercise 01 -
+      
+\033[0m""")
+
+### -- Exercise 1 -- ###
+def call_model_exercise(state: AgentState):
+    """Invoke the model with current conversation"""
+    response = model_react_exercise.invoke({"scratch_pad": state["messages"]})
+    return {"messages": [response]}
+
+from e30_Exercises import calculator_tool
+tools.append(calculator_tool)
+tools_by_name = {
+    tool.name: tool
+    for tool in tools
+}
+
+model_react_exercise = chat_prompt|model.bind_tools(tools)
+
+ex_workflow = StateGraph(AgentState)
+
+ex_workflow.add_node("agent", call_model_exercise)
+ex_workflow.add_node("tools", tool_node)
+
+ex_workflow.add_edge("tools", "agent")
+
+ex_workflow.add_conditional_edges("agent", should_continue, {"continue": "tools", "end": END})
+
+ex_workflow.set_entry_point("agent")
+
+ex_graph = ex_workflow.compile()
+
+print(ex_graph.get_graph().draw_mermaid())
+
+inputs = {"messages": [HumanMessage(content="What's 15% of 250 plus the square root of 144? If answer is a positve integer, get weather for Bamban Tarlac")]}
+print_stream(ex_graph.stream(inputs, stream_mode="values"))
