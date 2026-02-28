@@ -294,12 +294,12 @@ def call_model_exercise(state: AgentState):
 
 from e30_Exercises import calculator_tool
 tools.append(calculator_tool)
-tools_by_name = {
-    tool.name: tool
-    for tool in tools
-}
+# tools_by_name = {
+#     tool.name: tool
+#     for tool in tools
+# }
 
-model_react_exercise = chat_prompt|model.bind_tools(tools)
+# model_react_exercise = chat_prompt|model.bind_tools(tools)
 
 ex_workflow = StateGraph(AgentState)
 
@@ -316,5 +316,21 @@ ex_graph = ex_workflow.compile()
 
 print(ex_graph.get_graph().draw_mermaid())
 
-inputs = {"messages": [HumanMessage(content="What's 15% of 250 plus the square root of 144? If answer is a positve integer, get weather for Bamban Tarlac")]}
+# inputs = {"messages": [HumanMessage(content="What's 15% of 250 plus the square root of 144? If answer is a positve integer, get weather for Bamban Tarlac")]}
+# print_stream(ex_graph.stream(inputs, stream_mode="values"))
+
+### -- Exercise 2 -- ###
+from e30_Exercises import news_summarizer_tool
+
+tools.append(news_summarizer_tool)
+tools_by_name = {
+    tool.name: tool
+    for tool in tools
+}
+
+model_react_exercise = chat_prompt|model.bind_tools(tools)
+
+
+inputs = {"messages": [HumanMessage(content="Find recent AI news and summarize the top 3 articles")]}
+
 print_stream(ex_graph.stream(inputs, stream_mode="values"))
