@@ -1028,3 +1028,173 @@ Frameworks used to manage multi-agent workflows:
 * Challenges include coordination, overhead, and security.
 
 Multi-agent systems represent a major step toward scalable, collaborative, and adaptive agentic AI architectures.
+
+## Governing Agentic AI: Autonomy, Risk, and Responsibility
+
+### Why Agentic AI Is Different
+
+Agentic AI represents a major shift from traditional AI systems.
+
+Traditional ML:
+
+* Takes input → produces output.
+* Reactive and bounded.
+
+Agentic AI:
+
+* Uses outputs from one model as inputs to others.
+* Sets goals.
+* Plans over time.
+* Takes autonomous actions.
+* May operate without humans in the loop.
+
+**Key principle:**
+Greater autonomy = greater risk.
+
+---
+
+### Four Defining Characteristics (and Risk Amplifiers)
+
+1. **Underspecification**
+
+   * Given broad goals without detailed instructions.
+   * Leaves room for unintended strategies.
+
+2. **Long-Term Planning**
+
+   * Decisions build on prior steps.
+   * Small errors compound over time.
+
+3. **Goal-Directedness**
+
+   * Works toward objectives instead of just responding.
+   * May optimize in unintended ways.
+
+4. **Directedness of Impact**
+
+   * Can act without human oversight.
+   * Real-world consequences become possible.
+
+As autonomy increases, so do risks like:
+
+* Misinformation
+* Decision errors
+* Security vulnerabilities
+* Compliance violations
+* Ethical misalignment
+
+---
+
+## Why Governance Is Critical
+
+Agentic AI amplifies risks already seen in generative AI — but with fewer humans correcting mistakes midstream.
+
+Governance is not optional. It must be **multilayered**.
+
+---
+
+## Multi-Layer Governance Framework
+
+### 1. Technical Safeguards
+
+**Interruptibility**
+
+* Can you pause or shut down the agent?
+
+**Human-in-the-Loop**
+
+* When is human approval required?
+
+**Data Protection**
+
+* PII detection
+* Masking
+* Data sanitation
+
+---
+
+### 2. Process Controls
+
+**Risk-Based Permissions**
+
+* What actions are forbidden?
+* What requires approval?
+
+**Auditability**
+
+* Can you trace how a decision was made?
+
+**Monitoring & Evaluation**
+
+* Continuous performance oversight
+* Detect hallucinations and compliance failures
+
+**Accountability**
+
+* Who is responsible for AI harm?
+* What regulations apply?
+* How are vendors governed?
+
+---
+
+## Guardrails at Every Layer
+
+### Model Layer
+
+* Detect malicious prompts.
+* Enforce ethical and policy alignment.
+
+### Orchestration Layer
+
+* Infinite loop detection.
+* Prevent runaway workflows and cost spikes.
+
+### Tool Layer
+
+* Role-based access control (RBAC).
+* Limit tool usage to defined permissions.
+
+---
+
+## Testing and Deployment Best Practices
+
+* **Red Teaming** before deployment to expose vulnerabilities.
+* **Continuous Monitoring** after deployment.
+* Automated evaluation for:
+
+  * Hallucinations
+  * Policy violations
+  * Security breaches
+
+---
+
+## Supporting Infrastructure
+
+Successful organizations use:
+
+* Guardrail frameworks for prompt/output filtering
+* Secure orchestration platforms
+* Security enforcement layers
+* Observability tools to monitor system behavior
+
+---
+
+## Core Message
+
+Agentic AI is powerful and evolving rapidly.
+
+But:
+
+Autonomy without governance = unmanaged risk.
+
+Governance is not just about security.
+It is about **control, accountability, and responsible deployment**.
+
+Before allowing AI to act autonomously:
+
+* Define guardrails.
+* Establish oversight.
+* Implement monitoring.
+* Assign accountability.
+
+In the age of agentic AI, responsibility belongs to us.
