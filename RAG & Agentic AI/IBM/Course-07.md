@@ -1198,3 +1198,144 @@ Before allowing AI to act autonomously:
 * Assign accountability.
 
 In the age of agentic AI, responsibility belongs to us.
+
+## Agentic RAG: Evolving Beyond Traditional RAG
+
+### Quick Refresher: What Is RAG?
+
+Retrieval Augmented Generation (RAG) enhances LLM responses by:
+
+1. Receiving a user query
+2. Retrieving relevant data from a **vector database**
+3. Injecting retrieved data into the prompt as context
+4. Sending the enriched prompt to the LLM for generation
+
+This grounding process:
+
+* Improves factual accuracy
+* Reduces hallucinations
+* Produces more reliable responses
+
+In traditional RAG:
+
+* The LLM is called once
+* Its only role is **response generation**
+
+---
+
+## The Limitation of Traditional RAG
+
+Standard RAG pipelines:
+
+* Use a single vector database
+* Do not dynamically choose data sources
+* Do not decide response formats
+* Cannot intelligently reject irrelevant queries
+
+The LLM simply generates an answer using retrieved context.
+
+---
+
+## What Is Agentic RAG?
+
+Agentic RAG extends RAG by turning the LLM into an **active decision-making agent**.
+
+Instead of just generating responses, the LLM:
+
+* Interprets query intent
+* Chooses which database to query
+* Decides response format (text, chart, code, etc.)
+* Routes out-of-scope queries to a fail-safe
+
+The LLM becomes:
+
+* A router
+* A decision engine
+* A contextual reasoning system
+
+---
+
+## Multi-Database Routing Example
+
+Imagine two vector databases:
+
+### 1. Internal Documentation
+
+* Policies
+* Procedures
+* Guidelines
+
+### 2. General Industry Knowledge
+
+* Industry standards
+* Best practices
+* Public resources
+
+### Agent Behavior
+
+If user asks:
+
+> “What’s the company’s remote work policy during holidays?”
+
+→ Agent routes to **internal documentation**
+
+If user asks:
+
+> “What are industry standards for remote work in tech companies?”
+
+→ Agent routes to **general industry database**
+
+If user asks:
+
+> “Who won the World Series in 2015?”
+
+→ Agent recognizes irrelevance
+→ Routes to **fail-safe response**
+→ Returns: “Sorry, I don’t have that information.”
+
+---
+
+## What Makes It “Agentic”?
+
+The LLM:
+
+* Analyzes intent
+* Understands context
+* Selects tools (databases)
+* Decides routing
+* Handles edge cases
+* Potentially integrates external real-time data
+
+It is no longer just a generator — it becomes an orchestrator.
+
+---
+
+## Benefits of Agentic RAG
+
+* Higher relevance
+* Better contextual accuracy
+* Intelligent source selection
+* Controlled handling of unknown queries
+* More adaptable workflows
+* Support for structured outputs (charts, code, summaries)
+
+---
+
+## Real-World Applications
+
+* **Customer Support**: Route between internal policies and public documentation
+* **Legal Tech**: Pull from internal briefs vs. public caselaw databases
+* **Healthcare**: Internal protocols vs. external research
+* **Enterprise Knowledge Systems**
+
+---
+
+## Core Insight
+
+Traditional RAG = Retrieval + Single LLM generation
+
+Agentic RAG = Retrieval + Intelligent routing + Decision-making + Controlled responses
+
+It transforms RAG from a static pipeline into a dynamic, context-aware system capable of understanding where to look and how to respond.
+
+Agentic RAG represents a major evolution in building adaptive, reliable AI systems.
