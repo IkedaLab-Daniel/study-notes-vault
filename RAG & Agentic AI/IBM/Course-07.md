@@ -891,3 +891,140 @@ LangGraph’s `add_messages` (or equivalent) makes sure each node **appends** ra
 - Tool outputs such as tool_calls and schema fields help extract structured insights from AI messages
 - LangGraph chains responder and revisor nodes into an iterative feedback loop using prompt updates and evidence-based revisions
 - A MessageGraph orchestrates the Reflexion agent, managing node routing, iteration limits, and control flow
+
+> # Module 3: Multi-Agent Systems and Agentic RAG with LangGraph
+## Introduction to Multi-Agent Systems (MAS)
+
+### What Is a Multi-Agent System?
+
+A **Multi-Agent System (MAS)** consists of multiple autonomous agents that:
+
+* Operate independently
+* Interact within a shared environment
+* Work toward individual or collective goals
+
+Instead of one large AI doing everything, MAS uses **organized specialization** — assigning the right agent to the right task.
+
+---
+
+### Core Components of a Multi-Agent System
+
+Using the warehouse robot analogy:
+
+* **Agents** → Autonomous entities with specific capabilities
+* **Environment** → The space where agents operate and interact
+* **Communication Protocols** → Standards enabling agents to coordinate
+
+Agents perceive, decide, act, and communicate dynamically in real time.
+
+---
+
+### Agent Specialization Principles
+
+Effective multi-agent design follows key principles:
+
+1. **Capability Boundaries**
+
+   * Each agent has a clearly defined scope.
+   * Example: a summarizer should not query databases.
+
+2. **Expertise Depth vs. Breadth**
+
+   * Balance highly specialized agents with broader coordinator agents.
+   * Generalist agents often route tasks and oversee workflows.
+
+3. **Interface Standardization**
+
+   * Agents communicate using structured formats (e.g., JSON schemas).
+   * Enables orchestration via frameworks like:
+
+     * LangGraph
+     * CrewAI
+     * AutoGen
+     * IBM BeeAI
+
+4. **Clear Handoff Patterns**
+
+   * Agents pass tasks when outside their expertise.
+   * Example: retriever → summarizer → critique → compiler.
+
+---
+
+### Example: Research Assistant Multi-Agent System
+
+A research system might include:
+
+* **Retriever Agent** – Collects relevant documents
+* **Summarizer Agent** – Extracts key insights
+* **Critique Agent** – Evaluates bias and gaps
+* **Compiler Agent** – Produces final report
+
+Specialization improves scalability and efficiency across domains like legal tech, healthcare, and enterprise knowledge systems.
+
+---
+
+### Benefits of Multi-Agent Systems
+
+* **Scalability** – Add/remove agents without disrupting the system
+* **Flexibility** – Agents adapt to task changes
+* **Robustness** – System can continue functioning even if some agents fail
+
+---
+
+### Common Collaboration Patterns
+
+1. **Pipeline Pattern**
+
+   * Sequential handoffs
+   * Example: research → edit → publish
+
+2. **Hub-and-Spoke Pattern**
+
+   * Central coordinator dispatches tasks to specialists
+   * Example: content manager → writer, fact checker, SEO agent
+
+Agents typically operate within graph-structured workflows that define communication flow.
+
+---
+
+### Communication Protocols
+
+* **Model Context Protocol (MCP)**
+
+  * Standardizes how AI models access and share context with external tools and data.
+
+* **Agent Communication Protocol (ACP)**
+
+  * Developed by IBM.
+  * Enables standardized agent-to-agent collaboration.
+
+---
+
+### Orchestration Frameworks
+
+Frameworks used to manage multi-agent workflows:
+
+* **LangGraph** – Custom graph-based workflows with explicit control
+* **CrewAI** – Open-source framework for collaborative agent teams
+* **AutoGen** – Microsoft framework for conversational multi-agent systems
+* **IBM BeeAI** – Scalable multi-agent orchestration framework
+
+---
+
+### Challenges in Multi-Agent Systems
+
+* **Coordination Complexity** – Ensuring agents work harmoniously
+* **Communication Overhead** – High interaction costs between agents
+* **Security Risks** – Preventing malicious or compromised agents
+
+---
+
+### Key Takeaways
+
+* Multi-agent systems rely on **organized specialization**.
+* They consist of multiple autonomous agents interacting within an environment.
+* Structured communication and orchestration frameworks enable coordination.
+* MAS provides scalability, flexibility, and robustness.
+* Challenges include coordination, overhead, and security.
+
+Multi-agent systems represent a major step toward scalable, collaborative, and adaptive agentic AI architectures.
