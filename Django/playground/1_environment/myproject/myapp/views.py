@@ -2,21 +2,13 @@ from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
-    html = """
-    <div>
-        <h1 style="color: red;">Hello</h1>
-    </div>
-"""
-    return HttpResponse(html)
+   return HttpResponse("Welcome")
 
-def drinks(request, drink_name):
+def menu(request):
+   return HttpResponse("Menu")
 
-    drink = {
-        "mocha": "type of coffee",
-        "tea": "type of beverate",
-        "lemonade": "type of refreshment"
-    }
-    if not drink_name in drink:
-        drink[drink_name] = "probably delicious"
+def about(request):
+   return HttpResponse("About Us")
 
-    return HttpResponse(f"<h1>Drink name: {drink_name} is a {drink[drink_name]}</h1>")
+def book(request):
+   return HttpResponse("Make a booking")
