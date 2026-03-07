@@ -2,7 +2,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
-   return HttpResponse("Welcome")
+   return HttpResponse("Welcome <a href=\"/menu\">menu</a>")
 
 def menu(request):
    return HttpResponse("Menu")
