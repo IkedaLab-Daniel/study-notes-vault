@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +11,9 @@
 <!-- Add heading code -->
 <h1 style="color: #495E57"> Menu </h1>
 <!-- Add paragraph code -->
-<p>Little Lemon is a family-owned Mediterranean restaurant, focused on traditional recipes served with a modern twist. The chefs draw inspiration from Italian, Greek, and Turkish culture and have a menu of 12-15 items that they rotate seasonally. The restaurant has a rustic and relaxed atmosphere with moderate prices, making it a popular place for a meal any time of the day.</p>
+<p>{{ content.menu }}</p>
 <!-- Add image code -->
-
+<img src="{% static 'img/dessert.jpg' %}" width="500px">
 </body>
 </html>
 
