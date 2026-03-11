@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from myapp.models import Menu
 
 # Create your views here.
-def menu(request):
-    menu_items = Menu.objects.all()
-    item_dict = {
-        "menu": menu_items
-    }
+def home(request):
+    return render(request, "home.html")
 
-    return render(request, "menu.html", item_dict)
+def menu(request):
+    return render(request, "menu")
+
+def about(request):
+    return render(request, "request")
+
+def book(request):
+    return render(request, "book")
