@@ -38,11 +38,12 @@
 
   <body>
     <!-- Add include tag -->.
-    
+    {% include "partials/_header.html" %}
 
     <main>
-       <!-- Begin block content --> 
- 
+      <!-- Begin block content --> 
+      {% block content %}
+      {% endblock %}
       <!-- End block content --> 
     </main>
 
