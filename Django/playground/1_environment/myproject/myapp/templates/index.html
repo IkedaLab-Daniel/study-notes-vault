@@ -3,36 +3,46 @@
 
 {% block content %}
 <section>
-  <article>
-    <h1>Make a reservation</h1>
-    <!--Begin row-->
-    <div class="row">
-      <!--Begin col-->
-      <div class="column">
-        <form action="" method="post">
-          {% csrf_token %}
-          {{form.as_p}}
-          <input type="submit" id="button">
-        </form>
-      </div>
-      <!--End col-->
-
-      <!--Begin col-->
-      <div class="column">
-        <div class="videowrap">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11898.289517452584!2d-87.60853049433447!3d41.79442860243028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880e2912ce6f7027%3A0xc0cfb5545d4a37b2!2sHyde%20Park%2C%20Chicago%2C%20IL%2C%20USA!5e0!3m2!1sen!2spt!4v1662384760663!5m2!1sen!2spt"
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-      </div>
-      <!--End col-->
-    </div>
-    <!--End row-->
-
-
-
-
-  </article>
-</section>
+    <article id="hero">
+      <h1 class="heading_shadow">SPECIAL OFFER</h1>
+      <p>
+        30% Off This Weekend 
+      </p>
+      <a href="#" class="cta"> Book now </a>
+    </article>
+  </section>
+  <section>
+    <article>
+      <h2>Our New Menu</h2>
+      <img src="{% static 'img/grill.jpg' %}">
+      <p>
+        Our menu consists of 12-15 seasonal items based on Italian, Greek, and Turkish culture.
+      </p>
+      <p>
+        <a href="{% url 'menu' %}">See our new menu</a>
+      </p>
+    </article>
+    <article>
+      <h2>Book a table</h2>
+      <img src="{% static 'img/salad.jpg' %}">
+      <p>
+        Reserve your table for an Italian, Greek, and Turkish dining experience.
+      </p>
+      <p>
+        <a href="{% url 'book' %}">Book your table now</a>
+      </p>
+    </article>
+    <article>
+      <h2>Opening Hours</h2>
+      <img src="{% static 'img/head_chef.jpg' %}">
+      <p>
+        The Little Lemon Restaurant is open 7 days a week, except for public holidays. 
+      </p>
+      <ul>
+        <li>Mon - Fri: 2pm - 10pm</li>
+        <li>Sat: 2pm - 11pm</li>
+        <li>Sun: 2pm - 9pm</li>
+      </ul>
+    </article>
+  </section>
 {% endblock %}
