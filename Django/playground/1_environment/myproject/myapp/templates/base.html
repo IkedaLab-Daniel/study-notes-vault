@@ -1,61 +1,48 @@
+{% load static %}
 
-{% extends 'base.html' %} {% load static %} {% block content %}
-<section>
-  <article>
-    <h1>About Us</h1>
-    <!--Begin row-->
-    <div class="row">
-      <!--Begin col-->
-      <div class="column">
-        <p>
-          Based in Chicago, Illinois, Little Lemon is a family owned
-          Mediterranean restaurant, focused on traditional recipes served with a
-          modern twist.
-        </p>
-        <p>
-          The chefs draw inspiration from Italian, Greek, and Turkish culture
-          and have a menu of 12-15 items that they rotate seasonally.
-        </p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <p>
-          The restaurant has a rustic and relaxed atmosphere with moderate
-          prices, making it a popular place for a meal any time of the day.
-        </p>
+    <title>Little Lemon</title>
+    <meta name="description" content="A brief description" />
+    <meta
+      name="author"
+      content="Based in Chicago, Illinois, Little Lemon is a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist."
+    />
 
-        <p>
-          Little Lemon is owned by two Italian brothers, Mario and Adrian, who
-          moved to the United States to pursue their shared dream of owning a
-          restaurant.
-        </p>
+    <!-- Load favicon -->
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'img/favicon.ico' %}"
+    />
 
-        <p>
-          To craft the menu, Mario relies on family recipes and his experience
-          as a chef in Italy.
-        </p>
+    <!-- Include your CSS files here -->
+    <link
+      rel="preload"
+      as="style"
+      href="{% static 'css/style.css' %}"
+      onload="this.rel = 'stylesheet'"
+    />
 
-        <p>
-          Adrian does all the marketing for the restaurant and led the effort to
-          expand the menu beyond classic Italian to incorporate additional
-          cuisines from the mediterranean region.
-        </p>
-      </div>
-      <!--End col-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karla&family=Markazi+Text:wght@500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-      <!--Begin col-->
-      <div class="column">
-        <figure class="figure">
-          <img
-            src="{% static 'img/mario-and-adrian.jpg' %}"
-            alt="Mario and Adrian"
-          />
-          <figcaption class="figure-caption">
-            Little Lemon owners Mario and Adrian.
-          </figcaption>
-        </figure>
-      </div>
-      <!--End col-->
-    </div>
-    <!--End row-->
-  </article>
-</section>
-{% endblock %}
+  <body>
+    <!--Header content-->
+    {% include 'partials/_header.html' %}
+
+    <main>{% block content %} {% endblock %}</main>
+
+    <!--Footer content-->
+    <!-- Replace this comment with your code  -->
+  </body>
+</html>
