@@ -26,3 +26,6 @@ coverage/
 *.js.map
 thumbs.db
 desktop.ini
+__pycache__
+__pycache__/
+/__pycache__
