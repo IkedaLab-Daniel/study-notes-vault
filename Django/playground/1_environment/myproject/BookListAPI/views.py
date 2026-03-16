@@ -5,10 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 
 @csrf_exempt
-def book(request):
+def books(request):
     if request.method == 'GET':
-        books = Book.objects.all().values
-        return JsonResponse({'books': books})
+        books = Book.objects.all().values()
+        return JsonResponse({'books': list(books)})
     elif request.method == 'POST':
         title = request.POST.get('title')
         author = request.POST.get('author')
@@ -23,6 +23,6 @@ def book(request):
         try:
             book.save()
         except IntegrityError as ICE:
-            return JsonResponse({'error': True, 'message': 'required field missing'},
+            return JsonResponse({'error': 'true', 'message': 'required field missing'},
                                 status=400)
         return JsonResponse(model_to_dict(book), 201)
