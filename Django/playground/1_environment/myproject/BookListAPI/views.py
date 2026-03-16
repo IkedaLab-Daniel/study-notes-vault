@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from .models import Book
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
+import json
 
 @csrf_exempt
 def books(request):
@@ -10,9 +11,11 @@ def books(request):
         books = Book.objects.all().values()
         return JsonResponse({'books': list(books)})
     elif request.method == 'POST':
-        title = request.POST.get('title')
-        author = request.POST.get('author')
-        price = request.POST.get('price')
+        data = json.loads(request.body)
+
+        title = data.get('title')
+        author = data.get('author')
+        price = data.get('price')
 
         book = Book(
             title = title,
@@ -25,4 +28,4 @@ def books(request):
         except IntegrityError as ICE:
             return JsonResponse({'error': 'true', 'message': 'required field missing'},
                                 status=400)
-        return JsonResponse(model_to_dict(book), 201)
+        return JsonResponse(model_to_dict(book), status=201)
