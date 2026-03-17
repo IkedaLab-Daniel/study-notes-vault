@@ -8,9 +8,16 @@ class CategoriesView(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
 
 class MenuItemsView(generics.ListCreateAPIView):
-    throttle_classes = [AnonRateThrottle, UserRateThrottle]
+    # throttle_classes = [AnonRateThrottle, UserRateThrottle]
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     ordering_fields = ['price', 'inventory']
     search_fields = ['title', 'category__title']
+
+    def get_throttles(self):
+        if self.request.method == 'POST':
+            throttle_classes = [UserRateThrottle]
+        else:
+            throttle_classes = []
+        return [throttle() for throttle in throttle_classes]
     
