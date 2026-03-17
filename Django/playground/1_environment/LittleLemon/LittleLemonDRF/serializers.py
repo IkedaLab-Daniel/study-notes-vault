@@ -4,7 +4,7 @@ from .models import MenuItem, Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        field = ['id', 'title']
+        fields = ['id', 'title']
 
 class MenuItemSerializer(serializers.ModelSerializer):
     category_id = serializers.IntegerField(write_only=True)

@@ -1,6 +1,7 @@
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    # path('menu/', MenuItemView.as_view()),
-    # path('menu/<int:pk>', SingleMenuItemView.as_view())
+    path('category/', views.CategoriesView.as_view()),
+    path('menu-items/', views.MenuItemsView.as_view())
 ]
