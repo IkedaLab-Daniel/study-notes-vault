@@ -540,8 +540,6 @@
 * Focuses on **dynamic task assignment**, **parallel worker coordination**, and **merging outputs**.
 * Shows how **state variables** and **worker states** manage shared context and task-specific details.
 
----
-
 ### Conceptual Analogy
 
 * Imagine a **party planner on a cruise ship**:
@@ -629,8 +627,104 @@
 * **State variables** provide context, **worker state** ensures task-specific details remain isolated but accessible.
 * **Synthesizer** ensures all outputs combine into a **single coherent result**, making workflows scalable and robust.
 
+## Evaluator-Optimizer Pattern for AI Systems
+
+### Overview
+
+* This pattern is used to **iteratively refine outputs** from an LLM until they meet predefined criteria.
+* It combines **generator nodes** (create proposals/strategies) with **evaluator nodes** (assess quality/risk) in a **feedback loop**.
+* State variables track all key data, enabling controlled iteration and context management.
+
+### Conceptual Example: Multi-Agent Investment Advisor
+
+1. **Investor Profile Input**
+
+   * Example fields: risk tolerance, investment goals, capital, preferences.
+
+2. **Target Risk Grading**
+
+   * **LLM** computes a target risk grade (`ultra-conservative` → `high-risk`) from the investor profile.
+   * Node: `risk_grading_node`
+   * Output: `target_grade` in state variable.
+
+3. **Generator Node (Initial Strategy)**
+
+   * **Kathy Wood persona**: high-risk, innovation-driven strategies.
+   * Produces an initial investment plan based on the investor profile.
+   * Node: `generator_node_initial`
+
+4. **Evaluator Node**
+
+   * **Warren Buffett persona**: conservative, value-investing evaluator.
+   * Assesses plan against investor profile and target risk grade.
+   * Returns:
+
+     * `grade` – assessed risk level
+     * `feedback` – reasoning and improvement suggestions
+     * Updates iteration counter.
+   * Node: `evaluator_node`
+
+5. **Generator Node (Refined Strategy)**
+
+   * **Ray Dalio persona**: adjusts strategy using feedback from evaluator.
+   * Refines the plan to address evaluator concerns while targeting desired returns.
+   * Node: `generator_node_refined`
+
+6. **Iteration / Reflection Loop**
+
+   * Evaluate → Compare current grade vs. target grade:
+
+     * **If match** → Accept plan, exit loop.
+     * **If mismatch & iteration limit not reached** → Send plan + feedback back to generator for refinement.
+     * **Iteration counter** ensures process does not loop indefinitely.
+
 ---
 
-This pattern is ideal when workflow complexity is **unknown or variable**, like multi-step AI pipelines, content generation with multiple agents, or multi-language translation tasks.
+### State Variable Structure
 
-If you want, I can also **draw a simple diagram** showing the orchestrator pattern with orchestrator → assign workers → parallel worker nodes → synthesizer → final output. It makes the flow super easy to visualize. Do you want me to do that?
+* **Investor profile**: input details for the strategy.
+* **Investment plan**: current proposal from generator nodes.
+* **Target grade**: risk level target computed from profile.
+* **Feedback**: evaluator comments for refinement.
+* **Iteration counter**: tracks cycles through the reflection loop.
+
+---
+
+### Workflow Graph Nodes
+
+1. **Grading Node**
+
+   * Computes target risk score using `grade_prompt` and `grade_pipe`.
+2. **Generator Node**
+
+   * Combines Kathy Wood and Ray Dalio personas:
+
+     * Kathy Wood for initial strategy.
+     * Ray Dalio for refined strategy using feedback.
+3. **Evaluator Node**
+
+   * Warren Buffett-style assessment (`Buffett_evaluator_pipe`).
+4. **Routing / Reflection Logic**
+
+   * Conditional edges:
+
+     * `accepted` → finish workflow.
+     * `rejected` → loop back to generator with evaluator feedback.
+
+---
+
+### Key Principles
+
+* **Iterative refinement**: LLM outputs are improved until target criteria are met.
+* **State management**: Tracks investor profiles, plans, feedback, and iteration counts.
+* **Multi-agent personas**: Different LLM personas simulate diverse investment styles and evaluation methods.
+* **Reflection loop**: Enables structured feedback-based learning, akin to real-world advisor consultation.
+
+---
+
+### Benefits
+
+* Produces **high-quality outputs** by continuous evaluation.
+* Separates **generation** and **evaluation**, allowing modular persona designs.
+* **Controlled iteration** prevents runaway loops while ensuring convergence.
+* Scalable to **multi-agent, multi-step decision-making workflows**.
