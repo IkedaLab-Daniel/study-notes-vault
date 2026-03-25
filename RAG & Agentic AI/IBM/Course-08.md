@@ -531,3 +531,106 @@
 * **Routing Pattern**: Best for dynamic decision-making
 * **Parallelization Pattern**: Best for handling independent tasks simultaneously
 * LangGraph enables structured implementation of these patterns using graphs, improving clarity, flexibility, and control over AI workflows
+
+## Orchestrator Design Pattern
+
+### Video Overview
+
+* Introduces the **orchestrator pattern**, ideal for workflows where task complexity is unknown in advance.
+* Focuses on **dynamic task assignment**, **parallel worker coordination**, and **merging outputs**.
+* Shows how **state variables** and **worker states** manage shared context and task-specific details.
+
+---
+
+### Conceptual Analogy
+
+* Imagine a **party planner on a cruise ship**:
+
+  * Guests request multi-themed dinners daily.
+  * Orchestrator (planner) analyzes requests and assigns tasks to specialized chefs.
+  * Chefs work **in parallel**, and a synthesizer merges outputs into a **dinner guide**.
+  * Example growth: Italian pasta + Mexican tacos → five international dishes → buffet plan.
+
+* **AI Analogy**:
+
+  * **Specialized agent workers** = chefs
+  * **Central orchestrator** = head planner
+  * **Synthesizer** = combines all outputs into a unified result
+
+---
+
+### Key Components
+
+#### 1. State Variables
+
+* **Shared state**: Contains global workflow data.
+
+  * Example fields: `meals` (user input), `sections` (dish objects), `completed_menu` (merged outputs), `final_meal_guide`.
+* **Worker state**: Each worker gets a copy of task-specific data.
+
+  * Shares key-value pairs with global state for context.
+  * Enables **parallel execution** without conflicts.
+
+#### 2. Orchestrator Node
+
+* Breaks down complex requests into structured tasks.
+* Example workflow:
+
+  1. Receives `meals` input: `"prepare Italian pasta, Mexican tacos, Indian curry…"`.
+  2. Outputs **dish objects**: fields `name`, `ingredients`, `cuisine`.
+  3. Populates the **sections list** in state.
+
+#### 3. Assign Workers Node
+
+* Determines how many workers are needed based on task complexity.
+* Uses **LangGraph `send`** to distribute each dish object to worker state.
+* Creates **parallel execution paths** dynamically.
+
+#### 4. Worker Nodes
+
+* Example: `chef_worker` node
+
+  * Each worker receives a dish object (name, location, ingredients).
+  * Generates detailed **cooking instructions** using a worker-specific LLM prompt.
+  * Updates `completed_menu` (shared state) using `operator.add`.
+
+#### 5. Synthesizer Node
+
+* Combines outputs from all workers.
+* Formats a **final meal guide** (`final_meal_guide`).
+* Ensures parallel outputs merge into **a unified, coherent result**.
+
+---
+
+### Workflow Summary
+
+1. **Planner Input** → Orchestrator breaks down meal requests.
+2. **Orchestrator Output** → Sections list with structured dish objects.
+3. **Assign Workers** → Sends tasks to multiple worker nodes in parallel.
+4. **Workers** → Generate detailed outputs for their assigned dishes.
+5. **Synthesizer** → Aggregates all completed menus into final guide.
+
+---
+
+### Benefits of Orchestrator Pattern
+
+* **Dynamic task assignment**: adapts to unknown complexity.
+* **Parallel execution**: multiple workers handle tasks simultaneously.
+* **Separation of context and task-specific data**: state vs worker state.
+* **Scalable and flexible workflows**: easily handle more tasks or agents.
+* **Unified output**: synthesizer merges worker results for final execution.
+
+---
+
+### Key Takeaways
+
+* The orchestrator pattern extends **static workflow patterns** (sequential, routing, parallelization) to **dynamic scenarios**.
+* **Workers** focus on specialized tasks; orchestrator handles **coordination**.
+* **State variables** provide context, **worker state** ensures task-specific details remain isolated but accessible.
+* **Synthesizer** ensures all outputs combine into a **single coherent result**, making workflows scalable and robust.
+
+---
+
+This pattern is ideal when workflow complexity is **unknown or variable**, like multi-step AI pipelines, content generation with multiple agents, or multi-language translation tasks.
+
+If you want, I can also **draw a simple diagram** showing the orchestrator pattern with orchestrator → assign workers → parallel worker nodes → synthesizer → final output. It makes the flow super easy to visualize. Do you want me to do that?
