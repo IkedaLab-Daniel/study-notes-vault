@@ -401,3 +401,133 @@
   * Code complexity
   * Debugging ease
 * Choosing the right framework depends on system requirements and use case
+
+
+## Essential Design Patterns for AI Systems
+
+### Video Overview
+
+* Introduces three core LLM workflow patterns:
+
+  * Sequential (Prompt Chaining)
+  * Routing
+  * Parallelization
+* Demonstrates each pattern using LangGraph
+* Explains how state variables, nodes, and execution flow interact
+* Shows example outputs from each workflow
+
+### Sequential Pattern (Prompt Chaining)
+
+* Simplest workflow pattern
+* Output of one LLM becomes input to the next
+* Breaks complex tasks into smaller, specialized steps
+
+#### Example Use Case
+
+* Writing a cover letter:
+
+  * Agent 1: Generates resume summary
+  * Agent 2: Creates cover letter using summary + job description
+
+#### Implementation Flow
+
+* Define state variables:
+
+  * job_description
+  * resume_summary
+  * cover_letter
+* Create nodes:
+
+  * Resume summary generator
+  * Cover letter generator
+* Connect nodes sequentially in a graph
+* Execute workflow to transform input into final output
+
+#### Key Benefit
+
+* Easy to implement and ideal for step-by-step task processing
+
+### Routing Pattern
+
+* Dynamically selects the appropriate agent based on input
+* Uses a router agent to analyze the task
+
+#### Example Use Case
+
+* Decide whether to:
+
+  * Summarize text
+  * Translate text
+
+#### Implementation Flow
+
+* Define router state:
+
+  * user_input
+  * task_type
+  * output
+* Router node:
+
+  * Analyzes input
+  * Determines task (summarize or translate)
+* Conditional routing:
+
+  * Directs flow to the correct node
+* Task nodes:
+
+  * Summarization node
+  * Translation node
+* Final output stored in state
+
+#### Key Benefit
+
+* Enables intelligent decision-making within workflows
+
+### Parallelization Pattern
+
+* Runs multiple LLM tasks simultaneously
+* Improves speed and efficiency
+
+#### Example Use Case
+
+* Translate text into multiple languages at once:
+
+  * French
+  * Spanish
+  * Japanese
+
+#### Implementation Flow
+
+* Define state variables:
+
+  * text (input)
+  * language outputs (e.g., French, Spanish, Japanese)
+  * combined_output
+* Create parallel nodes:
+
+  * One node per language
+* Aggregator node:
+
+  * Combines outputs into a final result
+* Connect nodes:
+
+  * All translation nodes run in parallel
+  * Outputs flow into aggregator
+
+#### Key Benefit
+
+* Faster processing and higher throughput
+
+### LangGraph Workflow Concepts
+
+* **State Variables**: Store and pass data between nodes
+* **Nodes**: Represent LLM operations or agents
+* **Edges**: Define execution flow between nodes
+* **Graphs**: Structure workflows for clear logic and control
+
+### Key Takeaways
+
+* **Sequential Pattern**: Best for step-by-step processing
+* **Routing Pattern**: Best for dynamic decision-making
+* **Parallelization Pattern**: Best for handling independent tasks simultaneously
+* LangGraph enables structured implementation of these patterns using graphs, improving clarity, flexibility, and control over AI workflows
