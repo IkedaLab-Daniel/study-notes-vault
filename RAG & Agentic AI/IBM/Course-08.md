@@ -253,3 +253,151 @@
   * Use case
   * Level of control needed
   * System scale and complexity
+
+## Building AI Agents with Open-Source Frameworks
+
+### Overview
+
+* Explains how agentic frameworks structure multi-agent workflows
+* Covers agent creation, task assignment, and coordination
+* Demonstrates workflow logic through code interpretation
+* Compares use cases and limitations of different frameworks
+
+### Agentic AI Fundamentals
+
+* Autonomous systems that think, plan, and act
+* Capable of:
+
+  * Multi-step reasoning
+  * Decision-making
+  * Tool integration
+* Frameworks provide infrastructure to simplify building these systems
+
+### CrewAI Workflow
+
+* Focus: role-based multi-agent collaboration
+* Process:
+
+  * Define agents with roles, goals, and backstories
+  * Assign tasks with clear outputs
+  * Combine into a “crew” for execution
+
+#### Example Pattern: Evaluator-Optimizer
+
+* Generator produces output
+* Evaluator checks quality
+* If rejected → feedback loop to generator
+* If accepted → finalize output
+
+#### Strengths
+
+* Easy team simulation with clear roles
+* Structured collaboration
+
+#### Limitations
+
+* Less flexible
+* Debugging can be difficult
+
+### LangGraph Workflow
+
+* Uses Directed Acyclic Graphs (DAGs)
+* Agents are nodes, workflows defined by edges
+
+#### Key Concepts
+
+* State management for passing data
+* Nodes represent LLM operations
+* Routers control flow based on conditions
+* Graph defines full workflow execution
+
+#### Strengths
+
+* Fine-grained control
+* Advanced memory and error handling
+* Flexible workflow design
+
+#### Limitations
+
+* More complex and verbose code
+
+#### Best Use Cases
+
+* Complex workflows
+* Multi-step automation (e.g., finance, healthcare systems)
+
+### AutoGen Workflow
+
+* Dialogue-driven multi-agent system
+* Agents communicate through structured conversations
+
+#### Example: Study Assistant
+
+* Agents:
+
+  * Student (input)
+  * Concept analyzer
+  * Study tips generator
+* Group chat manager coordinates interaction
+* Uses turn-based communication (round-robin)
+
+#### Strengths
+
+* Intuitive conversational design
+* Supports human-in-the-loop workflows
+* Built-in code execution
+
+#### Best Use Cases
+
+* Chatbots
+* Virtual assistants
+* Educational tools
+
+### BeeAI Workflow
+
+* Modular framework with strong tool integration
+
+#### Example: Multi-Agent Report System
+
+* Researcher → gathers history (Wikipedia)
+* Weather agent → retrieves live data
+* Synthesizer → combines outputs
+
+#### Features
+
+* Supports sequential and parallel execution
+* Flexible agent design with tools
+* Produces combined outputs from multiple agents
+
+#### Strengths
+
+* Scalable and modular
+* Good for real-world integrations
+
+#### Best Use Cases
+
+* Travel assistants
+* Data aggregation systems
+* Educational bots
+
+### Framework Comparison
+
+* **CrewAI**: Role-based collaboration, simple but less flexible
+* **LangGraph**: Highly customizable workflows, more complex
+* **AutoGen**: Conversation-driven systems, easy prototyping
+* **BeeAI**: Modular, tool-integrated, scalable workflows
+
+### Key Takeaways
+
+* Agentic frameworks simplify building intelligent systems
+* Each framework supports different workflow patterns:
+
+  * Reflection (CrewAI, LangGraph)
+  * Delegation (CrewAI, BeeAI)
+  * Conversation (AutoGen)
+* Trade-offs exist in:
+
+  * Flexibility
+  * Code complexity
+  * Debugging ease
+* Choosing the right framework depends on system requirements and use case
