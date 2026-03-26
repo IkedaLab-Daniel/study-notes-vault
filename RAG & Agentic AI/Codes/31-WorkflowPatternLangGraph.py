@@ -74,3 +74,21 @@ class State(TypedDict):
     sections: List[Dish] # One section per meal/dish with ingredients
     completed_menu: Annotated[List[str], operator.add] # wworker written dish guide chinks
     final_meal_guide: str # fully compiled, readable menu
+
+## -- Test -- ##
+dummy_state: State = {
+    "meals": "Spaghetti Bolognese and Chicken Stir Fry",
+    "sections": [],
+    "completed_menu": [],
+    "final_meal_guide": ""
+}
+
+report_sections = planner_pipe.invoke({"meals": dummy_state["meals"]})
+
+for i, section in enumerate(report_sections.sections):
+    print(f"Dish {i+1}\n")
+    # add each dish to our dummy state
+    dummy_state["sections"].append(section)
+    print(f"Item Name: {section.name}")
+    print(f"Location/Cuisine: {section.location}")
+    print(f"Ingredients: {', '.join(section.ingredients)}.")
