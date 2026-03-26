@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph, END, START
 from langgraph.types import Send
 
 from typing import TypedDict, Annotated, List, Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 import operator
 from pprint import pprint
 
@@ -28,11 +28,19 @@ class Dish(BaseModel):
         description="Name of the dish (for example, Spaghetti Bolognese, Chicken Curry)."
     )
     ingredients: List[str] = Field(
-        description="List of ingredients needed for this dish, separated by commas."
+        description="List of ingredients needed for this dish as an array of strings."
     )
     location: str = Field(
         description="The cuisine or cultural origin of the dish (for example, Italian, Indian, Mexican)."
     )
+
+    @field_validator("ingredients", mode="before")
+    @classmethod
+    def normalize_ingredients(cls, value):
+        # Accept comma-separated ingredient strings and convert them to a list.
+        if isinstance(value, str):
+            return [item.strip() for item in value.split(",") if item.strip()]
+        return value
 
 # for a list of Dish objects
 class Dishes(BaseModel):
@@ -42,13 +50,27 @@ class Dishes(BaseModel):
 
 # construct a prompt template
 dish_prompt = ChatPromptTemplate.from_messages([
-    {
+    (
         "system",
         "You are an assistant that generates a structured grocery list.\n\n"
         "The user wants to prepare the following meals: {meals}\n\n"
         "For each meal, return a section with:\n"
         "- the name of the dish\n"
-        "- a comma-separated list of ingredients needed for that dish.\n"
+        "- a JSON array of ingredient strings needed for that dish (not a comma-separated string).\n"
         "- the cuisine or cultural origin of the food"
-    }
+    )
 ])
+
+# planner
+planner_pipe = dish_prompt | llm.with_structured_output(Dishes)
+
+# invoke the planner_pile with example meals
+result = planner_pipe.invoke({"meals": ["banana smoothie", "carrot cake"]})
+print(result)
+
+## -- State -- ##
+class State(TypedDict):
+    meals: str # user input
+    sections: List[Dish] # One section per meal/dish with ingredients
+    completed_menu: Annotated[List[str], operator.add] # wworker written dish guide chinks
+    final_meal_guide: str # fully compiled, readable menu
