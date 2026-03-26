@@ -21,4 +21,34 @@ llm = ChatGroq(
     api_key=os.getenv("GROQ_API")
 )
 
-print(llm.invoke('Hello'))
+## --- Dish Schemas -- ##
+# for a single dish
+class Dish(BaseModel):
+    name: str = Field(
+        description="Name of the dish (for example, Spaghetti Bolognese, Chicken Curry)."
+    )
+    ingredients: List[str] = Field(
+        description="List of ingredients needed for this dish, separated by commas."
+    )
+    location: str = Field(
+        description="The cuisine or cultural origin of the dish (for example, Italian, Indian, Mexican)."
+    )
+
+# for a list of Dish objects
+class Dishes(BaseModel):
+    sections: List[Dish] = Field(
+        description="A list of grocery sections, one for each dish, with ingredients."
+    )
+
+# construct a prompt template
+dish_prompt = ChatPromptTemplate.from_messages([
+    {
+        "system",
+        "You are an assistant that generates a structured grocery list.\n\n"
+        "The user wants to prepare the following meals: {meals}\n\n"
+        "For each meal, return a section with:\n"
+        "- the name of the dish\n"
+        "- a comma-separated list of ingredients needed for that dish.\n"
+        "- the cuisine or cultural origin of the food"
+    }
+])
