@@ -159,3 +159,12 @@ for section in dummy_dishes:
 completed_menu_sections = "\n".join(dummy_state["completed_menu"])
 print("-------")
 print(completed_menu_sections)
+
+def synthesizer(state: State):
+    """Synthesize full report from sections"""
+
+    # list of completed sections
+    completed_sections = state["completed_menu"]
+
+    # format completed section to str to us eas context for final sections
+    completed_menu = "\n\n---\n\n".join(completed_sections)
