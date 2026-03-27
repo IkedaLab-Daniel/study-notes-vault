@@ -238,3 +238,24 @@ def determine_target_grade(state: State):
     
     # return as a plain dict so LangGraph can merge it into the state
     return {"target_grade": response.content.lower()}
+
+# initialize empty state except for the user inputted investor profile
+dummy_state: State = {
+    "investment_plan": "",
+    "investor_profile": (
+        "Age: 29\n"
+        "Salary: $110,000\n"
+        "Assets: $40,000\n"
+        "Goal: Achieve financial independence by age 45\n"
+        "Risk tolerance: High"
+    ),
+    "target_grade": "",
+    "feedback": "",
+    "grade": "",
+    "n": 0
+}
+
+target_grade = determine_target_grade(dummy_state)
+# update target grade with the returned dict
+dummy_state.update(target_grade)
+pprint(dummy_state)
