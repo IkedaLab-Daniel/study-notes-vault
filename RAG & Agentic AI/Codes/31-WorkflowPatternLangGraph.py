@@ -139,3 +139,23 @@ def chef_worker(state: WorkerState):
 
     # Return the generated meal plan wrapped in a list under completed_sections
     return {"completed_menu": [meal_plan.content]}
+
+dummy_dishes: List[Dish] = dummy_state["sections"]
+
+# simulate LangGraph's fan-out and merging behavior
+for section in dummy_dishes:
+    # construct individual WorkerState
+    worker_state: WorkerState = {
+        "section": section,
+        "recipe": [] # > LangGraph merges this later\
+    }
+
+    # cal the worker logic directly
+    result = chef_worker(worker_state)
+
+    # merge the result into combined menu (LangGraph would do this with operator.add)
+    dummy_state["completed_menu"] += result["completed_menu"]
+
+completed_menu_sections = "\n".join(dummy_state["completed_menu"])
+print("-------")
+print(completed_menu_sections)
