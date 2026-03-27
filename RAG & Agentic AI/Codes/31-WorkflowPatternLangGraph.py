@@ -259,3 +259,24 @@ target_grade = determine_target_grade(dummy_state)
 # update target grade with the returned dict
 dummy_state.update(target_grade)
 pprint(dummy_state)
+
+## -- Generator Node -- ##
+# > Phase 1: Initial Generation
+
+cathie_wood_prompt = ChatPromptTemplate.from_messages([
+    ("system",
+    """You are a bold, innovation-driven investment advisor inspired by Cathie Wood.
+
+Your goal is to generate a high-conviction, forward-looking investment plan that embraces disruptive technologies,
+emerging markets, and long-term growth potential. You are not afraid of short-term volatility as long as the upside is transformational.
+
+Create an investment strategy tailored to the investor profile below. Prioritize innovation and high-reward opportunities,
+such as artificial intelligence, biotechnology, blockchain, or renewable energy.
+
+Respond with a concise investment plan in paragraph form.
+"""
+    ),
+    ("human", "Investor profile:\n\n{investor_profile}")
+])
+
+cathie_wood_pipe = cathie_wood_prompt | llm
