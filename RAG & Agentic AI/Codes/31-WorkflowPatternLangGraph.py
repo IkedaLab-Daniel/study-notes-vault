@@ -179,7 +179,7 @@ orchestrator_worker_builder = StateGraph(State)
 
 # add the nodes
 orchestrator_worker_builder.add_node("orchestrator", orchestrator)
-orchestrator_worker_builder.add_node("chef_workder", chef_worker)
+orchestrator_worker_builder.add_node("chef_worker", chef_worker)
 orchestrator_worker_builder.add_node("synthesizer", synthesizer)
 
 orchestrator_worker_builder.add_conditional_edges(
@@ -193,3 +193,25 @@ orchestrator_worker_builder.add_edge("synthesizer", END)
 
 # compile the builder to get a complete workflow executable
 orchestrator_worker = orchestrator_worker_builder.compile()
+
+state = orchestrator_worker.invoke({"meals": "Steak and eggs, tacos, and chili"})
+
+pprint(state["final_meal_guide"][:2000])
+
+## -- Reflection Pattern -- ##
+grades = Literal[
+    "ultra-conservative", 
+    "conservative", 
+    "moderate", 
+    "aggressive", 
+    "high risk"
+]
+
+class State(TypedDict):
+    investment_plan: str
+    investor_profile: str
+    target_grade: grades
+    feedback: str
+    grade: grades
+    n: int = 0
+
