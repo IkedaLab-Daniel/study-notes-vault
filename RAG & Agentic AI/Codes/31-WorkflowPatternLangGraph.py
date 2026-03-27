@@ -92,3 +92,27 @@ for i, section in enumerate(report_sections.sections):
     print(f"Item Name: {section.name}")
     print(f"Location/Cuisine: {section.location}")
     print(f"Ingredients: {', '.join(section.ingredients)}.")
+
+## -- Orchestrator Node -- ##
+def orchestrator(state: State):
+    """Orchestrator that generates a structured dish list from the given meals."""
+
+    dish_descriptions = planner_pipe.invoke({"meals": state["meals"]})
+
+    return {"sections" : dish_descriptions.sections}
+
+## -- Worker Nodes -- ##
+chef_prompt = ChatPromptTemplate.from_messages([
+    (
+        'system',
+         "You are a world-class chef from {location}.\n\n"
+        "Please introduce yourself briefly and present a detailed walkthrough for preparing the dish: {name}.\n"
+        "Your response should include:\n"
+        "- Start with hello with your  name and culinary background\n"
+        "- A clear list of preparation steps\n"
+        "- A full explanation of the cooking process\n\n"
+        "Use the following ingredients: {ingredients}."
+    )
+])
+
+chef_pipe = chef_prompt | llm
