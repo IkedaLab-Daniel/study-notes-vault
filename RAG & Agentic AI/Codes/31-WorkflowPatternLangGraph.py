@@ -168,3 +168,28 @@ def synthesizer(state: State):
 
     # format completed section to str to us eas context for final sections
     completed_menu = "\n\n---\n\n".join(completed_sections)
+
+    return {"final_meal_guide": completed_menu}
+    
+
+## -- Building the Workflow -- ##
+
+# instantiate the builder
+orchestrator_worker_builder = StateGraph(State)
+
+# add the nodes
+orchestrator_worker_builder.add_node("orchestrator", orchestrator)
+orchestrator_worker_builder.add_node("chef_workder", chef_worker)
+orchestrator_worker_builder.add_node("synthesizer", synthesizer)
+
+orchestrator_worker_builder.add_conditional_edges(
+    "orchestrator", assign_workers, ["chef_worker"] # source node, routing function, list of allowed targets
+)
+
+# add the edges, connections between nodes
+orchestrator_worker_builder.add_edge(START, "orchestrator")
+orchestrator_worker_builder.add_edge("chef_worker", "synthesizer")
+orchestrator_worker_builder.add_edge("synthesizer", END)
+
+# compile the builder to get a complete workflow executable
+orchestrator_worker = orchestrator_worker_builder.compile()
