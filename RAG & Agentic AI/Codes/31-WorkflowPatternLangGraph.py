@@ -215,3 +215,26 @@ class State(TypedDict):
     grade: grades
     n: int = 0
 
+grade_prompt = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        "You are an investment advisor. Given the investor’s profile and their proposed plan,"
+        "choose exactly one risk classification from: ultra-conservative, conservative, moderate, aggressive, high risk."
+        "Return ONLY the grade."
+    ),
+    (
+        "user",
+        "Investor profile:\n\n{investor_profile}\n\n"
+    )
+])
+
+grade_pipe = grade_prompt | llm
+
+def determine_target_grade(state: State):
+    """Ask the LLM to pick the best-fitting target_grade."""
+    response = grade_pipe.invoke({
+        "investor_profile": state["investor_profile"]
+    })
+    
+    # return as a plain dict so LangGraph can merge it into the state
+    return {"target_grade": response.content.lower()}
