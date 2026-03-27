@@ -116,3 +116,26 @@ chef_prompt = ChatPromptTemplate.from_messages([
 ])
 
 chef_pipe = chef_prompt | llm
+
+class WorkerState(TypedDict):
+    section: Dish
+    completed_menu: Annotated[list, operator.add]
+
+def assign_workers(state: State):
+    """Assign a worker to each section in the plan"""
+    # Kick off section writting in parallel via Send() API
+    return [Send("chef_worker", {"section": s}) for s in state["sections"]]
+
+def chef_worker(state: WorkerState):
+    """Worker node that generates the cooking instrutions for one meal sections."""
+
+    # Use the language model to generate a meal preparation plan
+    # The model receives the dish name, location, and ingredients from the current section
+    meal_plan = chef_pipe.invoke({
+        "name": state["section"].name,
+        "location": state["section"].location,
+        "ingredients": state["section"].ingredients
+    })
+
+    # Return the generated meal plan wrapped in a list under completed_sections
+    return {"completed_menu": [meal_plan.content]}
