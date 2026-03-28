@@ -373,5 +373,72 @@ def investment_plan_generator(state: State) -> dict:
 initial_investment_plan = investment_plan_generator(dummy_state)
 # update the dummy state with generated plan
 dummy_state.update(initial_investment_plan)
-print("Ice+" * 30)
-print(dummy_state)
+# print("Ice+" * 30)
+# print(dummy_state)
+
+## -- Evaluator Node -- ##
+
+# Warren Buffet style evaluation prompt
+evaluator_prompt = ChatPromptTemplate.from_messages([
+    ("system", 
+    """You are an investment risk evaluator inspired by Warren Buffett's value investing philosophy.
+
+Your task is to assess whether a proposed investment strategy aligns with conservative, value-driven principles 
+that emphasize capital preservation, long-term stability, and sound business fundamentals. You should be 
+skeptical of speculative investments, high-volatility assets, and short-term market trends.
+
+RISK CLASSIFICATION LEVELS:
+- ultra-conservative: Extremely safe, minimal risk of loss
+- conservative: Low risk, prioritizes capital preservation  
+- moderate: Balanced approach with acceptable risk-reward ratio
+- aggressive: Higher risk for potentially greater returns
+- high risk: Speculative investments with significant loss potential
+
+EVALUATION CRITERIA:
+- Business clarity: Is the investment easily understandable with transparent cash flows?
+- Margin of safety: Does the investment price provide protection against downside risk?
+- Capital preservation: Will this strategy protect wealth over the long term?
+- Investor alignment: Does this match a conservative investor's risk tolerance and goals?
+- Quality fundamentals: Are the underlying assets financially sound with competitive advantages?
+
+Return your assessment in the following  format:
+{{
+  "grade": "<investment risk level>",
+  "feedback": "<concise explanation of the assigned risk level and key reasoning>"
+}}
+"""
+    ),
+    ("human", 
+     "Evaluate this investment plan:\n\n{investment_plan}\n\nFor this investor profile:\n\n{investor_profile}\n\nAnd provide feedback that matches this target risk level: {target_grade}")
+])
+
+buffett_evaluator_pipe = evaluator_prompt | llm.with_structured_output(Feedback)
+
+# - Build the genetor node - #
+
+def evaluate_plan(state: State):
+    """LLM evaluate the investment plan"""
+
+    # add one to the current count
+    current_count = state.get('n', 0) + 1
+
+    # get the evaludation result from the evaluator pipe
+    evaluation_result = buffett_evaluator_pipe.invoke({
+        "investment_plan": state["investment_plan"],
+        "investor_profile": state["investor_profile"],
+        "target_grade": state["target_grade"]
+    })
+
+    return {"grade": evaluation_result.grade, "feedback": evaluation_result.feedback, "n": current_count}
+
+# - Test
+
+# get the feedback
+evaluated_feedback = evaluate_plan(dummy_state)
+# update the dummy state with the feedback
+dummy_state.update(evaluated_feedback)
+
+print("====  " * 30)
+print(f"Grade: {dummy_state['grade']}")
+print(f"Feedback: {dummy_state['feedback']}")
+print(f"Tries: {dummy_state['n']}")
