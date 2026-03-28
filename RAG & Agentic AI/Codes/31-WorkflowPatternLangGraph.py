@@ -280,3 +280,12 @@ Respond with a concise investment plan in paragraph form.
 ])
 
 cathie_wood_pipe = cathie_wood_prompt | llm
+
+# evaluator output schema
+class Feedback(BaseModel):
+    grade: grades = Field(
+        description="Classify the investment based on risk level, ranging from ultra-conservative to high risj."
+    )
+    feedback: str = Field(
+        description="Provide reasoning for the risk classification assigned to the investment suggestion."
+    )
