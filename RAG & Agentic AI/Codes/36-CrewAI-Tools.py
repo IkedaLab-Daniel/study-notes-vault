@@ -68,3 +68,43 @@ agent_centric_crew = Crew(
     process=Process.sequential,
     verbose=False
 )
+
+
+## -- Approach 2: A More Focused Method (Task-Centric Tools) -- ##
+
+# > 2.1 Create the Agent
+task_centric_agent = Agent(
+    role="Customer Service Specialist",
+    goal="Provide exceptional customer service by following a multi-step process to answer customer questions accurately.",
+    backstory="""You are an AI assistant for 'The Daily Dish'.
+    You are an expert at following instructions. You will be given a sequence of tasks to complete.
+    For each task, you will be provided with the specific tool needed to accomplish it.
+    Your job is to execute each task diligently and pass the results to the next step.""",
+    tools=[], # The agent is not given any tools directly
+    verbose=True,
+    allow_delegation=False,
+    llm=llm
+)
+
+# > Define the Tasks with Specific Tools
+faq_search_task = Task(
+    description="Search the restaurant's FAQ PDF for information related to the customer's query: '{customer_query}'.",
+    expected_output="A snippet of the most relevant information from the PDF, or a statement that the information was not found.",
+    tools=[pdf_search_tool], # Tool assigned directly to the task
+    agent=task_centric_agent
+)
+
+response_drafting_task = Task(
+    description="Using the information gathered from the FAQ search, draft a friendly and comprehensive response to the customer's query: '{customer_query}'.",
+    expected_output="The final, customer-facing response.",
+    agent=task_centric_agent,
+    context=[faq_search_task]
+)
+
+# > Assemble the New Crew
+task_centric_crew = Crew(
+    agents=[task_centric_agent],
+    tasks=[faq_search_task, response_drafting_task],
+    process=Process.sequential,
+    verbose=True
+)
