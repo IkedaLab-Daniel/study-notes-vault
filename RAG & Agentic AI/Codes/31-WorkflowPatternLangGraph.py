@@ -1,9 +1,11 @@
 from curses import init_pair
+from pickletools import optimize
 
 from langgraph.graph import StateGraph, END, START
 from langgraph.types import Send
 
 from typing import TypedDict, Annotated, List, Literal
+from langsmith import evaluate
 from pydantic import BaseModel, Field, field_validator
 import operator
 from pprint import pprint
@@ -472,3 +474,32 @@ def route_investment(state: State, iteration_limit: int = 5):
     else:
         print("Routing to: Rejected + Feedback")
         return "Rejected + Feedback"
+    
+## -- Building the Workflow -- ##
+
+optimizer_builder = StateGraph(State)
+
+# nodes
+optimizer_builder.add_node("determine_target_grade", determine_target_grade)
+optimizer_builder.add_node("investment_plan_generator", investment_plan_generator)
+optimizer_builder.add_node("evaluate_plan", evaluate_plan)
+
+# edges
+optimizer_builder.add_edge(START, "determine_target_grade")
+optimizer_builder.add_edge("determine_target_grade", "investment_plan_generator")
+optimizer_builder.add_edge("investment_plan_generator", "evaluator_plant")
+
+# condition
+optimizer_builder.add_conditional_edges(
+    "evaluate_plan",
+    lambda state: route_investment(state),
+    {
+        "Accepted": END,
+        "Rejected + Feedback": "investment_plan_generator",
+    }
+)
+
+# compi,le
+optimizer_workflow = optimizer_builder.compile()
+
+# - Test
