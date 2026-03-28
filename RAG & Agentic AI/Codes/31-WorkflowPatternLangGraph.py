@@ -1,3 +1,5 @@
+from curses import init_pair
+
 from langgraph.graph import StateGraph, END, START
 from langgraph.types import Send
 
@@ -343,3 +345,33 @@ ray_dalio_prompt = ChatPromptTemplate.from_messages([
 ])
 
 ray_dalio_pipe = ray_dalio_prompt | llm
+
+# - Build the generator Node - #
+
+def investment_plan_generator(state: State) -> dict:
+    """Prompts an LLM to generate or improve an investment plan based on the current state."""
+
+    if state.get("feedback"):
+        # use Ray Dalio-style generator when feedback is available
+        response = ray_dalio_pipe.invoke({
+            "investor_profile": state["investor_profile"],
+            "grade": state["grade"],
+            "feedback": state["feedback"]
+        })
+    else:
+        # use Cathie Wood-style generator for initial plan
+        response = cathie_wood_pipe.invoke({
+            "investor_profile": state["investor_profile"]
+        })
+    
+    return {"investment_plan": response.content}
+
+
+# - Test
+
+# get the investment plan (Cathie)
+initial_investment_plan = investment_plan_generator(dummy_state)
+# update the dummy state with generated plan
+dummy_state.update(initial_investment_plan)
+print("Ice+" * 30)
+print(dummy_state)
