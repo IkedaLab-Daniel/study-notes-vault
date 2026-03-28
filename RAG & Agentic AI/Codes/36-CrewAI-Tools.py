@@ -22,17 +22,17 @@ web_search_tool = SerperDevTool()
 
 ## -- PDF Search Tool -- ##
 
-pdf_search_tool = PDFSearchTool(
-    pdf="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/7vgNfis17dQfjHAiIKkBOg/The-Daily-Dish-FAQ.pdf",
-    config=dict(
-        embedder=dict(
-            provider="huggingface",
-            config=dict(
-                model="sentence-transformers/all-MiniLM-L6-v2"
-            )
-        )
-    )
-)
+# pdf_search_tool = PDFSearchTool(
+#     pdf="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/7vgNfis17dQfjHAiIKkBOg/The-Daily-Dish-FAQ.pdf",
+#     config=dict(
+#         embedder=dict(
+#             provider="huggingface",
+#             config=dict(
+#                 model="sentence-transformers/all-MiniLM-L6-v2"
+#             )
+#         )
+#     )
+# )
 
 ## -- Approach 1: The Standard Method (Agent-Centric Tools // Generalist)
 
@@ -44,7 +44,8 @@ agent_centric_agent = Agent(
     backstory="""You are an AI assistant for 'The Daily Dish'.
     You have access to two tools: one for searching the restaurant's FAQ document and another for searching the web.
     Your job is to analyze the user's question and choose the most appropriate tool to find the information needed to provide a helpful response.""",
-    tools=[pdf_search_tool, web_search_tool],
+    # tools=[pdf_search_tool, web_search_tool],
+    tools=[web_search_tool],
     verbose=True,
     allow_delegation=False,
     llm=llm   
@@ -90,7 +91,8 @@ task_centric_agent = Agent(
 faq_search_task = Task(
     description="Search the restaurant's FAQ PDF for information related to the customer's query: '{customer_query}'.",
     expected_output="A snippet of the most relevant information from the PDF, or a statement that the information was not found.",
-    tools=[pdf_search_tool], # Tool assigned directly to the task
+    # tools=[pdf_search_tool], # Tool assigned directly to the task
+    tools=[],
     agent=task_centric_agent
 )
 
@@ -108,3 +110,63 @@ task_centric_crew = Crew(
     process=Process.sequential,
     verbose=True
 )
+
+## -- Extending CrewAI with Custom Functions -- ##
+
+from crewai.tools import tool
+import re
+
+@tool("Add Two Numbers Tool")
+def add_numbers(data: str) -> int:
+    """
+    Extract and adds intergers form the input string.
+    Example input: 'add 1 and or' or '[1,2,3,4]'
+    Output: sum of the numbers
+    """
+
+    numbers = list(map(int, re.findall(r'-?\d+', data)))
+    return sum(numbers)
+
+from functools import reduce
+
+@tool("Multiply Numbers Tool")
+def multiply_numbers(data: str) -> int:
+    """
+    Extracts and multiplies integers from the input string.
+    Example input: 'multiply 2 and 3' or '[2,3,4]'
+    Output: the product of all numbers found
+    """
+    numbers = list(map(int, re.findall(r'-?\d+', data)))
+    return reduce(lambda x, y: x * y, numbers, 1)
+
+calculator_agent = Agent(
+    role="Calculator",
+    goal="Extracts, adds, or multiplies numbers when asked, using the Add Two Numbers and Multiply Numbers tools.",
+    backstory="An expert at parsing numeric instructions and computing sums or products.",
+    tools=[add_numbers, multiply_numbers],
+    llm=llm,
+    allow_delegation=False
+)
+
+calculation_task = Task(
+    description="Extract numbers from '{numbers}' and either add or multiply them, depending on the natural-language instruction.",
+    expected_output="An integer result (sum or product) based on the user’s request.",
+    agent=calculator_agent
+)
+
+crew = Crew(
+    agents=[calculator_agent],
+    tasks=[calculation_task]
+)
+
+result = crew.kickoff(
+    inputs={
+        "numbers": 'please add 4, 5, and 6'
+    }
+)
+
+print("\n\n >> Sum result:", result)
+
+# Inputs for multiplication…
+result = crew.kickoff(inputs={'numbers': 'multiply 7 and 8 also 9 dont forget 10'})
+print("\n\n >> Product result:", result)
