@@ -69,8 +69,8 @@ dish_prompt = ChatPromptTemplate.from_messages([
 planner_pipe = dish_prompt | llm.with_structured_output(Dishes)
 
 # invoke the planner_pile with example meals
-result = planner_pipe.invoke({"meals": ["banana smoothie", "carrot cake"]})
-print(result)
+# result = planner_pipe.invoke({"meals": ["banana smoothie", "carrot cake"]})
+# print(result)
 
 ## -- State -- ##
 class State(TypedDict):
@@ -87,15 +87,15 @@ dummy_state: State = {
     "final_meal_guide": ""
 }
 
-report_sections = planner_pipe.invoke({"meals": dummy_state["meals"]})
+# report_sections = planner_pipe.invoke({"meals": dummy_state["meals"]})
 
-for i, section in enumerate(report_sections.sections):
-    print(f"Dish {i+1}\n")
-    # add each dish to our dummy state
-    dummy_state["sections"].append(section)
-    print(f"Item Name: {section.name}")
-    print(f"Location/Cuisine: {section.location}")
-    print(f"Ingredients: {', '.join(section.ingredients)}.")
+# for i, section in enumerate(report_sections.sections):
+#     print(f"Dish {i+1}\n")
+#     # add each dish to our dummy state
+#     dummy_state["sections"].append(section)
+#     print(f"Item Name: {section.name}")
+#     print(f"Location/Cuisine: {section.location}")
+#     print(f"Ingredients: {', '.join(section.ingredients)}.")
 
 ## -- Orchestrator Node -- ##
 def orchestrator(state: State):
@@ -198,9 +198,9 @@ orchestrator_worker_builder.add_edge("synthesizer", END)
 # compile the builder to get a complete workflow executable
 orchestrator_worker = orchestrator_worker_builder.compile()
 
-state = orchestrator_worker.invoke({"meals": "Steak and eggs, tacos, and chili"})
+# state = orchestrator_worker.invoke({"meals": "Steak and eggs, tacos, and chili"})
 
-pprint(state["final_meal_guide"][:2000])
+# pprint(state["final_meal_guide"][:2000])
 
 ## -- Reflection Pattern -- ##
 grades = Literal[
@@ -457,7 +457,6 @@ def route_investment(state: State, iteration_limit: int = 5):
     match = current_grade == target_grade
 
     # print out the tranced values
-    print("/\/\/\/|" * 30)
     print(f"=== ROUTING  ===")
     print(f"Current grade: '{current_grade}'")
     print(f"Target risk profile: '{target_grade}'")
@@ -487,7 +486,7 @@ optimizer_builder.add_node("evaluate_plan", evaluate_plan)
 # edges
 optimizer_builder.add_edge(START, "determine_target_grade")
 optimizer_builder.add_edge("determine_target_grade", "investment_plan_generator")
-optimizer_builder.add_edge("investment_plan_generator", "evaluator_plant")
+optimizer_builder.add_edge("investment_plan_generator", "evaluate_plan")
 
 # condition
 optimizer_builder.add_conditional_edges(
@@ -499,7 +498,33 @@ optimizer_builder.add_conditional_edges(
     }
 )
 
-# compi,le
+# compile
 optimizer_workflow = optimizer_builder.compile()
 
 # - Test
+
+state = optimizer_workflow.invoke({
+    "investor_profile": (
+        "Age: 29\n"
+        "Salary: $110,000\n"
+        "Assets: $40,000\n"
+        "Goal: Achieve financial independence by age 45\n"
+        "Risk tolerance: High"
+    )
+})
+
+def pretty_print_final_state(state: dict):
+    print("\n\n🎯 Final Investment Plan Summary\n" + "="*40)
+    print(f"\n📌 Investor Profile:\n{state['investor_profile']}")
+    
+    print("\n📈 Target Risk Grade:", state['target_grade'])
+    print("📊 Final Assigned Grade:", state['grade'])
+    print("🔁 Iterations Taken:", state['n'])
+
+    print("\n📝 Evaluator Feedback:\n" + "-"*30)
+    print(state['feedback'])
+
+    print("\n📃 Final Investment Plan:\n" + "-"*30)
+    print(state['investment_plan'])
+
+pretty_print_final_state(state)
