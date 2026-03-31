@@ -1,13 +1,9 @@
-from multiprocessing import dummy
-
-from langgraph.graph import StateGraph, END, START
+from langgraph.graph import StateGraph, END
+from langchain_core.prompts import ChatPromptTemplate
 from typing import TypedDict
-from pydantic import BaseModel, Field
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 import os
-
-from requests_toolbelt import user_agent
 
 load_dotenv()
 llm = ChatGroq(
@@ -43,14 +39,16 @@ class ChainState(TypedDict):
 
 ## -- Resume Summary Agent -- ##
 def generate_resume_summary(state: ChainState) -> ChainState:
-    prompt = f"""
-You're a resume assistant. Read the following job description and summarize the key qualifications and experience the ideal candidate should have, phrased as if from the perspective of a strong applicant's resume summary.
+    prompt = ChatPromptTemplate.from_template(
+"""You're a resume assistant. Read the following job description and summarize the key qualifications and experience the ideal candidate should have, phrased as if from the perspective of a strong applicant's resume summary.
 
 Job Description:
-{state['job_description']}
+{job_description}
 """
+    )
 
-    response = llm.invoke(prompt)
+    chain = prompt | llm
+    response = chain.invoke({"job_description": state["job_description"]})
 
     return {**state, "resume_summary": response.content}
 
@@ -62,17 +60,24 @@ dummy_state: ChainState = {
 
 ## -- Generate Cover Letter Agent -- ##
 def generate_cover_letter(state: ChainState) -> ChainState:
-    prompt = f"""
-You're a cover letter writing assistant. Using the resume summary below, write a professional and personalized cover letter for the following job.
+    prompt = ChatPromptTemplate.from_template(
+"""You're a cover letter writing assistant. Using the resume summary below, write a professional and personalized cover letter for the following job.
 
 Resume Summary:
-{state['resume_summary']}
+{resume_summary}
 
 Job Description:
-{state['job_description']}
+{job_description}
 """
+    )
 
-    response = llm.invoke(prompt)
+    chain = prompt | llm
+    response = chain.invoke(
+        {
+            "resume_summary": state["resume_summary"],
+            "job_description": state["job_description"],
+        }
+    )
 
     return {**state, "cover_letter": response.content}
 
@@ -117,13 +122,15 @@ def translate(state: RouterState):
 
     user_input = state["user_input"]
 
-    prompt = f"""
-    You are a French translator agent. Translate the following text into French:
-    {user_input}
-    French Translation:
-    """
+    prompt = ChatPromptTemplate.from_template(
+"""You are a French translator agent. Translate the following text into French:
+{user_input}
+French Translation:
+"""
+    )
 
-    result = llm.invoke(prompt)
+    chain = prompt | llm
+    result = chain.invoke({"user_input": user_input})
 
     return {"output": result.content}
 
@@ -133,14 +140,16 @@ def summarize(state: RouterState):
 
     user_input = state["user_input"]
 
-    prompt = f"""
-    You are a summarizer agent. Summarize the given text:
-    {user_input}
-    ---
-    Output:
+    prompt = ChatPromptTemplate.from_template(
+"""You are a summarizer agent. Summarize the given text:
+{user_input}
+---
+Output:
 """
-    
-    result = llm.invoke(prompt)
+    )
+
+    chain = prompt | llm
+    result = chain.invoke({"user_input": user_input})
 
     return {"output": result.content}
 
@@ -149,8 +158,8 @@ def definer(state: RouterState):
 
     user_input = state["user_input"]
 
-    prompt = f"""
-You are a routing classifier.
+    prompt = ChatPromptTemplate.from_template(
+"""You are a routing classifier.
 
 Classify the user intent into ONE of these EXACT labels:
 - summarize
@@ -169,10 +178,12 @@ Rules:
 
 Answer:
 """
-    
-    result = llm.invoke(prompt)
+    )
 
-    return {"task_type": result.content}
+    chain = prompt | llm
+    result = chain.invoke({"user_input": user_input})
+
+    return {"task_type": result.content.strip().lower()}
 
 def router(state: RouterState):
     """Determine next step based on current state"""
@@ -221,8 +232,10 @@ app = workflow.compile()
 print("\n\nGRAPH:")
 print(app.get_graph().draw_mermaid())
 
+user_input = input("Enter query: ")
+
 dummy_state: RouterState = {
-    "user_input": "Summarize: `LangGraph for Beginners, Part 3: Conditional Edges | by ...add_conditional_edges in LangGraph enables non-linear workflows by routing graph execution to different nodes based on the current state, acting as a decision-maker. It requires a starting node, a routing function that returns a string, and a mapping (path_map) of these strings to next-node names, enabling branching, loops, and conditional termination`",
+    "user_input": user_input,
     "output": "",
     "task_type": ""
 }
