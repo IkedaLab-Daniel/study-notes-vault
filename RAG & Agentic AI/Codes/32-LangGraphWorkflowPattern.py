@@ -71,3 +71,30 @@ Job Description:
     response = llm.invoke(prompt)
 
     return {**state, "cover_letter": response.content}
+
+## -- LangGraph Workflow -- ##
+
+workflow = StateGraph(ChainState)
+
+# > nodes
+workflow.add_node("generate_resume_summary", generate_resume_summary)
+workflow.add_node("generate_cover_letter", generate_cover_letter)
+
+# > Start, edge, end
+
+workflow.set_entry_point("generate_resume_summary")
+workflow.add_edge("generate_resume_summary", "generate_cover_letter")
+workflow.set_finish_point("generate_cover_letter")
+
+print_workflow_info(workflow)
+
+app = workflow.compile()
+
+input_state = {
+        "job_description": "We are looking for a data scientist with experience in machine learning, NLP, and Python. Prior work with large datasets and experience deploying models into production is required."
+}
+
+result = app.invoke(input_state)
+
+print("====" * 30)
+print(result['resume_summary'])
