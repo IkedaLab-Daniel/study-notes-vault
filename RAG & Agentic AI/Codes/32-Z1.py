@@ -6,140 +6,101 @@ from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 import os
 
-from requests_toolbelt import user_agent
-
 load_dotenv()
 llm = ChatGroq(
     model="llama-3.1-8b-instant",
     # model="llama-3.3-70b-versatile",
     api_key=os.getenv("GROQ_API")
 )
-### -- Working Pattern: Routing -- ###
 
 class RouterState(TypedDict):
     user_input: str
     task_type: str
     output: str
 
-# > Translator
+class Router(BaseModel):
+    role: str = Field(..., description="Decide whether the user wants to summarize a passage  ouput 'summarize'  or translate text into French oupput translate.")
 
-def translate(state: RouterState):
-    """Translate a given text into French"""
+llm_router=llm.bind_tools([Router])
+llm_router_structured = llm.with_structured_output(Router)
 
-    user_input = state["user_input"]
 
-    prompt = f"""
-    You are a French translator agent. Translate the following text into French:
-    {user_input}
-    French Translation:
+def _normalize_task_type(value: str) -> str:
+    value = value.strip().lower()
+    if value == "summarize":
+        return "summarize"
+    if value == "translate":
+        return "translate"
+    if "summar" in value:
+        return "summarize"
+    if "french" in value or "translat" in value:
+        return "translate"
+    return "summarize"
+
+def router_node(state: RouterState) -> RouterState:
+    routing_prompt = f"""
+    You are an AI task classifier.
+    
+    Decide whether the user wants to:
+    - "summarize" a passage
+    - or "translate" text into French
+    
+    Respond with just one word: 'summarize' or 'translate'.
+    
+    User Input: "{state['user_input']}"
     """
 
-    result = llm.invoke(prompt)
+    # Prefer structured output; if parsing fails, fall back to text/tool-call parsing.
+    try:
+        structured = llm_router_structured.invoke(routing_prompt)
+        task_type = _normalize_task_type(structured.role)
+    except Exception:
+        response = llm_router.invoke(routing_prompt)
+        if response.tool_calls:
+            task_type = _normalize_task_type(response.tool_calls[0]["args"].get("role", ""))
+        else:
+            task_type = _normalize_task_type(getattr(response, "content", ""))
 
-    return {"output": result.content}
+    return {**state, "task_type": task_type} # This becomes the next node's name!
 
+def router(state: RouterState) -> str:
+    return state['task_type']
 
-def summarize(state: RouterState):
-    """Summarize the given text"""
-
-    user_input = state["user_input"]
-
-    prompt = f"""
-    You are a summarizer agent. Summarize the given text:
-    {user_input}
-    ---
-    Output:
-"""
+def summarize_node(state: RouterState) -> RouterState:
+    prompt = f"Please summarize the following passage:\n\n{state['user_input']}"
+    response = llm.invoke(prompt)
     
-    result = llm.invoke(prompt)
+    return {**state, "task_type": "summarize", "output": response.content}
 
-    return {"output": result.content}
+def translate_node(state: RouterState) -> RouterState:
+    prompt = f"Translate the following text to French:\n\n{state['user_input']}"
+    response = llm.invoke(prompt)
 
-def definer(state: RouterState):
-    """Determine user intent"""
+    return {**state, "task_type": "translate", "output": response.content}
 
-    user_input = state["user_input"]
-
-    prompt = f"""
-You are a routing classifier.
-
-Classify the user intent into ONE of these EXACT labels:
-- summarize
-- translate
-- invalid
-
-User input:
-{user_input}
-
-Rules:
-- Output ONLY one word
-- Do NOT explain
-- Do NOT add punctuation
-- Do NOT add quotes
-- Your entire response must be exactly one of: summarize, translate, invalid
-
-Answer:
-"""
-    
-    result = llm.invoke(prompt)
-
-    return {"task_type": result.content}
-
-def router(state: RouterState):
-    """Determine next step based on current state"""
-    task_type = state["task_type"]
-
-    if task_type == "translate":
-        return "translate"
-    elif task_type == "summarize":
-        return "summarize"
-    else:
-        return "invalid"
-
-def invalid_catch(state: RouterState):
-    """Update state's Output into predefine error message"""
-    return {"output": "Invalid user input. Please specify the given task (summarize or translate into French?)"}
-
-## -- Workflow -- ##
- 
 workflow = StateGraph(RouterState)
 
-# > nodes
+# > Nodes
+workflow.add_node("router", router_node)
+workflow.add_node("summarize", summarize_node)
+workflow.add_node("translate", translate_node)
 
-workflow.add_node("definer", definer)
-workflow.add_node("summarize", summarize)
-workflow.add_node("translate", translate)
-workflow.add_node("invalid", invalid_catch)
-
-# > start, edge, end
-
-workflow.set_entry_point("definer")
-workflow.add_conditional_edges(
-    "definer",
-    router,
-    {
-        "summarize": "summarize",
-        "translate": "translate",
-        "invalid": "invalid"
-    }
-)
-workflow.add_edge("summarize", END)
-workflow.add_edge("translate", END)
-workflow.add_edge("invalid", END)
+# > entry, edge, end
+workflow.set_entry_point("router")
+workflow.add_conditional_edges("router", router, {
+    "summarize": "summarize",
+    "translate": "translate"
+})
+workflow.set_finish_point("summarize")
+workflow.set_finish_point("translate")
 
 app = workflow.compile()
 
-print("\n\nGRAPH:")
-print(app.get_graph().draw_mermaid())
+input_text = {
+        "user_input": "Can you translate this sentence: I love programming?",
+    }
 
-user_input = input("Enter query: ")
+result = app.invoke(input_text)
 
-dummy_state: RouterState = {
-    "user_input": user_input,
-    "output": "",
-    "task_type": ""
-}
-
-result = app.invoke(dummy_state)
-print("\n\n\n\n RESULT:")
-print(result["output"])
+print(result['output'])
+print(result['task_type'])
