@@ -7,6 +7,8 @@ from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 import os
 
+from requests_toolbelt import user_agent
+
 load_dotenv()
 llm = ChatGroq(
     model="llama-3.1-8b-instant",
@@ -142,23 +144,42 @@ def summarize(state: RouterState):
 
     return {"output": result.content}
 
-text = """
-In this workflow, we are going to build a simple task router using the Routing design pattern. The goal is to create a system that can intelligently decide whether the user wants to summarize or translate a given input, and then send it to the appropriate processing path.
+def router_node(state: RouterState):
+    """Determine user intent"""
 
-This pattern is useful when the system needs to handle multiple types of tasks based on the user’s intent. Instead of creating one large model to handle everything, we let a router node classify the request and direct it to a specialized sub-process.
+    user_input = state["user_input"]
 
-For example:
+    prompt = f"""
+You are a routing classifier.
 
-If the input is “Summarize this article about AI,” the router sends it to the summarizer.
-If the input is “Translate this to French,” it sends it to the translator.
+Classify the user intent into ONE of these EXACT labels:
+- summarize
+- translate
+- invalid
+
+User input:
+{user_input}
+
+Rules:
+- Output ONLY one word
+- Do NOT explain
+- Do NOT add punctuation
+- Do NOT add quotes
+- Your entire response must be exactly one of: summarize, translate, invalid
+
+Answer:
 """
+    
+    result = llm.invoke(prompt)
+
+    return {"task_type": result.content}
 
 dummy_state: RouterState = {
-    "user_input": text,
-    "output": "",
-    "task_type": ""
+    "user_input": "Skibidi Sigma",
+    "task_type": "",
+    "output": ""
 }
 
-result = summarize(dummy_state)
+result = router_node(dummy_state)
 dummy_state.update(result)
-print(dummy_state["output"])
+print(dummy_state["task_type"])
