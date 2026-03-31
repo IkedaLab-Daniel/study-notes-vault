@@ -56,6 +56,18 @@ dummy_state: ChainState = {
     "cover_letter": "",
 }
 
-result = generate_resume_summary(dummy_state)
-dummy_state.update(result)
-print(dummy_state)
+## -- Generate Cover Letter Agent -- ##
+def generate_cover_letter(state: ChainState) -> ChainState:
+    prompt = f"""
+You're a cover letter writing assistant. Using the resume summary below, write a professional and personalized cover letter for the following job.
+
+Resume Summary:
+{state['resume_summary']}
+
+Job Description:
+{state['job_description']}
+"""
+
+    response = llm.invoke(prompt)
+
+    return {**state, "cover_letter": response.content}
