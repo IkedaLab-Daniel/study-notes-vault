@@ -125,13 +125,40 @@ def translate(state: RouterState):
 
     return {"output": result.content}
 
+
+def summarize(state: RouterState):
+    """Summarize the given text"""
+
+    user_input = state["user_input"]
+
+    prompt = f"""
+    You are a summarizer agent. Summarize the given text:
+    {user_input}
+    ---
+    Output:
+"""
+    
+    result = llm.invoke(prompt)
+
+    return {"output": result.content}
+
+text = """
+In this workflow, we are going to build a simple task router using the Routing design pattern. The goal is to create a system that can intelligently decide whether the user wants to summarize or translate a given input, and then send it to the appropriate processing path.
+
+This pattern is useful when the system needs to handle multiple types of tasks based on the user’s intent. Instead of creating one large model to handle everything, we let a router node classify the request and direct it to a specialized sub-process.
+
+For example:
+
+If the input is “Summarize this article about AI,” the router sends it to the summarizer.
+If the input is “Translate this to French,” it sends it to the translator.
+"""
+
 dummy_state: RouterState = {
-    "user_input": "I love coding",
+    "user_input": text,
     "output": "",
     "task_type": ""
 }
 
-result = translate(dummy_state)
+result = summarize(dummy_state)
 dummy_state.update(result)
-print("\n\n___ Dummy State ___")
 print(dummy_state["output"])
