@@ -144,7 +144,7 @@ def summarize(state: RouterState):
 
     return {"output": result.content}
 
-def router_node(state: RouterState):
+def definer(state: RouterState):
     """Determine user intent"""
 
     user_input = state["user_input"]
@@ -174,12 +174,59 @@ Answer:
 
     return {"task_type": result.content}
 
+def router(state: RouterState):
+    """Determine next step based on current state"""
+    task_type = state["task_type"]
+
+    if task_type == "translate":
+        return "translate"
+    elif task_type == "summarize":
+        return "summarize"
+    else:
+        return "invalid"
+
+def invalid_catch(state: RouterState):
+    """Update state's Output into predefine error message"""
+    return {"output": "Invalid user input. Please specify the given task (summarize or translate into French?)"}
+
+## -- Workflow -- ##
+ 
+workflow = StateGraph(RouterState)
+
+# > nodes
+
+workflow.add_node("definer", definer)
+workflow.add_node("summarize", summarize)
+workflow.add_node("translate", translate)
+workflow.add_node("invalid", invalid_catch)
+
+# > start, edge, end
+
+workflow.set_entry_point("definer")
+workflow.add_conditional_edges(
+    "definer",
+    router,
+    {
+        "summarize": "summarize",
+        "translate": "translate",
+        "invalid": "invalid"
+    }
+)
+workflow.add_edge("summarize", END)
+workflow.add_edge("translate", END)
+workflow.add_edge("invalid", END)
+
+app = workflow.compile()
+
+print("\n\nGRAPH:")
+print(app.get_graph().draw_mermaid())
+
 dummy_state: RouterState = {
-    "user_input": "Skibidi Sigma",
-    "task_type": "",
-    "output": ""
+    "user_input": "Summarize: `LangGraph for Beginners, Part 3: Conditional Edges | by ...add_conditional_edges in LangGraph enables non-linear workflows by routing graph execution to different nodes based on the current state, acting as a decision-maker. It requires a starting node, a routing function that returns a string, and a mapping (path_map) of these strings to next-node names, enabling branching, loops, and conditional termination`",
+    "output": "",
+    "task_type": ""
 }
 
-result = router_node(dummy_state)
-dummy_state.update(result)
-print(dummy_state["task_type"])
+result = app.invoke(dummy_state)
+print("\n\n\n\n RESULT:")
+print(result["output"])
