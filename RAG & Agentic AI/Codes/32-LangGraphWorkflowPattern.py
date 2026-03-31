@@ -1,3 +1,5 @@
+from multiprocessing import dummy
+
 from langgraph.graph import StateGraph, END, START
 from typing import TypedDict
 from pydantic import BaseModel, Field
@@ -86,7 +88,7 @@ workflow.set_entry_point("generate_resume_summary")
 workflow.add_edge("generate_resume_summary", "generate_cover_letter")
 workflow.set_finish_point("generate_cover_letter")
 
-print_workflow_info(workflow)
+# print_workflow_info(workflow)
 
 app = workflow.compile()
 
@@ -94,7 +96,42 @@ input_state = {
         "job_description": "We are looking for a data scientist with experience in machine learning, NLP, and Python. Prior work with large datasets and experience deploying models into production is required."
 }
 
-result = app.invoke(input_state)
+# result = app.invoke(input_state)
 
-print("====" * 30)
-print(result['resume_summary'])
+# print("====" * 30)
+# print(result['resume_summary'])
+
+### -- Working Pattern: Routing -- ###
+
+class RouterState(TypedDict):
+    user_input: str
+    task_type: str
+    output: str
+
+# > Translator
+
+def translate(state: RouterState):
+    """Translate a given text into French"""
+
+    user_input = state["user_input"]
+
+    prompt = f"""
+    You are a French translator agent. Translate the following text into French:
+    {user_input}
+    French Translation:
+    """
+
+    result = llm.invoke(prompt)
+
+    return {"output": result.content}
+
+dummy_state: RouterState = {
+    "user_input": "I love coding",
+    "output": "",
+    "task_type": ""
+}
+
+result = translate(dummy_state)
+dummy_state.update(result)
+print("\n\n___ Dummy State ___")
+print(dummy_state["output"])
