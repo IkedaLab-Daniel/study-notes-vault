@@ -1,3 +1,5 @@
+from pydoc import describe
+
 from crewai_tools import SerperDevTool
 from dotenv import load_dotenv
 import os
@@ -62,4 +64,21 @@ writer_agent = Agent(
     verbose=True,
     llm = llm,
     allow_delegation=True
+)
+
+## -- Tasks -- ##
+
+from crewai import Task
+
+research_task = Task(
+    description="Analyze the major {topic}, identifying key trends and technologies. Provide a detailed report on their potential impact.",
+    agent=research_agent,
+    expected_output="A detailed report on {topic}, including trends, emergin technologies, and their impact."
+)
+
+# Create a task for the Writer Agent
+writer_task = Task(
+  description="Create an engaging blog post based on the research findings about {topic}. Tailor the content for a tech-savvy audience, ensuring clarity and interest.",
+  agent=writer_agent,
+  expected_output="A 4-paragraph blog post on {topic}, written clearly and engagingly for tech enthusiasts."
 )
