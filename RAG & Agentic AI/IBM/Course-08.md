@@ -728,3 +728,148 @@
 * Separates **generation** and **evaluation**, allowing modular persona designs.
 * **Controlled iteration** prevents runaway loops while ensuring convergence.
 * Scalable to **multi-agent, multi-step decision-making workflows**.
+
+## Design AI Agent Workflows with CrewAI
+
+### Video Overview
+
+* Explains how to design multi-agent workflows using CrewAI
+* Covers core components: agents, tasks, tools, and flows
+* Demonstrates sequential task execution
+* Shows how to access results and evaluate performance using the Crew output object
+
+### Core Components of CrewAI
+
+#### Task
+
+* Defines what needs to be accomplished
+* Key elements:
+
+  * **Description**: what the agent should do
+  * **Expected output**: desired result format
+* Acts like a “director” guiding the agent
+
+#### Agent
+
+* LLM-powered entity with structured prompts
+* Defined by:
+
+  * **Role**: expertise or identity
+  * **Goal**: objective to achieve
+  * **Backstory**: context shaping behavior
+* Acts like an “actor” executing tasks
+
+#### Tool
+
+* External resources used by agents or tasks
+* Examples:
+
+  * APIs
+  * Search engines
+* Enhances capabilities and real-time data access
+
+#### Flow
+
+* Defines how tasks are executed and agents interact
+* Types:
+
+  * **Sequential**: tasks run one after another
+  * **Hierarchical**: manager agent dynamically assigns tasks
+
+---
+
+### Sequential Workflow in CrewAI
+
+* Tasks execute in a linear order
+* Output of one task becomes input for the next
+* Similar to a reflection workflow with feedback between steps
+
+---
+
+### Example: Content Creation Pipeline
+
+#### Agents
+
+* **Research Analyst**
+
+  * Role: Senior Research Analyst
+  * Goal: uncover insights
+  * Uses tools (e.g., web search)
+
+* **Content Strategist**
+
+  * Role: Tech Content Strategist
+  * Goal: create engaging content
+  * Transforms research into readable output
+
+#### Tasks
+
+* **Research Task**
+
+  * Input: topic (e.g., generative AI breakthroughs)
+  * Output: detailed summary
+
+* **Writing Task**
+
+  * Input: research findings
+  * Output: structured blog post
+
+---
+
+### Crew Object
+
+* Central orchestrator combining:
+
+  * Agents
+  * Tasks
+  * Tools
+  * LLM
+  * Flow type
+
+#### Configuration
+
+* Agents and tasks passed as lists
+* Flow defined using `process.sequential`
+* Execution starts with `.kickoff()` method
+
+---
+
+### Workflow Execution
+
+1. Crew initializes
+2. Research agent gathers and analyzes information
+3. Output passed to writer agent
+4. Writer creates final content
+5. Workflow completes and returns results
+
+---
+
+### Crew Output Object
+
+* Stores results and performance data
+
+#### Fields
+
+* **raw**: final combined output
+* **tasks_output**: results from each task
+* **token_usage**:
+
+  * prompt tokens
+  * completion tokens
+  * total tokens (cost tracking)
+
+#### Accessing Results
+
+* Use `result.raw` for final output only
+* Includes combined results from all agents
+
+---
+
+### Key Takeaways
+
+* CrewAI enables structured multi-agent collaboration
+* Agents simulate human roles using structured prompts
+* Tasks define clear goals and outputs
+* Tools extend agent capabilities
+* Crew object orchestrates the full workflow
+* Output object provides results, breakdowns, and usage metrics
