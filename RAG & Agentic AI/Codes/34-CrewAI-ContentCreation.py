@@ -32,9 +32,10 @@ for item in search_results.get("organic", []):
 from crewai import LLM
 
 llm = LLM(
-    model="groq/llama-3.1-8b-instant",
+    #model="groq/llama-3.1-8b-instant",
+    model="llama-3.3-70b-versatile",
     api_key=os.getenv("GROQ_API"),
-    max_tokens=2000
+    max_tokens=300
 )
 
 print(llm.call)
@@ -82,3 +83,19 @@ writer_task = Task(
   agent=writer_agent,
   expected_output="A 4-paragraph blog post on {topic}, written clearly and engagingly for tech enthusiasts."
 )
+
+## -- Workflow -- ##
+
+from crewai import Crew, Process
+
+crew = Crew(
+    agents=[research_agent, writer_agent],
+    tasks=[research_task, writer_task],
+    process=Process.sequential,
+    verbose=False
+)
+
+result = crew.kickoff(inputs={"topic": "Latest Generative AI breakthroughs"})
+
+final_output = result.raw
+print("Final output:", final_output)

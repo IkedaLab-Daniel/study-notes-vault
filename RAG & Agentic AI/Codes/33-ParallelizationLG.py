@@ -262,18 +262,18 @@ workflow.set_finish_point("default_handler")
 app = workflow.compile()
 
 # > Test
-# test_cases = [
-#     {"user_input": "I need a ride from downtown to the airport at 3pm"},
-#     {"user_input": "I want to order 2 large pepperoni pizzas for delivery"},
-#     {"user_input": "I need milk, bread, eggs, and vegetables for the week"},
-#     {"user_input": "What's the weather like today?"},  # Default/unclassified example
-# ]
+test_cases = [
+    {"user_input": "I need a ride from downtown to the airport at 3pm"},
+    {"user_input": "I want to order 2 large pepperoni pizzas for delivery"},
+    {"user_input": "I need milk, bread, eggs, and vegetables for the week"},
+    {"user_input": "What's the weather like today?"},  # Default/unclassified example
+]
 
-# for i, test_input in enumerate(test_cases, 1):
-#     result=app.invoke(test_input)
+for i, test_input in enumerate(test_cases, 1):
+    result=app.invoke(test_input)
 
 
-#     print(f"question {test_input['user_input']}\n")
-#     print(f"task_type {result['task_type']}\n")
-#     print(f"output: {result['output']}\n")
-#     print('-----------------------------------')
+    print(f"question {test_input['user_input']}\n")
+    print(f"task_type {result['task_type']}\n")
+    print(f"output: {result['output']}\n")
+    print('-----------------------------------')
