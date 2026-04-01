@@ -9,6 +9,8 @@ BLUE = "\033[94m"
 GRAY = "\033[90m"
 RESET = "\033[0m"
 
+## -- Setup Serper -- ##
+
 load_dotenv()
 SERPER_API = os.getenv('SERPER_API')
 os.environ['SERPER_API_KEY'] = SERPER_API
@@ -22,3 +24,42 @@ for item in search_results.get("organic", []):
     print(f"{CYAN}[{item['position']}] {BOLD}{WHITE}{item['title']}{RESET}")
     print(f"{BLUE}{item['link']}{RESET}")
     print(f"{GRAY}{item['snippet']}{RESET}\n")
+
+## -- Setup LLM -- ##
+
+from crewai import LLM
+
+llm = LLM(
+    model="groq/llama-3.1-8b-instant",
+    api_key=os.getenv("GROQ_API"),
+    max_tokens=2000
+)
+
+print(llm.call)
+
+## -- Defining an Agent Directly as a Python Object -- ##
+
+from crewai import Agent
+
+research_agent = Agent(
+    role='Senior Research Analyst',
+    goal="Uncover cutting-edge information and insights on any subject with comprehensive analysis",
+    backstory="""You are an expert researcher with extensive experience in gathering, analyzing, and synthesizing information across multiple domains. 
+    Your analytical skills allow you to quickly identify key trends, separate fact from opinion, and produce insightful reports on any topic. 
+    You excel at finding reliable sources and extracting valuable information efficiently.""",
+    verbose=True,
+    allow_delegation=False,
+    llm = llm,
+    tools=[SerperDevTool()]
+)
+
+writer_agent = Agent(
+    role='Tech Content Strategist',
+    goal='Craft well-structured and engaging content based on research findings',
+    backstory="""You are a skilled content strategist known for translating 
+    complex topics into clear and compelling narratives. Your writing makes 
+    information accessible and engaging for a wide audience.""",
+    verbose=True,
+    llm = llm,
+    allow_delegation=True
+)
