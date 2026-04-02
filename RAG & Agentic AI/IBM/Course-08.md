@@ -729,6 +729,8 @@
 * **Controlled iteration** prevents runaway loops while ensuring convergence.
 * Scalable to **multi-agent, multi-step decision-making workflows**.
 
+# > Module 2: CrewAI Fundamentals and Advanced Applications
+
 ## Design AI Agent Workflows with CrewAI
 
 ### Video Overview
@@ -873,3 +875,170 @@
 * Tools extend agent capabilities
 * Crew object orchestrates the full workflow
 * Output object provides results, breakdowns, and usage metrics
+
+## CrewAI with Structured Outputs, YAML, and CrewBase Classes
+
+### Video Overview
+
+* Builds a **multi-agent meal planning system** using CrewAI
+* Uses **Pydantic** for structured outputs
+* Introduces **YAML-based configuration** for agents and tasks
+* Demonstrates **@CrewBase class** for loading and running workflows
+
+---
+
+### System Overview
+
+* Multi-agent workflow with specialized roles:
+
+  * Meal planning
+  * Shopping organization
+  * Budget analysis
+  * Leftover management
+  * Final summary generation
+* Tasks run **sequentially**, passing outputs between agents
+* Shared LLM powers all agents for consistent reasoning
+
+---
+
+### Structured Outputs with Pydantic
+
+#### Purpose
+
+* Ensures **clean, validated, reusable data**
+* Enables reliable data exchange between agents
+
+#### Key Models
+
+* **GroceryItem**
+
+  * Fields: name, quantity, estimated price, store category
+  * Represents individual shopping items
+
+* **MealPlan**
+
+  * Fields: meal name, difficulty, servings, ingredients
+  * Represents complete meal details
+
+* **ShoppingCategory**
+
+  * Fields: section name, items list, total cost
+  * Groups grocery items by store section
+
+* **GroceryShoppingPlan**
+
+  * Combines:
+
+    * Meal plans
+    * Shopping categories
+    * Total budget
+    * Shopping tips
+  * Provides full structured output for the workflow
+
+---
+
+### Agents and Tasks
+
+#### MealPlanner Agent
+
+* Role: recipe planner
+* Uses web search tool for real-time recipes
+* Outputs structured `MealPlan` data
+
+#### ShoppingOrganizer Agent
+
+* Converts meal plans into shopping lists
+* Groups items by category
+* Outputs `GroceryShoppingPlan`
+
+#### BudgetAdvisor Agent
+
+* Ensures plan stays within budget
+* Suggests cost optimizations
+* Outputs markdown guide
+
+---
+
+### YAML Configuration
+
+#### Purpose
+
+* Separates configuration from code
+* Simplifies updates without modifying Python
+
+#### Example Usage
+
+* Define **leftover agent** and **task** in YAML
+* Includes:
+
+  * Role
+  * Goal
+  * Backstory
+  * Task description
+
+---
+
+### CrewBase Class
+
+#### Features
+
+* Uses `@CrewBase` decorator to define crew container
+* Automatically loads YAML-defined agents and tasks
+* Provides decorators:
+
+  * `@Agent`
+  * `@Task`
+  * `@Crew`
+
+#### Usage
+
+* Instantiate CrewBase class with shared LLM
+* Access agents/tasks as methods
+* Integrate YAML and Python components seamlessly
+
+---
+
+### Final Workflow
+
+#### Summary Agent
+
+* Combines outputs from all agents:
+
+  * Meal planner
+  * Shopping organizer
+  * Budget advisor
+  * Leftover manager
+* Produces final **meal planning guide**
+
+#### Execution
+
+* Create crew object with:
+
+  * All agents
+  * All tasks
+  * Sequential flow
+* Run with `.kickoff()` and user input
+* Generates:
+
+  * Recipes
+  * Shopping lists
+  * Budget insights
+  * Leftover strategies
+
+---
+
+### Output Formats
+
+* `.json`: structured data (e.g., shopping lists)
+* `.md`: readable guides (e.g., shopping guide)
+
+---
+
+### Key Takeaways
+
+* CrewAI supports structured multi-agent workflows with clear roles and tasks
+* Pydantic ensures consistent, validated data across agents
+* YAML enables flexible configuration without code changes
+* `@CrewBase` simplifies integration of YAML and Python components
+* Sequential workflows allow smooth data flow between agents
+* Final output is a comprehensive, automated meal planning guide
