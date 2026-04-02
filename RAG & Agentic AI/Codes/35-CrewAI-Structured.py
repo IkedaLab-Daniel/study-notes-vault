@@ -1,8 +1,7 @@
-from tabnanny import verbose
-
 from leftover import LeftoversCrew
 
 from dotenv import load_dotenv
+load_dotenv()
 import os
 
 from pydantic import BaseModel, Field
@@ -43,13 +42,12 @@ class GroceryShoppingPlan(BaseModel):
 from crewai_tools import SerperDevTool
 from crewai import Agent, Task, Crew,  Process, LLM
 
-# Set Watsonx environment variables
-os.environ["WATSONX_API_BASE"] = "https://us-south.ml.cloud.ibm.com"
-os.environ["WX_PROJECT_ID"] = "skills-network"
-
-
-# Initialize LLM using Watsonx Granite
-llm = LLM(model="watsonx/ibm/granite-3-3-8b-instruct")
+llm = LLM(
+    #model="groq/llama-3.1-8b-instant",
+    model="groq/llama-3.3-70b-versatile",
+    api_key=os.getenv("GROQ_API"),
+    max_tokens=1000
+)
 
 ## -- Setup SerperDevTool -- ##
 
@@ -81,3 +79,26 @@ meal_planning_task = Task(
     output_pydantic=MealPlan,
     output_file="meals.json"
 )
+
+## -- Creating and Running Our Meal Planning Crew -- ##
+
+meal_planner_crew = Crew(
+    agents=[meal_planner],
+    tasks=[meal_planning_task],
+    process=Process.sequential,
+    verbose=True
+)
+
+meal_planner_result = meal_planner_crew.kickoff(
+    inputs={
+        "meal_name": "Chicken Stir Fry",
+        "servings": 4,
+        "budget": "$25",                           
+        "dietary_restrictions": ["no nuts"],       
+        "cooking_skill": "beginner"          
+    }
+)
+
+print("✅ Single meal planning completed!")
+print("📋 Single Meal Results:")
+print(meal_planner_result)
