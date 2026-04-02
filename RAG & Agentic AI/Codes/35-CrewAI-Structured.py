@@ -89,19 +89,19 @@ meal_planner_crew = Crew(
     verbose=True
 )
 
-meal_planner_result = meal_planner_crew.kickoff(
-    inputs={
-        "meal_name": "Chicken Stir Fry",
-        "servings": 4,
-        "budget": "$25",                           
-        "dietary_restrictions": ["no nuts"],       
-        "cooking_skill": "beginner"          
-    }
-)
+# meal_planner_result = meal_planner_crew.kickoff(
+#     inputs={
+#         "meal_name": "Chicken Stir Fry",
+#         "servings": 4,
+#         "budget": "$25",                           
+#         "dietary_restrictions": ["no nuts"],       
+#         "cooking_skill": "beginner"          
+#     }
+# )
 
-print("✅ Single meal planning completed!")
-print("📋 Single Meal Results:")
-print(meal_planner_result)
+# print("✅ Single meal planning completed!")
+# print("📋 Single Meal Results:")
+# print(meal_planner_result)
 
 ## -- Creating Our Shopping Organization Agent -- ##
 
@@ -127,3 +127,83 @@ shopping_task = Task(
     output_pydantic=GroceryShoppingPlan,
     output_file="shopping_list.json"
 )
+
+## -- Building Our Two-Agent Grocery Crew -- ##
+
+two_agent_grocery_crew = Crew(
+    agents=[meal_planner, shopping_organizer],
+    tasks=[meal_planning_task, shopping_task],
+    process=Process.sequential,
+    verbose=True
+)
+
+# Run the crew
+shopping_result = two_agent_grocery_crew.kickoff(
+    inputs={
+        "meal_name": "Chicken Stir Fry",
+        "servings": 4,
+        "budget": "$25",                           
+        "dietary_restrictions": ["no nuts"],      
+        "cooking_skill": "beginner"             
+    }
+)
+
+# ANSI colors
+RESET = "\033[0m"
+BOLD = "\033[1m"
+CYAN = "\033[96m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+MAGENTA = "\033[95m"
+
+def print_shopping_results(data):
+    print(f"{BOLD}{CYAN}📋 Shopping Results{RESET}")
+    print(f"{YELLOW}Budget:{RESET} {data.total_budget}\n")
+
+    # Meal Plans
+    print(f"{BOLD}{MAGENTA}🍽 Meal Plans{RESET}")
+    for meal in data.meal_plans:
+        print(f"  {GREEN}- {meal.meal_name}{RESET}")
+        print(f"    Difficulty: {meal.difficulty_level}")
+        print(f"    Servings: {meal.servings}")
+        print(f"    Ingredients:")
+        for ing in meal.researched_ingredients:
+            print(f"      • {ing}")
+        print()
+
+    # Shopping Sections
+    print(f"{BOLD}{MAGENTA}🛒 Shopping List{RESET}")
+    for section in data.shopping_sections:
+        print(f"\n  {CYAN}{section.section_name}{RESET} ({section.estimated_total})")
+        for item in section.items:
+            print(f"    {GREEN}- {item.name}{RESET}")
+            print(f"      Qty: {item.quantity}")
+            print(f"      Price: {item.estimated_price}")
+
+    # Tips
+    print(f"\n{BOLD}{MAGENTA}💡 Tips{RESET}")
+    for tip in data.shopping_tips:
+        print(f"  {YELLOW}- {tip}{RESET}")
+
+def extract_shopping_plan(result) -> GroceryShoppingPlan:
+    # CrewAI kickoff returns a CrewOutput wrapper; prefer the structured Pydantic payload.
+    if isinstance(result, GroceryShoppingPlan):
+        return result
+
+    pydantic_result = getattr(result, "pydantic", None)
+    if isinstance(pydantic_result, GroceryShoppingPlan):
+        return pydantic_result
+
+    task_outputs = getattr(result, "tasks_output", None) or []
+    for task_output in reversed(task_outputs):
+        task_pydantic = getattr(task_output, "pydantic", None)
+        if isinstance(task_pydantic, GroceryShoppingPlan):
+            return task_pydantic
+
+    raise TypeError(
+        "Crew output does not contain GroceryShoppingPlan in `.pydantic` or `tasks_output`."
+    )
+
+
+shopping_plan = extract_shopping_plan(shopping_result)
+print_shopping_results(shopping_plan)
