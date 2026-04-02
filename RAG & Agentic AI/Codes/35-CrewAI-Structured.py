@@ -1,3 +1,5 @@
+from tabnanny import verbose
+
 from leftover import LeftoversCrew
 
 from dotenv import load_dotenv
@@ -52,4 +54,30 @@ llm = LLM(model="watsonx/ibm/granite-3-3-8b-instruct")
 ## -- Setup SerperDevTool -- ##
 
 SERPER_API = os.getenv('SERPER_API')
+os.environ['SERPER_API_KEY'] = SERPER_API
 
+
+## -- Creating Our AI Agent Workflow with CrewAI -- ##
+
+# > Meal Planner Agent
+meal_planner = Agent(
+    role="Meal Planner & Recipe Researcher",
+    goal="Search for optimal recipes and create detailed meal plans",
+    backstory="A skilled meal planner who researches the best recipes online, considering dietary needs, cooking skill levels, and budget constraints.",
+    tools=[SerperDevTool()],
+    llm=llm,
+    verbose=False
+)
+
+# > Meal Planning Task
+meal_planning_task = Task(
+    description=(
+        "Search for the best '{meal_name}' recipe for {servings} people within a {budget} budget. "
+        "Consider dietary restrictions: {dietary_restrictions} and cooking skill level: {cooking_skill}. "
+        "Find recipes that match the skill level and provide complete ingredient lists with quantities."
+    ),
+    expected_output="A detailed meal plan with researched ingredients, quantities, and cooking instructions appropriate for the skill level.",
+    agent=meal_planner,
+    output_pydantic=MealPlan,
+    output_file="meals.json"
+)
