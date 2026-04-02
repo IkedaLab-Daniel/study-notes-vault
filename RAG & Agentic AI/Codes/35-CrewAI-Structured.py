@@ -35,3 +35,21 @@ class GroceryShoppingPlan(BaseModel):
     meal_plans: List[MealPlan] = Field(description="Planned meals")
     shopping_sections: List[ShoppingCategory] = Field(description="Organized by store sections")
     shopping_tips: List[str] = Field(description="Money-saving and efficiency tips")
+
+## -- Setting Up our LLM and Essential Tools -- ##
+
+from crewai_tools import SerperDevTool
+from crewai import Agent, Task, Crew,  Process, LLM
+
+# Set Watsonx environment variables
+os.environ["WATSONX_API_BASE"] = "https://us-south.ml.cloud.ibm.com"
+os.environ["WX_PROJECT_ID"] = "skills-network"
+
+
+# Initialize LLM using Watsonx Granite
+llm = LLM(model="watsonx/ibm/granite-3-3-8b-instruct")
+
+## -- Setup SerperDevTool -- ##
+
+SERPER_API = os.getenv('SERPER_API')
+
