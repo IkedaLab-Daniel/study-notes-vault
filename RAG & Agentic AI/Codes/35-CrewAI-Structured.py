@@ -230,3 +230,11 @@ budget_task = Task(
     context=[meal_planning_task, shopping_task],
     output_file="shopping_guide.md"
 )
+
+## -- Using CrewBase and Decorators with CrewAI -- ##
+
+from leftover import LeftoversCrew
+
+leftovers_cb = LeftoversCrew(llm=llm)
+yaml_leftover_manager = leftovers_cb.leftover_manager()
+yaml_leftover_task    = leftovers_cb.leftover_task()

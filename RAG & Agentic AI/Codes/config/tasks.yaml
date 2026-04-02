@@ -1,0 +1,9 @@
+# task.yaml
+leftover_task:
+  description: >
+    Analyze the shopping list for '{meal_name}' and identify ingredients that might result in leftovers or partial usage. 
+    Suggest additional quick meals or recipes that can use these leftover ingredients within the {budget} budget.
+    Consider dietary restrictions: {dietary_restrictions}.
+  expected_output: >
+    A list of bonus recipes and creative uses for leftover ingredients, helping to maximize the grocery budget and minimize waste.
+  agent: leftover_manager
