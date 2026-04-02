@@ -138,15 +138,15 @@ two_agent_grocery_crew = Crew(
 )
 
 # Run the crew
-shopping_result = two_agent_grocery_crew.kickoff(
-    inputs={
-        "meal_name": "Chicken Stir Fry",
-        "servings": 4,
-        "budget": "$25",                           
-        "dietary_restrictions": ["no nuts"],      
-        "cooking_skill": "beginner"             
-    }
-)
+# shopping_result = two_agent_grocery_crew.kickoff(
+#     inputs={
+#         "meal_name": "Chicken Stir Fry",
+#         "servings": 4,
+#         "budget": "$25",                           
+#         "dietary_restrictions": ["no nuts"],      
+#         "cooking_skill": "beginner"             
+#     }
+# )
 
 # ANSI colors
 RESET = "\033[0m"
@@ -205,8 +205,8 @@ def extract_shopping_plan(result) -> GroceryShoppingPlan:
     )
 
 
-shopping_plan = extract_shopping_plan(shopping_result)
-print_shopping_results(shopping_plan)
+# shopping_plan = extract_shopping_plan(shopping_result)
+# print_shopping_results(shopping_plan)
 
 ## -- Adding Financial Intelligence with Budget Advisor Agent -- ##
 
@@ -238,3 +238,62 @@ from leftover import LeftoversCrew
 leftovers_cb = LeftoversCrew(llm=llm)
 yaml_leftover_manager = leftovers_cb.leftover_manager()
 yaml_leftover_task    = leftovers_cb.leftover_task()
+
+## -- Summry Agent and Task -- ##
+summary_agent = Agent(
+    role="Report Compiler",
+    goal="Compile comprehensive meal planning reports from all team outputs",
+    backstory="A skilled coordinator who organizes information from multiple specialists into comprehensive, easy-to-follow reports.",
+    tools=[],
+    llm=llm,
+    verbose=False
+)
+
+summary_task = Task(
+    description=(
+        "Compile a comprehensive meal planning report that includes:\n"
+        "1. The complete recipe and cooking instructions from the meal planner\n"
+        "2. The organized shopping list with prices from the shopping organizer\n"
+        "3. The budget analysis and money-saving tips from the budget advisor\n"
+        "4. The leftover management suggestions from the waste reduction specialist\n"
+        "Format this as a complete, user-friendly meal planning guide."
+    ),
+    expected_output="A comprehensive meal planning guide that combines all team outputs into one cohesive report.",
+    agent=summary_agent,
+    context=[meal_planning_task, shopping_task, budget_task, yaml_leftover_task],
+)
+
+## -- Complete Grocery Planning Team -- ##
+
+complete_grocery_crew = Crew(
+    agents=[
+        meal_planner,           
+        shopping_organizer,      
+        budget_advisor,         
+        yaml_leftover_manager,  # YAML-based leftover manager
+        summary_agent           # New summary agent
+    ],
+    tasks=[
+        meal_planning_task,     
+        shopping_task,          
+        budget_task,            
+        yaml_leftover_task,    # YAML-based leftover task
+        summary_task            # New summary task
+    ],
+    process=Process.sequential,
+    verbose=True
+)
+
+complete_result = complete_grocery_crew.kickoff(
+    inputs={
+        "meal_name": "Chicken Stir Fry",
+        "servings": 4,
+        "budget": "$25",
+        "dietary_restrictions": ["no nuts", "low sodium"],
+        "cooking_skill": "beginner"
+    }
+)
+
+print("✅ Complete meal planning with summary completed!")
+print("📋 Complete Results:")
+print(complete_result)
