@@ -207,3 +207,26 @@ def extract_shopping_plan(result) -> GroceryShoppingPlan:
 
 shopping_plan = extract_shopping_plan(shopping_result)
 print_shopping_results(shopping_plan)
+
+## -- Adding Financial Intelligence with Budget Advisor Agent -- ##
+
+budget_advisor = Agent(
+    role="Budget Advisor",
+    goal="Provide cost estimates and money-saving tips",
+    backstory="A budget-conscious shopper who helps families save money on groceries while respecting dietary needs.",
+    tools=[SerperDevTool()],
+    llm=llm,
+    verbose=False
+)
+
+budget_task = Task(
+    description=(
+        "Analyze the shopping plan for '{meal_name}' serving {servings} people. "
+        "Ensure total cost stays within {budget}. Consider dietary restrictions: {dietary_restrictions}. "
+        "Provide practical money-saving tips and alternative ingredients if needed to meet budget."
+    ),
+    expected_output="A complete shopping guide with detailed prices, budget analysis, and money-saving tips.",
+    agent=budget_advisor,
+    context=[meal_planning_task, shopping_task],
+    output_file="shopping_guide.md"
+)
