@@ -102,3 +102,28 @@ meal_planner_result = meal_planner_crew.kickoff(
 print("✅ Single meal planning completed!")
 print("📋 Single Meal Results:")
 print(meal_planner_result)
+
+## -- Creating Our Shopping Organization Agent -- ##
+
+shopping_organizer = Agent(
+    role="Shopping Organizer",
+    goal="Organize grocery lists by store sections efficiently",
+    backstory="An experienced shopper who knows how to organize lists for quick store trips and considers dietary restrictions.",
+    tools=[],
+    llm=llm,
+    verbose=False
+)
+
+shopping_task = Task(
+    description=(
+        "Organize the ingredients from the '{meal_name}' meal plan into a grocery shopping list. "
+        "Group items by store sections and estimate quantities for {servings} people. "
+        "Consider dietary restrictions: {dietary_restrictions} and cooking skill: {cooking_skill}. "
+        "Stay within budget: {budget}."
+    ),
+    expected_output="An organized shopping list grouped by store sections with quantities and prices.",
+    agent=shopping_organizer,
+    context=[meal_planning_task],
+    output_pydantic=GroceryShoppingPlan,
+    output_file="shopping_list.json"
+)
