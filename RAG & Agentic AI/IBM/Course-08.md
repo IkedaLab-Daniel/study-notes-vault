@@ -1213,9 +1213,9 @@
 
 # > Module 3: Alternative Agentic Frameworks: BeeAI and AG2 (AutoGen)
 
-## Extending CrewAI with Custom Functions
+## BeeAI: Introduction and Code Components
 
-### Video Overview
+### Overview
 
 * Explains how to create and use **custom tools (functions)** in CrewAI
 * Demonstrates assigning tools to **agents vs tasks**
@@ -1352,3 +1352,186 @@
 * Combine agent(s), task(s), and tools into a crew
 * Run using `.kickoff()` with user input
 * Agents process input, use tools, and return results
+
+## Developing Agents and Multi-Agent Systems with BeeAI Framework
+
+### Video Overview
+
+* Demonstrates how to build agents using BeeAI
+* Covers tools, reasoning, requirements, and security features
+* Explains ReAct pattern and multi-agent collaboration
+
+---
+
+### RequirementAgent Fundamentals
+
+* Core class for building intelligent agents in BeeAI
+* Key features:
+
+  * Persistent state
+  * Tool usage
+  * Behavior control via requirements
+
+#### Setup
+
+* Use `RequirementAgent` with:
+
+  * LLM
+  * `UnconstrainedMemory` for context
+  * System instructions for role definition
+* Run using async execution
+
+---
+
+### Adding Tools to Agents
+
+* Tools extend agent capabilities
+* Example: **WikipediaTool**
+
+  * Enables access to external knowledge
+
+#### Controlled Usage
+
+* Use `ConditionalRequirement` to:
+
+  * Limit tool usage (e.g., `max_invocations=1`)
+  * Control execution behavior
+
+---
+
+### ThinkTool for Systematic Reasoning
+
+* Enables agents to “think” before responding
+* Supports internal reflection
+
+#### Configuration
+
+* Add `ThinkTool` to tools list
+* Use `ConditionalRequirement` to:
+
+  * Limit number of reasoning steps
+  * Control execution flow
+
+---
+
+### Requirements System
+
+* Provides fine-grained control over agent behavior
+
+#### Key Features
+
+* **ConditionalRequirement**
+
+  * Controls tool usage frequency and order
+* **AskPermissionRequirement**
+
+  * Requires human approval before tool execution
+* **ControlTrajectoryMiddleware**
+
+  * Tracks execution flow for debugging
+* **force_at_step**
+
+  * Forces tool usage at a specific step
+* **only_after**
+
+  * Creates dependency between tools
+* **consecutive_allowed**
+
+  * Controls repeated tool usage
+
+---
+
+### ReAct Pattern in BeeAI
+
+* Combines reasoning and action in cycles:
+
+  * Think → Act → Think → Act → Final Answer
+
+#### Implementation
+
+* Use:
+
+  * `ThinkTool`
+  * `WikipediaTool`
+  * Middleware for tracking
+* Configure requirements:
+
+  * `force_at_step=1` → start with thinking
+  * `force_after=Tool` → think after each action
+  * `maxInvocations` → limit cycles
+  * `consecutive_allowed=false` → avoid repetition
+
+#### Benefits
+
+* Transparent reasoning
+* Self-correction
+* Improved decision-making
+
+---
+
+### Human-in-the-Loop Security
+
+* Ensures safe and controlled agent behavior
+
+#### AskPermissionRequirement
+
+* Prompts user approval before executing actions
+* Useful for:
+
+  * Sensitive operations
+  * Compliance and risk management
+
+---
+
+### Creating Custom Tools
+
+* Enables domain-specific functionality
+
+#### Steps
+
+1. Define input schema using Pydantic (`BaseModel`)
+2. Create tool class extending `Tool`
+3. Implement `_run()` method with custom logic
+
+#### Example
+
+* **AddTool**
+
+  * Inputs: numbers
+  * Output: computed sum
+
+---
+
+### Multi-Agent Systems in BeeAI
+
+#### Concept
+
+* Multiple specialized agents collaborate on tasks
+
+#### Key Component
+
+* **HandoffTool**
+
+  * Delegates tasks between agents
+
+#### Workflow
+
+1. Create multiple specialized agents
+2. Wrap each with `HandoffTool`
+3. Create a **Coordinator agent**:
+
+   * Uses ThinkTool + Handoff tools
+4. Route user query to coordinator
+5. Coordinator delegates tasks to appropriate agents
+
+---
+
+### Key Takeaways
+
+* BeeAI agents are **stateful, tool-driven, and highly controllable**
+* RequirementAgent enables structured and flexible agent design
+* Tools extend capabilities; requirements control behavior
+* ThinkTool enables reasoning, forming the basis of ReAct pattern
+* AskPermissionRequirement adds security via human approval
+* Custom tools allow domain-specific functionality
+* Multi-agent systems enable scalable, specialized collaboration
