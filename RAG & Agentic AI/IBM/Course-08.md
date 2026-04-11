@@ -1198,7 +1198,7 @@
   * Need for flexibility vs control
   * Complexity of the workflow
 
-## > Module 2: Summary
+## Module 2: Summary
 
 - CrewAI is designed for multi-agent collaboration, with agents assigned clear roles and tasks to simulate human-like teamwork
 - Tools are standard components in AI workflows (for example, APIs and search engines) that can be used by either the Agent or the Task.
@@ -1210,3 +1210,145 @@
 - Custom functions enhance CrewAI by enabling domain-specific tools that improve flexibility and control
 - An agent-centric workflow assigns tools directly to the agent, letting them choose the best tool based on the query
 - A task-centric workflow attaches tools to individual tasks, guiding the agent step by step through a fixed process
+
+# > Module 3: Alternative Agentic Frameworks: BeeAI and AG2 (AutoGen)
+
+## Extending CrewAI with Custom Functions
+
+### Video Overview
+
+* Explains how to create and use **custom tools (functions)** in CrewAI
+* Demonstrates assigning tools to **agents vs tasks**
+* Highlights how custom tools improve flexibility, efficiency, and control
+
+---
+
+### Custom Tools in CrewAI
+
+#### Purpose
+
+* Extend agent capabilities beyond built-in tools
+* Enable **domain-specific functionality**
+
+#### Creating Custom Tools
+
+* Use `@tool` decorator from `crewai.tools`
+* Define function logic in Python
+* Include a docstring to describe functionality
+
+#### Examples
+
+* **add_numbers tool**
+
+  * Extracts numbers and returns their sum
+* **multiply_numbers tool**
+
+  * Extracts numbers and returns their product
+
+---
+
+### Assigning Tools to Agents
+
+#### Agent Setup
+
+* Role: Calculator
+* Goal: perform arithmetic operations
+* Backstory: interprets numeric instructions
+
+#### Tool Assignment
+
+* Tools passed via `tools` parameter in agent definition
+* Agent decides which tool to use based on input
+
+#### Example Flow
+
+1. Input: “Add 7, 8, 9, and 10”
+2. Agent extracts numbers
+3. Chooses **add_numbers tool**
+4. Tool computes result → `34`
+
+---
+
+### Agent-Centric Approach
+
+#### Key Idea
+
+* Tools are attached to the **agent**
+* Agent selects the appropriate tool dynamically
+
+#### Example: Q&A Bot (Daily Dish)
+
+* Tools used:
+
+  * **PDF Search Tool** (for FAQ document)
+  * **SerperDevTool** (for real-time web search)
+
+#### Workflow
+
+* Agent analyzes query
+* Chooses:
+
+  * FAQ tool → for known questions
+  * Web search → for unknown queries
+* Generates final response
+
+#### Benefits
+
+* Flexible decision-making
+* More autonomous agents
+
+---
+
+### Task-Centric Approach
+
+#### Key Idea
+
+* Tools are attached to **specific tasks**, not agents
+* Agent follows predefined workflow
+
+#### Setup
+
+* Agent: Customer Service Specialist (no tools assigned)
+* Tasks:
+
+  1. **FAQ Search Task**
+
+     * Uses PDF search tool
+  2. **Response Drafting Task**
+
+     * Formats answer
+
+#### Workflow
+
+1. Task 1 retrieves data from FAQ
+2. Task 2 generates response
+3. Final answer returned
+
+#### Benefits
+
+* Clear, step-by-step execution
+* Better traceability and control
+
+---
+
+### Comparison: Agent-Centric vs Task-Centric
+
+* **Agent-Centric**
+
+  * Tools assigned to agent
+  * Agent chooses tools dynamically
+  * More flexible and autonomous
+
+* **Task-Centric**
+
+  * Tools assigned to tasks
+  * Fixed workflow execution
+  * More controlled and predictable
+
+---
+
+### Crew Execution
+
+* Combine agent(s), task(s), and tools into a crew
+* Run using `.kickoff()` with user input
+* Agents process input, use tools, and return results
