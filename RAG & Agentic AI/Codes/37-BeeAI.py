@@ -1,4 +1,5 @@
 import asyncio
+from email import message
 import logging
 from beeai_framework.backend import UserMessage, SystemMessage
 from beeai_framework.adapters.groq import GroqChatModel
@@ -119,8 +120,65 @@ async def prompt_template_example():
         print("### LLM Response: ###\n")
         print(response.get_text_content())
 
+# async def main() -> None:
+#     logging.getLogger('asyncio').setLevel(logging.CRITICAL) # Suppress unwanted warnings
+#     await prompt_template_example()
+# if __name__ == "__main__":
+#     asyncio.run(main())
+
+## -- Structured output magic (Pydantic) -- ##
+import asyncio
+import logging
+from pydantic import BaseModel, Field
+from typing import List
+from beeai_framework.backend import UserMessage, SystemMessage
+from beeai_framework.adapters.groq import GroqChatModel
+
+# Define a structured output for business planning
+class BusinessPlan(BaseModel):
+    """A comprehensive business plan structure."""
+    business_name: str = Field(description="Catchy name for the business")
+    elevator_pitch: str = Field(description="30-second description of the business")
+    target_market: str = Field(description="Primary target audience")
+    unique_value_proposition: str = Field(description="What makes this business special")
+    revenue_streams: List[str] = Field(description="Ways the business will make money")
+    startup_costs: str = Field(description="Estimated initial investment needed")
+    key_success_factors: List[str] = Field(description="Critical elements for success")
+
+# > Generate structured business plans
+async def structured_output_example():
+    llm = GroqChatModel(
+        model_id="llama-3.3-70b-versatile"
+    )
+
+    messages = [
+        SystemMessage(content="You are an expert business consultant and entrepreneur."),
+        UserMessage(content="Create a business plan for a mobile app that helps people find and book unique local experiences in their city.")
+    ]
+
+    response = await llm.run(messages, response_format=BusinessPlan)
+
+    plan = response.output_structured
+    if isinstance(plan, BaseModel):
+        plan = plan.model_dump()
+    elif plan is None:
+        plan = {}
+
+    print("User: Create a business plan for a mobile app that helps people find and book unique local experiences in their city.")
+    print("\n🚀 AI-Generated Business Plan:")
+    print(f"💡 Business Name: {plan.get('business_name', 'N/A')}")
+    print(f"🎯 Elevator Pitch: {plan.get('elevator_pitch', 'N/A')}")
+    print(f"👥 Target Market: {plan.get('target_market', 'N/A')}")
+    print(f"⭐ Unique Value Proposition: {plan.get('unique_value_proposition', 'N/A')}")
+    print(f"💰 Revenue Streams: {', '.join(plan.get('revenue_streams', []))}")
+    print(f"💵 Startup Costs: {plan.get('startup_costs', 'N/A')}")
+    print(f"🔑 Key Success Factors:")
+    for factor in plan.get('key_success_factors', []):
+        print(f"  - {factor}")
+
+        
 async def main() -> None:
     logging.getLogger('asyncio').setLevel(logging.CRITICAL) # Suppress unwanted warnings
-    await prompt_template_example()
+    await structured_output_example()
 if __name__ == "__main__":
     asyncio.run(main())
