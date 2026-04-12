@@ -177,8 +177,22 @@ async def structured_output_example():
         print(f"  - {factor}")
 
         
-async def main() -> None:
-    logging.getLogger('asyncio').setLevel(logging.CRITICAL) # Suppress unwanted warnings
-    await structured_output_example()
-if __name__ == "__main__":
-    asyncio.run(main())
+# async def main() -> None:
+#     logging.getLogger('asyncio').setLevel(logging.CRITICAL) # Suppress unwanted warnings
+#     await structured_output_example()
+# if __name__ == "__main__":
+#     asyncio.run(main())
+
+## -- BeeAI Agent -- ## 
+import asyncio
+import logging
+from beeai_framework.agents.requirement import RequirementAgent
+from beeai_framework.memory import UnconstrainedMemory
+from beeai_framework.backend import ChatModel, ChatModelParameters
+from beeai_framework.adapters.groq import GroqChatModel
+
+async def minimal_tracked_agent_example():
+    """
+    Minimal RequirementAgent
+    """
+    pass
