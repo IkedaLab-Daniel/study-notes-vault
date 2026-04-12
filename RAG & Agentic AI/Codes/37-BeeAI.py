@@ -222,9 +222,20 @@ Your methodology:
     result = await minimal_agent.run(ANALYSIS_QUERY)
     print(f"\n💬 Pure LLM Analysis:\n{result.output_structured.response}")
 
-async def main() -> None:
-    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
-    await minimal_tracked_agent_example()
+# async def main() -> None:
+#     logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+#     await minimal_tracked_agent_example()
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())
+
+## -- Tool calling with RequirementAgent -- ##
+import asyncio
+import logging
+from beeai_framework.agents.requirement import RequirementAgent
+from beeai_framework.agents.requirement.requirements.conditional import ConditionalRequirement
+from beeai_framework.memory import UnconstrainedMemory
+from beeai_framework.adapters.groq import GroqChatModel
+from beeai_framework.tools.search.wikipedia import WikipediaTool
+from beeai_framework.middleware.trajectory import GlobalTrajectoryMiddleware
+from beeai_framework.tools import Tool
