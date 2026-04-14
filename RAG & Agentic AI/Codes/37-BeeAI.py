@@ -338,9 +338,22 @@ Your methodology:
     print_agent()
     print(f"\n🧠 Reasoning + Research Analysis:\n   >>   {result.output_structured.response}")
 
-async def main() -> None:
-    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
-    await reasoning_enhanced_agent_example()
+# async def main() -> None:
+#     logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+#     await reasoning_enhanced_agent_example()
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())
+
+## -- Controlled execution -- ##
+import asyncio
+import logging
+from beeai_framework.agents.requirement import RequirementAgent
+from beeai_framework.memory import UnconstrainedMemory
+from beeai_framework.agents.requirement.requirements.conditional import ConditionalRequirement
+from beeai_framework.adapters.groq import GroqChatModel
+from beeai_framework.tools.search.wikipedia import WikipediaTool
+from beeai_framework.tools.think import ThinkTool
+from beeai_framework.middleware.trajectory import GlobalTrajectoryMiddleware
+from beeai_framework.tools import Tool
+
