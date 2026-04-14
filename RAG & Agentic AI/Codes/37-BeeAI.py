@@ -430,3 +430,56 @@ from beeai_framework.tools.search.wikipedia import WikipediaTool
 from beeai_framework.tools.think import ThinkTool
 from beeai_framework.middleware.trajectory import GlobalTrajectoryMiddleware
 from beeai_framework.tools import Tool
+
+async def reasoning_enhanced_agent_example():
+    llm = GroqChatModel(
+            model_id="llama-3.3-70b-versatile"
+        )
+    
+    # SAME SYSTEM PROMPT as previous examples
+    SYSTEM_INSTRUCTIONS = """You are an expert cybersecurity analyst specializing in threat assessment and risk analysis.
+
+Your methodology:
+1. Analyze the threat landscape systematically
+2. Research authoritative sources when available
+3. Provide comprehensive risk assessment with actionable recommendations
+4. Focus on practical, implementable security measures"""
+    
+    # RequirementAgent with reasoning + research capability
+    reasoning_agent = RequirementAgent(
+        llm=llm,
+        tools=[ThinkTool(), WikipediaTool()],
+        memory=UnconstrainedMemory(),
+        middlewares=[GlobalTrajectoryMiddleware(included=(Tool,))],
+        instructions=SYSTEM_INSTRUCTIONS,
+        requirements=[
+            ConditionalRequirement(
+                ThinkTool,
+                force_at_step=1,
+                force_after=Tool, # ? Force reasoning after every tool call
+                min_invocations=1,
+                max_invocations=5,
+                consecutive_allowed=False
+            ),
+            ConditionalRequirement(
+                WikipediaTool,
+                only_after=[ThinkTool],
+                max_invocations=2
+            )
+        ]
+    )
+
+    # SAME QUERY as previous examples
+    ANALYSIS_QUERY = """Analyze the cybersecurity risks of quantum computing for financial institutions. 
+    What are the main threats, timeline for concern, and recommended preparation strategies?"""
+    
+    result = await reasoning_agent.run(ANALYSIS_QUERY)
+    print_agent()
+    print(f"\n🧠 Reasoning + Research Analysis:\n   >>   {result.output_structured.response}")
+
+async def main() -> None:
+    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+    await reasoning_enhanced_agent_example()
+
+if __name__ == "__main__":
+    asyncio.run(main())
