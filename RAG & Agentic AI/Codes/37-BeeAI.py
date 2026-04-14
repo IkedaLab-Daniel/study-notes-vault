@@ -497,3 +497,66 @@ from beeai_framework.tools.think import ThinkTool
 from beeai_framework.middleware.trajectory import GlobalTrajectoryMiddleware
 from beeai_framework.tools import Tool
 
+async def production_security_example():
+    """
+    Production-Ready RequirementAgent with Security Approval
+    
+    AskPermissionRequirement adds human-in-the-loop security controls.
+    Same query, same tracking - but now with approval workflow.
+    """
+    llm = GroqChatModel(
+            model_id="llama-3.3-70b-versatile"
+        )    
+    # SAME SYSTEM PROMPT as all previous examples
+    SYSTEM_INSTRUCTIONS = """You are an expert cybersecurity analyst specializing in threat assessment and risk analysis.
+
+Your methodology:
+1. Analyze the threat landscape systematically
+2. Research authoritative sources when available
+3. Provide comprehensive risk assessment with actionable recommendations
+4. Focus on practical, implementable security measures"""
+    
+    # Production-grade RequirementAgent with security approval
+    secure_agent = RequirementAgent(
+        llm=llm,
+        tools=[ThinkTool(), WikipediaTool()],
+        instructions=SYSTEM_INSTRUCTIONS,
+        memory=UnconstrainedMemory(),
+        middlewares=[GlobalTrajectoryMiddleware(included=(Tool,))],
+
+        requirements=[
+            ConditionalRequirement(
+                ThinkTool,
+                force_at_step=1,
+                force_after=Tool, # ? Force reasoning after every tool call
+                min_invocations=1,
+                max_invocations=5,
+                consecutive_allowed=False
+            ),
+            # SECURITY
+            AskPermissionRequirement(
+                WikipediaTool,
+            ),
+            ConditionalRequirement(
+                WikipediaTool,
+                only_after=[ThinkTool],
+                min_invocations=0,  # Optional after approval
+                max_invocations=1  # Limited even after approval
+            )
+        ]
+    )
+
+    # SAME QUERY as all previous examples
+    ANALYSIS_QUERY = """Analyze the cybersecurity risks of quantum computing for financial institutions. 
+    What are the main threats, timeline for concern, and recommended preparation strategies?"""
+    
+    result = await secure_agent.run(ANALYSIS_QUERY)
+    print_agent()
+    print(f"\n🛡️ Security-Approved Analysis:\n   >>   {result.output_structured.response}")
+
+async def main() -> None:
+    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+    await production_security_example()
+
+if __name__ == "__main__":
+    asyncio.run(main())
