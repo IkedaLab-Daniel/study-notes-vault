@@ -52,7 +52,7 @@
 * Engage in discussions to learn from others
 * Practice by building projects (e.g., a blog app)
 
-## Introduction and Welcome
+# Introduction and Welcome
 
 * Modern web apps must be fast and optimized, especially for mobile (over 60% of traffic comes from mobile devices)
 * Poor performance leads to high bounce rates, abandoned carts, and lower search rankings
@@ -127,3 +127,70 @@
 
 * Next.js simplifies development while improving performance
 * Provides built-in features that make React apps faster, scalable, and SEO-friendly
+
+# Setting Up Next.js
+
+* Setting up a Next.js project is fast and beginner-friendly
+* Requires Node.js to run JavaScript outside the browser
+* Use any code editor (e.g., VS Code)
+
+## Install Node.js
+
+* Download from official website
+* Choose correct version for your OS
+* Verify installation using:
+
+  * `node -v`
+
+## Create Next.js Project
+
+* Open terminal in your project folder
+* Run command:
+
+  * `npx create-next-app@latest`
+* Configure setup options:
+
+  * Project name
+  * TypeScript (optional)
+  * ESLint (recommended)
+  * Tailwind CSS (optional)
+  * App Router (recommended)
+
+## Verify Installation
+
+* Check Next.js version:
+
+  * `npx next -v`
+* Confirms successful setup
+
+## Project Structure Overview
+
+* `app/` → main application folder
+* `page.js` → main page component
+* `layout.js` → layout structure
+* `node_modules/` → dependencies
+
+## Run the Development Server
+
+* Navigate to project folder:
+
+  * `cd project-name`
+* Start app:
+
+  * `npm run dev`
+* Runs on:
+
+  * `http://localhost:3000` (default)
+
+## Making First Changes
+
+* Edit `app/page.js`
+* Modify content (e.g., create "Hello World")
+* Changes auto-update in browser (hot reload)
+
+## Key Takeaways
+
+* Next.js setup is quick and simple
+* Built-in tools reduce configuration effort
+* Automatic reload speeds up development
+* Ready to start building pages immediately
