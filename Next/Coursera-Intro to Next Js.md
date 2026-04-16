@@ -51,3 +51,79 @@
 * Use official documentation as a reference
 * Engage in discussions to learn from others
 * Practice by building projects (e.g., a blog app)
+
+## Introduction and Welcome
+
+* Modern web apps must be fast and optimized, especially for mobile (over 60% of traffic comes from mobile devices)
+* Poor performance leads to high bounce rates, abandoned carts, and lower search rankings
+
+## Why Next.js
+
+* A React-based framework focused on speed, performance, and SEO
+* Transforms slow, inefficient websites into fast, optimized applications
+* Key advantage: improves both user experience and search engine visibility
+
+## What You Will Learn
+
+* Server-Side Rendering (SSR)
+* Static Site Generation (SSG)
+* Efficient routing system
+* Creating dynamic pages
+* Data management and performance optimization
+
+## Course Approach
+
+* Start with project setup and basics
+* Progress to building dynamic and scalable applications
+* Focus on real-world performance improvements
+
+## Goal
+
+* Build high-performance, scalable, and SEO-friendly web applications
+* Gain skills to stay competitive in modern web development
+
+## Why Next.js Matters
+
+* Next.js improves performance, scalability, and flexibility
+* Can transform slow websites into fast, optimized applications
+* Used by companies like Twitch, Netflix, and Hulu
+
+## Server-Side Rendering (SSR)
+
+* Renders content on the server instead of the browser
+* Results in faster load times
+* Improves SEO and overall performance
+
+## Static Site Generation (SSG)
+
+* Generates static HTML pages in advance
+* Ideal for blogs or portfolios with less frequent updates
+* Provides very fast loading speed
+
+## File-Based Routing
+
+* Routing is based on file structure
+* Creating a file in the `pages` folder automatically creates a route
+* Simpler and faster than configuring routing libraries manually
+
+## Automatic Code Splitting
+
+* Splits code into smaller bundles per page
+* Loads only necessary JavaScript
+* Improves performance and user experience
+
+## SEO Benefits
+
+* Server-side rendering allows search engines to easily crawl pages
+* Helps improve search engine rankings compared to traditional React apps
+
+## Built-in API Routes
+
+* Create backend APIs directly inside a Next.js project
+* No need for a separate server (e.g., Express)
+* Simplifies full-stack development
+
+## Key Takeaway
+
+* Next.js simplifies development while improving performance
+* Provides built-in features that make React apps faster, scalable, and SEO-friendly
