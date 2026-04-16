@@ -194,3 +194,48 @@
 * Built-in tools reduce configuration effort
 * Automatic reload speeds up development
 * Ready to start building pages immediately
+
+# Creating Your First Page in Next.js
+
+* Pages are created using the `app` directory
+* `page.js` inside `app/` is the root (homepage)
+* Each new page is created by adding a folder with a `page.js` file
+
+## File-Based Routing Example
+
+* Create folder: `app/about/`
+* Add file: `app/about/page.js`
+* Automatically creates route:
+
+  * `/about`
+* No manual routing configuration needed
+
+## Basic Page Example
+
+* Export a function that returns JSX
+* Example: display a simple heading like "About Us"
+
+## Navigation Between Pages
+
+* Use built-in `Link` component
+* Add link in homepage (e.g., "Go to About Page")
+* Enables seamless navigation
+
+## Client-Side Navigation
+
+* No full page reload when navigating
+* Only necessary parts of the page are updated
+* Results in faster and smoother user experience
+
+## Key Concept
+
+* Next.js combines:
+
+  * Server-Side Rendering (initial load)
+  * Client-Side Navigation (fast transitions)
+
+## Key Takeaways
+
+* Creating pages is simple with file-based routing
+* Navigation is optimized and fast
+* Easy to build multi-page applications without extra setup
