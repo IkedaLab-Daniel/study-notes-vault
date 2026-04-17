@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <h1 className="text-4xl font-bold mb-2">Hello World</h1>
+      <h1 className="text-4xl font-bold mb-2">Welcome to our Homepage</h1>
       <Image 
         src="https://media.tenor.com/v7lgy2BsGR8AAAAe/shocked-black-guy-shocked.png"
         alt="wow"
@@ -12,7 +12,12 @@ export default function Home() {
         height={200}
         priority
       />
-      <Link href="/about">Go to About Page</Link>
+      <div className="flex flex-col items-center gap-2">
+        <Link href="/about" className="hover:font-bold hover:text-blue-600 transition duration-700">Go to About Page</Link>
+        <Link href="/posts/1" className="hover:font-bold hover:text-blue-600 transition duration-700">Go to Post 1</Link>
+        <Link href="/posts/2" className="hover:font-bold hover:text-blue-600 transition duration-700">Go to Post 2</Link>
+      </div>
+      
     </main>
   );
 }
