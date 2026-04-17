@@ -454,3 +454,89 @@
 * Layout components simplify reuse
 * Next.js App Router makes integration easy
 * Improves overall user experience and app flow
+
+# Environment Variables in Next.js
+
+* Used to securely store sensitive data (e.g., API keys, configs)
+* Prevents exposing critical information in code
+* Essential for real-world applications
+
+## Creating Environment Variables
+
+* Create file in root directory:
+
+  * `.env.local`
+* Store variables:
+
+  * `KEY_NAME=value`
+* Example:
+
+  * `NEXT_PUBLIC_API_KEY=your_key_here`
+
+## Accessing Environment Variables
+
+* Use:
+
+  * `process.env.KEY_NAME`
+* Example:
+
+  * `process.env.NEXT_PUBLIC_API_KEY`
+* Can be used across pages and components
+
+## Public vs Private Variables
+
+* `NEXT_PUBLIC_` prefix:
+
+  * Accessible on both client and server
+* Without prefix:
+
+  * Server-side only (more secure)
+
+## Usage in Application
+
+* Can be used for:
+
+  * API keys
+  * Database URLs
+  * Configuration settings
+* Typically used in backend logic, not displayed in UI
+
+## Benefits
+
+* Keeps sensitive data secure
+* Easy to manage across environments (development, production)
+* Improves maintainability and scalability
+
+## Mini Project Recap
+
+### Dynamic Routing
+
+* Created routes using file-based system
+* Used dynamic parameters (`[id]`)
+
+### Data Fetching
+
+* Loaded content based on route parameters
+* Simulated API using local data
+
+### Styling
+
+* CSS Modules for scoped styles
+* Tailwind CSS for rapid UI development
+
+### Navigation
+
+* Built reusable layout with global navigation bar
+* Ensured consistent UI across pages
+
+### Environment Variables
+
+* Stored and accessed sensitive data securely
+* Used `.env.local` for configuration
+
+## Key Takeaways
+
+* Environment variables are critical for security
+* Next.js simplifies secure configuration management
+* Combined features enable building full modern web apps
+* Covers core fundamentals of Next.js development
