@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import Layout from "./Navigation";
 
 export default function Home() {
   return (
-    <main>
+    <Layout>
       <h1 className="text-4xl font-bold mb-2">Welcome to our Homepage</h1>
       <Image 
         src="https://media.tenor.com/v7lgy2BsGR8AAAAe/shocked-black-guy-shocked.png"
@@ -18,6 +19,6 @@ export default function Home() {
         <Link href="/posts/2" className="hover:font-bold hover:text-blue-600 transition duration-700">Go to Post 2</Link>
       </div>
       
-    </main>
+    </Layout>
   );
 }
