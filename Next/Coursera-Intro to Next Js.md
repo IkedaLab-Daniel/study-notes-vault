@@ -405,3 +405,52 @@
 * Tailwind CSS → best for rapid UI development
 * Both can be used together for flexibility
 * Helps create clean, professional-looking applications
+
+# Navigation in Next.js
+
+* Good navigation improves user experience and usability
+* Helps users move seamlessly across pages
+* Essential for dynamic applications
+
+## Creating a Navigation Component
+
+* Create file: `app/navigation.js`
+* Define navigation links (e.g., Home, About, Post 1, Post 2)
+* Use `Link` component for routing
+
+## Using a Layout Component
+
+* Wrap page content with a layout component
+* Layout includes navigation bar + page content
+* Makes navigation reusable across pages
+
+## Adding Navigation to Pages
+
+* Import layout/navigation component
+* Wrap page content inside layout
+* Repeat for all pages (Home, About, Posts)
+
+## Handling Import Paths
+
+* Ensure correct file paths when importing components
+* Use relative paths based on folder structure
+* Incorrect paths → module not found error
+
+## Styling Navigation
+
+* Can use Tailwind CSS or custom styles
+* Example: change colors (e.g., blue → purple)
+* Keeps UI consistent and visually appealing
+
+## Benefits of Layout-Based Navigation
+
+* Reusable across all pages
+* Consistent design and structure
+* Reduces code duplication
+
+## Key Takeaways
+
+* Navigation should be global and accessible
+* Layout components simplify reuse
+* Next.js App Router makes integration easy
+* Improves overall user experience and app flow
