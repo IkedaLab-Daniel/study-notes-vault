@@ -337,3 +337,71 @@
 * Easy to simulate APIs with local data
 * Scalable for real backend integration
 * Essential for building dynamic web applications
+
+# Styling in Next.js
+
+* Styling transforms functional apps into visually polished designs
+* Next.js supports multiple styling approaches
+* Common methods: CSS Modules and Tailwind CSS
+
+## CSS Modules
+
+* Create scoped CSS for specific components
+* Example file:
+
+  * `post.module.css`
+* Prevents global style conflicts
+
+### Applying CSS Modules
+
+* Import styles:
+
+  * `import styles from './post.module.css'`
+* Use in components:
+
+  * `className={styles.title}`
+* Can style elements like:
+
+  * Container (`main`)
+  * Title (`h1`)
+  * Content (`p`)
+
+## Benefits of CSS Modules
+
+* Scoped styling (no conflicts)
+* Clean and maintainable code
+* Ideal for component-specific designs
+
+## Tailwind CSS
+
+* Utility-first CSS framework
+* Apply styles directly in className
+* No need to write custom CSS
+
+### Tailwind Setup
+
+* Config file: `tailwind.config.js`
+* Global styles: `globals.css` (includes base, components, utilities)
+
+### Using Tailwind
+
+* Add utility classes directly:
+
+  * Example:
+
+    * `text-xl` → larger text
+    * `font-bold` → bold text
+    * `m-4` → margin
+
+## Benefits of Tailwind CSS
+
+* Faster UI development
+* No need for separate CSS files
+* Highly customizable via config
+
+## Key Takeaways
+
+* CSS Modules → best for scoped, custom styles
+* Tailwind CSS → best for rapid UI development
+* Both can be used together for flexibility
+* Helps create clean, professional-looking applications
