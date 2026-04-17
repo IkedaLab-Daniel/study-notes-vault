@@ -239,3 +239,57 @@
 * Creating pages is simple with file-based routing
 * Navigation is optimized and fast
 * Easy to build multi-page applications without extra setup
+
+# Dynamic Routing in Next.js
+
+* Allows pages to change based on URL parameters
+* Useful for dynamic content like blog posts, products, or user profiles
+* No complex configuration required
+
+## Creating Dynamic Routes
+
+* Create folder structure:
+
+  * `app/posts/[id]/page.js`
+* Square brackets `[id]` define a dynamic parameter
+* Automatically creates routes like:
+
+  * `/posts/1`
+  * `/posts/2`
+
+## Accessing Route Parameters
+
+* Use `params` inside the component
+* Example:
+
+  * `params.id` gives the dynamic value from the URL
+* Enables rendering content based on the ID
+
+## Behavior of Dynamic Routes
+
+* Visiting `/posts` → returns 404 (missing parameter)
+* Visiting `/posts/1` → displays content for ID 1
+* URL changes dynamically update the page content
+
+## Navigation with Dynamic Routes
+
+* Use `Link` component to navigate
+* Example links:
+
+  * `/posts/1`
+  * `/posts/2`
+* Works seamlessly with client-side navigation
+
+## Use Cases
+
+* Blog post pages
+* Product detail pages
+* User profiles
+* Any data-driven page with unique identifiers
+
+## Key Takeaways
+
+* Dynamic routing is simple using file-based structure
+* Square brackets (`[param]`) define dynamic segments
+* No need for manual routing setup
+* Easily scalable for real-world applications
