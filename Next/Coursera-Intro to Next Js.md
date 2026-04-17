@@ -293,3 +293,47 @@
 * Square brackets (`[param]`) define dynamic segments
 * No need for manual routing setup
 * Easily scalable for real-world applications
+
+# Data Fetching in Next.js
+
+* Data makes applications dynamic and functional
+* Next.js allows fetching data based on routes (e.g., blog posts by ID)
+* Enables building real-world, data-driven applications
+
+## Setting Up Mock Data
+
+* Create folder: `app/data/`
+* Create file: `posts.js`
+* Store mock data (e.g., array of posts with `id`, `title`, `content`)
+* Simulates real API or database data
+
+## Fetching Data in Dynamic Routes
+
+* Import data into dynamic route page (`app/posts/[id]/page.js`)
+* Use `params.id` to find matching post
+* Render post details (title and content) dynamically
+
+## Rendering Dynamic Content
+
+* Each URL (e.g., `/posts/1`) displays specific post data
+* Content changes based on route parameter
+* Mimics real-world applications like blogs or product pages
+
+## Error Handling
+
+* Check if post exists
+* If not found, display message (e.g., "Post not found")
+* Important for handling invalid user input or missing data
+
+## Testing the Setup
+
+* `/posts/1` → shows first post
+* `/posts/2` → shows second post
+* `/posts/3` → shows error message
+
+## Key Takeaways
+
+* Data fetching connects dynamic routes to real content
+* Easy to simulate APIs with local data
+* Scalable for real backend integration
+* Essential for building dynamic web applications
