@@ -1627,3 +1627,116 @@
 * Supports **flexible orchestration patterns and human oversight**
 * Improves **output quality through multi-agent interaction**
 * Suitable for **complex, real-world AI systems**
+
+## Extending AG2 with Tools and Structured Outputs
+
+### Overview
+
+* Focuses on enhancing AG2 agents with **tools** and **structured outputs**
+* Enables agents to perform real-world tasks and produce **consistent, reliable responses**
+* Emphasizes **production-ready practices** for secure and scalable systems
+
+### Extending Agents with Tools
+
+* Tools allow agents to go beyond text generation:
+
+  * Code execution
+  * API calls
+  * Database access
+  * File system interaction
+* Supports automation, analysis, and visualization
+* Example:
+
+  * `math_asker` agent interprets request
+  * `math_checker` agent executes `is_prime` function
+* Separation of reasoning and execution improves **security and clarity**
+
+### Structured Outputs with Pydantic
+
+* Ensures consistent and predictable responses
+* Solves issues with unstructured outputs (e.g., inconsistent formats)
+* Benefits:
+
+  * Data validation
+  * Type safety
+  * Reliable API integration
+* Example:
+
+  * Ticket summary model with fields:
+
+    * Customer name
+    * Issue type
+    * Urgency
+    * Recommended action
+* Set as `response_format` in `llm_config` to enforce schema
+
+### Importance of Structured Data
+
+* Prevents malformed responses
+* Creates **clear data contracts**
+* Enables seamless integration with APIs, databases, and pipelines
+* Improves system robustness and maintainability
+
+### Production Best Practices
+
+#### Security
+
+* Avoid hardcoding API keys
+* Use environment variables or secure credential storage
+
+#### Reliability
+
+* Use fallback models to maintain uptime
+* Implement error handling and rate limiting
+
+#### Model Configuration
+
+* Adjust temperature:
+
+  * `0.0` → deterministic, structured outputs
+  * `0.7–1.0` → creative responses
+
+### Agent Design Best Practices
+
+* Define clear roles using strong system messages
+* Keep agents **specialized and focused**
+* Prevent infinite loops with `max_consecutive_auto_reply`
+* Choose appropriate `human_input_mode` (automation vs oversight)
+
+### Human-in-the-Loop Strategy
+
+* Apply in high-risk or high-impact scenarios
+* Define escalation criteria (e.g., financial thresholds)
+* Provide context for human reviewers
+* Log interventions for accountability
+
+### Multi-Agent Orchestration Best Practices
+
+* Define clear roles and task handoffs
+* Use:
+
+  * Group chat for collaboration
+  * Structured workflows for control
+* Set termination conditions to avoid infinite loops
+* Monitor interactions for quality and intervention needs
+
+### Tool Design Guidelines
+
+* Each tool should have a **single, clear purpose**
+* Implement strong error handling
+* Validate inputs and outputs
+* Clearly document tool usage and capabilities
+
+### Structured Output Best Practices
+
+* Use Pydantic models for validation and consistency
+* Align schemas with downstream system requirements
+* Include meaningful error messages
+* Version schemas to maintain compatibility over time
+
+### Key Takeaways
+
+* Tools enable AG2 agents to perform **real-world actions and automation**
+* Structured outputs ensure **consistency, reliability, and integration readiness**
+* Production systems require **security, error handling, and fallback strategies**
+* Clear agent roles, orchestration design, and human oversight improve system quality and maintainability
