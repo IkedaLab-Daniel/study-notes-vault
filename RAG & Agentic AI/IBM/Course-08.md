@@ -1535,3 +1535,95 @@
 * AskPermissionRequirement adds security via human approval
 * Custom tools allow domain-specific functionality
 * Multi-agent systems enable scalable, specialized collaboration
+
+## Introduction to AG2 (Autogen) and Its Key Elements
+
+### Overview of AG2
+
+* AG2 (formerly Autogen) is an open-source framework for building **collaborative multi-agent systems**
+* Uses multiple specialized agents (e.g., researcher, writer, reviewer) instead of a single LLM
+* Provider-agnostic: supports models like OpenAI and Anthropic
+* Designed for **real-world applications** with scalability, error handling, and flexibility
+
+### Core Concepts
+
+* **Conversable Agents**: Agents that send, receive, and respond to messages
+* **Human-in-the-Loop**: Allows human oversight and intervention when needed
+* **Multi-Agent Orchestration**: Coordinates multiple agents to solve complex tasks
+* **Tools Integration**: Agents can use APIs, code execution, and external systems
+* **Structured Outputs**: Ensures consistent and reusable responses
+
+### Setting Up AG2
+
+* Install framework and import core components
+* Configure LLM using `LLMConfig`
+* Apply shared or per-agent configurations for flexibility
+
+### Agent Roles and Interaction
+
+* Agents are defined using **system messages** that specify roles and behavior
+* Example: Student (asks questions) and Tutor (provides explanations)
+* Use `initiate_chat` to start interactions
+* `max_turns` limits conversation length
+* `summary_method` generates a final summarized output
+
+### Benefits of Multi-Agent Systems
+
+* Produces **higher-quality outputs** than single prompts
+* Enables **role-based reasoning and collaboration**
+* Provides **context-rich and structured responses**
+* Scales well for complex problem-solving
+
+### Specialized Agent Types
+
+* **Assistant Agent**: Handles reasoning and code generation
+* **UserProxy Agent**: Executes code and provides feedback
+* Separation ensures **safe and efficient workflows**
+
+### Code Execution Workflow
+
+* Assistant generates code (e.g., plotting a sine wave)
+* UserProxy executes it in a safe environment
+* Output (e.g., image file) is generated and saved
+* Includes safeguards like execution limits
+
+### Human-in-the-Loop Modes
+
+* **Always**: Requires input at every step
+* **Never**: Fully autonomous execution
+* **Terminate**: Requires input only at the end
+* Useful for sensitive domains (finance, healthcare, law)
+
+### Multi-Agent Orchestration Patterns
+
+* **Two-Agent Chat**: Simple interaction between two agents
+* **Group Chat**: Multiple agents collaborate in one conversation
+* **Sequential Chat**: Step-by-step workflow
+* **Nested Chat**: Reusable sub-conversations
+
+### Group Chat System
+
+* **Group Chat**: Defines participants and interaction rules
+* **Group Chat Manager**: Controls conversation flow
+* Speaker selection methods:
+
+  * Auto (LLM decides)
+  * Round Robin (fixed order)
+  * Manual (human selects)
+  * Random (random order)
+
+### Example Use Case: Lesson Planning
+
+* Agents:
+
+  * Lesson Planner (creates content)
+  * Reviewer (provides feedback)
+  * Teacher (oversees and finalizes)
+* Conversation ends when termination condition is met (e.g., “done”)
+
+### Key Takeaways
+
+* AG2 enables **structured, role-based AI collaboration**
+* Supports **flexible orchestration patterns and human oversight**
+* Improves **output quality through multi-agent interaction**
+* Suitable for **complex, real-world AI systems**

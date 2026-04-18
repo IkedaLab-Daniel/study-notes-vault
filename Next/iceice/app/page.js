@@ -17,6 +17,7 @@ export default function Home() {
         <Link href="/about" className="hover:font-bold hover:text-blue-600 transition duration-700">Go to About Page</Link>
         <Link href="/posts/1" className="hover:font-bold hover:text-blue-600 transition duration-700">Go to Post 1</Link>
         <Link href="/posts/2" className="hover:font-bold hover:text-blue-600 transition duration-700">Go to Post 2</Link>
+        <p>Your API Key is: {process.env.NEXT_PUBLIC_API_KEY}</p>
       </div>
       
     </Layout>
