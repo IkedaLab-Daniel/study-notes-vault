@@ -44,12 +44,50 @@ tutor = ConversableAgent(
 )
 
 # > Start conversation
-chat_result = student.initiate_chat(
-    recipient=tutor,
-    message="Can you explain what a neural network is?",
-    max_turns=2,
-    summary_method="reflection_with_llm"
+# chat_result = student.initiate_chat(
+#     recipient=tutor,
+#     message="Can you explain what a neural network is?",
+#     max_turns=2,
+#     summary_method="reflection_with_llm"
+# )
+
+# print("\nFinal Summary:")
+# print(chat_result.summary)
+
+## -- Creating Specialized Agents -- ##
+
+# > Technical Expert Agent
+tech_expert = ConversableAgent(
+    name="tech_expert",
+    system_message="""You are a senior software engineer with expertise in Python, AI, and system design.
+    Provide technical, detailed explanations with code examples when appropriate.
+    Always consider best practices and performance implications.""",
+    llm_config=llm_config,
+    human_input_mode="NEVER"
 )
 
-print("\nFinal Summary:")
-print(chat_result.summary)
+# > Creative Writer Agent
+creative_writer = ConversableAgent(
+    name="creative_writer",
+    system_message="""You are a creative writer and storyteller.
+    Your responses are engaging, imaginative, and use vivid descriptions.
+    You excel at making complex topics accessible through stories and analogies.""",
+    llm_config=llm_config,
+    human_input_mode="NEVER"
+)
+
+# > Business Analyst Agent
+business_analyst = ConversableAgent(
+    name="business_analyst",
+    system_message="""You are a business analyst focused on ROI, efficiency, and strategic planning.
+    Always consider business impact, costs, and practical implementation.
+    Provide actionable recommendations with clear metrics.""",
+    llm_config=llm_config,
+    human_input_mode="NEVER"
+)
+
+agents = [tech_expert, creative_writer, business_analyst]
+print("Specialized agents created!")
+
+for agent in agents:
+    print(f"- {agent.name}: {agent.system_message.split('.')[0]}.")
