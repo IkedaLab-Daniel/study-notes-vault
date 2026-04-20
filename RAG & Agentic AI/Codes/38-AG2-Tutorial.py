@@ -225,9 +225,52 @@ manager = GroupChatManager(
 )
 
 # > Start client
-teacher.initiate_chat(
-    recipient=manager,
-    message="Make a single lesson about the moon.",
-    max_turns=6,
-    summary_method="reflection_with_llm"
+# teacher.initiate_chat(
+#     recipient=manager,
+#     message="Make a single lesson about the moon.",
+#     max_turns=6,
+#     summary_method="reflection_with_llm"
+# )
+
+## -- Tools and Extensions -- ##
+from autogen import ConversableAgent, register_function
+from typing import Annotated
+
+# > Define function
+def is_prime(n: Annotated[int, "Positive integer"]) -> str:
+    if n < 2:
+        return "No"
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return "No"
+    return "Yes"
+
+# > Create Agents
+math_asker = ConversableAgent(
+    name="math_asker",
+    system_message="Ask wheather a number is prime.",
+    llm_config=llm_config,
 )
+
+math_checker = ConversableAgent(
+    name="math_checker",
+    human_input_mode="NEVER",
+    llm_config=llm_config,
+)
+
+# > Register function
+register_function(
+    is_prime,
+    caller=math_asker,
+    executor=math_checker,
+    description="Check if a nuomber is prime. Return Yes or No."
+)
+
+# > Start conversation
+result = math_checker.initiate_chat(
+    recipient=math_asker,
+    message="Is 67 a prime number",
+    max_turns=2
+)
+
+print("67 prime??? \n   >>", result)
