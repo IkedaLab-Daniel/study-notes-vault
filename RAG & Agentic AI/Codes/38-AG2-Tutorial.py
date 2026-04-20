@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from autogen import ConversableAgent, AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
+from autogen import ConversableAgent
 from autogen.llm_config import LLMConfig
 import json
 import time
@@ -45,8 +45,8 @@ tutor = ConversableAgent(
 
 # > Start conversation
 # chat_result = student.initiate_chat(
-#     recipient=tutor,
 #     message="Can you explain what a neural network is?",
+#     recipient=tutor,
 #     max_turns=2,
 #     summary_method="reflection_with_llm"
 # )
@@ -91,3 +91,39 @@ print("Specialized agents created!")
 
 for agent in agents:
     print(f"- {agent.name}: {agent.system_message.split('.')[0]}.")
+print("--------" * 10)
+
+
+## -- Built-in Agent Types -- ##
+from autogen import AssistantAgent, UserProxyAgent
+from autogen.coding import LocalCommandLineCodeExecutor
+
+
+# > Create Assistant Agent
+assistant = AssistantAgent(
+    name="assistant",
+    system_message="You are a helpful assistant who writes and explains Python code clearly.",
+    llm_config=llm_config,
+)
+
+# > User Proxy Agent
+user_proxy = UserProxyAgent(
+    name="user_proxy",
+    human_input_mode="NEVER",
+    max_consecutive_auto_reply=5,
+    code_execution_config={
+        "executor": LocalCommandLineCodeExecutor(work_dir="coding", timeout=30),
+    }
+)
+
+# > Start
+chat_result = user_proxy.initiate_chat(
+    recipient=assistant,
+    message="execute an nmap scan at 127.0.0.1. Local nmap already installed. Save result as scan.txt",
+    max_turns=4,
+    summary_method="reflection_with_llm"
+)
+
+# Step 6: Print summary
+print("\nFinal Summary:")
+print(chat_result.summary)
