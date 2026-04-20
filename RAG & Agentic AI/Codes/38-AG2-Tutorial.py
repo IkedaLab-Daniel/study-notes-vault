@@ -18,7 +18,7 @@ if not groq_api_key:
 llm_config = {
     "config_list": [
         {
-            "model": "llama-3.3-70b-versatile",
+            "model": "llama-3.1-8b-instant",
             "api_key": groq_api_key,
             "base_url": "https://api.groq.com/openai/v1",
             "api_type": "openai",
@@ -117,13 +117,67 @@ user_proxy = UserProxyAgent(
 )
 
 # > Start
-chat_result = user_proxy.initiate_chat(
-    recipient=assistant,
-    message="execute an nmap scan at 127.0.0.1. Local nmap already installed. Save result as scan.txt",
-    max_turns=4,
-    summary_method="reflection_with_llm"
-)
+# chat_result = user_proxy.initiate_chat(
+#     recipient=assistant,
+#     message="execute an nmap scan at 127.0.0.1. Local nmap already installed. Save result as scan.txt",
+#     max_turns=4,
+#     summary_method="reflection_with_llm"
+# )
 
 # Step 6: Print summary
-print("\nFinal Summary:")
-print(chat_result.summary)
+# print("\nFinal Summary:")
+# print(chat_result.summary)
+
+## -- Human-in-the-loop -- ##
+from autogen import ConversableAgent
+import random
+
+# > Define system message
+triage_system_message = """
+You are a bug triage assistant. You will be given bug report summaries.
+
+For each bug:
+- If it is urgent (e.g., 'crash', 'security', or 'data loss' is mentioned), escalate it and ask the human agent for confirmation.
+- If it seems minor (e.g., cosmetic, typo), suggest closing it but still ask for human review.
+- Otherwise, classify it as medium priority and ask the human for review.
+
+Once all bugs are processed, summarize what was escalated, closed, or marked as medium priority.
+End by saying: "You can type exit to finish."
+"""
+
+# > Create triage agent
+triage_bot =ConversableAgent(
+    name="triage_agent",
+    system_message=triage_system_message,
+    llm_config=llm_config,
+)
+
+# > Create human agent
+human = ConversableAgent(
+    name="human",
+    human_input_mode="ALWAYS",
+)
+
+# > Generate sample bugs
+BUGS = [
+    "App crashes when opening user profile.",
+    "Minor UI misalignment on settings page.",
+    "Password reset email not sent consistently.",
+    "Typo in the About Us footer text.",
+    "Database connection timeout under heavy load.",
+    "Login form allows SQL injection attack.",
+]
+
+random.shuffle(BUGS)
+selected_bugs = BUGS[:3]
+
+initial_prompt = (
+    "Please triage the following bug reports one by one:\n\n" +
+    "\n".join([f"{i+1}. {bug}" for i, bug in enumerate(selected_bugs, 1)])
+)
+
+# > Start converstaion
+result = human.initiate_chat(
+    recipient=triage_bot,
+    message=initial_prompt
+)
