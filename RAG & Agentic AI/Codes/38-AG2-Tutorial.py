@@ -176,8 +176,58 @@ initial_prompt = (
     "\n".join([f"{i+1}. {bug}" for i, bug in enumerate(selected_bugs, 1)])
 )
 
-# > Start converstaion
-result = human.initiate_chat(
-    recipient=triage_bot,
-    message=initial_prompt
+# # > Start converstaion
+# result = human.initiate_chat(
+#     recipient=triage_bot,
+#     message=initial_prompt
+# )
+
+## -- Group Chat for Lesson Planning -- ##
+from autogen import ConversableAgent, GroupChat, GroupChatManager
+
+planner_message = "Create a short lesson plan for 4th graders."
+reviewer_message = "Review a plan and suggest up to 3 brief edits."
+teacher_message = "Suggest a topic and reploy DONE when satisfied"
+
+# > Create agents
+lesson_planner = ConversableAgent(
+    name="planner_agent",
+    system_message=planner_message,
+    description="Makes lesson plans.",
+    llm_config=llm_config
+)
+
+lesson_reviewer = ConversableAgent(
+    name="reviewer_agent",
+    system_message=reviewer_message,
+    description="Reviews lesson plans and suggests edits.",
+    llm_config=llm_config
+)
+
+teacher = ConversableAgent(
+    name="teacher_agent",
+    system_message=teacher_message,
+    llm_config=llm_config,
+    is_termination_msg=lambda x: "DONE" in (x.get("content", "") or "").upper()
+)
+
+# Create group chat
+groupchat = GroupChat(
+    agents=[teacher, lesson_planner, lesson_reviewer],
+    speaker_selection_method="auto"
+)
+
+# > Create manager
+manager = GroupChatManager(
+    name="group_manager",
+    groupchat=groupchat,
+    llm_config=llm_config,
+)
+
+# > Start client
+teacher.initiate_chat(
+    recipient=manager,
+    message="Make a single lesson about the moon.",
+    max_turns=6,
+    summary_method="reflection_with_llm"
 )
