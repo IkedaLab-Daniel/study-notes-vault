@@ -267,10 +267,65 @@ register_function(
 )
 
 # > Start conversation
-result = math_checker.initiate_chat(
-    recipient=math_asker,
-    message="Is 67 a prime number",
-    max_turns=2
+# result = math_checker.initiate_chat(
+#     recipient=math_asker,
+#     message="Is 67 a prime number",
+#     max_turns=2
+# )
+
+# print("67 prime??? \n   >>", result)
+
+## -- Structured Output -- ##
+from pydantic import BaseModel
+
+# Define structured output model
+class TicketSummary(BaseModel):
+    customer_name: str
+    issue_type: str
+    urgency_level: str
+    recommended_action: str
+
+# > LLM Configuration
+llm_config = {
+    "config_list": [
+        {
+            "model": "llama-3.3-70b-versatile",
+            "api_key": groq_api_key,
+            "base_url": "https://api.groq.com/openai/v1",
+            "api_type": "openai",
+        }
+    ]
+    # ! "response_format": TicketSummary --- Groq llama instant & versatile not supported
+}
+
+# > Create agent
+support_agent = ConversableAgent(
+    name="support_agent",
+    system_message=(
+        "You are a support assistant. Summarize a customer ticket using:"
+        "\n- customer_name"
+        "\n- issue_type (e.g. login issue, billing problem, bug report)"
+        "\n- urgency_level (Low, Medium, High)"
+        "\n- recommended_action"
+        "\n\nReturn ONLY valid JSON with exactly these keys and no extra text."
+    ),
+    llm_config=llm_config
 )
 
-print("67 prime??? \n   >>", result)
+# > Start conversation
+chat_result = support_agent.initiate_chat(
+    recipient=support_agent,
+    message="Ticket: John Doe is unable to reset his password and has an important meeting in 30 minutes.",
+    max_turns=1
+)
+
+# Parse the model output into the same schema to keep typed structure.
+raw_reply = chat_result.chat_history[-1].get("content", "")
+try:
+    ticket = TicketSummary.model_validate_json(raw_reply)
+    print("Structured summary:")
+    print(ticket.model_dump_json(indent=2))
+except Exception as exc:
+    print("Could not parse structured JSON output:", exc)
+    print("Raw model reply:")
+    print(raw_reply)
