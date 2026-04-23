@@ -3,6 +3,7 @@ import os
 
 from autogen import ConversableAgent, GroupChat, GroupChatManager
 from openai import OpenAI
+from utils import print_agent
 
 load_dotenv()
 
@@ -55,4 +56,32 @@ consultation_agent = ConversableAgent(
     name="consultation", 
     system_message="You determine if a doctor's visit is required. Provide a final summary with clear next steps. IMPORTANT: End your response with 'CONSULTATION_COMPLETE' to signal the end of the conversation.", 
     llm_config=llm_config
+)
+
+## -- Group Chat -- ##
+groupchat = GroupChat(
+	agents=[diagnosis_agent, pharmacy_agent, consultation_agent],
+	messages=[],
+	max_round=5,
+	speaker_selection_method="round_robin"
+)
+
+manager = GroupChatManager(
+	name="manager",
+	groupchat=groupchat
+)
+
+## -- Start Consulatation -- ##
+print_agent()
+print("""
+   |----------------------------------------------------|
+   |  Welcome to the AI Healthcare Consultation System! |
+   |----------------------------------------------------|
+	  """)
+symptoms = input("""
+	🩺 >> Please describe your symptoms: """)
+    
+response = patient_agent.initiate_chat(
+	manager,
+	message=f"I am feeling {symptoms}. Can you help?",
 )
