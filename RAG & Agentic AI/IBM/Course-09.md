@@ -322,3 +322,137 @@ MCP servers expose three main types of capabilities:
 
 * APIs = manual integration layer for software systems
 * MCP = standardized, AI-native layer for connecting LLMs to tools and data dynamically
+
+
+## MCP App Demo
+
+Think of Context7 as a **documentation brain plugged into your IDE**.
+
+### 1. You (in Cursor / Windsurf)
+
+You type:
+
+> “How do I create a LangGraph React agent?”
+
+---
+
+### 2. MCP Client (inside IDE)
+
+The IDE doesn’t answer directly.
+
+It says:
+
+> “Wait, I should check MCP servers first.”
+
+---
+
+### 3. MCP Server (Context7)
+
+It exposes tools like:
+
+* `ResolveLibraryID` → finds what library you mean
+* `GetLibraryDocs` → fetches real documentation
+
+So it does:
+
+* detects “LangGraph”
+* retrieves correct docs/snippets
+
+---
+
+### 4. LLM (inside IDE)
+
+Now the model gets:
+
+* your question
+* * real docs from MCP
+
+Then it responds with:
+
+> a grounded, accurate code answer
+
+---
+
+## 🧩 Why this is powerful (this is the key idea)
+
+Without MCP:
+
+> LLM = “I think LangGraph works like this…” ❌ (hallucination risk)
+
+With MCP:
+
+> LLM = “Here’s what the official docs say…” ✅ (grounded output)
+
+So MCP basically turns an LLM into a:
+
+> **“tool-using system with live data access”**
+
+---
+
+## ⚔️ MCP vs APIs (this is the mental model upgrade)
+
+You already saw APIs vs MCP — here’s the real difference:
+
+### 🔧 API style (old way)
+
+* You manually integrate each service
+* Every tool has different format
+* No standard discovery
+
+> “I must code integration for each service”
+
+---
+
+### 🧠 MCP style (new way)
+
+* Standard protocol
+* AI can *discover tools automatically*
+* Same interface for docs, DBs, APIs, files
+
+> “AI figures out what tools exist and uses them”
+
+---
+
+## 🧑‍💻 Why Cursor/Windsurf matter here
+
+These IDEs are basically becoming:
+
+> **“AI operating systems for developers”**
+
+With MCP they can:
+
+* fetch docs (Context7)
+* run tools
+* query APIs
+* even connect to your local files
+
+So instead of:
+
+> Googling → StackOverflow → copy-paste
+
+You get:
+
+> Ask → MCP fetches truth → AI writes working code
+
+---
+
+## 🧠 Big picture (connect everything you learned)
+
+You just saw 4 layers of modern AI systems:
+
+### 1. Single agent systems
+
+(CrewAI / AG2 / BeeAI basics)
+→ agents + tools + roles
+
+### 2. Multi-agent systems
+
+→ planner, writer, reviewer, coordinator
+
+### 3. Tool frameworks
+
+→ custom functions, APIs, ReAct, structured outputs
+
+### 4. MCP layer (this video)
+
+→ universal tool/data access layer for all agents
