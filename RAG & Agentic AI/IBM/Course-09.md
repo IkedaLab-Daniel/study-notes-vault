@@ -176,3 +176,149 @@
   * MCP server handles retrieval
   * Returns only relevant document chunks to the LLM
 * Simplifies architecture and improves scalability
+
+## MCP vs API (Model Context Protocol Explained)
+
+### Overview
+
+* LLMs need external data and tools to be useful in real-world applications
+* Traditionally, this was done using **APIs**
+* In 2024, Anthropic introduced **MCP (Model Context Protocol)** as a new open standard for AI systems
+* MCP standardizes how AI applications connect to tools, data, and services
+
+---
+
+### MCP Explained
+
+* MCP (Model Context Protocol) is like a **USB-C port for AI systems**
+* It standardizes connections between:
+
+  * AI applications (hosts)
+  * LLMs (clients)
+  * External systems (servers)
+
+### MCP Architecture
+
+* **MCP Host**
+
+  * The main application (chat app, IDE, etc.)
+* **MCP Client**
+
+  * Runs inside the host
+  * Opens a JSON-RPC 2.0 session using MCP protocol
+* **MCP Server**
+
+  * Exposes capabilities like tools, data, and prompts
+  * Connects to:
+
+    * Databases
+    * APIs
+    * File systems
+    * Code repositories
+
+---
+
+### MCP Analogy (USB-C Model)
+
+* Host = Laptop
+* MCP Protocol = USB-C standard
+* MCP Servers = Peripherals (monitor, storage, power, etc.)
+* Key idea: **any compatible server works with any host using the same standard**
+
+---
+
+### MCP Capabilities (Primitives)
+
+MCP servers expose three main types of capabilities:
+
+#### 1. Tools
+
+* Actions/functions the AI can execute
+* Examples:
+
+  * `get_weather`
+  * `create_event`
+* LLM calls tool → server executes function
+
+#### 2. Resources
+
+* Read-only data sources
+* Examples:
+
+  * Files
+  * Database records
+  * Knowledge base entries
+
+#### 3. Prompts
+
+* Predefined prompt templates for structured usage
+
+> Not all MCP servers use all primitives, but tools are the most common.
+
+---
+
+### Key MCP Feature: Dynamic Discovery
+
+* MCP servers expose a **machine-readable catalog**
+
+  * `tools/list`
+  * `resources/list`
+  * `prompts/list`
+* Agents can:
+
+  * Discover capabilities at runtime
+  * Use new tools without code redeployment
+* This makes MCP highly **flexible and extensible**
+
+---
+
+### What APIs Are
+
+* APIs (Application Programming Interfaces) allow systems to communicate
+* Define rules for requesting and receiving data/services
+* Commonly used to integrate external functionality without building from scratch
+
+---
+
+### REST APIs (Most Common Type)
+
+* Communicate over HTTP
+* Standard methods:
+
+  * GET → retrieve data
+  * POST → create data
+  * PUT → update data
+  * DELETE → remove data
+
+#### Example
+
+* `GET /books/123` → fetch book details
+* `POST /loans` → borrow a book
+* Responses typically in **JSON format**
+
+---
+
+### MCP vs API (Key Differences)
+
+#### APIs
+
+* Generic system-to-system communication
+* Developer must manually:
+
+  * Define endpoints
+  * Handle integration logic
+* Fixed structure per service
+
+#### MCP
+
+* Designed specifically for **AI agents and LLMs**
+* Standardized discovery of tools and data
+* Dynamic usage at runtime
+* Works like a universal plug-and-play layer
+
+---
+
+### Key Insight
+
+* APIs = manual integration layer for software systems
+* MCP = standardized, AI-native layer for connecting LLMs to tools and data dynamically
