@@ -228,3 +228,21 @@ Perhaps the biggest issue was the siloed nature of the work. Architects, develop
 This separation was especially problematic for operations teams. They were responsible for deploying, running, and maintaining software in production, yet they were often the least familiar with the application because they had little involvement during development. This frequently led to deployment delays, operational challenges, and frustration on both sides.
 
 DevOps emerged as a response to these challenges. By breaking down silos and fostering collaboration between development and operations, DevOps enables faster delivery, better communication, reduced risk, and more reliable software deployment.
+
+## Extreme Programming, Agile, and the Path to DevOps
+
+Extreme Programming (XP), introduced by Kent Beck in 1996, was one of the earliest foundations of Agile thinking. It focused on improving software quality and responsiveness through rapid feedback loops. These loops operated at different time scales: long-term release planning in months, iteration planning in weeks, acceptance testing in days, daily stand-ups, hourly collaboration, and even minute-level unit testing and continuous programming. The goal was simple—deliver quickly, get feedback fast, and continuously improve the product.
+
+XP introduced practices like pair programming, where two developers work together on the same code. This improves code quality, spreads knowledge across the team, and helps junior developers learn directly from more experienced ones.
+
+Building on XP, the Agile Manifesto was created in 2001 by 17 software developers. It shifted software development priorities toward valuing individuals and interactions over tools and processes, working software over documentation, customer collaboration over rigid contracts, and responding to change over strict planning. Agile promotes adaptive planning, early delivery, continuous improvement, and iterative development through short cycles called sprints.
+
+While Agile greatly improved software development for developers, it exposed a major gap with operations teams. Developers were working in fast, iterative cycles, but operations teams were still using slow, ticket-based processes. This mismatch created delays, frustration, and inefficiencies.
+
+A common example shows this clearly: developers could complete features in weeks, but deploying them often required waiting months due to infrastructure provisioning delays. Even simple requests, like creating virtual machines, could take days or weeks due to manual processes and ticket backlogs.
+
+This disconnect led to “two-speed IT,” where developers bypassed internal IT systems by using external cloud services to get resources instantly. This behavior contributed to the rise of Shadow IT, where teams use unapproved tools and services outside official control.
+
+Agile alone could not solve this problem because it focused mainly on development, not operations. This gap highlighted the need for a new approach where both development and operations could work together at the same speed—ultimately leading to the emergence of DevOps.
+
+In summary, Extreme Programming laid the groundwork for Agile, and Agile transformed software development through collaboration, iteration, and adaptability. However, its limitations in addressing operations challenges helped set the stage for DevOps.
