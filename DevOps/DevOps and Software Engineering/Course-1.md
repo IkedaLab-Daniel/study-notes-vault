@@ -246,3 +246,27 @@ This disconnect led to “two-speed IT,” where developers bypassed internal IT
 Agile alone could not solve this problem because it focused mainly on development, not operations. This gap highlighted the need for a new approach where both development and operations could work together at the same speed—ultimately leading to the emergence of DevOps.
 
 In summary, Extreme Programming laid the groundwork for Agile, and Agile transformed software development through collaboration, iteration, and adaptability. However, its limitations in addressing operations challenges helped set the stage for DevOps.
+
+## Key DevOps Milestones and Influencers (2007–2019)
+
+DevOps began in 2007 when Patrick Debois recognized a fundamental problem: development and operations teams were not collaborating effectively. This idea sparked a movement to bridge the gap between the two disciplines and improve software delivery.
+
+In 2008, Andrew Clay Shafer attempted to start discussions around “Agile Infrastructure” at an Agile Conference, where Patrick Debois also joined the conversation. This meeting is often seen as the moment where the DevOps idea started taking shape through collaboration between early thinkers.
+
+A major breakthrough came in 2009 at the Velocity Conference when John Allspaw presented “10+ Deploys per Day – Dev and Ops Cooperation at Flickr.” This talk demonstrated that frequent, reliable deployments were possible when development and operations worked closely together, inspiring widespread interest.
+
+Also in 2009, Patrick Debois organized the first DevOpsDays conference in Ghent, Belgium. This event officially introduced the term “DevOps” and became a global community-driven conference series.
+
+In 2010, Jez Humble and David Farley published *Continuous Delivery*, which introduced automation practices for building, testing, and deploying software quickly and reliably. This helped formalize the technical foundation of modern DevOps.
+
+In 2013, Gene Kim, Kevin Behr, and George Spafford published *The Phoenix Project*, a novel that applied lean manufacturing principles to IT. It highlighted how DevOps principles could rescue struggling organizations by improving collaboration and flow.
+
+In 2015, Nicole Forsgren, Gene Kim, and Jez Humble founded DORA (DevOps Research and Assessment). Their research produced the influential State of DevOps Reports, which provided data-driven evidence that high-performing DevOps organizations consistently outperform others in speed, stability, and efficiency.
+
+In 2016, *The DevOps Handbook* was published by Gene Kim, Jez Humble, Patrick Debois, and John Willis. This book provided practical guidance for implementing DevOps practices based on real-world case studies.
+
+Community-driven growth continued through DevOpsDays events, which expanded globally and helped spread DevOps principles across industries. Bridget Kromhout played a key leadership role in organizing these events and contributing to the DevOps community, including through the “Arrested DevOps” podcast.
+
+Overall, DevOps evolved as a grassroots movement shaped by practitioners rather than vendors. Influential figures such as Patrick Debois, Andrew Shafer, John Allspaw, Jez Humble, Gene Kim, John Willis, Nicole Forsgren, and Bridget Kromhout helped define its principles and demonstrate its real-world impact.
+
+In summary, DevOps grew from early experiments in collaboration to a global movement driven by community events, research, and foundational books that emphasized culture, measurement, and continuous improvement.
