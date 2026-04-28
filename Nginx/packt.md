@@ -4752,3 +4752,214 @@ The FastCGI module is central to integrating NGINX with dynamic web applications
 * Providing powerful caching capabilities
 
 These same concepts largely apply to uWSGI and SCGI, making NGINX a flexible and high-performance gateway for a wide range of application platforms.
+
+## Setting Up PHP with NGINX Using FastCGI and PHP-FPM
+
+PHP works especially well with NGINX through **FastCGI**, thanks to **PHP-FPM** (PHP FastCGI Process Manager), which has been bundled with PHP since version 5.3.3.
+
+Unlike SCGI or uWSGI, FastCGI is the native and recommended protocol for PHP deployments.
+
+## Why Use PHP-FPM?
+
+PHP itself can process FastCGI requests, but PHP-FPM adds a dedicated process manager that greatly improves performance, scalability, and administration.
+
+Key advantages include:
+
+* Automatic daemonization (runs as a background service)
+* Efficient process management
+* Support for multiple worker pools
+* Improved logging
+* IP-based access controls
+* Optional chroot sandboxing
+* Better security and resource isolation
+
+## How the Architecture Works
+
+The communication flow is:
+
+```text
+Client Browser → NGINX → PHP-FPM → PHP Interpreter
+```
+
+* **NGINX** acts as the FastCGI client.
+* **PHP-FPM** acts as the FastCGI server and process manager.
+* **PHP workers** execute the requested scripts.
+
+Communication occurs over either:
+
+* TCP sockets (for example, `127.0.0.1:9000`)
+* Unix domain sockets (for example, `/run/php/php-fpm.sock`)
+
+## Installing PHP-FPM
+
+### On Red Hat / CentOS / Fedora
+
+```bash
+dnf install php-fpm
+```
+
+### On Ubuntu / Debian
+
+```bash
+apt install php-fpm
+```
+
+Most modern repositories provide packages such as:
+
+* `php-fpm`
+* `php8-fpm`
+
+## Important PHP Security Setting
+
+Edit your `php.ini` file and ensure the following setting is disabled:
+
+```ini
+cgi.fix_pathinfo=0
+```
+
+This is an important security measure that helps prevent unintended script execution vulnerabilities.
+
+## Key PHP-FPM Configuration Options
+
+The main configuration file is typically:
+
+```text
+/etc/php-fpm.conf
+```
+
+Or pool-specific files such as:
+
+```text
+/etc/php-fpm.d/www.conf
+```
+
+Important settings to review:
+
+* Worker process user and group
+* Socket or IP/port to listen on
+* Maximum number of child processes
+* Allowed client IP addresses
+* Optional Unix socket ownership and permissions
+
+## Managing PHP-FPM
+
+### Start or Restart
+
+```bash
+systemctl restart php-fpm
+```
+
+### Start (if not already running)
+
+```bash
+systemctl start php-fpm
+```
+
+### Check Status
+
+```bash
+systemctl status php-fpm
+```
+
+This command helps monitor:
+
+* Service health
+* Active processes
+* Current workload
+* Error messages
+
+## NGINX Configuration for PHP
+
+A basic NGINX server block for PHP looks like this:
+
+```nginx
+server {
+    listen 80;
+    server_name .website.com;
+    root /home/website/www;
+    index index.php index.html;
+
+    location ~* \.php$ {
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+```
+
+## Explanation of Key Directives
+
+* `fastcgi_pass`: Specifies the PHP-FPM backend
+* `SCRIPT_FILENAME`: Full filesystem path to the PHP script
+* `PATH_INFO`: Additional path information for the script
+* `include fastcgi_params`: Loads standard FastCGI parameters
+
+## Reload NGINX
+
+After updating the configuration:
+
+```bash
+systemctl reload nginx
+```
+
+## Testing PHP Integration
+
+Create a simple test file:
+
+```bash
+echo "<?php phpinfo(); ?>" > /home/website/www/index.php
+```
+
+Then visit:
+
+```text
+http://localhost/
+```
+
+Or your configured domain.
+
+If everything is working correctly, you'll see the PHP information page.
+
+## Common Issues
+
+### 403 Forbidden
+
+Usually caused by incorrect file permissions or ownership.
+
+Verify that:
+
+* Website files are readable by the PHP-FPM user
+* Directory permissions allow traversal
+* PHP-FPM is running under the correct user and group
+
+### Connection Refused
+
+Possible causes:
+
+* PHP-FPM is not running
+* Wrong socket or port configured
+* Firewall blocking TCP connections
+
+## Best Practices
+
+* Use Unix sockets for local communication when possible
+* Set `cgi.fix_pathinfo=0`
+* Separate applications into different PHP-FPM pools
+* Restrict access to PHP-FPM using allowed client settings
+* Monitor PHP-FPM status regularly
+* Tune worker limits based on server resources
+
+## Summary
+
+Integrating PHP with NGINX is straightforward using PHP-FPM and FastCGI.
+
+The setup provides:
+
+* High performance
+* Efficient process management
+* Strong security
+* Excellent scalability
+* Flexible configuration options
+
+PHP-FPM is the standard and recommended way to run PHP applications with NGINX in production environments.
