@@ -941,3 +941,373 @@ The `configure` step determines exactly how NGINX will be built and installed. T
 * Fewer surprises later
 
 A carefully configured build is the foundation of a reliable NGINX deployment.
+
+# Basic NGINX Configuration
+
+## Overview
+
+Now that NGINX is installed, the next step is learning how to configure it. NGINX uses a clean, modular configuration system that is both powerful and relatively easy to understand.
+
+In this section, you will learn:
+
+* How NGINX configuration files are structured
+* The syntax used in configuration files
+* How directives and blocks work
+* How configuration files can include other files
+* How to test your configuration for errors
+
+A solid understanding of these basics is essential before moving on to advanced topics such as virtual hosts, reverse proxying, load balancing, and SSL/TLS.
+
+---
+
+# Where Is the Main Configuration File?
+
+The location depends on how NGINX was installed.
+
+## Package Manager Installation
+
+```text id="b2z6wr"
+/etc/nginx/nginx.conf
+```
+
+## Source Installation (Default)
+
+```text id="n7pnux"
+/usr/local/nginx/conf/nginx.conf
+```
+
+---
+
+# Understanding NGINX Configuration Syntax
+
+NGINX configuration files are made up of:
+
+* **Directives**
+* **Blocks (contexts)**
+* **Comments**
+* **Include statements**
+
+---
+
+# 1. Directives
+
+A directive is a configuration instruction.
+
+### Syntax
+
+```nginx id="lyx2sp"
+directive_name value;
+```
+
+Every directive:
+
+* Begins with a directive name
+* Followed by one or more values
+* Ends with a semicolon (`;`)
+
+### Example
+
+```nginx id="oz8k77"
+worker_processes 1;
+```
+
+This tells NGINX to run with one worker process.
+
+---
+
+# 2. Comments
+
+Comments are ignored by NGINX and are used for documentation.
+
+### Syntax
+
+```nginx id="zh9yjv"
+# This is a comment
+```
+
+You can place comments:
+
+* On their own line
+* After a directive
+
+### Example
+
+```nginx id="vb8v8t"
+worker_processes 4;  # Number of worker processes
+```
+
+---
+
+# 3. Blocks (Contexts)
+
+Blocks group related directives together.
+
+### Syntax
+
+```nginx id="ojc3g4"
+context_name {
+    directive value;
+}
+```
+
+### Example
+
+```nginx id="ok9ajx"
+events {
+    worker_connections 1024;
+}
+```
+
+The `events` block contains settings related to connection handling.
+
+---
+
+# Common Top-Level Contexts
+
+| Context    | Purpose                           |
+| ---------- | --------------------------------- |
+| `main`     | Global settings                   |
+| `events`   | Connection processing             |
+| `http`     | HTTP server settings              |
+| `server`   | Virtual host configuration        |
+| `location` | URL matching and request handling |
+
+---
+
+# Example Basic Configuration Structure
+
+```nginx id="7xg2kr"
+user nginx;
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+    }
+}
+```
+
+---
+
+# Important Core Directives
+
+## `worker_processes`
+
+Determines how many worker processes NGINX will use.
+
+```nginx id="e9l6j7"
+worker_processes auto;
+```
+
+Using `auto` allows NGINX to match the number of CPU cores automatically.
+
+---
+
+## `user`
+
+Specifies which system user runs worker processes.
+
+```nginx id="z4izkq"
+user nginx;
+```
+
+---
+
+## `pid`
+
+Defines the location of the process ID file.
+
+```nginx id="x5ldfx"
+pid /run/nginx.pid;
+```
+
+---
+
+## `error_log`
+
+Specifies where error logs are written.
+
+```nginx id="ehgxy0"
+error_log /var/log/nginx/error.log;
+```
+
+---
+
+# The `include` Directive
+
+The `include` directive inserts the contents of another file into the current configuration.
+
+### Example
+
+```nginx id="m7uww2"
+include mime.types;
+```
+
+This imports MIME type definitions.
+
+---
+
+# Why Use Include Files?
+
+Benefits include:
+
+* Better organization
+* Easier maintenance
+* Modular configuration
+* Separation of concerns
+* Simpler troubleshooting
+
+---
+
+# Example of File Inclusion
+
+## Main Configuration
+
+```nginx id="63b9dj"
+user nginx;
+worker_processes auto;
+include other_settings.conf;
+```
+
+## Included File (`other_settings.conf`)
+
+```nginx id="80t7yo"
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+```
+
+NGINX processes this as if all content were in one file.
+
+---
+
+# Wildcard Includes
+
+NGINX supports file globbing.
+
+```nginx id="knk5gk"
+include /etc/nginx/conf.d/*.conf;
+```
+
+This includes all `.conf` files in the specified directory.
+
+This is commonly used for:
+
+* Virtual hosts
+* Site-specific configurations
+* Modular service definitions
+
+---
+
+# Common Included Files
+
+| File              | Purpose                               |
+| ----------------- | ------------------------------------- |
+| `mime.types`      | MIME type mappings                    |
+| `fastcgi.conf`    | FastCGI settings                      |
+| `proxy.conf`      | Reverse proxy settings                |
+| `conf.d/*.conf`   | Additional configurations             |
+| `sites-enabled/*` | Enabled virtual hosts (Debian/Ubuntu) |
+
+---
+
+# Configuration Testing
+
+Always test your configuration before reloading or restarting NGINX.
+
+```bash id="iydx6r"
+sudo nginx -t
+```
+
+Successful output:
+
+```text id="o3i8ly"
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+---
+
+# Common Configuration Errors
+
+## Missing Included File
+
+```text id="a0wlkd"
+open() "/etc/nginx/missing.conf" failed
+```
+
+This occurs when a referenced file does not exist.
+
+---
+
+# Wildcard Include Behavior
+
+If no files match a wildcard pattern, NGINX does **not** generate an error.
+
+```nginx id="k9m5vn"
+include /etc/nginx/sites/*.conf;
+```
+
+If the directory is empty, configuration testing still succeeds.
+
+---
+
+# Best Practices
+
+* Keep configuration modular using `include`.
+* Use separate files for each site or service.
+* Always test configuration changes with `nginx -t`.
+* Comment your configuration for clarity.
+* Use `worker_processes auto` for most systems.
+
+---
+
+# Recommended Directory Layout
+
+```text id="7a5a14"
+/etc/nginx/
+├── nginx.conf
+├── mime.types
+├── conf.d/
+│   ├── default.conf
+│   └── api.conf
+└── sites-enabled/
+    ├── example.com.conf
+    └── app.example.com.conf
+```
+
+---
+
+# Key Takeaways
+
+* NGINX configuration is based on directives and blocks.
+* Every directive ends with a semicolon.
+* Blocks organize related settings.
+* `include` makes configuration modular and manageable.
+* Always validate your configuration before applying changes.
+
+---
+
+# Next Steps
+
+With the syntax mastered, you're ready to learn:
+
+* HTTP module configuration
+* Virtual host setup
+* Reverse proxy configuration
+* SSL/TLS implementation
+* Performance optimization
+
+Understanding the configuration structure is the foundation for all advanced NGINX administration.
