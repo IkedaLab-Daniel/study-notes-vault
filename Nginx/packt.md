@@ -2428,3 +2428,293 @@ Once you understand them, you can build:
 Together, they form NGINX's request-handling pipeline.
 
 Master these, and you're officially speaking fluent NGINX.
+
+---
+
+# `alias`
+
+Used **inside a `location` block only**. It maps a URL path to a completely different directory on disk.
+
+```nginx
+location /admin/ {
+    alias /var/www/locked/;
+}
+```
+
+* Request: `/admin/report.html`
+* File served: `/var/www/locked/report.html`
+
+Notice that `/admin/` is replaced entirely by the alias path.
+
+### Important
+
+* `alias` should usually end with a trailing slash when mapping directories.
+* It differs from `root`.
+
+With `root`:
+
+```nginx
+location /admin/ {
+    root /var/www;
+}
+```
+
+Request `/admin/report.html` becomes:
+`/var/www/admin/report.html`
+
+With `alias`:
+`/var/www/locked/report.html`
+
+Think of it this way: `root` appends; `alias` replaces.
+
+---
+
+## `error_page`
+
+Defines custom pages or actions for HTTP errors.
+
+```nginx
+error_page 404 /not_found.html;
+error_page 500 502 503 504 /50x.html;
+```
+
+You can also:
+
+* Redirect elsewhere
+* Jump to a named location
+* Change the response code
+
+```nginx
+error_page 404 =200 /index.html;
+```
+
+This is commonly used in Single Page Applications so client-side routing works.
+
+---
+
+## `if_modified_since`
+
+Controls how NGINX handles the `If-Modified-Since` request header.
+
+```nginx
+if_modified_since exact;
+```
+
+Possible values:
+
+* `off` – ignore the header
+* `exact` – only return `304 Not Modified` if timestamps match exactly
+* `before` – return `304` if the file has not changed since that time
+
+Default:
+
+```nginx
+if_modified_since exact;
+```
+
+Useful for browser caching and reducing bandwidth.
+
+---
+
+## `index`
+
+Specifies the default file served when a directory is requested.
+
+```nginx
+index index.php index.html;
+```
+
+If someone visits:
+
+```text
+https://example.com/
+```
+
+NGINX looks for:
+
+1. `index.php`
+2. `index.html`
+
+and serves the first one it finds.
+
+---
+
+## `recursive_error_pages`
+
+Allows error pages themselves to trigger other error pages.
+
+```nginx
+recursive_error_pages on;
+```
+
+Normally off. Mostly useful in advanced custom error handling setups.
+
+---
+
+## `try_files`
+
+One of the most useful directives. It checks for files in order and serves the first one found.
+
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+
+How it works:
+
+1. Try exact file (`$uri`)
+2. Try directory (`$uri/`)
+3. Fallback to `/index.html`
+
+This is the standard setup for React, Vue, and other SPAs.
+
+### Example for reverse proxy fallback
+
+```nginx
+location / {
+    try_files $uri $uri.html $uri.xml @backend;
+}
+```
+
+If none exist, request is passed to `@backend`.
+
+### Security warning
+
+Never do this:
+
+```nginx
+try_files $uri $uri.php @backend;
+```
+
+That can accidentally expose PHP source code. A spectacularly bad surprise.
+
+---
+
+# Connection Handling Directives
+
+## `keepalive_requests`
+
+Maximum number of requests allowed on one persistent connection.
+
+```nginx
+keepalive_requests 100;
+```
+
+Default: `100`
+
+---
+
+## `keepalive_timeout`
+
+How long to keep an idle connection open.
+
+```nginx
+keepalive_timeout 75;
+```
+
+Or:
+
+```nginx
+keepalive_timeout 75 60;
+```
+
+* First value: server timeout
+* Second value: sent to client in the `Keep-Alive` header
+
+---
+
+## `keepalive_disable`
+
+Disable keepalive for certain browsers.
+
+```nginx
+keepalive_disable msie6;
+```
+
+Default is already `msie6` because, well, Internet Explorer liked to keep life interesting.
+
+---
+
+## `send_timeout`
+
+Closes a connection if the client stops receiving data.
+
+```nginx
+send_timeout 60;
+```
+
+Default: `60s`
+
+---
+
+# Request Body Handling
+
+## `client_body_in_file_only`
+
+Stores incoming request bodies (such as POST data) in files.
+
+```nginx
+client_body_in_file_only clean;
+```
+
+Options:
+
+* `off` – default
+* `clean` – store temporarily, then delete
+* `on` – store permanently (mainly for debugging)
+
+Use `on` cautiously, unless you enjoy mystery files multiplying.
+
+---
+
+## `client_body_in_single_buffer`
+
+Stores the entire request body in one memory buffer.
+
+```nginx
+client_body_in_single_buffer on;
+```
+
+Useful for some performance optimizations or modules that prefer contiguous data.
+
+Default:
+
+```nginx
+off
+```
+
+---
+
+# Quick Practical Example
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+    root /var/www/example;
+
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /admin/ {
+        alias /var/www/admin-panel/;
+    }
+
+    error_page 404 /404.html;
+
+    keepalive_timeout 65;
+    send_timeout 60;
+}
+```
+
+This setup:
+
+* Serves files from `/var/www/example`
+* Falls back to `index.html` for SPA routes
+* Maps `/admin/` to a separate directory
+* Uses a custom 404 page
+* Optimizes connection handling
