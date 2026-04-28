@@ -1311,3 +1311,328 @@ With the syntax mastered, you're ready to learn:
 * Performance optimization
 
 Understanding the configuration structure is the foundation for all advanced NGINX administration.
+
+---
+
+# Understanding NGINX Configuration Syntax
+
+NGINX configuration is built around **directives** and **blocks**. Each directive belongs to a specific module, and when that module is enabled, its directives become available.
+
+## Directives and Modules
+
+A directive is a configuration instruction. For example:
+
+```nginx
+worker_processes auto;
+```
+
+Some directives are simple single-line instructions, while others create blocks.
+
+Modules can also introduce **directive blocks**, which group related settings.
+
+For example:
+
+```nginx
+events {
+    worker_connections 1024;
+}
+```
+
+Here:
+
+* `events` is a block directive provided by the Events module.
+* `worker_connections` is only valid inside the `events` block.
+
+Trying to place `worker_connections` outside of `events` would cause an error.
+
+---
+
+# The Main Block
+
+The top level of the configuration file is called the **main block**.
+
+Directives placed here affect the entire NGINX server.
+
+Example:
+
+```nginx
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+```
+
+These settings apply globally.
+
+---
+
+# Nested Blocks
+
+NGINX allows blocks to be nested in a logical hierarchy.
+
+A typical structure looks like this:
+
+```nginx
+http {
+    server {
+        listen 80;
+        server_name example.com;
+
+        location / {
+            root /var/www/html;
+            index index.html;
+        }
+    }
+}
+```
+
+## Block Hierarchy
+
+* **main**
+
+  * **http**
+
+    * **server**
+
+      * **location**
+
+Each level has a specific purpose:
+
+* `http`: Global HTTP settings
+* `server`: Configuration for a virtual host (website)
+* `location`: Rules for specific URIs or paths
+
+---
+
+# Example Explained
+
+```nginx
+http {
+    server {
+        listen 80;
+        server_name example.com;
+        access_log /var/log/nginx/example.com.log;
+
+        location ^~ /admin/ {
+            index index.php;
+        }
+    }
+}
+```
+
+### What this does:
+
+* Handles HTTP traffic
+* Hosts a website for `example.com`
+* Listens on port 80
+* Logs requests to a custom log file
+* Applies special settings for URLs starting with `/admin/`
+
+---
+
+# Configuration Inheritance
+
+Child blocks inherit settings from parent blocks unless explicitly overridden.
+
+Example:
+
+```nginx
+server {
+    access_log /var/log/nginx/access.log;
+
+    location /admin/ {
+        access_log off;
+    }
+}
+```
+
+### Result:
+
+* Logging is enabled for the entire server
+* Logging is disabled for `/admin/`
+
+The child block overrides the parent setting.
+
+---
+
+# Directive-Specific Syntax
+
+Each directive has its own syntax rules.
+
+Simple example:
+
+```nginx
+root /var/www/html;
+```
+
+Complex example:
+
+```nginx
+rewrite ^/(.*)\.(png|jpg|gif)$ /image.php?file=$1&format=$2 last;
+```
+
+This uses a regular expression to rewrite image requests.
+
+Not all directives are this fancy, but some can get surprisingly spicy.
+
+---
+
+# Size Units
+
+NGINX supports shorthand units for file sizes:
+
+* `k` or `K` = Kilobytes
+* `m` or `M` = Megabytes
+* `g` or `G` = Gigabytes
+
+These are equivalent:
+
+```nginx
+client_max_body_size 2G;
+client_max_body_size 2048M;
+client_max_body_size 2097152k;
+```
+
+---
+
+# Time Units
+
+NGINX also supports shorthand for time values:
+
+* `ms` = Milliseconds
+* `s` = Seconds
+* `m` = Minutes
+* `h` = Hours
+* `d` = Days
+* `w` = Weeks
+* `M` = Months (30 days)
+* `y` = Years (365 days)
+
+Examples:
+
+```nginx
+client_body_timeout 3m;
+client_body_timeout 180s;
+client_body_timeout 180;
+```
+
+All three are equivalent because the default unit is seconds.
+
+You can also combine units:
+
+```nginx
+client_body_timeout 1m30s;
+client_body_timeout '1m 30s 500ms';
+```
+
+---
+
+# Variables
+
+NGINX provides built-in variables, which always begin with `$`.
+
+Example:
+
+```nginx
+log_format main '$pid - $nginx_version - $remote_addr';
+```
+
+Common variables include:
+
+* `$remote_addr` – Client IP address
+* `$request_uri` – Requested URI
+* `$status` – Response status code
+* `$host` – Host header
+* `$nginx_version` – NGINX version
+
+---
+
+# Important Note About Variables
+
+Not every directive supports variable expansion.
+
+For example:
+
+```nginx
+error_log logs/error-$nginx_version.log;
+```
+
+This will literally create a file named:
+
+```text
+error-$nginx_version.log
+```
+
+—not one containing the actual version number.
+
+---
+
+# String Values
+
+Strings can be written in three ways.
+
+## Without quotes
+
+```nginx
+root /var/www/html;
+```
+
+## With single quotes
+
+```nginx
+root '/var/www/my website';
+```
+
+## With double quotes
+
+```nginx
+root "/var/www/my website";
+```
+
+Use quotes when the value contains:
+
+* spaces
+* semicolons (`;`)
+* curly braces (`{}`)
+
+Alternatively, you can escape special characters with a backslash.
+
+---
+
+# Duplicate Directives
+
+Most directives can only appear once per block.
+
+Invalid:
+
+```nginx
+server {
+    root /var/www/site1;
+    root /var/www/site2;
+}
+```
+
+This will cause NGINX to reject the configuration.
+
+### Exceptions
+
+Some directives, such as:
+
+* `allow`
+* `deny`
+
+can appear multiple times.
+
+---
+
+# Key Takeaways
+
+* NGINX configuration is modular.
+* Directives belong to modules.
+* Blocks organize configuration hierarchically.
+* Child blocks inherit parent settings.
+* Each directive has its own syntax.
+* Shorthand units simplify size and time values.
+* Variables are powerful, but not universally supported.
+* Most directives cannot be repeated in the same block.
+
+NGINX configuration may look intimidating at first, but once you understand its block-based structure, it becomes surprisingly elegant—like LEGO for web servers, only with fewer chances of stepping on it.
