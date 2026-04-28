@@ -2033,7 +2033,7 @@ Boom—zero downtime. Your users won't even notice.
 
 ---
 
-# Quick Summary
+## Quick Summary
 
 * **Core module**: Controls NGINX itself
 * **Events module**: Controls connection handling
@@ -2042,3 +2042,389 @@ Boom—zero downtime. Your users won't even notice.
 Together, these modules form the backbone of every NGINX server.
 
 Master these, and the rest of NGINX becomes much easier to understand.
+
+# Exploring the HTTP Configuration in NGINX
+
+Now we're getting to the fun part: actually serving websites.
+
+The **HTTP Core Module** is the heart of NGINX's web-serving functionality. It provides the blocks, directives, and variables that make it possible to host websites, route requests, and control how content is delivered.
+
+Without this module, NGINX would be a very efficient... nothing. Fast, but nothing.
+
+---
+
+# The Three Core HTTP Blocks
+
+The HTTP module introduces three essential blocks:
+
+```nginx
+http {
+    server {
+        location / {
+            # Configuration here
+        }
+    }
+}
+```
+
+Think of them as a hierarchy:
+
+* **http** → Global HTTP settings
+* **server** → One website (virtual host)
+* **location** → Rules for specific URLs or paths
+
+---
+
+# 1. `http` Block
+
+This is the top-level container for all web-related configuration.
+
+It must appear in the main configuration file.
+
+```nginx
+http {
+    include mime.types;
+    default_type application/octet-stream;
+}
+```
+
+Typical settings here include:
+
+* MIME types
+* Logging formats
+* Compression
+* Timeouts
+* Default behaviors
+
+Anything defined here is inherited by all `server` and `location` blocks unless overridden.
+
+---
+
+# 2. `server` Block
+
+A `server` block defines a **virtual host**—a website.
+
+```nginx
+server {
+    listen 80;
+    server_name example.com www.example.com;
+}
+```
+
+Each `server` block can represent:
+
+* A domain
+* A subdomain
+* A specific IP/port combination
+
+You can host multiple websites on a single NGINX server using multiple server blocks.
+
+---
+
+# 3. `location` Block
+
+A `location` block applies rules to specific URIs.
+
+```nginx
+location /images/ {
+    root /var/www/assets;
+}
+```
+
+This lets you customize behavior for:
+
+* Static files
+* API routes
+* Admin panels
+* Downloads
+* Proxied applications
+
+You can even nest location blocks in some cases.
+
+---
+
+# Configuration Inheritance
+
+Settings flow downward.
+
+```nginx
+http {
+    gzip on;
+
+    server {
+        location /downloads/ {
+            gzip off;
+        }
+    }
+}
+```
+
+Result:
+
+* Compression is enabled everywhere
+* Except inside `/downloads/`
+
+Child blocks override parent settings.
+
+---
+
+# The `listen` Directive
+
+Defines which IP address and port the server listens on.
+
+```nginx
+server {
+    listen 80;
+}
+```
+
+## Common Examples
+
+```nginx
+listen 80;
+listen 443 ssl;
+listen 443 ssl http2;
+listen 127.0.0.1:8080;
+listen [::]:80;
+```
+
+---
+
+# Useful `listen` Options
+
+* `default_server` – Fallback server
+* `ssl` – Enable HTTPS
+* `http2` – Enable HTTP/2
+* `reuseport` – Improve performance under heavy load
+
+Example:
+
+```nginx
+listen 443 ssl http2 default_server;
+```
+
+---
+
+# The `server_name` Directive
+
+Specifies which hostnames this server block handles.
+
+```nginx
+server_name example.com www.example.com;
+```
+
+NGINX matches the request's `Host` header against this list.
+
+---
+
+## Wildcards
+
+```nginx
+server_name *.example.com;
+```
+
+Matches:
+
+* `blog.example.com`
+* `shop.example.com`
+
+---
+
+## Combined Root + Subdomains
+
+```nginx
+server_name .example.com;
+```
+
+Matches both:
+
+* `example.com`
+* `www.example.com`
+* Any subdomain
+
+Very handy.
+
+---
+
+## Regular Expressions
+
+```nginx
+server_name ~^(www)\.example\.com$;
+```
+
+Use regex only when necessary—they're more expensive to process.
+
+---
+
+# Default Server Behavior
+
+If no `server_name` matches, NGINX uses:
+
+1. The server block marked with `default_server`
+2. Otherwise, the first matching `listen` block
+
+Example:
+
+```nginx
+listen 80 default_server;
+```
+
+---
+
+# Important HTTP Directives
+
+## `root`
+
+Defines the document root.
+
+```nginx
+root /var/www/example.com;
+```
+
+This is where NGINX looks for files.
+
+---
+
+## `index`
+
+Specifies default index files.
+
+```nginx
+index index.html index.htm index.php;
+```
+
+When a directory is requested, NGINX tries these files in order.
+
+---
+
+## `error_page`
+
+Custom error pages.
+
+```nginx
+error_page 404 /404.html;
+error_page 500 502 503 504 /50x.html;
+```
+
+A nice touch for production sites.
+
+---
+
+# Performance-Related Directives
+
+## `sendfile`
+
+Enables zero-copy file transfers.
+
+```nginx
+sendfile on;
+```
+
+This usually improves performance for static files.
+
+---
+
+## `sendfile_max_chunk`
+
+Limits the amount of data per sendfile call.
+
+```nginx
+sendfile_max_chunk 1m;
+```
+
+Useful for preventing a single large file transfer from monopolizing a worker.
+
+---
+
+## `reset_timedout_connection`
+
+Frees resources immediately after client timeout.
+
+```nginx
+reset_timedout_connection on;
+```
+
+Helps reduce memory usage under abusive or broken connections.
+
+---
+
+# A Basic Website Configuration
+
+```nginx
+http {
+    include mime.types;
+    default_type application/octet-stream;
+
+    sendfile on;
+    keepalive_timeout 65;
+
+    server {
+        listen 80;
+        server_name example.com www.example.com;
+
+        root /var/www/example.com;
+        index index.html index.htm;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+    }
+}
+```
+
+---
+
+# How Request Matching Works
+
+When a request arrives:
+
+1. NGINX matches the IP and port (`listen`)
+2. It checks the `Host` header (`server_name`)
+3. It finds the best matching `location`
+
+This three-step process is incredibly fast.
+
+---
+
+# Simple Example
+
+Request:
+
+```text
+http://example.com/images/logo.png
+```
+
+NGINX will:
+
+* Match `listen 80`
+* Match `server_name example.com`
+* Match `location /images/` (if present)
+
+Otherwise, it falls back to the best available match.
+
+---
+
+# Why This Matters
+
+These three blocks are the backbone of all NGINX HTTP configuration.
+
+Once you understand them, you can build:
+
+* Static websites
+* Reverse proxies
+* API gateways
+* Load balancers
+* SSL-enabled applications
+* Multi-domain hosting
+
+---
+
+# Quick Summary
+
+* `http` = Global HTTP settings
+* `server` = One website or virtual host
+* `location` = Rules for specific URIs
+
+Together, they form NGINX's request-handling pipeline.
+
+Master these, and you're officially speaking fluent NGINX.
