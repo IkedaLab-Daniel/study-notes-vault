@@ -3063,3 +3063,330 @@ This configuration is ideal for:
 * File uploads
 * API servers
 * Modern web applications
+
+---
+
+# 🧾 MIME Types (What the browser *thinks* a file is)
+
+## `default_type`
+
+When NGINX can’t figure out a file’s type, it falls back here:
+
+```nginx id="m1n8qx"
+default_type text/plain;
+```
+
+### What this really means
+
+If you request something like:
+
+```
+/file.unknown
+```
+
+NGINX asks:
+
+* “Do I know this extension from `types {}` or `mime.types`?”
+* If NO → it uses `default_type`
+
+### Common real-world setting
+
+```nginx id="z7kq3t"
+default_type application/octet-stream;
+```
+
+👉 This forces unknown files to be treated as “downloadable binary”
+
+So instead of:
+
+* browser trying to display garbage
+
+You get:
+
+* clean download behavior
+
+---
+
+# ⚡ MIME Hash Tables (Performance internals)
+
+NGINX doesn’t search MIME types line-by-line. It uses hash tables.
+
+## `types_hash_max_size`
+
+Controls how big that lookup structure can grow:
+
+```nginx id="h3p9aa"
+types_hash_max_size 4096;
+```
+
+* Bigger = more entries allowed
+* Helps when you have many file types
+
+Default:
+
+* `4k` or `8k` depending on system
+
+👉 You usually only touch this when NGINX literally warns you during startup.
+
+---
+
+## `types_hash_bucket_size`
+
+Controls how data is grouped inside the hash table:
+
+```nginx id="b2v7lm"
+types_hash_bucket_size 64;
+```
+
+Think of it like:
+
+> how NGINX organizes MIME types for fast lookup
+
+Default:
+
+* `64`
+
+### When it matters
+
+Only change if you see startup warnings like:
+
+> “could not build types_hash, you should increase types_hash_bucket_size”
+
+Otherwise: leave it alone.
+
+---
+
+# 🚫 LIMITING & SECURITY CONTROL
+
+This is where NGINX starts behaving like a gatekeeper.
+
+---
+
+## `limit_except` (HTTP method control)
+
+This is basically:
+
+> “What HTTP methods are allowed here?”
+
+```nginx id="k9x0dd"
+location /admin/ {
+    limit_except GET {
+        deny all;
+    }
+}
+```
+
+### What this means:
+
+* Only `GET` allowed
+* `POST`, `PUT`, `DELETE` → blocked
+
+### Why this is powerful
+
+You can lock down:
+
+* admin panels
+* APIs
+* sensitive endpoints
+
+And optionally allow exceptions:
+
+```nginx id="q8p1zz"
+limit_except GET {
+    allow 192.168.1.0/24;
+    deny all;
+}
+```
+
+👉 So internal network gets more freedom
+
+---
+
+## `limit_rate` (bandwidth throttling)
+
+```nginx id="r4v7ee"
+limit_rate 500k;
+```
+
+This limits download speed per connection.
+
+### Important detail:
+
+It’s **per connection**, not per user.
+
+So:
+
+* 2 connections = double speed
+
+---
+
+## `limit_rate_after` (burst then slow down)
+
+```nginx id="t6m2pp"
+limit_rate_after 10m;
+```
+
+Meaning:
+
+* First 10MB → full speed
+* After that → apply `limit_rate`
+
+### Real use case
+
+Good for:
+
+* letting pages load fast
+* slowing down large downloads afterward
+
+---
+
+## `satisfy` (security logic mode)
+
+This is a big one.
+
+```nginx id="n8a1ss"
+satisfy any;
+```
+
+or
+
+```nginx id="c3d9kk"
+satisfy all;
+```
+
+### Think of it like logic gates:
+
+### `all`
+
+User must pass:
+
+* IP rule AND password
+
+### `any`
+
+User passes if:
+
+* IP rule OR password
+
+### Example scenario
+
+Admin panel:
+
+* internal IPs OR login required
+
+---
+
+## `internal` (hidden routes)
+
+```nginx id="u2w5qq"
+location /admin/ {
+    internal;
+}
+```
+
+### What it does:
+
+* Blocks direct browser access
+* Only allows internal redirects
+
+So users can’t just type:
+
+```
+/admin/
+```
+
+But NGINX can still route there internally via:
+
+* `rewrite`
+* `try_files`
+* backend logic
+
+---
+
+# 📂 FILE SYSTEM BEHAVIOR
+
+---
+
+## `disable_symlinks` (security control)
+
+```nginx id="s1l3yy"
+disable_symlinks on;
+```
+
+### Why this exists
+
+Symlinks can be abused to:
+
+* escape web root
+* expose sensitive files
+
+### Modes:
+
+#### `on`
+
+* block all symlinks
+
+#### `if_not_owner`
+
+* allow only if same owner
+
+#### `from=`
+
+* partial trust zone
+
+Example:
+
+```nginx id="p7x8zz"
+disable_symlinks on from=$document_root;
+```
+
+👉 Only trust symlinks inside your web root
+
+---
+
+## `directio` (bypass cache for big files)
+
+```nginx id="d9k2ll"
+directio 4m;
+```
+
+### What it does:
+
+* Large files skip OS cache
+* read directly from disk
+
+### Why that matters:
+
+Good for:
+
+* video streaming
+* large downloads
+
+Bad for:
+
+* small files (adds overhead)
+
+---
+
+## `directio_alignment`
+
+```nginx id="a8v4mm"
+directio_alignment 4k;
+```
+
+### Why it exists
+
+Storage systems (like XFS) prefer aligned reads.
+
+So:
+
+* reduces disk inefficiency
+* improves throughput
+
+---
+
+# 🧠 Big picture (this section in one idea)
+
+This whole chapter is basically NGINX saying:
+
+> “I don’t just serve files. I decide *how*, *when*, *who*, and *at what speed* they are served.”
