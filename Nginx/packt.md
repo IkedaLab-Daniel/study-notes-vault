@@ -4427,3 +4427,328 @@ NGINX acts like a smart receptionist:
 * static files? “I’ve got this.”
 * dynamic PHP? “Forwarding to PHP.”
 * Python app? “Right this way.”
+
+## Main FastCGI, uWSGI, and SCGI Directives in NGINX
+
+NGINX includes built-in support for FastCGI, uWSGI, and SCGI, so no additional compilation is required. These modules allow NGINX to forward requests to backend applications such as PHP, Python, or other dynamic web frameworks.
+
+## Core Connection Directives
+
+### `fastcgi_pass`
+
+Specifies the backend FastCGI server.
+
+* TCP socket:
+
+  ```nginx
+  fastcgi_pass 127.0.0.1:9000;
+  ```
+* Unix socket:
+
+  ```nginx
+  fastcgi_pass unix:/tmp/fastcgi.socket;
+  ```
+* Upstream block:
+
+  ```nginx
+  upstream fastcgi_backend {
+      server 127.0.0.1:9000;
+      server 127.0.0.1:9001;
+  }
+
+  location ~ \.php$ {
+      fastcgi_pass fastcgi_backend;
+  }
+  ```
+
+## Passing Request Parameters
+
+### `fastcgi_param`
+
+Defines parameters sent to the FastCGI application.
+
+Essential parameters include:
+
+```nginx
+fastcgi_param SCRIPT_FILENAME /path/to/site$fastcgi_script_name;
+fastcgi_param QUERY_STRING    $query_string;
+```
+
+For POST requests, these are also required:
+
+```nginx
+fastcgi_param REQUEST_METHOD  $request_method;
+fastcgi_param CONTENT_TYPE    $content_type;
+fastcgi_param CONTENT_LENGTH  $content_length;
+```
+
+The standard `fastcgi_params` file already includes most required parameters, except `SCRIPT_FILENAME`, which must be set manually.
+
+## Request and Response Handling
+
+### `fastcgi_index`
+
+Defines the default script when a directory is requested.
+
+```nginx
+fastcgi_index index.php;
+```
+
+### `fastcgi_split_path_info`
+
+Splits URLs containing extra path information.
+
+```nginx
+fastcgi_split_path_info ^(.+\.php)(.*)$;
+fastcgi_param SCRIPT_FILENAME /path/to/site$fastcgi_script_name;
+fastcgi_param PATH_INFO       $fastcgi_path_info;
+```
+
+Useful for URLs like:
+
+```text
+/page.php/param1/param2
+```
+
+## Timeout Controls
+
+### `fastcgi_connect_timeout`
+
+Maximum time to establish a connection to the backend.
+
+Default: 60 seconds
+
+### `fastcgi_send_timeout`
+
+Maximum delay between successive writes to the backend.
+
+Default: 60 seconds
+
+### `fastcgi_read_timeout`
+
+Maximum time to wait for a response from the backend.
+
+Default: 60 seconds
+
+If exceeded, NGINX returns:
+
+```text
+504 Gateway Timeout
+```
+
+## Header Management
+
+### `fastcgi_pass_header`
+
+Allows specific headers to be forwarded.
+
+```nginx
+fastcgi_pass_header Authorization;
+```
+
+### `fastcgi_hide_header`
+
+Prevents certain headers from being forwarded.
+
+```nginx
+fastcgi_hide_header X-Forwarded-For;
+```
+
+### `fastcgi_ignore_headers`
+
+Ignores selected response headers from the backend, such as:
+
+* `Cache-Control`
+* `Expires`
+* `X-Accel-Redirect`
+* `X-Accel-Buffering`
+
+## Error Handling
+
+### `fastcgi_intercept_errors`
+
+Allows NGINX to process backend-generated errors using `error_page`.
+
+```nginx
+fastcgi_intercept_errors on;
+```
+
+### `fastcgi_catch_stderr`
+
+Captures matching backend stderr output into the NGINX error log.
+
+```nginx
+fastcgi_catch_stderr "PHP Fatal error:";
+```
+
+## Client Abort Behavior
+
+### `fastcgi_ignore_client_abort`
+
+Controls whether NGINX continues processing if the client disconnects.
+
+* `on`: continue processing
+* `off`: stop processing (default)
+
+## Upstream Failover
+
+### `fastcgi_next_upstream`
+
+Specifies when to retry another backend server.
+
+Common conditions:
+
+* `error`
+* `timeout`
+* `invalid_header`
+* `http_500`
+* `http_503`
+* `http_404`
+* `http_429`
+
+Example:
+
+```nginx
+fastcgi_next_upstream error timeout invalid_header;
+```
+
+Related directives:
+
+* `fastcgi_next_upstream_timeout`
+* `fastcgi_next_upstream_tries`
+
+## Connection Optimization
+
+### `fastcgi_keep_conn`
+
+Keeps FastCGI connections open for reuse.
+
+```nginx
+fastcgi_keep_conn on;
+```
+
+Reduces connection overhead.
+
+## Request Forwarding Controls
+
+### `fastcgi_pass_request_body`
+
+Controls whether the request body is sent.
+
+Default: `on`
+
+### `fastcgi_pass_request_headers`
+
+Controls whether request headers are sent.
+
+Default: `on`
+
+## Temporary File and Storage Settings
+
+### `fastcgi_temp_path`
+
+Specifies the directory for temporary files.
+
+```nginx
+fastcgi_temp_path /tmp/nginx_fastcgi;
+```
+
+### `fastcgi_max_temp_file_size`
+
+Limits temporary file size.
+
+```nginx
+fastcgi_max_temp_file_size 5m;
+```
+
+Set to `0` to disable temporary files.
+
+### `fastcgi_temp_file_write_size`
+
+Defines write buffer size for temporary files.
+
+## Performance Controls
+
+### `fastcgi_limit_rate`
+
+Limits download speed from the FastCGI backend.
+
+```nginx
+fastcgi_limit_rate 100k;
+```
+
+### `fastcgi_force_ranges`
+
+Enables byte-range support for FastCGI responses.
+
+```nginx
+fastcgi_force_ranges on;
+```
+
+## FastCGI Caching
+
+FastCGI caching can dramatically improve performance by storing backend responses.
+
+### Example Configuration
+
+```nginx
+fastcgi_cache phpcache;
+fastcgi_cache_key "$scheme$host$request_uri";
+fastcgi_cache_min_uses 2;
+
+fastcgi_cache_path /tmp/cache
+    levels=1:2
+    keys_zone=phpcache:10m
+    inactive=30m
+    max_size=500m;
+
+fastcgi_cache_use_stale updating timeout;
+fastcgi_cache_valid 404 1m;
+fastcgi_cache_valid 500 502 504 5m;
+```
+
+## Example PHP Location with Caching
+
+```nginx
+location ~ \.php$ {
+    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_param SCRIPT_FILENAME /home/website.com/www$fastcgi_script_name;
+    fastcgi_param PATH_INFO $fastcgi_script_name;
+    include fastcgi_params;
+    include fastcgi_cache;
+}
+```
+
+## Key Benefits of FastCGI Caching and Buffering
+
+* Reduces backend load
+* Improves response times
+* Serves repeated requests faster
+* Allows stale content during backend outages
+* Buffers responses for more efficient client delivery
+
+## Equivalent Directives in uWSGI and SCGI
+
+Most FastCGI directives have direct counterparts:
+
+| FastCGI             | uWSGI             | SCGI             |
+| ------------------- | ----------------- | ---------------- |
+| `fastcgi_pass`      | `uwsgi_pass`      | `scgi_pass`      |
+| `fastcgi_cache`     | `uwsgi_cache`     | `scgi_cache`     |
+| `fastcgi_temp_path` | `uwsgi_temp_path` | `scgi_temp_path` |
+
+Directive syntax and behavior are nearly identical across all three modules.
+
+## Summary
+
+The FastCGI module is central to integrating NGINX with dynamic web applications. Its key responsibilities include:
+
+* Forwarding requests to backend applications
+* Passing required request parameters
+* Managing timeouts and errors
+* Handling upstream failover
+* Optimizing connections
+* Enabling response buffering
+* Providing powerful caching capabilities
+
+These same concepts largely apply to uWSGI and SCGI, making NGINX a flexible and high-performance gateway for a wide range of application platforms.
