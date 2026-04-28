@@ -3390,3 +3390,333 @@ So:
 This whole chapter is basically NGINX saying:
 
 > “I don’t just serve files. I decide *how*, *when*, *who*, and *at what speed* they are served.”
+
+---
+
+# ⚡ Open File Cache (BIG performance feature)
+
+## `open_file_cache`
+
+This is one of the most important optimizations in high-traffic NGINX setups.
+
+```nginx id="ofc1"
+open_file_cache max=5000 inactive=180;
+```
+
+### What it actually does
+
+Instead of constantly checking disk for files, NGINX caches:
+
+* file existence (does it exist?)
+* file metadata (size, modified time)
+* directory existence
+* permission errors (optional)
+
+👉 It does NOT cache file content — only file *info*
+
+---
+
+## Parameters explained
+
+### `max=5000`
+
+Maximum cached entries.
+
+* More entries = more RAM usage
+* Too low = frequent disk checks
+* Too high = wasted memory
+
+---
+
+### `inactive=180`
+
+Time before an entry is removed if unused.
+
+* Default is **60 seconds**
+* In your example: **180 seconds**
+
+BUT:
+
+* If a file is frequently accessed, its timer resets
+* So “hot files” stay cached longer
+
+---
+
+## Why this matters
+
+Without it:
+
+* every request may hit disk metadata lookup
+
+With it:
+
+* requests become mostly memory lookups ⚡
+
+---
+
+## `open_file_cache_errors`
+
+```nginx id="ofc2"
+open_file_cache_errors on;
+```
+
+Controls whether NGINX caches errors like:
+
+* file not found (404)
+* permission denied (403)
+
+### Why disable it sometimes?
+
+If your filesystem changes often, caching errors may “stick” too long.
+
+Default:
+
+```text id="ofc2a"
+off
+```
+
+---
+
+## `open_file_cache_min_uses`
+
+```nginx id="ofc3"
+open_file_cache_min_uses 3;
+```
+
+Meaning:
+
+> If a file is accessed 3+ times, treat it as “important”
+
+So it won’t be evicted easily.
+
+---
+
+## `open_file_cache_valid`
+
+```nginx id="ofc4"
+open_file_cache_valid 60s;
+```
+
+This controls freshness.
+
+Every 60 seconds:
+
+* NGINX re-checks cached file info
+
+👉 Prevents serving stale metadata forever
+
+---
+
+# 📖 File read optimization
+
+## `read_ahead`
+
+```nginx id="ra1"
+read_ahead 0;
+```
+
+* Linux may prefetch file data automatically
+* NGINX mostly ignores your value on Linux
+
+So:
+
+* `0` = disable control
+* anything else = “let OS decide”
+
+👉 Honestly: rarely touched in real deployments
+
+---
+
+# 📄 Logging behavior tweaks
+
+## `log_not_found`
+
+```nginx id="log1"
+log_not_found off;
+```
+
+* `on`: log every 404
+* `off`: ignore missing files
+
+### Why disable it?
+
+Because bots LOVE hitting:
+
+* `/favicon.ico`
+* `/robots.txt`
+
+Your logs get spammed fast.
+
+---
+
+## `log_subrequest`
+
+```nginx id="log2"
+log_subrequest off;
+```
+
+Logs internal requests like:
+
+* SSI includes
+* internal redirects
+
+Usually:
+
+* `off` (default)
+* only enable for debugging
+
+---
+
+# 🧼 URI cleanup behavior
+
+## `merge_slashes`
+
+```nginx id="ms1"
+merge_slashes on;
+```
+
+Turns this:
+
+```
+/images//logo.png
+```
+
+into:
+
+```
+/images/logo.png
+```
+
+### Why this matters
+
+Without it:
+
+* weird URLs may fail matching
+* inconsistent routing issues
+
+Default:
+
+* `off` (surprisingly)
+
+---
+
+# 🧓 Browser compatibility hacks (legacy stuff)
+
+These exist mainly for old Internet Explorer quirks.
+
+---
+
+## `msie_padding`
+
+```nginx id="ms1a"
+msie_padding on;
+```
+
+* Pads small error pages to 512 bytes
+* Prevents IE from showing its own ugly error page
+
+👉 Mostly irrelevant today, but still in NGINX
+
+---
+
+## `msie_refresh`
+
+```nginx id="ms2"
+msie_refresh on;
+```
+
+* Sends HTML refresh redirect instead of HTTP redirect
+* Only for old IE behavior
+
+Modern usage:
+
+* basically never needed
+
+---
+
+# 🌐 DNS RESOLUTION (VERY IMPORTANT in dynamic setups)
+
+## `resolver`
+
+```nginx id="dns1"
+resolver 8.8.8.8 1.1.1.1 valid=1h;
+```
+
+### What it does
+
+NGINX needs DNS when:
+
+* using `proxy_pass` with domain names
+* upstreams change dynamically
+
+---
+
+## Key parts
+
+### DNS servers
+
+* 127.0.0.1 (local resolver = best practice)
+* Google DNS: `8.8.8.8`
+* Cloudflare: `1.1.1.1`
+
+---
+
+### `valid=1h`
+
+Cache DNS results for 1 hour
+
+Without this:
+
+* every request may trigger DNS lookup (bad performance)
+
+---
+
+## Why local resolver is recommended
+
+Using something like:
+
+* dnsmasq
+* systemd-resolved
+
+Benefits:
+
+* faster DNS
+* cached locally
+* avoids external latency
+* more stable under load
+
+---
+
+## `resolver_timeout`
+
+```nginx id="dns2"
+resolver_timeout 30s;
+```
+
+If DNS lookup takes longer than 30 seconds:
+
+* request fails
+
+Default:
+
+* `30s`
+
+---
+
+# 🧠 Big mental model for this whole section
+
+This part of NGINX is about 3 things:
+
+### 1. Avoid disk work
+
+→ `open_file_cache`
+
+### 2. Clean request handling
+
+→ slashes, logging, headers
+
+### 3. Avoid slow dependencies
+
+→ DNS resolver optimization
+
+---
