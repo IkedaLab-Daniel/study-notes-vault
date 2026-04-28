@@ -332,7 +332,7 @@ curl http://localhost
 
 ---
 
-# Summary
+## Summary
 
 A proper NGINX installation lays the groundwork for a stable, high-performance web server. Whether you choose a simple package installation or a fully customized source build, understanding the installation process ensures you can deploy and manage NGINX confidently.
 
@@ -356,7 +356,7 @@ This approach is ideal for advanced users, production environments with specific
 
 ---
 
-# NGINX Resources and Community
+## NGINX Resources and Community
 
 Before compiling, it's helpful to know where to find documentation, support, and updates.
 
@@ -378,7 +378,7 @@ These resources are invaluable when troubleshooting or learning advanced configu
 
 ---
 
-# Understanding NGINX Version Branches
+## Understanding NGINX Version Branches
 
 NGINX offers three release branches:
 
@@ -405,7 +405,7 @@ Despite being the newest branch, mainline releases are highly stable and widely 
 
 ---
 
-# Which Version Should You Choose?
+## Which Version Should You Choose?
 
 | Use Case                   | Recommended Version |
 | -------------------------- | ------------------- |
@@ -472,7 +472,7 @@ wget https://nginx.org/download/nginx-1.25.2.tar.gz
 
 ---
 
-# Extracting the Source Code
+## Extracting the Source Code
 
 Once downloaded, extract the archive:
 
@@ -490,7 +490,7 @@ cd nginx-1.25.2
 
 ---
 
-# Verifying the Download
+## Verifying the Download
 
 You can confirm the contents with:
 
@@ -511,7 +511,7 @@ These contain the build scripts, default configuration files, documentation, and
 
 ---
 
-# Why Compile from Source?
+## Why Compile from Source?
 
 Compiling from source allows you to:
 
@@ -530,7 +530,7 @@ This is especially useful for:
 
 ---
 
-# Next Step: Configure the Build
+## Next Step: Configure the Build
 
 After extraction, the next phase is configuring the build options.
 
@@ -558,7 +558,7 @@ A common example:
 
 ---
 
-# Build and Install
+## Build and Install
 
 After configuration:
 
@@ -571,7 +571,7 @@ This compiles and installs NGINX using your selected options.
 
 ---
 
-# Verify Installation
+## Verify Installation
 
 Check the installed version:
 
@@ -594,7 +594,7 @@ This shows:
 
 ---
 
-# Best Practices
+## Best Practices
 
 * Always download from the official NGINX website.
 * Prefer the mainline release unless strict stability requirements exist.
@@ -604,7 +604,7 @@ This shows:
 
 ---
 
-# Summary
+## Summary
 
 Compiling NGINX from source gives you maximum flexibility, performance, and control. The process involves:
 
@@ -617,3 +617,327 @@ Compiling NGINX from source gives you maximum flexibility, performance, and cont
 This approach is perfect for administrators who need a customized, optimized NGINX installation tailored to their exact requirements.
 
 ---
+
+# Configuring NGINX Before Compilation
+
+## Overview
+
+When building NGINX from source, there are three standard steps:
+
+1. **Configure**
+2. **Compile**
+3. **Install**
+
+Of these, the **configuration step is the most important**. It determines:
+
+* Which modules are included
+* Where files are installed
+* Which libraries are used
+* How NGINX behaves at runtime
+
+Once compiled, these options cannot be changed without rebuilding NGINX.
+
+---
+
+## The Three Build Steps
+
+## 1. Configure
+
+The `configure` script examines your system and prepares the build environment.
+
+```bash id="9gzj6h"
+./configure
+```
+
+It checks for:
+
+* Compiler availability
+* Required libraries
+* Optional dependencies
+* System compatibility
+
+---
+
+## 2. Compile
+
+```bash id="epj5f9"
+make
+```
+
+This compiles the NGINX source code into executable binaries.
+
+---
+
+## 3. Install
+
+```bash id="6yq1zr"
+sudo make install
+```
+
+By default, NGINX is installed to:
+
+```text id="h8b2g0"
+/usr/local/nginx
+```
+
+---
+
+## The Easy Way
+
+If you want a quick installation using default settings, simply run:
+
+```bash id="5i4o6x"
+./configure
+make
+sudo make install
+```
+
+This creates a working NGINX installation with standard modules and default paths.
+
+Good for:
+
+* Testing
+* Learning
+* Development environments
+* Quick prototypes
+
+Not ideal for:
+
+* Production deployments
+* Custom module requirements
+* Standardized system integration
+
+---
+
+## Why Configuration Matters
+
+Skipping customization may result in:
+
+* Missing required modules
+* Incorrect file locations
+* Inconvenient log paths
+* Limited functionality
+* Difficult maintenance later
+
+Think of `./configure` as choosing the blueprint before building the house.
+
+---
+
+## Viewing Available Configuration Options
+
+Each NGINX version may support different options.
+
+To list all available switches:
+
+```bash id="krkk2i"
+./configure --help
+```
+
+This command displays every configurable option supported by your specific NGINX version.
+
+---
+
+## Common Path Configuration Options
+
+Path options allow you to control where NGINX stores its files.
+
+## Example
+
+```bash id="syv8hx"
+./configure --conf-path=/etc/nginx/nginx.conf
+```
+
+This tells NGINX to use:
+
+```text id="k3mkku"
+/etc/nginx/nginx.conf
+```
+
+as its main configuration file.
+
+---
+
+## Commonly Customized Paths
+
+| Option             | Purpose                     |
+| ------------------ | --------------------------- |
+| `--prefix`         | Installation root directory |
+| `--sbin-path`      | NGINX executable location   |
+| `--conf-path`      | Main configuration file     |
+| `--error-log-path` | Error log file              |
+| `--http-log-path`  | Access log file             |
+| `--pid-path`       | Process ID file             |
+| `--lock-path`      | Lock file                   |
+| `--modules-path`   | Dynamic modules directory   |
+
+---
+
+## Recommended Production Configuration
+
+A typical production-ready configuration might look like:
+
+```bash id="7h5yl8"
+./configure \
+  --prefix=/etc/nginx \
+  --sbin-path=/usr/sbin/nginx \
+  --modules-path=/usr/lib/nginx/modules \
+  --conf-path=/etc/nginx/nginx.conf \
+  --error-log-path=/var/log/nginx/error.log \
+  --http-log-path=/var/log/nginx/access.log \
+  --pid-path=/var/run/nginx.pid \
+  --lock-path=/var/run/nginx.lock \
+  --with-http_ssl_module \
+  --with-http_v2_module \
+  --with-http_gzip_static_module
+```
+
+This layout closely matches packages provided by major Linux distributions.
+
+---
+
+## Troubleshooting Configuration Errors
+
+If `./configure` fails, don't panic—it's usually one of a few common issues.
+
+## Step 1: Check the Error Log
+
+```bash id="7aq60p"
+cat objs/autoconf.err
+```
+
+This file contains detailed diagnostic information.
+
+---
+
+## Common Causes of Failure
+
+## Missing Prerequisites
+
+Ensure these are installed:
+
+* GCC
+* PCRE and development headers
+* zlib and development headers
+* OpenSSL and development headers
+
+Optional modules may require:
+
+* LibXML2
+* LibXSLT
+* GeoIP libraries
+
+---
+
+## Required Core Dependencies
+
+| Dependency | Required For                          |
+| ---------- | ------------------------------------- |
+| GCC        | Compilation                           |
+| PCRE       | Regular expressions and rewrite rules |
+| zlib       | Gzip compression                      |
+| OpenSSL    | HTTPS/TLS support                     |
+
+---
+
+## Specifying Library Paths Manually
+
+If the configure script cannot locate a library, specify its path explicitly.
+
+## Example: OpenSSL
+
+```bash id="ca7pw4"
+./configure --with-openssl=/usr/lib64
+```
+
+This tells NGINX where to find the OpenSSL source or library files.
+
+---
+
+## File and Directory Permissions
+
+Before running `configure`, verify:
+
+* Source directory is readable
+* Build directory is writable
+* Installation target directories exist
+* You have sufficient permissions
+
+Check permissions:
+
+```bash id="gjdq56"
+ls -ld .
+```
+
+If necessary:
+
+```bash id="4fey53"
+chmod -R u+rw .
+```
+
+---
+
+## Best Practices
+
+* Always review `./configure --help` before building.
+* Use explicit paths for production installations.
+* Match package-manager directory layouts when possible.
+* Keep a copy of your configure command for future upgrades.
+* Review `objs/autoconf.err` when errors occur.
+
+---
+
+## Example Full Build Process
+
+```bash id="3zjrbv"
+./configure \
+  --prefix=/etc/nginx \
+  --sbin-path=/usr/sbin/nginx \
+  --conf-path=/etc/nginx/nginx.conf \
+  --with-http_ssl_module \
+  --with-http_v2_module
+
+make
+sudo make install
+```
+
+---
+
+## Verify the Build
+
+After installation:
+
+```bash id="9ah9hy"
+nginx -V
+```
+
+This displays:
+
+* NGINX version
+* Compiler version
+* Enabled modules
+* Full configure arguments
+
+---
+
+## Key Takeaways
+
+* Configuration is the most critical build step.
+* Default settings are fine for testing, but not ideal for production.
+* Use `./configure --help` to explore all available options.
+* Missing dependencies are the most common cause of errors.
+* `objs/autoconf.err` is your best troubleshooting resource.
+* Save your configure command for future upgrades and consistency.
+
+---
+
+## Summary
+
+The `configure` step determines exactly how NGINX will be built and installed. Taking the time to configure NGINX properly ensures:
+
+* Better performance
+* Cleaner system integration
+* Required module availability
+* Easier maintenance
+* Fewer surprises later
+
+A carefully configured build is the foundation of a reliable NGINX deployment.
