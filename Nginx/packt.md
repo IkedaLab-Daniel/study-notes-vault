@@ -1636,3 +1636,409 @@ can appear multiple times.
 * Most directives cannot be repeated in the same block.
 
 NGINX configuration may look intimidating at first, but once you understand its block-based structure, it becomes surprisingly elegant—like LEGO for web servers, only with fewer chances of stepping on it.
+
+# NGINX Base Modules: The Foundation of Everything
+
+Before diving into virtual hosts, reverse proxies, or fancy load balancing, it helps to understand the three **base modules** that power every NGINX installation. These modules are always available—you can't disable them during compilation. Think of them as NGINX's built-in operating system.
+
+---
+
+# The Three Base Modules
+
+## 1. Core Module
+
+The **Core module** provides the essential directives that control how NGINX itself runs.
+
+It handles:
+
+* Process management
+* Security settings
+* Logging
+* Worker processes
+* User permissions
+
+Examples of core directives:
+
+```nginx
+user www-data www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+error_log /var/log/nginx/error.log;
+```
+
+---
+
+## 2. Events Module
+
+The **Events module** controls how NGINX handles network connections.
+
+This is where you configure:
+
+* Maximum simultaneous connections
+* Event handling method (`epoll`, `kqueue`, etc.)
+* Connection acceptance behavior
+
+Example:
+
+```nginx
+events {
+    worker_connections 1024;
+    use epoll;
+}
+```
+
+---
+
+## 3. Configuration Module
+
+The **Configuration module** provides the `include` directive, which lets you split your configuration into multiple files.
+
+Example:
+
+```nginx
+include mime.types;
+include sites-enabled/*.conf;
+```
+
+This keeps your configuration organized and manageable—because one giant config file is nobody's idea of a good time.
+
+---
+
+# NGINX Process Architecture
+
+NGINX uses a **master-worker architecture**.
+
+## Master Process
+
+* Starts first
+* Usually runs as `root`
+* Reads the configuration
+* Manages worker processes
+* Handles signals (reload, restart, upgrade)
+
+Importantly, the master process does **not** handle client requests directly.
+
+## Worker Processes
+
+* Handle all incoming client requests
+* Serve content
+* Process connections
+* Run under a less-privileged user (such as `www-data`)
+
+This design improves both **security** and **performance**.
+
+---
+
+# Typical Process Flow
+
+```text
+Master Process (root)
+        │
+        ├── Worker Process (www-data)
+        ├── Worker Process (www-data)
+        ├── Worker Process (www-data)
+        └── Worker Process (www-data)
+```
+
+Each worker can process many connections simultaneously.
+
+---
+
+# Important Core Directives
+
+## `daemon`
+
+Controls whether NGINX runs in the background.
+
+```nginx
+daemon on;
+```
+
+* `on` (default): Run as a background service
+* `off`: Run in the foreground
+
+Useful for debugging:
+
+```nginx
+daemon off;
+```
+
+---
+
+# Essential Performance Settings
+
+## `user`
+
+Never run workers as `root`.
+
+Bad idea:
+
+```nginx
+user root;
+```
+
+Recommended:
+
+```nginx
+user www-data www-data;
+```
+
+This limits damage if something goes wrong.
+
+---
+
+## `worker_processes`
+
+Determines how many worker processes NGINX creates.
+
+Recommended:
+
+```nginx
+worker_processes auto;
+```
+
+This automatically matches the number of CPU cores.
+
+For example:
+
+* 4 CPU cores → 4 workers
+* 8 CPU cores → 8 workers
+
+---
+
+## `worker_priority`
+
+Controls the scheduling priority of worker processes.
+
+```nginx
+worker_priority -5;
+```
+
+Range:
+
+* `-20` = highest priority
+* `19` = lowest priority
+
+Usually, the default (`0`) is perfectly fine.
+
+---
+
+# Events Module Directives
+
+All of these must be placed inside the `events` block.
+
+```nginx
+events {
+    worker_connections 1024;
+}
+```
+
+---
+
+## `worker_connections`
+
+Defines the maximum simultaneous connections per worker.
+
+```nginx
+worker_connections 1024;
+```
+
+Total connection capacity is:
+
+```text
+worker_processes × worker_connections
+```
+
+Example:
+
+* 4 workers
+* 1024 connections each
+
+Total:
+
+```text
+4 × 1024 = 4096 simultaneous connections
+```
+
+---
+
+## `use`
+
+Selects the event handling method.
+
+```nginx
+use epoll;
+```
+
+Common options:
+
+* `epoll` – Linux (best choice)
+* `kqueue` – FreeBSD/macOS
+* `select` – fallback, less efficient
+* `poll` – older alternative
+
+Usually, NGINX automatically picks the best option.
+
+---
+
+## `multi_accept`
+
+Controls whether a worker accepts multiple new connections at once.
+
+```nginx
+multi_accept on;
+```
+
+* `on`: Accept as many as possible
+* `off`: Accept one at a time
+
+Default is `off`.
+
+---
+
+## `accept_mutex`
+
+Prevents all workers from trying to accept the same connection simultaneously (the classic "thundering herd" problem).
+
+```nginx
+accept_mutex on;
+```
+
+Modern systems often work well with the default setting.
+
+---
+
+# Configuration Module: `include`
+
+This directive allows modular configuration.
+
+```nginx
+include /etc/nginx/mime.types;
+include /etc/nginx/sites-enabled/*.conf;
+```
+
+Benefits:
+
+* Cleaner organization
+* Easier maintenance
+* Separation of concerns
+* Simpler troubleshooting
+
+---
+
+# Recommended Initial Configuration
+
+```nginx
+user www-data www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include mime.types;
+    default_type application/octet-stream;
+
+    sendfile on;
+    keepalive_timeout 65;
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+    }
+}
+```
+
+---
+
+# Testing Your Configuration
+
+Always test before reloading:
+
+```bash
+nginx -t
+```
+
+If successful, you'll see:
+
+```text
+syntax is ok
+test is successful
+```
+
+Then reload:
+
+```bash
+sudo systemctl reload nginx
+```
+
+Or:
+
+```bash
+sudo nginx -s reload
+```
+
+---
+
+# Graceful Binary Upgrade (Zero Downtime)
+
+One of NGINX's coolest tricks is upgrading without dropping connections.
+
+## Steps
+
+1. Replace the old binary.
+2. Find the master process PID:
+
+```bash
+cat /run/nginx.pid
+```
+
+3. Send `USR2`:
+
+```bash
+kill -USR2 <pid>
+```
+
+4. Gracefully stop old workers:
+
+```bash
+kill -WINCH <old_pid>
+```
+
+5. After confirming old workers are gone:
+
+```bash
+kill -QUIT <old_pid>
+```
+
+Boom—zero downtime. Your users won't even notice.
+
+---
+
+# Key Best Practices
+
+* Run workers as a non-root user
+* Set `worker_processes auto`
+* Tune `worker_connections` based on hardware
+* Use `include` for modular configs
+* Always test with `nginx -t`
+* Use graceful reloads and upgrades
+
+---
+
+# Quick Summary
+
+* **Core module**: Controls NGINX itself
+* **Events module**: Controls connection handling
+* **Configuration module**: Organizes configuration files
+
+Together, these modules form the backbone of every NGINX server.
+
+Master these, and the rest of NGINX becomes much easier to understand.
