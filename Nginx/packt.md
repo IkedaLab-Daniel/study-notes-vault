@@ -2718,3 +2718,348 @@ This setup:
 * Maps `/admin/` to a separate directory
 * Uses a custom 404 page
 * Optimizes connection handling
+
+---
+
+# Request Body Handling
+
+## `client_body_buffer_size`
+
+Sets how much of the request body NGINX keeps in memory before spilling over to disk.
+
+```nginx
+client_body_buffer_size 16k;
+```
+
+* Small uploads stay in RAM (faster).
+* Larger uploads are written to temporary files.
+
+Default:
+
+* `8k` on 32-bit systems
+* `16k` on 64-bit systems
+
+### When to adjust
+
+* Increase for APIs receiving medium-sized JSON payloads.
+* Leave default unless you have a specific reason.
+
+---
+
+## `client_body_temp_path`
+
+Defines where temporary uploaded request bodies are stored.
+
+```nginx
+client_body_temp_path /var/cache/nginx/client_temp;
+```
+
+You can also create a hashed directory structure:
+
+```nginx
+client_body_temp_path /var/cache/nginx/client_temp 1 2;
+```
+
+This creates nested folders, which helps performance when handling many temporary files.
+
+Example layout:
+
+```text
+/var/cache/nginx/client_temp/a/3f/
+```
+
+Very handy for high-traffic upload systems.
+
+---
+
+## `client_body_timeout`
+
+How long NGINX waits while reading the request body.
+
+```nginx
+client_body_timeout 60s;
+```
+
+If the client stops sending data for longer than this, NGINX returns:
+
+```text
+408 Request Timeout
+```
+
+Useful for defending against slow upload attacks.
+
+---
+
+# Request Header Handling
+
+## `client_header_buffer_size`
+
+Initial buffer size for request headers.
+
+```nginx
+client_header_buffer_size 2k;
+```
+
+Default: `1k`
+
+This stores:
+
+* HTTP headers
+* Cookies
+* Request line
+
+If headers exceed this, NGINX uses larger fallback buffers.
+
+---
+
+## `large_client_header_buffers`
+
+Number and size of extra header buffers.
+
+```nginx
+large_client_header_buffers 4 8k;
+```
+
+Meaning:
+
+* Up to 4 large buffers
+* Each buffer is 8 KB
+
+### Important limits
+
+* Request URI too large → `414 Request-URI Too Large`
+* Header line too large → `400 Bad Request`
+
+This is especially useful for:
+
+* Applications with large cookies
+* Complex authentication tokens (JWTs)
+* Long URLs
+
+---
+
+## `client_header_timeout`
+
+How long NGINX waits for request headers.
+
+```nginx
+client_header_timeout 60s;
+```
+
+If the client pauses too long while sending headers:
+
+```text
+408 Request Timeout
+```
+
+A nice little shield against slowloris-style attacks.
+
+---
+
+# Upload Limits
+
+## `client_max_body_size`
+
+Maximum allowed request body size.
+
+```nginx
+client_max_body_size 50m;
+```
+
+If exceeded:
+
+```text
+413 Request Entity Too Large
+```
+
+### Common values
+
+* File uploads: `50m`, `100m`, or higher
+* APIs with JSON only: `1m` to `10m`
+
+Default: `1m`
+
+This is one of the first settings you'll tweak for upload features.
+
+---
+
+# Connection Closing Behavior
+
+## `lingering_close`
+
+Controls how NGINX closes connections after a response.
+
+```nginx
+lingering_close on;
+```
+
+Options:
+
+* `on` (default) – wait briefly for extra client data
+* `off` – close immediately
+* `always` – always linger before closing
+
+Usually, keep the default.
+
+---
+
+## `lingering_time`
+
+Maximum total time spent reading leftover client data.
+
+```nginx
+lingering_time 30s;
+```
+
+Default: `30s`
+
+---
+
+## `lingering_timeout`
+
+Maximum pause between reads while lingering.
+
+```nginx
+lingering_timeout 5s;
+```
+
+Default: `5s`
+
+Together, these directives help NGINX shut connections gracefully without abruptly cutting off clients.
+
+---
+
+# Header Validation
+
+## `ignore_invalid_headers`
+
+Controls whether malformed headers are ignored.
+
+```nginx
+ignore_invalid_headers on;
+```
+
+* `on` (default): invalid headers are ignored
+* `off`: malformed headers trigger errors
+
+Best practice: leave it `on`.
+
+---
+
+# Transfer Encoding
+
+## `chunked_transfer_encoding`
+
+Enables HTTP/1.1 chunked responses.
+
+```nginx
+chunked_transfer_encoding on;
+```
+
+Default: `on`
+
+This allows NGINX to send data in chunks when the total size isn't known upfront.
+
+Turn it off only for compatibility with very old or broken clients.
+
+---
+
+# Partial Content Requests
+
+## `max_ranges`
+
+Limits the number of byte ranges allowed in a single request.
+
+```nginx
+max_ranges 5;
+```
+
+* `0` = disable range requests entirely
+* unset = unlimited
+
+Useful for mitigating certain abuse patterns involving excessive range requests.
+
+---
+
+# MIME Type Handling
+
+## `types`
+
+Maps file extensions to MIME types.
+
+```nginx
+types {
+    text/html  html;
+    text/css   css;
+    application/javascript js;
+}
+```
+
+Usually, you simply include the standard file:
+
+```nginx
+include mime.types;
+```
+
+This gives NGINX a full list of common file types.
+
+---
+
+## `default_type`
+
+Used when no matching file extension is found.
+
+```nginx
+default_type application/octet-stream;
+```
+
+Default:
+
+```nginx
+default_type text/plain;
+```
+
+### Common use case: force downloads
+
+```nginx
+location /downloads/ {
+    types { }
+    default_type application/octet-stream;
+    add_header Content-Disposition 'attachment';
+}
+```
+
+This tells browsers:
+"Don't try to display this—just download it."
+
+---
+
+# Practical Example
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+
+    client_max_body_size 50m;
+    client_body_buffer_size 16k;
+    client_body_timeout 60s;
+
+    client_header_buffer_size 2k;
+    large_client_header_buffers 4 8k;
+    client_header_timeout 60s;
+
+    lingering_close on;
+    lingering_time 30s;
+    lingering_timeout 5s;
+
+    include mime.types;
+    default_type application/octet-stream;
+}
+```
+
+This configuration is ideal for:
+
+* File uploads
+* API servers
+* Modern web applications
