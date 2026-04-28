@@ -4204,4 +4204,226 @@ People think:
 
 ❌ Not true.
 
-It uses a **priority algorithm**, not file order.
+# PHP and Python wiuth NGINX
+
+# 🧠 The Big Picture
+
+For static content:
+
+```text
+Browser → NGINX → HTML/CSS/JS file
+```
+
+For dynamic content:
+
+```text
+Browser → NGINX → Application Server → NGINX → Browser
+```
+
+Examples:
+
+* PHP → PHP-FPM
+* Python → Gunicorn / uWSGI / Daphne
+* Ruby → Puma / Unicorn
+* Perl → FastCGI daemon
+
+NGINX does not execute application code itself. It delegates that responsibility.
+
+---
+
+# 📜 Why CGI Wasn't Enough
+
+Traditional CGI worked like this:
+
+```text
+Request arrives
+→ Web server starts a new process
+→ Script runs
+→ Process exits
+```
+
+That’s fine for low traffic, but under load it’s a disaster:
+
+* expensive process creation
+* no memory reuse
+* poor scalability
+* high latency
+
+Every request starts from scratch. That's like hiring a new chef for every sandwich.
+
+---
+
+# ⚡ Why FastCGI Changed Everything
+
+FastCGI keeps application processes alive.
+
+```text
+Request arrives
+→ NGINX sends request to existing worker process
+→ Worker handles it
+→ Worker stays alive for next request
+```
+
+Benefits:
+
+* much faster
+* lower CPU overhead
+* better memory efficiency
+* supports high concurrency
+* can run locally or remotely
+
+---
+
+# 🔌 How NGINX Communicates with Applications
+
+Using sockets:
+
+### Unix socket (faster, local only)
+
+```text
+/run/php/php8.2-fpm.sock
+```
+
+### TCP socket (network-capable)
+
+```text
+127.0.0.1:9000
+```
+
+Unix sockets are typically preferred when the app runs on the same server.
+
+---
+
+# 🐘 PHP + NGINX = PHP-FPM
+
+PHP-FPM stands for:
+
+> **PHP FastCGI Process Manager**
+
+It maintains a pool of PHP worker processes.
+
+Request flow:
+
+```text
+Browser
+   ↓
+NGINX
+   ↓
+PHP-FPM
+   ↓
+PHP script executes
+   ↓
+NGINX
+   ↓
+Browser
+```
+
+Typical configuration:
+
+```nginx
+location ~ \.php$ {
+    include fastcgi_params;
+    fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+}
+```
+
+### Key directives
+
+* `fastcgi_pass` → where PHP-FPM is listening
+* `include fastcgi_params` → passes standard CGI variables
+* `fastcgi_param SCRIPT_FILENAME` → tells PHP which file to execute
+
+Without `SCRIPT_FILENAME`, PHP would have a bit of an existential crisis.
+
+---
+
+# 🐍 Python + NGINX
+
+For Python web apps (like Django or Flask), NGINX usually sits in front of an application server such as:
+
+* Gunicorn
+* uWSGI
+* Daphne
+* Uvicorn
+
+Architecture:
+
+```text
+Browser → NGINX → Gunicorn/uWSGI → Django/Flask
+```
+
+Example using uWSGI:
+
+```nginx
+location / {
+    include uwsgi_params;
+    uwsgi_pass unix:/run/uwsgi/app.sock;
+}
+```
+
+Example using Gunicorn:
+
+```nginx
+location / {
+    proxy_pass http://127.0.0.1:8000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+```
+
+---
+
+# 🔄 FastCGI vs uWSGI vs SCGI
+
+All serve the same purpose: connecting NGINX to an application server.
+
+| Protocol | Common Use                | Directive      |
+| -------- | ------------------------- | -------------- |
+| FastCGI  | PHP                       | `fastcgi_pass` |
+| uWSGI    | Python                    | `uwsgi_pass`   |
+| SCGI     | Specialized / legacy apps | `scgi_pass`    |
+
+The syntax is intentionally very similar.
+
+---
+
+# 🚀 Why This Architecture Is So Popular
+
+NGINX handles what it does best:
+
+* SSL/TLS termination
+* static files
+* caching
+* compression
+* rate limiting
+* connection management
+
+Application servers handle:
+
+* business logic
+* database access
+* templating
+* session management
+
+This separation is elegant and highly scalable.
+
+---
+
+# 🧩 Real-World Deployment Pattern
+
+```text
+Internet
+   ↓
+NGINX
+   ├── Static files (served directly)
+   ├── PHP requests → PHP-FPM
+   └── Python requests → Gunicorn/uWSGI
+```
+
+NGINX acts like a smart receptionist:
+
+* static files? “I’ve got this.”
+* dynamic PHP? “Forwarding to PHP.”
+* Python app? “Right this way.”
