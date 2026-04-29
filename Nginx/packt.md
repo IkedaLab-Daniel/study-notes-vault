@@ -4963,3 +4963,96 @@ The setup provides:
 * Flexible configuration options
 
 PHP-FPM is the standard and recommended way to run PHP applications with NGINX in production environments.
+
+## Python and NGINX with Django
+
+Python is a widely used object-oriented programming language available across many platforms, including Linux, Unix, Windows, Java, and .NET. When paired with NGINX, it becomes a powerful platform for building dynamic web applications.
+
+In this setup, Python is used as a **server-side web language** through the **Django framework**.
+
+## What Is Django?
+
+Django is a popular open-source web framework for Python designed to simplify and accelerate web development.
+
+Its well-known slogan is:
+
+> *The web framework for perfectionists with deadlines.*
+
+Django provides many built-in features, including:
+
+* Automatic administrative interface
+* Powerful URL routing
+* Built-in caching framework
+* Unit testing tools
+* Security protections
+* Database ORM (Object-Relational Mapping)
+
+## Why Use Django with NGINX?
+
+Django applications are commonly deployed using **WSGI**, which is the standard Python web interface. However, Django also supports **FastCGI**, which integrates smoothly with NGINX and is simpler to configure for FastCGI-based deployments.
+
+This makes it an excellent choice for learning how NGINX communicates with Python applications.
+
+## Architecture Overview
+
+```text id="nzwv0s"
+Client Browser → NGINX → Django FastCGI → Python Application
+```
+
+* **NGINX** receives client requests.
+* Requests for dynamic content are forwarded via FastCGI.
+* **Django's FastCGI handler** processes the request.
+* Python executes the application logic.
+* The response is returned through NGINX to the client.
+
+## Installing Python
+
+Python is typically available through your system's package manager.
+
+### Red Hat / CentOS / Fedora
+
+```bash id="k2p8xg"
+dnf install python python-devel
+```
+
+### Ubuntu / Debian
+
+```bash id="tnexy0"
+apt install python python-dev
+```
+
+The package manager automatically installs all required dependencies.
+
+## Installing Django
+
+Although Django can be installed from system repositories, the recommended approach is to use **pip**, Python's package manager. This ensures you get the latest stable version and simplifies dependency management.
+
+### Why Use pip?
+
+* Access to the latest Django release
+* Easier upgrades
+* Better dependency handling
+* Consistent installation across platforms
+
+Before installing Django, you must first install `pip`.
+
+## Next Step
+
+After installing `pip`, Django can be installed using:
+
+```bash id="o8fdg4"
+pip install django
+```
+
+This will download and install Django along with any required Python packages.
+
+## Summary
+
+To run Python applications with NGINX:
+
+* Install Python and development libraries
+* Install Django using `pip`
+* Use Django's FastCGI support for integration with NGINX
+* Configure NGINX to forward requests to the Django application
+
+While WSGI is the modern standard for production deployments, FastCGI provides a simpler and effective way to understand how NGINX interacts with Python web applications.
