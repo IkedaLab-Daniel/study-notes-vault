@@ -5323,3 +5323,285 @@ Its reverse proxy capabilities provide:
 * Enhanced security
 
 This makes NGINX an essential component in modern web application architectures, especially for distributed systems and microservices.
+
+---
+
+## Proxy Caching, Buffering, and Temporary File Management
+
+To maximize performance, NGINX should serve as much content as possible without involving backend servers. Proxy buffering and caching significantly reduce backend load, improve response times, and enhance scalability.
+
+## Why Use Proxy Caching and Buffering?
+
+Benefits include:
+
+* Reduced backend server workload
+* Faster response times
+* Better handling of traffic spikes
+* Improved resource efficiency
+* Increased application resilience
+* Ability to serve stale content during backend failures
+
+## Response Buffering
+
+### `proxy_buffering`
+
+Controls whether backend responses are buffered before being sent to the client.
+
+```nginx id="s24h0k"
+proxy_buffering on;
+```
+
+* `on` (default): Response is buffered in memory, then optionally written to disk
+* `off`: Response is streamed directly to the client
+
+Buffering is generally recommended for optimal performance.
+
+## Request Buffering
+
+### `proxy_request_buffering`
+
+Controls whether client request bodies are buffered before being sent upstream.
+
+```nginx id="7kw4g5"
+proxy_request_buffering on;
+```
+
+Default: `on`
+
+This helps protect backend servers from slow clients.
+
+## Buffer Configuration
+
+### `proxy_buffers`
+
+Defines the number and size of response buffers.
+
+```nginx id="mp6e6p"
+proxy_buffers 8 4k;
+```
+
+Default:
+
+* 8 buffers
+* Each buffer is 4 KB or 8 KB depending on platform
+
+### `proxy_buffer_size`
+
+Sets the size of the initial buffer used for response headers.
+
+```nginx id="drdk3x"
+proxy_buffer_size 4k;
+```
+
+This buffer typically stores HTTP headers.
+
+### `proxy_busy_buffers_size`
+
+Specifies how much buffered data can be busy sending to clients before flushing.
+
+```nginx id="hqrzvr"
+proxy_busy_buffers_size 8k;
+```
+
+Default:
+
+```text id="vbtt1i"
+2 × proxy_buffer_size
+```
+
+## Proxy Cache Basics
+
+### `proxy_cache`
+
+Enables caching using a named cache zone.
+
+```nginx id="crrf4e"
+proxy_cache mycache;
+```
+
+## Defining the Cache Storage
+
+### `proxy_cache_path`
+
+Configures where cached files are stored and how the cache behaves.
+
+```nginx id="e5alca"
+proxy_cache_path /tmp/nginx_cache
+    levels=1:2
+    keys_zone=mycache:10m
+    inactive=30m
+    max_size=500m;
+```
+
+### Parameters
+
+* `levels`: Directory hierarchy depth
+* `keys_zone`: Shared memory zone for cache metadata
+* `inactive`: Time before unused entries are removed
+* `max_size`: Maximum total cache size
+* `use_temp_path`: Controls whether temporary files use `proxy_temp_path`
+
+## Cache Key Definition
+
+### `proxy_cache_key`
+
+Defines how cached objects are uniquely identified.
+
+```nginx id="bj98is"
+proxy_cache_key "$scheme$host$request_uri";
+```
+
+For personalized content, include cookies:
+
+```nginx id="5d4rzr"
+proxy_cache_key "$scheme$host$request_uri $cookie_user";
+```
+
+This ensures different users receive their own cached versions when necessary.
+
+## Cache Eligibility
+
+### `proxy_cache_methods`
+
+Specifies which HTTP methods can be cached.
+
+```nginx id="5uhs4g"
+proxy_cache_methods GET HEAD OPTIONS;
+```
+
+* `GET` and `HEAD` are always enabled
+* Additional methods may be added
+
+### `proxy_cache_min_uses`
+
+Defines the minimum number of identical requests before caching begins.
+
+```nginx id="ry28j1"
+proxy_cache_min_uses 2;
+```
+
+This avoids caching rarely requested content.
+
+## Cache Expiration Rules
+
+### `proxy_cache_valid`
+
+Sets cache durations based on HTTP response codes.
+
+```nginx id="l9gmyh"
+proxy_cache_valid 200 10m;
+proxy_cache_valid 404 1m;
+proxy_cache_valid 500 502 504 5m;
+```
+
+This allows fine-grained control over cache retention.
+
+## Serving Stale Content
+
+### `proxy_cache_use_stale`
+
+Allows NGINX to serve expired cache entries when the backend is unavailable.
+
+```nginx id="4e2z7l"
+proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+```
+
+Useful scenarios include:
+
+* Backend timeouts
+* Server errors
+* Invalid responses
+* Cache updates in progress
+
+This greatly improves availability.
+
+## Temporary File Handling
+
+When response data exceeds available memory buffers, NGINX writes excess data to temporary files.
+
+### `proxy_temp_path`
+
+Defines the location for temporary files.
+
+```nginx id="hryhsp"
+proxy_temp_path /tmp/nginx_proxy 1 2;
+```
+
+### `proxy_max_temp_file_size`
+
+Limits the size of temporary files.
+
+```nginx id="s4r4wn"
+proxy_max_temp_file_size 5m;
+```
+
+Set to `0` to disable temporary file usage entirely.
+
+### `proxy_temp_file_write_size`
+
+Defines the chunk size used when writing temporary files.
+
+```nginx id="nyl0qj"
+proxy_temp_file_write_size 8k;
+```
+
+Default:
+
+```text id="6q7p17"
+2 × proxy_buffer_size
+```
+
+## Complete Example Configuration
+
+```nginx id="zrz69w"
+proxy_cache_path /tmp/nginx_cache
+    levels=1:2
+    keys_zone=mycache:10m
+    inactive=30m
+    max_size=500m;
+
+server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://backend;
+        proxy_cache mycache;
+        proxy_cache_key "$scheme$host$request_uri";
+        proxy_cache_min_uses 2;
+        proxy_cache_valid 200 10m;
+        proxy_cache_valid 404 1m;
+        proxy_cache_valid 500 502 504 5m;
+        proxy_cache_use_stale error timeout updating;
+        
+        proxy_buffering on;
+        proxy_buffers 8 4k;
+        proxy_buffer_size 4k;
+        proxy_busy_buffers_size 8k;
+    }
+}
+```
+
+## Best Practices
+
+* Cache only cacheable content
+* Include query strings in cache keys
+* Use cookies in cache keys only when necessary
+* Enable stale cache serving for resilience
+* Size buffers appropriately for your workload
+* Store cache on fast storage
+* Monitor cache hit ratios regularly
+
+## Summary
+
+NGINX proxy caching and buffering are essential for high-performance reverse proxy deployments.
+
+They provide:
+
+* Faster client responses
+* Reduced backend traffic
+* Better scalability
+* Improved fault tolerance
+* Efficient resource usage
+
+A well-tuned cache can dramatically improve application performance while reducing infrastructure costs.
