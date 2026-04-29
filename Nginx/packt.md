@@ -5056,3 +5056,270 @@ To run Python applications with NGINX:
 * Configure NGINX to forward requests to the Django application
 
 While WSGI is the modern standard for production deployments, FastCGI provides a simpler and effective way to understand how NGINX interacts with Python web applications.
+
+## NGINX as a Reverse Proxy
+
+NGINX was designed not only as a fast web server but also as a powerful **reverse proxy**. In modern web architectures, it commonly sits in front of backend application servers such as Node.js, Apache, Django, or microservices.
+
+## How Reverse Proxy Works
+
+```text id="e5x2gb"
+Client → NGINX → Backend Server(s)
+```
+
+* Clients communicate directly with **NGINX**
+* NGINX serves static files itself
+* Dynamic requests are forwarded to backend servers
+* Backend servers respond only to NGINX, not directly to the public internet
+
+This architecture improves:
+
+* Performance
+* Security
+* Scalability
+* Load balancing
+* Resource utilization
+
+## Benefits of Using NGINX as a Reverse Proxy
+
+* Efficient handling of static content
+* Offloads traffic from backend servers
+* Supports load balancing across multiple servers
+* Improves security by hiding backend infrastructure
+* Simplifies SSL/TLS termination
+* Enables advanced routing and caching
+* Supports modern protocols like WebSockets
+
+## Reverse Proxy vs FastCGI
+
+Unlike FastCGI, reverse proxying uses standard **HTTP or HTTPS** between NGINX and backend servers.
+
+* **FastCGI**: Used for applications like PHP-FPM
+* **HTTP Proxying**: Used for web servers and application servers such as Node.js, Apache, or Django
+
+No special protocol is required beyond HTTP.
+
+## Core Proxy Module
+
+NGINX includes the **proxy module** by default. It provides directives for:
+
+* Forwarding requests
+* Managing headers
+* Handling redirects
+* Configuring failover
+* Controlling retries
+* Buffering and caching responses
+
+## Main Directives
+
+### `proxy_pass`
+
+Specifies the backend server to which requests are forwarded.
+
+#### TCP Backend
+
+```nginx id="3c4gby"
+proxy_pass http://127.0.0.1:8080;
+```
+
+#### HTTPS Backend
+
+```nginx id="lnw0zt"
+proxy_pass https://192.168.0.1;
+```
+
+#### Unix Socket
+
+```nginx id="q6ngul"
+proxy_pass http://unix:/tmp/nginx.sock;
+```
+
+#### With URI Rewriting
+
+```nginx id="n58e1x"
+proxy_pass http://localhost:8080/uri/;
+```
+
+#### Using Variables
+
+```nginx id="94u8ww"
+proxy_pass http://$server_name:8080;
+```
+
+## Load Balancing with Upstream
+
+```nginx id="o8t85n"
+upstream backend {
+    server 127.0.0.1:8080;
+    server 127.0.0.1:8081;
+}
+
+location / {
+    proxy_pass http://backend;
+}
+```
+
+This distributes requests among multiple backend servers.
+
+## Overriding the HTTP Method
+
+### `proxy_method`
+
+Forces all proxied requests to use a specific HTTP method.
+
+```nginx id="vbwjlwm"
+proxy_method POST;
+```
+
+Useful in specialized integration scenarios.
+
+## Header Management
+
+### `proxy_hide_header`
+
+Prevents specific response headers from being sent to the client.
+
+```nginx id="aqxv3z"
+proxy_hide_header Cache-Control;
+```
+
+By default, NGINX already hides some headers, including:
+
+* `Date`
+* `Server`
+* `X-Pad`
+* `X-Accel-*`
+
+### `proxy_pass_header`
+
+Allows otherwise hidden headers to be passed to the client.
+
+```nginx id="v99dri"
+proxy_pass_header Date;
+```
+
+## Forwarding Request Data
+
+### `proxy_pass_request_body`
+
+Controls whether the request body is sent to the backend.
+
+Default: `on`
+
+### `proxy_pass_request_headers`
+
+Controls whether request headers are sent to the backend.
+
+Default: `on`
+
+## Rewriting Redirects
+
+### `proxy_redirect`
+
+Rewrites `Location` headers returned by the backend.
+
+#### Disable Rewriting
+
+```nginx id="u1m75c"
+proxy_redirect off;
+```
+
+#### Automatic Rewriting
+
+```nginx id="mf4kmg"
+proxy_redirect default;
+```
+
+#### Custom Rewrite
+
+```nginx id="j2fykf"
+proxy_redirect http://localhost:8080/ http://example.com/;
+```
+
+This is especially useful when backend servers generate redirects using internal URLs.
+
+## Upstream Failover
+
+### `proxy_next_upstream`
+
+Specifies when NGINX should retry another upstream server.
+
+Supported conditions include:
+
+* `error`
+* `timeout`
+* `invalid_header`
+* `http_500`
+* `http_502`
+* `http_503`
+* `http_504`
+* `http_404`
+
+Example:
+
+```nginx id="vz8qsk"
+proxy_next_upstream error timeout invalid_header;
+```
+
+## Retry Controls
+
+### `proxy_next_upstream_timeout`
+
+Limits the total retry duration.
+
+```nginx id="36g1aj"
+proxy_next_upstream_timeout 30s;
+```
+
+Set to `0` to disable.
+
+### `proxy_next_upstream_tries`
+
+Limits the number of retry attempts.
+
+```nginx id="2mvjkx"
+proxy_next_upstream_tries 3;
+```
+
+## Typical Reverse Proxy Configuration
+
+```nginx id="v2kfb2"
+server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+    }
+}
+```
+
+## Common Use Cases
+
+* Proxying Node.js applications
+* Fronting Apache or Tomcat servers
+* Serving Django or Flask apps
+* Load balancing microservices
+* SSL termination
+* WebSocket proxying
+* API gateway functionality
+
+## Summary
+
+NGINX excels as a reverse proxy by acting as an intelligent intermediary between clients and backend servers.
+
+Its reverse proxy capabilities provide:
+
+* High performance
+* Flexible routing
+* Load balancing
+* Failover handling
+* Header manipulation
+* Redirect rewriting
+* Enhanced security
+
+This makes NGINX an essential component in modern web application architectures, especially for distributed systems and microservices.
