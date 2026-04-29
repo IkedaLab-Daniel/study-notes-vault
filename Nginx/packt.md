@@ -5605,3 +5605,428 @@ They provide:
 * Efficient resource usage
 
 A well-tuned cache can dramatically improve application performance while reducing infrastructure costs.
+
+---
+
+## NGINX Proxy: Limits, Timeouts, and Error Handling
+
+When acting as a reverse proxy, NGINX needs clear rules for how long it should wait, how it should handle failures, and how it should behave under unusual conditions. These directives are essential for building resilient, performant systems.
+
+---
+
+# Connection and Communication Timeouts
+
+## `proxy_connect_timeout`
+
+Defines how long NGINX waits to establish a connection to the upstream server.
+
+```nginx
+proxy_connect_timeout 15s;
+```
+
+* Applies only during connection establishment
+* Does **not** apply after the connection is established
+
+Use a relatively short value to fail fast when an upstream is unavailable.
+
+---
+
+## `proxy_read_timeout`
+
+Specifies the maximum time between two successive read operations from the upstream server.
+
+```nginx
+proxy_read_timeout 60s;
+```
+
+Important: this is **not** the total response timeout.
+
+If the upstream sends data every 59 seconds, the connection remains open indefinitely.
+
+Default: `60s`
+
+---
+
+## `proxy_send_timeout`
+
+Defines the maximum time between two successive write operations to the upstream server.
+
+```nginx
+proxy_send_timeout 60s;
+```
+
+Like `proxy_read_timeout`, this is an inactivity timeout, not a total transfer timeout.
+
+Default: `60s`
+
+---
+
+# Client Abort Behavior
+
+## `proxy_ignore_client_abort`
+
+Controls whether NGINX continues processing a request after the client disconnects.
+
+```nginx
+proxy_ignore_client_abort on;
+```
+
+* `off` (default): Abort upstream request when client disconnects
+* `on`: Continue processing upstream request
+
+Useful for:
+
+* Long-running background tasks
+* Cache warming
+* Report generation
+* Upload processing
+
+---
+
+# Upstream Error Handling
+
+## `proxy_intercept_errors`
+
+Allows NGINX to intercept error responses from the upstream server and serve custom error pages.
+
+```nginx
+proxy_intercept_errors on;
+```
+
+Without this directive, upstream error responses are passed directly to clients.
+
+### Example
+
+```nginx
+proxy_intercept_errors on;
+error_page 500 502 503 504 /50x.html;
+```
+
+This is particularly useful for user-friendly error pages or failover logic.
+
+---
+
+# Rate Limiting Upstream Reads
+
+## `proxy_limit_rate`
+
+Limits the rate at which NGINX reads data from the upstream server.
+
+```nginx
+proxy_limit_rate 100k;
+```
+
+Useful when:
+
+* Protecting upstream bandwidth
+* Preventing large downloads from overwhelming backend systems
+* Throttling expensive responses
+
+---
+
+# BSD-Specific Optimization
+
+## `proxy_send_lowat`
+
+```nginx
+proxy_send_lowat 16k;
+```
+
+* Only relevant on BSD-based systems
+* Uses the `SO_SNDLOWAT` socket option
+* Ignored on Linux
+
+In most Linux deployments, this directive has no effect.
+
+---
+
+# Proxy Header Hash Tuning
+
+## `proxy_headers_hash_max_size`
+
+Sets the maximum size of the hash table used for proxy headers.
+
+```nginx
+proxy_headers_hash_max_size 1024;
+```
+
+## `proxy_headers_hash_bucket_size`
+
+Sets the bucket size for the proxy header hash table.
+
+```nginx
+proxy_headers_hash_bucket_size 128;
+```
+
+Increase these values when working with many custom headers.
+
+---
+
+# Byte-Range Support
+
+## `proxy_force_ranges`
+
+Forces support for HTTP byte-range requests, even if the upstream server does not explicitly advertise it.
+
+```nginx
+proxy_force_ranges on;
+```
+
+Useful for:
+
+* Video streaming
+* Large file downloads
+* Resume support
+
+---
+
+# Ignoring Upstream Headers
+
+## `proxy_ignore_headers`
+
+Prevents NGINX from honoring certain upstream response headers.
+
+```nginx
+proxy_ignore_headers Cache-Control Expires;
+```
+
+Common headers that can be ignored:
+
+* `X-Accel-Redirect`
+* `X-Accel-Expires`
+* `Expires`
+* `Cache-Control`
+
+Use cautiously—you're overriding upstream intent.
+
+---
+
+# Modifying Requests Sent Upstream
+
+## `proxy_set_header`
+
+Sets or overrides request headers sent to the upstream server.
+
+```nginx
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+```
+
+These are standard headers for reverse proxy deployments.
+
+---
+
+## `proxy_set_body`
+
+Overrides the request body sent upstream.
+
+```nginx
+proxy_set_body "test payload";
+```
+
+Mostly useful for:
+
+* Debugging
+* Specialized integrations
+* Request transformation
+
+Not commonly used in standard reverse proxy setups.
+
+---
+
+# Storing Upstream Responses
+
+## `proxy_store`
+
+Saves upstream responses as files on disk.
+
+```nginx
+proxy_store on;
+proxy_temp_path /var/cache/nginx/temp;
+```
+
+Alternative form:
+
+```nginx
+proxy_store /data/static;
+```
+
+This can be used to create a simple on-demand file cache.
+
+---
+
+## `proxy_store_access`
+
+Controls permissions for stored files.
+
+```nginx
+proxy_store_access user:rw group:rw all:r;
+```
+
+---
+
+# Upstream HTTP Version
+
+## `proxy_http_version`
+
+Sets the HTTP version used between NGINX and the upstream.
+
+```nginx
+proxy_http_version 1.1;
+```
+
+Options:
+
+* `1.0` (default)
+* `1.1`
+
+Use HTTP/1.1 when you need:
+
+* Keepalive connections
+* WebSocket support
+* Chunked transfer encoding
+
+For modern applications, `1.1` is usually the right choice.
+
+---
+
+# Cookie Rewriting
+
+## `proxy_cookie_domain`
+
+Rewrites cookie domain attributes.
+
+```nginx
+proxy_cookie_domain backend.internal example.com;
+```
+
+---
+
+## `proxy_cookie_path`
+
+Rewrites cookie path attributes.
+
+```nginx
+proxy_cookie_path /app/ /;
+```
+
+These directives are invaluable when publishing internal applications under different public URLs.
+
+---
+
+# Useful Proxy Variables
+
+## Common Variables
+
+| Variable                      | Description                        |
+| ----------------------------- | ---------------------------------- |
+| `$proxy_host`                 | Upstream hostname                  |
+| `$proxy_port`                 | Upstream port                      |
+| `$proxy_add_x_forwarded_for`  | Existing XFF header plus client IP |
+| `$proxy_internal_body_length` | Length of modified request body    |
+
+---
+
+# Recommended Production Proxy Configuration
+
+```nginx
+location / {
+    proxy_pass http://backend;
+
+    proxy_http_version 1.1;
+
+    proxy_connect_timeout 5s;
+    proxy_send_timeout 60s;
+    proxy_read_timeout 60s;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    proxy_intercept_errors on;
+    error_page 500 502 503 504 /50x.html;
+}
+```
+
+---
+
+# NGINX in Modern Microservices
+
+NGINX plays a central role in microservice architectures by acting as:
+
+* Reverse proxy
+* Load balancer
+* SSL terminator
+* Cache layer
+* API gateway
+* Traffic router
+
+It sits between clients and backend services, handling concerns such as:
+
+* Routing
+* Security
+* Rate limiting
+* Caching
+* Failover
+* Observability
+
+---
+
+# NGINX vs Application Logic
+
+You generally have two implementation choices:
+
+### Implement in Backend
+
+* Easier development
+* Better tooling
+* Rich ecosystem
+* Faster iteration
+
+### Implement in NGINX
+
+* Lower latency
+* Reduced backend load
+* Higher throughput
+* Greater complexity
+
+The trade-off is simple:
+
+> **NGINX offers speed; application servers offer flexibility.**
+
+---
+
+# Practical Example: Cache Before Application
+
+A common optimization is to check a cache before forwarding to the application.
+
+```nginx
+location / {
+    set $memcached_key $request_uri;
+    memcached_pass memcached;
+    error_page 404 502 = @backend;
+}
+
+location @backend {
+    proxy_pass http://app;
+}
+```
+
+This architecture reduces application load dramatically for cacheable content.
+
+---
+
+# Key Takeaways
+
+* Use short connection timeouts
+* Set sensible read/write inactivity timeouts
+* Enable custom error handling with `proxy_intercept_errors`
+* Use HTTP/1.1 for modern upstreams
+* Forward client identity headers properly
+* Rewrite cookies when publishing internal services externally
+* Consider implementing high-performance logic directly in NGINX when justified
+
+NGINX is far more than a web server—it's a high-performance application delivery platform.
