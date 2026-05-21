@@ -27,9 +27,7 @@ Doing Agile means applying those values and principles through practices and met
 - Design Thinking
 
 ### Flow of Agile
-```text
 Mindset → Values → Principles → Practices
-```
 
 ---
 
@@ -247,4 +245,279 @@ Choose two Agile values to improve over the next 30 days and practice them in:
   * Openness
   * Courage
 
-```
+
+# Lesson 2: Core Principles of Agile
+
+Agile principles are another important component of the Agile methodology. Together with Agile values, they form the mindset of being Agile.
+
+## Relationship Between Agile Components
+
+Agile Values → Agile Principles → Agile Practices
+
+- **Values** shape behavior and culture.
+- **Principles** guide how work should be done.
+- **Practices** are the actions and methods used in daily work.
+
+---
+
+# The Three Agile Principles
+
+## 1. Clarity of Outcome
+
+> Begin with clarity about the outcome, and let it guide every step along the way.
+
+This principle ensures that everyone understands:
+- What success looks like
+- What problem is being solved
+- What value should be delivered to users
+
+The work should always focus on:
+- User value
+- Business value
+- Outcome-oriented goals
+
+---
+
+## Steps to Apply Clarity of Outcome
+
+### Step 1: Define the Problem
+Understand the real problem before creating solutions.
+
+### Step 2: Determine the User Outcome
+Identify the specific result or value users should experience.
+
+### Step 3: Keep the Outcome in Sight
+Use the desired outcome as the guiding direction for:
+- Decisions
+- Tasks
+- Priorities
+- Actions
+
+---
+
+## Example: Volunteer Group
+
+### Problem
+A volunteer organization receives complaints about:
+- Scheduling
+- Communication
+- Volunteer experience
+
+### User Outcome
+Reduce service complaints by **50% within 3 months**.
+
+### Result
+The outcome becomes the team’s:
+- North star
+- Main focus
+- Basis for decision-making
+
+Every improvement is measured against whether it helps improve service quality and user experience.
+
+---
+
+# 2. Iteration and Learning
+
+> Listen, iterate, learn, and continually improve rather than wait until it’s perfect.
+
+Agile recognizes that:
+- Better solutions emerge over time
+- Improvement happens through repeated attempts
+- Feedback is essential
+
+The work should be:
+- Iterative
+- Flexible
+- Adaptive
+- Continuously improving
+
+---
+
+## What is Iteration?
+
+Iteration means:
+> Trying something, learning from it, improving it, and trying again.
+
+---
+
+## Steps to Apply Iteration and Learning
+
+### 1. Start Small
+Work on small pieces first.
+
+### 2. Listen and Learn
+Collect feedback from users and team members.
+
+### 3. Iterate and Course Correct
+Adjust the solution based on feedback.
+
+If necessary:
+- Make major adjustments
+- Change direction
+- Improve continuously
+
+---
+
+## Example: Volunteer Group
+
+The volunteer group identifies three training areas:
+- Scheduling
+- Communication
+- Experience
+
+### First Iteration
+They improve scheduling methods.
+
+### Feedback
+The system improves but still has issues.
+
+### Second Iteration
+They make more adjustments based on feedback.
+
+### Result
+- Volunteers receive schedules more easily
+- Users request services more smoothly
+
+The team continues gathering feedback for ongoing improvement.
+
+---
+
+# 3. Self-Directed Teams
+
+> Build small teams with the right skills and encourage self-direction to unleash innovation.
+
+Agile teams should:
+- Be small
+- Have the necessary skills
+- Be empowered to make decisions
+
+Self-directed teams work faster and become more innovative because they are trusted to guide themselves.
+
+---
+
+## Steps to Apply Self-Directed Teams
+
+### 1. Build Small Teams
+Keep teams manageable and focused.
+
+### 2. Select the Right Skills
+Choose people with the skills needed to complete the work.
+
+### 3. Empower the Team
+Allow teams to:
+- Make decisions
+- Solve problems
+- Decide how work gets done
+
+Leaders should:
+- Set priorities
+- Provide clarity
+- Avoid micromanaging
+
+---
+
+## Example: Volunteer Group
+
+The managing board:
+- Helped define the problem
+- Helped establish the outcome
+
+Afterward, the volunteer team:
+- Directed themselves
+- Decided how to solve the issue
+- Improved the system after two iterations
+
+This freedom enabled faster problem-solving and innovation.
+
+---
+
+# The Five Dysfunctions of a Team
+
+Based on the ideas from :contentReference[oaicite:0]{index=0}, strong teams are built on trust.
+
+## 1. Absence of Trust
+
+Trust is the foundation of every successful organization.
+
+Without trust:
+- People hide mistakes
+- People avoid vulnerability
+- Teams become defensive
+
+### Key Idea
+> Vulnerability builds trust.
+
+The more open and honest people are, the stronger the trust becomes.
+
+---
+
+## 2. Fear of Conflict
+
+Without trust:
+- Teams avoid honest discussions
+- Meetings become artificial
+- Everyone says “yes” publicly while disagreeing privately
+
+Healthy conflict is important.
+
+### Important Distinction
+Agile encourages:
+- Respectful debate
+- Passionate discussion about ideas
+
+Agile discourages:
+- Personal attacks
+- Toxic conflict
+
+Strong discussions help create better solutions.
+
+---
+
+## 3. Lack of Commitment
+
+Without open discussion:
+- Decisions become unclear
+- Team members leave meetings confused
+- Commitment weakens
+
+Healthy conflict creates clarity and alignment.
+
+---
+
+## 4. Avoidance of Accountability
+
+Without commitment:
+- People avoid responsibility
+- Team standards weaken
+- Performance declines
+
+Agile teams hold themselves accountable together.
+
+---
+
+## 5. Inattention to Results
+
+Without accountability:
+- Personal interests replace team goals
+- Workplace culture deteriorates
+- Teams lose focus on delivering value
+
+Successful Agile teams focus on:
+- Collaboration
+- Accountability
+- Delivering meaningful results
+
+---
+
+# Key Takeaways
+
+- Agile principles guide how work is done.
+- The three Agile principles are:
+  1. Clarity of outcome
+  2. Iteration and learning
+  3. Self-directed teams
+- Agile teams improve continuously through feedback and iteration.
+- Small, empowered teams are more innovative.
+- Trust is the foundation of effective teamwork.
+- Healthy conflict leads to better ideas and stronger commitment.
+- Agile culture depends on openness, accountability, and collaboration.
