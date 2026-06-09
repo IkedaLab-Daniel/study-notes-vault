@@ -1,0 +1,4 @@
+# Develop your first agent with Microsoft Foundry
+
+## Introduction
+"Ready to dive in and start building AI agents? This fast-start, hands-on training is designed to get you up and running with Microsoft Foundry quickly. Whether you're new to AI development or looking to expand your skills, you'll be developing and deploying your first AI agent in an hour or less. We'll cover the key concepts you need to get started, and then jump straight into practical development, guiding you through the essential steps to create a working agent that can understand requests, use tools, and deliver intelligent responses."
