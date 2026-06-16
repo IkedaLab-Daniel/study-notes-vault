@@ -889,3 +889,199 @@ Using the Python toolkit helps you:
 | Virtual Environment | Isolates project dependencies     |
 | Libraries           | Provide pre-written functionality |
 | pip                 | Installs and manages libraries    |
+
+## Navigating Jupyter Notebooks
+
+### What is a Jupyter Notebook?
+
+A **Jupyter Notebook** is an interactive computing environment used for coding, analysis, and documentation in one place.
+
+It allows you to combine:
+
+* Code
+* Text (Markdown)
+* Visualizations
+
+Think of it as a **digital laboratory** where you can experiment, analyze data, and document your work at the same time.
+
+---
+
+## Structure of a Jupyter Notebook
+
+### 1. Cells
+
+Notebooks are made up of **cells**, which come in two main types:
+
+#### Code Cells
+
+* Used to write and execute Python code
+* Show results immediately after running
+
+Example:
+
+```python id="jup1"
+print("Hello from Jupyter!")
+```
+
+#### Markdown Cells
+
+* Used for writing formatted text
+* Support:
+
+  * Headings
+  * Links
+  * Images
+  * Lists
+  * Equations
+
+---
+
+## Why Jupyter Notebooks Are Important
+
+Jupyter Notebooks are widely used in:
+
+* Data Science
+* Machine Learning
+* Research
+* Education
+
+### Key Advantages
+
+#### 1. Interactivity
+
+* Run code **cell by cell**
+* Get instant feedback
+* Easily test and refine code
+
+#### 2. Data Analysis Support
+
+Works well with Python libraries like:
+
+* Pandas → data manipulation
+* NumPy → numerical operations
+* Matplotlib → charts and graphs
+
+#### 3. Documentation + Code Together
+
+You can:
+
+* Explain your logic using Markdown
+* Show results directly under code
+* Combine storytelling with programming
+
+#### 4. Reproducibility
+
+* Every step of your workflow is saved
+* Others can rerun your notebook and get the same results
+* Useful for research and collaboration
+
+---
+
+## Jupyter Notebook Interface Overview
+
+### Toolbar
+
+Includes tools for:
+
+* Saving notebooks
+* Adding/copying cells
+* Running code
+* Restarting the kernel
+
+---
+
+### Kernel
+
+* The **kernel** is the engine that runs your code
+* Status indicators:
+
+  * Busy → code is running
+  * Idle → ready for input
+
+You can:
+
+* Restart the kernel
+* Interrupt running code
+
+---
+
+### Command Palette
+
+A quick-access tool for commands.
+
+Shortcuts:
+
+* `Ctrl + Shift + C` (Windows/Linux)
+* `Cmd + Shift + C` (Mac)
+
+You can:
+
+* Change kernel
+* Clear outputs
+* Toggle settings
+
+---
+
+### Main Workspace
+
+This is where you:
+
+* Write code
+* Run cells
+* View outputs
+
+You can add new cells using:
+
+* The "+" button
+* Keyboard shortcuts
+
+---
+
+## Advanced Features
+
+### 1. Metadata
+
+Stores information like:
+
+* Notebook title
+* Author
+* Tags
+
+---
+
+### 2. Magic Commands
+
+Special commands starting with `%`
+
+Examples:
+
+* Time code execution
+* Display plots inline
+* Run system commands
+
+---
+
+### 3. Extensions
+
+Jupyter can be extended with tools like:
+
+* Code folding
+* Variable inspector
+* Git integration
+
+---
+
+## Benefits of Jupyter Notebooks
+
+* Interactive coding experience
+* Easy data visualization
+* Strong support for experimentation
+* Combines code and documentation
+* Ideal for learning and teaching
+* Widely used in professional data workflows
+
+---
+
+## Key Takeaway
+
+A **Jupyter Notebook** is an interactive coding environment that combines code, text, and visual output in one document. It is especially powerful for data science and Python development because it allows you to write, test, visualize, and document your work all in one place with immediate feedback and easy sharing.
