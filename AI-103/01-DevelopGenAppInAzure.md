@@ -60,3 +60,28 @@ Most AI solution development begins in the portal, where developers can:
 * Retrieve endpoints and keys necessary for client applications.
 
 > **Note on Architecture:** The platform is currently transitioning to a new project architecture. Older "classic" Foundry projects may still utilize a legacy hub-based system.
+
+## Microsoft Foundry Tools
+
+### Overview
+
+While generative AI models and agents are the focus of modern AI development, **Foundry Tools** offer prebuilt, "off-the-shelf" APIs and models for common AI tasks. Integrating these out-of-the-box tools can help developers create more cost-effective and predictable solutions than relying solely on generative AI agents.
+
+### Available Tools
+
+| Tool | Description |
+| --- | --- |
+| **Azure Language** | Analyzes natural language text to perform tasks like entity extraction, sentiment analysis, and summarization. Also aids in building conversational language models and question-answering solutions. |
+| **Azure Speech** | Provides APIs for text-to-speech and speech-to-text transformation, as well as real-time live speech capabilities for conversational apps. |
+| **Azure Translator** | Utilizes advanced language models to seamlessly translate text across a large number of languages. |
+| **Azure Document Intelligence** | Employs pre-built or custom models to extract data fields from complex, structured documents such as invoices, receipts, and forms. |
+| **Azure Content Understanding** | Provides multi-modal analysis capabilities to extract structured data from forms, documents, images, videos, and audio streams. |
+
+### Implementation and Usage
+
+* **Connection:** Developers create client applications that connect to a tool-specific endpoint hosted in their Microsoft Foundry resource.
+* **Authentication:** Access is secured by specifying the project authentication key or by utilizing token-based authentication.
+* **Development:** Functionality is implemented using the specific APIs and SDKs provided for each tool.
+* **Portal Access:** Select tools provide a visual user interface within the Foundry portal for straightforward configuration and testing.
+
+> **Note on Naming:** Foundry Tools were previously known as *Azure AI Services* (and before that, *Azure Cognitive Services*). These legacy names may still appear in some APIs and SDKs. While some tools can still be provisioned outside of Foundry, new projects should utilize the tools provided directly within a Microsoft Foundry resource.
