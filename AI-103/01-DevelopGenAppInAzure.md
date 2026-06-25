@@ -23,3 +23,40 @@
 | **Computer Speech** | • Recognizes and synthesizes speech for natural voice interactions.<br><br>• Handles complex conversations, background noise, interruptions, and multiple accents/languages.<br><br>• Used for live transcription, translation, and text-to-speech. |
 | **Computer Vision** | • Interprets and processes visual input from images, videos, and live camera streams.<br><br>• Enabled by multimodal generative models that can both process and generate visual content. |
 | **Information Extraction** | • Combines generative AI, NLP, computer vision, and speech to extract key information from unstructured media.<br><br>• Example: Extracting dates, items, and totals from scanned receipts. |
+
+## Microsoft Foundry on Azure
+
+### Platform Overview
+
+* **Microsoft Foundry:** The recommended platform for building AI solutions on Microsoft Azure, providing comprehensive project organization, resource management, and development capabilities.
+* **Developer Interfaces:**
+* **Microsoft Foundry Portal:** A web-based visual interface for developing and managing AI projects.
+* **Microsoft Foundry SDK:** Enables programmatic development, resource management, and automation for CI/CD pipelines.
+
+---
+
+### Microsoft Foundry Projects
+
+* **Structure:** Projects manage the data, code, and connections for an AI solution. They are hosted within a **Foundry resource**, which supplies the necessary compute, storage, and AI services. A single resource can support multiple projects (with one designated as the default).
+* **Core Assets:**
+
+| Asset | Description |
+| --- | --- |
+| **Models** | Deployments of Large Language Models (LLMs) from the Foundry Models catalog. Accessed via project-specific or Azure OpenAI endpoints. |
+| **Agents** | Autonomous AI entities configured with an LLM, instructions, and tools to automate tasks. Developed and consumed through the Foundry Agent service. |
+| **Tools** | Capabilities utilized by agents. Includes built-in functions (e.g., code interpreters), custom integrations via the **Model Context Protocol (MCP)**, and Microsoft Foundry Tools (speech, text analysis). |
+| **Knowledge** | Data stores used by agents to ground and contextualize prompts. **Foundry IQ** can be used to create a centralized, MCP-based knowledge connection. |
+
+---
+
+### The Microsoft Foundry Portal Capabilities
+
+Most AI solution development begins in the portal, where developers can:
+
+* Find, compare, test, and deploy models.
+* Create, configure, and test AI agents.
+* Set up MCP connections to external tools and Foundry IQ knowledge sources.
+* Manage user access and resource configurations.
+* Retrieve endpoints and keys necessary for client applications.
+
+> **Note on Architecture:** The platform is currently transitioning to a new project architecture. Older "classic" Foundry projects may still utilize a legacy hub-based system.
