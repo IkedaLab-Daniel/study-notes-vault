@@ -85,3 +85,34 @@ While generative AI models and agents are the focus of modern AI development, **
 * **Portal Access:** Select tools provide a visual user interface within the Foundry portal for straightforward configuration and testing.
 
 > **Note on Naming:** Foundry Tools were previously known as *Azure AI Services* (and before that, *Azure Cognitive Services*). These legacy names may still appear in some APIs and SDKs. While some tools can still be provisioned outside of Foundry, new projects should utilize the tools provided directly within a Microsoft Foundry resource.
+
+## Developer Tools and SDKs for AI Development
+
+### Development Environments
+
+* Developers can choose environments that best support their preferred languages and workflows.
+* **Microsoft Visual Studio:** Ideal for .NET Framework and Windows applications.
+* **Visual Studio Code (VS Code):** Preferred for web developers utilizing open-source languages and libraries.
+
+### The Foundry Toolkit Extension for VS Code
+
+This extension simplifies developing Microsoft Foundry-based generative AI applications. Key features include:
+
+* Browsing and managing project resources (deployed models, agents, connections, vector stores).
+* Deploying models directly from the model catalog.
+* Testing models and agents within integrated interactive playgrounds.
+* Configuring declarative and hosted agents using a visual designer and YAML files.
+* Generating integration code to connect agents with applications.
+
+### Source Control and Productivity
+
+* **GitHub:** The standard platform for source control and DevOps management, essential for team development.
+* **GitHub Copilot:** An AI coding assistant natively integrated into both Visual Studio and VS Code to significantly enhance productivity and effectiveness.
+
+### Programming Languages, APIs, and SDKs
+
+AI applications can be developed using popular languages such as C#, Python, Node, TypeScript, Java, and others. Key APIs and SDKs for building on Azure include:
+
+* **Microsoft Foundry SDK:** Enables developers to write code that connects to Foundry projects and accesses specific assets, such as agents and Foundry IQ knowledge stores.
+* **The OpenAI API:** Allows developers to use standard OpenAI SDKs to build chat applications based on Foundry models that support OpenAI syntax.
+* **Foundry Tools SDKs:** Service-specific libraries available across multiple languages and frameworks to consume Foundry Tools resources. These tools can also be accessed directly via their REST APIs.
