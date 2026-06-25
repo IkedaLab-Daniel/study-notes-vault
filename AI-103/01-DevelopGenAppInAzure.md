@@ -116,3 +116,22 @@ AI applications can be developed using popular languages such as C#, Python, Nod
 * **Microsoft Foundry SDK:** Enables developers to write code that connects to Foundry projects and accesses specific assets, such as agents and Foundry IQ knowledge stores.
 * **The OpenAI API:** Allows developers to use standard OpenAI SDKs to build chat applications based on Foundry models that support OpenAI syntax.
 * **Foundry Tools SDKs:** Service-specific libraries available across multiple languages and frameworks to consume Foundry Tools resources. These tools can also be accessed directly via their REST APIs.
+
+## Responsible AI
+
+### Overview
+
+Software engineers must deeply consider the impact of AI applications on users and society. Because AI systems rely on probabilistic models trained on large datasets, their decisions can reflect historical data biases. While human-like interfaces increase user friendliness, they can lead users to over-trust the application's correctness. To mitigate potential harm, software engineers should adhere to foundational core principles.
+
+---
+
+### Core Principles for Responsible AI
+
+| Principle | Description & Key Considerations |
+| --- | --- |
+| **Fairness** | • Systems must treat all individuals fairly without bias based on factors like gender or ethnicity.<br><br>• Tooling alone cannot ensure fairness; developers must carefully review training data for representation and evaluate performance across different demographic subsections throughout the development lifecycle. |
+| **Reliability and Safety** | • Applications must perform reliably and safely, especially in high-stakes fields like autonomous driving or healthcare diagnostics.<br><br>• Development requires rigorous testing, deployment management, and the application of appropriate confidence-score thresholds to manage the probabilistic nature of ML models. |
+| **Privacy and Security** | • AI solutions rely on vast volumes of data, which often contain personal or sensitive details that must remain private.<br><br>• Safeguards must protect both the training data and new data ingested during production. |
+| **Inclusiveness** | • AI should empower and benefit everyone regardless of physical ability, gender, sexual orientation, or ethnicity.<br><br>• Inclusiveness is optimized by including a diverse group of people during the design, development, and testing phases. |
+| **Transparency** | • Systems should be understandable, ensuring users are fully aware of the application's purpose, operational logic, and limitations.<br><br>• Developers should clearly convey factors affecting accuracy (e.g., training size, key predictive features, confidence scores) and explicitly detail data usage and retention practices. |
+| **Accountability** | • Ultimately, human designers and developers remain accountable for the autonomous behavior of AI systems.<br><br>• Teams must work within governance frameworks and organizational principles to ensure solutions satisfy responsible, ethical, and legal standards. |
