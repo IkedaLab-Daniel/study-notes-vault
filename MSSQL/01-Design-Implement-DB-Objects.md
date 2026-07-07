@@ -54,3 +54,44 @@ Choosing the right Microsoft SQL platform requires understanding the trade-offs 
 * **SQL Database in Microsoft Fabric:** A developer-friendly database that seamlessly merges transactional operations with built-in analytics.
 * **Zero-ETL Analytics:** Automatically mirrors operational data into OneLake as Delta Parquet files, allowing analytical queries without impacting transactional performance.
 * **Modern Features:** Includes automatic indexing, AI integration (semantic search, RAG), git integration, and GraphQL APIs.
+
+## Table Design Fundamentals
+
+Effective table design is the bedrock of database efficiency. In relational databases, tables organize transactional data and enforce relationships, while in multidimensional analytics, they serve as fact and dimension tables. Design decisions—like data types, column sizing, constraints, and index strategies—directly dictate storage efficiency, query performance, and data integrity.
+
+### Data Type Selection
+
+Choosing the correct data type is critical. Changing types in production often requires disruptive table rebuilds. Incorrect types can cause wasted storage, sluggish performance, or critical data errors (e.g., using `FLOAT` instead of `DECIMAL` for financial data can introduce irreversible rounding errors).
+
+**Common Data Types:**
+
+* **Numeric:** `INT` (4 bytes), `BIGINT` (8 bytes), `DECIMAL` (varies), `FLOAT`. Use based on required range and precision.
+* **String:** `VARCHAR` (1 byte/char, variable), `CHAR` (fixed), `NVARCHAR` (2 bytes/char, Unicode). Use `VARCHAR` for ASCII-only to save space; `NVARCHAR` for international data.
+* **Date/Time:** `DATE` (3 bytes), `DATETIME2` (6-8 bytes), `DATETIMEOFFSET` (10 bytes). `DATETIME2` is preferred over legacy `DATETIME` for better precision.
+* **Binary:** `VARBINARY`, `IMAGE`. Used for files, photos, or documents.
+* **Special:** `UNIQUEIDENTIFIER` (16 bytes, GUIDs), `XML`, `JSON` (native binary in SQL 2025+). Avoid GUIDs as primary keys if `INT` suffices, as they inflate index size and slow joins.
+
+### Table Size Estimation
+
+Estimating table size is vital for capacity planning, backup/restore durations, and cloud cost calculations. A poorly designed table with an unnecessary 50 bytes per row can waste terabytes of storage annually at scale.
+
+**Estimation Example:**
+
+* `INT`: 4 bytes
+* `NVARCHAR(50)`: ~40 bytes (average)
+* `DATE`: 3 bytes
+* `DECIMAL(10,2)`: 5 bytes
+* *Row Overhead:* ~7 bytes
+* *Total:* Sum these to find average row size, then multiply by expected row count.
+
+### Design Best Practices
+
+To ensure long-term performance and maintainability, follow these principles:
+
+* **Right-Size Data Types:** Always use the smallest data type that safely holds your data.
+* **Implement Constraints:** Use `NOT NULL`, `DEFAULT`, `CHECK`, and primary/foreign keys to enforce data quality at the database level.
+* **Efficient Primary Keys:** Use `IDENTITY(1,1)` with `INT` or `BIGINT` for sequential, cluster-efficient surrogate keys.
+* **Index Strategically:** Index columns frequently used in `WHERE`, `JOIN`, and `ORDER BY` clauses.
+* **Workload-Specific Structures:** Use Columnstore indexes for analytical workloads and Rowstore for transactional workloads.
+* **Plan for Growth & Compression:** Estimate future volumes early and consider row/page compression for large tables.
+* **Normalize Logically:** Strike a balance between strict normalization and the practical performance needs of your queries.
